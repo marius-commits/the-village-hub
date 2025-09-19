@@ -1,10 +1,12 @@
 ---
-title: The Village Hub
-emoji: 🐢
-colorFrom: gray
-colorTo: red
+title: the-village-hub
+emoji: 🐳
+colorFrom: green
+colorTo: blue
 sdk: static
 pinned: false
+tags:
+  - deepsite
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
