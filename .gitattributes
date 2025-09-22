@@ -43,3 +43,4 @@ images/Logo[[:space:]]without[[:space:]]words.png filter=lfs diff=lfs merge=lfs 
 images/Gemini_Generated_Image_c1557gc1557gc155.png filter=lfs diff=lfs merge=lfs -text
 images/Gemini_Generated_Image_pnm5rmpnm5rmpnm5.png filter=lfs diff=lfs merge=lfs -text
 images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png filter=lfs diff=lfs merge=lfs -text
+Foundry.png filter=lfs diff=lfs merge=lfs -text
