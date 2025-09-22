@@ -25,7 +25,25 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-    </style>
+    <style>
+  /* ...keep your existing styles... */
+
+  /* Sage button */
+  .btn-sage {
+    background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%); /* sage */
+    color: #fff;
+    transition: all .2s ease;
+  }
+  .btn-sage:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(138,154,91,.25);
+    filter: brightness(0.98);
+  }
+  .btn-sage:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(138,154,91,.35);
+  }
+</style>
 </head>
 <body class="font-sans antialiased text-gray-800">
     <!-- Navigation -->
