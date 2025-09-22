@@ -312,6 +312,162 @@
         </div>
     </div>
 
+<!-- Floorplan Section -->
+<section id="floorplan" class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Floorplan</h2>
+      <p class="mt-4 max-w-2xl text-lg text-gray-600 mx-auto">
+        Explore the proposed layout of hot desks, booths, private offices and meeting rooms.
+      </p>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div class="inline-flex rounded-md shadow-sm overflow-hidden border border-gray-200">
+        <button id="fp-zoom-out" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">−</button>
+        <span id="fp-zoom" class="px-4 py-2 text-sm bg-gray-100">100%</span>
+        <button id="fp-zoom-in" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">+</button>
+      </div>
+
+      <div class="inline-flex rounded-md shadow-sm overflow-hidden border border-gray-200">
+        <button id="fp-prev" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">Prev</button>
+        <span id="fp-page" class="px-4 py-2 text-sm bg-gray-100">1 / 1</span>
+        <button id="fp-next" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">Next</button>
+      </div>
+
+      <a
+        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf"
+        target="_blank" rel="noopener"
+        class="btn-sage px-4 py-2 rounded-md text-sm font-medium"
+      >Open full screen</a>
+
+      <a
+        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf"
+        download
+        class="px-4 py-2 rounded-md text-sm font-medium border border-stone-300 text-stone-700 bg-white hover:bg-stone-50"
+      >Download PDF</a>
+    </div>
+
+    <!-- Canvas viewer -->
+    <div class="mt-6 bg-white rounded-xl shadow-lg p-4">
+      <div class="relative overflow-auto">
+        <canvas id="fp-canvas" class="mx-auto block"></canvas>
+      </div>
+      <p class="mt-3 text-center text-xs text-stone-500">
+        Tip: use the + / − buttons or your trackpad to zoom. On mobile, open full screen for pinch-zoom.
+      </p>
+    </div>
+
+    <!-- Simple legend chips -->
+    <div class="mt-6 flex flex-wrap gap-2 justify-center text-sm">
+      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Hot desks</span>
+      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Phone booths</span>
+      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Private offices</span>
+      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Meeting rooms</span>
+      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Reception / lounge</span>
+    </div>
+  </div>
+</section>
+
+<!-- PDF.js (lightweight CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js"></script>
+<script>
+  (function () {
+    // 1) Point to YOUR PDF here (keep the same URL if you already uploaded it)
+    const PDF_URL =
+      "https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf";
+
+    // 2) Setup PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js";
+
+    const canvas = document.getElementById("fp-canvas");
+    const ctx = canvas.getContext("2d");
+
+    const zoomEl = document.getElementById("fp-zoom");
+    const pageEl = document.getElementById("fp-page");
+    const btnIn = document.getElementById("fp-zoom-in");
+    const btnOut = document.getElementById("fp-zoom-out");
+    const btnPrev = document.getElementById("fp-prev");
+    const btnNext = document.getElementById("fp-next");
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let scale = 1.2; // default zoom
+    const SCALE_MIN = 0.6;
+    const SCALE_MAX = 3.0;
+    let rendering = false, pending = null;
+
+    function renderPage(num) {
+      rendering = true;
+      pdfDoc.getPage(num).then(function (page) {
+        const viewport = page.getViewport({ scale });
+        // Limit canvas width to container for responsiveness
+        const maxWidth = Math.min(viewport.width, 1400);
+        const scaled = maxWidth / viewport.width;
+        const vp = page.getViewport({ scale: scale * scaled });
+
+        canvas.width = vp.width;
+        canvas.height = vp.height;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: vp
+        };
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(function () {
+          rendering = false;
+          if (pending !== null) {
+            renderPage(pending);
+            pending = null;
+          }
+        });
+
+        zoomEl.textContent = Math.round(scale * 100) + "%";
+        pageEl.textContent = num + " / " + pdfDoc.numPages;
+      });
+    }
+
+    function queueRender(num) {
+      if (rendering) pending = num;
+      else renderPage(num);
+    }
+
+    function onPrev() {
+      if (pageNum <= 1) return;
+      pageNum--;
+      queueRender(pageNum);
+    }
+    function onNext() {
+      if (pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      queueRender(pageNum);
+    }
+    function onZoomIn() {
+      scale = Math.min(SCALE_MAX, scale + 0.1);
+      queueRender(pageNum);
+    }
+    function onZoomOut() {
+      scale = Math.max(SCALE_MIN, scale - 0.1);
+      queueRender(pageNum);
+    }
+
+    btnPrev.addEventListener("click", onPrev);
+    btnNext.addEventListener("click", onNext);
+    btnIn.addEventListener("click", onZoomIn);
+    btnOut.addEventListener("click", onZoomOut);
+
+    // Load the PDF
+    pdfjsLib.getDocument(PDF_URL).promise.then(function (pdf) {
+      pdfDoc = pdf;
+      pageNum = 1;
+      renderPage(pageNum);
+    });
+  })();
+</script>
+
+  
     <!-- Registration Section -->
 <div id="register" class="py-16 bg-[#8A9A5B] overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
