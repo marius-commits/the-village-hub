@@ -62,3 +62,5 @@ Allign the bootom of the register interest and https://huggingface.co/spaces/Mar
 Change gallery photos
 change About The Village Hub photo
 change About The Village Hub image
+https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png replace photo with 
+how can i change a photo
