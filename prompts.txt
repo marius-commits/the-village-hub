@@ -1,3 +1,64 @@
 We are about to launch a coworking space at Nooitgedacht Village called the Village Hub. I want to create a webpage where people can register their interest, receive some information, see a few illistrative images etc. Attached is the logo and the presentation file. I have already created a previous page on google forms for reference, but please use your own layout - https://docs.google.com/forms/d/e/1FAIpQLScsK_nsNQMhopC1ehpvD3u7Z8Q7FTgcAXw6zpzoPyQoIYyzjw/viewform?usp=sf_link
 Use attached as a theme for colors and images for the website
 Change the colors of the website, text, banners, buttons etc to be more like the colors on the attached color board
+Use as logo
+Make the logo 300% bigger
+undo
+Use as logo
+Make the logo smaller to fit
+Change header to The Village Hub also The Welcome to The Village Hub
+### Register section (Netlify-ready form)
+- Build a clean form that later works on Netlify Forms. Requirements:
+  <form name="interest" method="POST" data-netlify="true">
+  Include a hidden input: <input type="hidden" name="form-name" value="interest" />
+  Fields (with accessible labels):
+  - First name (required)
+  - Last name (required)
+  - Email (required, type=email)
+  - Phone (optional)
+  - Company (optional)
+  - Role (optional)
+  - I’m interested in (select: Hot Desk, Dedicated Desk, Private Office, Meeting Room, Day Passes)
+  - Team size (number, min 1, default 1)
+  - Ideal start date (date)
+  - Days per week (select: Flexible, 1–2 days, 3 days, 4–5 days)
+  - How did you hear about us? (optional)
+  - Anything else? (textarea, optional)
+  - Consent checkbox text: “I agree to be contacted about The Village Hub.”
+  - Submit button: “Join the waitlist”
+- Add light client-side validation for email and required fields.
+- Add a tiny success message area (we’ll later rely on Netlify dashboard for notifications).
+Change the Register your interest section (Netlify-ready form)
+- Build a clean form that later works on Netlify Forms. Requirements:
+  <form name="interest" method="POST" data-netlify="true">
+  Include a hidden input: <input type="hidden" name="form-name" value="interest" />
+  Fields (with accessible labels):
+  - First name (required)
+  - Last name (required)
+  - Email (required, type=email)
+  - Phone (optional)
+  - Company (optional)
+  - Role (optional)
+  - I’m interested in (select: Hot Desk, Dedicated Desk, Private Office, Meeting Room, Day Passes)
+  - Team size (number, min 1, default 1)
+  - Ideal start date (date)
+  - Days per week (select: Flexible, 1–2 days, 3 days, 4–5 days)
+  - How did you hear about us? (optional)
+  - Anything else? (textarea, optional)
+  - Consent checkbox text: “I agree to be contacted about The Village Hub.”
+  - Submit button: “Join the waitlist”
+- Add light client-side validation for email and required fields.
+- Add a tiny success message area (we’ll later rely on Netlify dashboard for notifications).
+Change the about sections wording to: Coming soon to Nooitgedacht Village — The Village Hub is a serene yet vibrant coworking destination where modern functionality meets a handcrafted, village-inspired atmosphere. With flexible desks, private offices, and collaborative lounges filled with natural light and greenery, it’s designed for professionals to focus deeply, connect meaningfully, and thrive in an inspiring community.
+change About The Village Hub
+change Prime Location
+Situated in Nooitgedacht Village with easy access to amenities and authentic experiences.
+At the Our Features section, make the icons more colorful
+Change the register your interest button color to sage green
+https://enzostvs-deepsite.hf.space/projects/Mariusvj86/the-village-hub#register change color to sage green
+https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_3.jpg change to attached
+Allign the bootom of the register interest and https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png
+Allign the bootom of the register interest and https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png
+Change gallery photos
+change About The Village Hub photo
+change About The Village Hub image
