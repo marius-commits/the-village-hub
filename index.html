@@ -570,5 +570,33 @@
     </script>
     <script>AOS.init();</script>
     <script>feather.replace();</script>
+  <!-- Image Modal -->
+<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center p-4">
+  <span id="closeModal" class="absolute top-4 right-6 text-white text-3xl cursor-pointer">&times;</span>
+  <img id="modalImg" class="max-h-full max-w-full rounded-lg shadow-2xl" alt="enlarged view">
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImg");
+  const closeModal = document.getElementById("closeModal");
+
+  // Attach click to all images in gallery & register/floorplan
+  document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modalImg.src = img.src;
+      modalImg.alt = img.alt || "enlarged view";
+    });
+  });
+
+  // Close modal on click of X or backdrop
+  closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.add("hidden");
+  });
+});
+</script>
+
 </body>
 </html>
