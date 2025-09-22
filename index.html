@@ -63,33 +63,44 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero-gradient pt-24 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" data-aos="fade-right">
-                        <span class="block">Welcome to The</span>
-                        <span class="block text-[#8B5A2B]">Village Hub</span>
-                    </h1>
-                    <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-right" data-aos-delay="100">
-                        A vibrant coworking space coming soon to Nooitgedacht Village. Connect, create, and collaborate in our inspiring workspace.
-                    </p>
-                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0" data-aos="fade-right" data-aos-delay="200">
-                        <p class="text-base font-medium text-gray-900">Sign up to get notified when we launch:</p>
-                        <a href="#register" class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white btn-primary md:py-4 md:text-lg md:px-10">
-                            Register Interest
-                        </a>
-                    </div>
-                </div>
-                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center" data-aos="fade-left">
-                    <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                        <img class="w-full rounded-lg" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png" alt="Coworking space">
-                    </div>
-                </div>
-            </div>
+   <!-- Hero Section (aligned button to image bottom) -->
+<div class="hero-gradient pt-24 pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      <!-- LEFT: make it a column and push CTA to the bottom -->
+      <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:flex-col lg:justify-between">
+        <div>
+          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" data-aos="fade-right">
+            <span class="block">Welcome to The</span>
+            <span class="block text-[#8B5A2B]">Village Hub</span>
+          </h1>
+          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-right" data-aos-delay="100">
+            A vibrant coworking space coming soon to Nooitgedacht Village. Connect, create, and collaborate in our inspiring workspace.
+          </p>
         </div>
+
+        <!-- CTA sits at the bottom of the left column on lg+ -->
+        <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0" data-aos="fade-right" data-aos-delay="200">
+          <p class="text-base font-medium text-gray-900">Sign up to get notified when we launch:</p>
+          <a href="#register"
+             class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white btn-primary md:py-4 md:text-lg md:px-10">
+            Register Interest
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: image -->
+      <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-end" data-aos="fade-left">
+        <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+          <img class="w-full rounded-lg"
+               src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png"
+               alt="Coworking space">
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
 
     <!-- About Section -->
     <div id="about" class="py-16 bg-white overflow-hidden">
