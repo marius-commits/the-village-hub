@@ -1,527 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Hub - Coworking Space at Nooitgedacht Village</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        .hero-gradient {
-            background: linear-gradient(135deg, #F8F1E5 0%, #E8D9C5 100%);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #8B5A2B 0%, #6B4423 100%);
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-    <style>
-  /* ...keep your existing styles... */
-
-  /* Sage button */
-  .btn-sage {
-    background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%); /* sage */
-    color: #fff;
-    transition: all .2s ease;
-  }
-  .btn-sage:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(138,154,91,.25);
-    filter: brightness(0.98);
-  }
-  .btn-sage:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(138,154,91,.35);
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Village Hub - Coworking Space at Nooitgedacht Village</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <style>
+    .hero-gradient {
+      background: linear-gradient(135deg, #F8F1E5 0%, #E8D9C5 100%);
+    }
+    .btn-sage {
+      background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%);
+      color: #fff;
+      transition: all .2s ease;
+    }
+    .btn-sage:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(138,154,91,.25);
+      filter: brightness(0.98);
+    }
+  </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img class="h-16 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
-                        <span class="ml-3 text-2xl font-bold text-[#6B4423]">The Village Hub</span>
-                    </div>
-                </div>
-                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-                    <a href="#about" class="text-[#6B4423] inline-flex items-center px-1 pt-1 border-b-2 border-[#8B5A2B] text-sm font-medium">About</a>
-                    <a href="#features" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Features</a>
-                    <a href="#gallery" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Gallery</a>
-                  <a href="#register" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Register Interest</a>
-                </div>
-                <div class="-mr-2 flex items-center md:hidden">
-                    <button type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
-                        <i data-feather="menu"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Mobile menu -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="#about" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
-                <a href="#features" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Features</a>
-                <a href="#gallery" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Gallery</a>
-                <a href="#register" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Register Interest</a>
-            </div>
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <img class="h-16 w-auto" src="images/Logo.png" alt="Village Hub Logo">
+          <span class="ml-3 text-2xl font-bold text-[#6B4423]">The Village Hub</span>
         </div>
-    </nav>
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#about" class="text-[#6B4423] hover:text-[#8B5A2B]">About</a>
+          <a href="#features" class="text-[#6B4423] hover:text-[#8B5A2B]">Features</a>
+          <a href="#gallery" class="text-[#6B4423] hover:text-[#8B5A2B]">Gallery</a>
+          <a href="#floorplan" class="text-[#6B4423] hover:text-[#8B5A2B]">Floorplan</a>
+          <a href="#register" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Register Interest</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-   <!-- Hero Section (aligned button to image bottom) -->
-<div class="hero-gradient pt-24 pb-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-      <!-- LEFT: make it a column and push CTA to the bottom -->
-      <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:flex-col lg:justify-between">
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-24 pb-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-6">
+      <div class="flex flex-col justify-between">
         <div>
-          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" data-aos="fade-right">
-            <span class="block">Welcome to The</span>
+          <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <span>Welcome to The</span>
             <span class="block text-[#8B5A2B]">Village Hub</span>
           </h1>
-          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-right" data-aos-delay="100">
-            A vibrant coworking space coming soon to Nooitgedacht Village. Connect, create, and collaborate in our inspiring workspace.
+          <p class="mt-5 text-lg text-gray-600">
+            A vibrant coworking space coming soon to Nooitgedacht Village.  
+            Connect, create, and collaborate in our inspiring workspace.
           </p>
         </div>
-
-        <!-- CTA sits at the bottom of the left column on lg+ -->
-        <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0" data-aos="fade-right" data-aos-delay="200">
+        <div class="mt-6">
           <p class="text-base font-medium text-gray-900">Sign up to get notified when we launch:</p>
-          <a href="#register" 
-   class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#8A9A5B] hover:bg-[#7a8a50] md:py-4 md:text-lg md:px-10 transition-colors duration-300">
-   Register Your Interest
-</a>
-
-
+          <a href="#register" class="btn-sage mt-4 w-full md:w-auto inline-flex justify-center px-6 py-3 rounded-md text-lg font-medium">
+            Register Your Interest
+          </a>
         </div>
       </div>
-
-      <!-- RIGHT: image -->
-      <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-end" data-aos="fade-left">
-        <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-          <img class="w-full rounded-lg"
-               src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png"
-               alt="Coworking space">
-        </div>
+      <div class="flex items-end">
+        <img class="rounded-lg shadow-lg" src="images/HighResLogo.png" alt="Coworking space">
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
+  <!-- About Section -->
+  <section id="about" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-8 items-center">
+      <img class="rounded-lg shadow-xl" src="images/Foundry.png" alt="About Village Hub">
+      <div>
+        <h2 class="text-3xl font-extrabold text-gray-900">About The Village Hub</h2>
+        <p class="mt-4 text-lg text-gray-600">
+          The Village Hub is a thoughtfully designed coworking space nestled in the heart of Nooitgedacht Village.  
+          We've created a harmonious blend of productivity and comfort, where natural materials and warm tones inspire creativity.
+        </p>
+        <ul class="mt-4 list-disc pl-5 text-gray-600 space-y-2">
+          <li>Flexible workspace options for individuals and teams</li>
+          <li>Private offices with custom configurations</li>
+          <li>Bright, plant-filled common areas</li>
+          <li>Premium meeting rooms with the latest technology</li>
+          <li>A welcoming community of professionals</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <!-- About Section -->
-    <div id="about" class="py-16 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
-                <div data-aos="fade-right">
-                    <img class="w-full rounded-lg shadow-xl" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Foundry.png" alt="About Village Hub">
-                </div>
-                <div class="mt-10 lg:mt-0" data-aos="fade-left">
-                    <h2 class="text-3xl font-extrabold text-gray-900">About The Village Hub</h2>
-                    <p class="mt-4 text-lg text-gray-500">
-                        The Village Hub is a thoughtfully designed coworking space nestled in the heart of Nooitgedacht Village. We've created a harmonious blend of productivity and comfort, where natural materials and warm tones inspire creativity while modern amenities support your work. Our space offers:
-                    </p>
-                    <ul class="mt-4 text-lg text-gray-500 list-disc pl-5 space-y-2">
-                        <li>Flexible workspace options for individuals and teams</li>
-                        <li>Private offices with custom configurations</li>
-                        <li>Bright, plant-filled common areas that encourage connection</li>
-                        <li>Premium meeting rooms with the latest technology</li>
-                        <li>A welcoming community of professionals and entrepreneurs</li>
-                    </ul>
-                    <p class="mt-4 text-lg text-gray-500">
-                        Designed to be your professional home away from home, The Village Hub combines the warmth of village life with the efficiency of a modern workspace.
-                    </p>
-                    <div class="mt-8">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#8B5A2B] text-white">
-                                    <i data-feather="map-pin"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Prime Location</h3>
-                                <p class="mt-2 text-base text-gray-500">
-                                    Situated in Nooitgedacht Village with easy access to amenities and authentic experiences.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-8 flex items-start">
-                            <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#8B5A2B] text-white">
-                                    <i data-feather="users"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Vibrant Community</h3>
-                                <p class="mt-2 text-base text-gray-500">
-                                    Connect with like-minded professionals and grow your network in a collaborative environment.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Features Section -->
+  <section id="features" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">Our Features</h2>
+      <p class="mt-4 text-xl text-gray-600">Designed to boost your productivity and creativity</p>
+      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="bg-white p-6 rounded-lg shadow-md">High-Speed Internet</div>
+        <div class="bg-white p-6 rounded-lg shadow-md">Refreshment Zone</div>
+        <div class="bg-white p-6 rounded-lg shadow-md">Meeting Rooms</div>
+        <div class="bg-white p-6 rounded-lg shadow-md">Printing Facilities</div>
+        <div class="bg-white p-6 rounded-lg shadow-md">Secure Storage</div>
+        <div class="bg-white p-6 rounded-lg shadow-md">Events & Workshops</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">Gallery</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <img class="rounded-lg shadow-md cursor-pointer hover:scale-105 transition" src="images/gallery1.jpg" alt="Workspace">
+        <img class="rounded-lg shadow-md cursor-pointer hover:scale-105 transition" src="images/gallery2.jpg" alt="Meeting room">
+        <img class="rounded-lg shadow-md cursor-pointer hover:scale-105 transition" src="images/gallery3.jpg" alt="Community area">
+      </div>
+    </div>
+  </section>
+
+  <!-- Floorplan Section -->
+  <section id="floorplan" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">Floorplan</h2>
+      <p class="mt-4 text-lg text-gray-600">
+        Explore the proposed layout of hot desks, private offices, meeting rooms, and community areas.
+      </p>
+      <div class="mt-8">
+        <img src="images/Floorplan.png" alt="Village Hub Floorplan"
+          class="mx-auto rounded-lg shadow-lg cursor-pointer transition hover:scale-105"
+          onclick="window.open(this.src,'_blank')">
+      </div>
+      <div class="mt-6">
+        <a href="Floorplan.pdf" target="_blank"
+           class="px-6 py-3 btn-sage rounded-md shadow">
+          Download PDF
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Section -->
+  <section id="register" class="py-16 bg-[#9FB78E]">
+    <div class="max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Register Your Interest</h2>
+      <form name="interest" method="POST" data-netlify="true" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <input type="text" name="firstName" placeholder="First name" class="border p-3 rounded">
+        <input type="text" name="lastName" placeholder="Last name" class="border p-3 rounded">
+        <input type="email" name="email" placeholder="Email" class="border p-3 rounded md:col-span-2" required>
+        <input type="text" name="phone" placeholder="Phone" class="border p-3 rounded">
+        <input type="text" name="company" placeholder="Company" class="border p-3 rounded">
+        <textarea name="message" placeholder="Anything else?" class="border p-3 rounded md:col-span-2"></textarea>
+        <div class="md:col-span-2">
+          <button type="submit" class="btn-sage w-full py-3 rounded-md font-semibold">Join the waitlist</button>
         </div>
+      </form>
     </div>
+  </section>
 
-    <!-- Features Section -->
-    <div id="features" class="py-16 bg-gray-50 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
-                    Our Features
-                </h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Designed to boost your productivity and creativity
-                </p>
-            </div>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-6">
+    <p>&copy; 2025 The Village Hub. All rights reserved.</p>
+  </footer>
 
-            <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#E8A87C] text-white">
-                            <i data-feather="wifi"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">High-Speed Internet</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            Blazing fast fiber internet to keep you connected without interruptions.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#C38D9E] text-white">
-                            <i data-feather="coffee"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">Refreshment Zone</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            Complimentary coffee, tea and snacks to keep you energized throughout the day.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="400">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#41B3A3] text-white">
-                            <i data-feather="monitor"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">Meeting Rooms</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            Professionally equipped meeting spaces for your client presentations and team meetings.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#E27D60] text-white">
-                            <i data-feather="printer"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">Printing Facilities</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            High-quality printing, scanning and copying services available on-site.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#85CDCA] text-white">
-                            <i data-feather="lock"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">Secure Storage</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            Lockers and secure storage options for your personal belongings.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="400">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#D79922] text-white">
-                            <i data-feather="calendar"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium text-gray-900">Events & Workshops</h3>
-                        <p class="mt-2 text-base text-gray-500">
-                            Regular networking events, workshops and skill-building sessions.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Gallery Section -->
-    <div id="gallery" class="py-16 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
-                    Gallery
-                </h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Take a peek at our inspiring workspace
-                </p>
-            </div>
-
-            <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_4.jpg" alt="Workspace area">
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_5.jpg" alt="Meeting room">
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="400">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry outside.png" alt="Lounge area">
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_c1557gc1557gc155.png" alt="Outdoor space">
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/People.jpg" alt="Event">
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="400">
-                    <img class="w-full h-64 object-cover" src="http://static.photos/workspace/640x360/8" alt="Event space">
-                </div>
-            </div>
-        </div>
-    </div>
-  
-
-<!-- Floorplan Section -->
-<div id="floorplan" class="py-16 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-3xl font-extrabold text-gray-900">Floorplan</h2>
-    <p class="mt-4 text-lg text-gray-600">
-      Explore the proposed layout of hot desks, private offices, meeting rooms, and community areas.
-    </p>
-    
-    <div class="mt-8">
-      <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorplan.png" 
-           alt="Village Hub Floorplan" 
-           class="mx-auto rounded-lg shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105" 
-           onclick="window.open(this.src,'_blank')">
-    </div>
-    
-    <div class="mt-6">
-      <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorpan.pdf"
-         target="_blank"
-         class="px-6 py-3 bg-[#8A9A5B] text-white font-medium rounded-md shadow hover:bg-[#6F7A45]">
-        Download PDF
-      </a>
-    </div>
-  </div>
-</div>
-           
-
-    <!-- Footer -->
-    <footer class="bg-gray-800">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                <div class="space-y-8 xl:col-span-1">
-                    <div class="flex items-center">
-                        <img class="h-16 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
-                        <span class="ml-3 text-2xl font-bold text-white">The Village Hub</span>
-                    </div>
-                    <p class="text-[#F8F1E5] text-base">
-                        A vibrant coworking space coming soon to Nooitgedacht Village.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-[#E8D9C5] hover:text-white">
-                            <i data-feather="facebook"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i data-feather="instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i data-feather="twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i data-feather="linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">
-                                Village Hub
-                            </h3>
-                            <ul class="mt-4 space-y-4">
-                                <li>
-                                    <a href="#about" class="text-base text-gray-400 hover:text-white">About</a>
-                                </li>
-                                <li>
-                                    <a href="#features" class="text-base text-gray-400 hover:text-white">Features</a>
-                                </li>
-                                <li>
-                                    <a href="#gallery" class="text-base text-gray-400 hover:text-white">Gallery</a>
-                                </li>
-                                <li>
-                                    <a href="#register" class="text-base text-gray-400 hover:text-white">Register</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mt-12 md:mt-0">
-                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">
-                                Contact
-                            </h3>
-                            <ul class="mt-4 space-y-4">
-                                <li>
-                                    <span class="text-base text-gray-400">Nooitgedacht Village</span>
-                                </li>
-                                <li>
-                                    <span class="text-base text-gray-400">info@villagehub.com</span>
-                                </li>
-                                <li>
-                                    <span class="text-base text-gray-400">+27 12 345 6789</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">
-                                Legal
-                            </h3>
-                            <ul class="mt-4 space-y-4">
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">Privacy</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">Cookie Policy</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-12 border-t border-gray-700 pt-8">
-                <p class="text-base text-gray-400 text-center">
-                    &copy; 2023 Village Hub. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            // Form submission handler
-            const form = document.querySelector('form[name="interest"]');
-            if(form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    
-                    // Simple client-side validation
-                    const email = formData.get('email');
-                    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-                        alert('Please enter a valid email address');
-                        return;
-                    }
-                    
-                    // Show success message
-                    const successDiv = document.getElementById('form-success');
-                    successDiv.classList.remove('hidden');
-                    successDiv.textContent = 'Thank you for your interest! We will be in touch soon.';
-                    form.reset();
-                    
-                    // For Netlify, we'll let it handle the actual submission
-                    this.submit();
-                });
-            }
-            
-            const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', function() {
-                const expanded = this.getAttribute('aria-expanded') === 'true' || false;
-                this.setAttribute('aria-expanded', !expanded);
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    if(this.getAttribute('href') === '#') return;
-                    
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if(target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu if open
-                        if(!mobileMenu.classList.contains('hidden')) {
-                            mobileMenuButton.setAttribute('aria-expanded', 'false');
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-    <script>AOS.init();</script>
-    <script>feather.replace();</script>
-  <!-- Image Modal -->
-<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center p-4">
-  <span id="closeModal" class="absolute top-4 right-6 text-white text-3xl cursor-pointer">&times;</span>
-  <img id="modalImg" class="max-h-full max-w-full rounded-lg shadow-2xl" alt="enlarged view">
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById("imgModal");
-  const modalImg = document.getElementById("modalImg");
-  const closeModal = document.getElementById("closeModal");
-
-  // Attach click to all images in gallery & register/floorplan
-  document.querySelectorAll("img").forEach(img => {
-    img.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-      modalImg.src = img.src;
-      modalImg.alt = img.alt || "enlarged view";
-    });
-  });
-
-  // Close modal on click of X or backdrop
-  closeModal.addEventListener("click", () => modal.classList.add("hidden"));
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
-  });
-});
-</script> 
-
+  <script>
+    AOS.init();
+    feather.replace();
+  </script>
 </body>
 </html>
