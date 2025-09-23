@@ -318,302 +318,38 @@
     <div class="text-center">
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Floorplan</h2>
       <p class="mt-4 max-w-2xl text-lg text-gray-600 mx-auto">
-        Explore the proposed layout of hot desks, booths, private offices and meeting rooms.
+        Explore the proposed layout of hot desks, private offices, meeting rooms, and community areas.
       </p>
     </div>
 
-    <!-- Controls -->
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <div class="inline-flex rounded-md shadow-sm overflow-hidden border border-gray-200">
-        <button id="fp-zoom-out" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">−</button>
-        <span id="fp-zoom" class="px-4 py-2 text-sm bg-gray-100">100%</span>
-        <button id="fp-zoom-in" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">+</button>
-      </div>
+    <!-- PDF Embed -->
+    <div class="mt-8 rounded-xl overflow-hidden shadow-lg">
+      <iframe
+        class="w-full"
+        style="aspect-ratio: 16 / 10; height: 700px;"
+        src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation.pdf#page=1&zoom=page-fit"
+        title="Village Hub Floorplan"
+      ></iframe>
+    </div>
 
-      <div class="inline-flex rounded-md shadow-sm overflow-hidden border border-gray-200">
-        <button id="fp-prev" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">Prev</button>
-        <span id="fp-page" class="px-4 py-2 text-sm bg-gray-100">1 / 1</span>
-        <button id="fp-next" class="px-3 py-2 text-sm bg-white hover:bg-gray-50">Next</button>
-      </div>
+    <!-- Buttons -->
+    <div class="mt-6 flex justify-center gap-4">
+      <a
+        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation.pdf"
+        target="_blank"
+        rel="noopener"
+        class="px-4 py-2 rounded-md text-white bg-[#8A9A5B] hover:bg-[#7a8a50] text-sm font-medium"
+      >Open Fullscreen</a>
 
       <a
-        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf"
-        target="_blank" rel="noopener"
-        class="btn-sage px-4 py-2 rounded-md text-sm font-medium"
-      >Open full screen</a>
-
-      <a
-        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf"
+        href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation.pdf"
         download
-        class="px-4 py-2 rounded-md text-sm font-medium border border-stone-300 text-stone-700 bg-white hover:bg-stone-50"
+        class="px-4 py-2 rounded-md text-[#8A9A5B] border border-[#8A9A5B] bg-white hover:bg-gray-50 text-sm font-medium"
       >Download PDF</a>
-    </div>
-
-    <!-- Canvas viewer -->
-    <div class="mt-6 bg-white rounded-xl shadow-lg p-4">
-      <div class="relative overflow-auto">
-        <canvas id="fp-canvas" class="mx-auto block"></canvas>
-      </div>
-      <p class="mt-3 text-center text-xs text-stone-500">
-        Tip: use the + / − buttons or your trackpad to zoom. On mobile, open full screen for pinch-zoom.
-      </p>
-    </div>
-
-    <!-- Simple legend chips -->
-    <div class="mt-6 flex flex-wrap gap-2 justify-center text-sm">
-      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Hot desks</span>
-      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Phone booths</span>
-      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Private offices</span>
-      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Meeting rooms</span>
-      <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700">Reception / lounge</span>
     </div>
   </div>
 </section>
 
-<!-- PDF.js (lightweight CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js"></script>
-<script>
-  (function () {
-    // 1) Point to YOUR PDF here (keep the same URL if you already uploaded it)
-    const PDF_URL =
-      "https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/2025.08.28_VDS_NOOITGEDACHT_S100%20SKETCH%20DRAWING_REV%2004%20OF%2003-A0.pdf";
-
-    // 2) Setup PDF.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js";
-
-    const canvas = document.getElementById("fp-canvas");
-    const ctx = canvas.getContext("2d");
-
-    const zoomEl = document.getElementById("fp-zoom");
-    const pageEl = document.getElementById("fp-page");
-    const btnIn = document.getElementById("fp-zoom-in");
-    const btnOut = document.getElementById("fp-zoom-out");
-    const btnPrev = document.getElementById("fp-prev");
-    const btnNext = document.getElementById("fp-next");
-
-    let pdfDoc = null;
-    let pageNum = 1;
-    let scale = 1.2; // default zoom
-    const SCALE_MIN = 0.6;
-    const SCALE_MAX = 3.0;
-    let rendering = false, pending = null;
-
-    function renderPage(num) {
-      rendering = true;
-      pdfDoc.getPage(num).then(function (page) {
-        const viewport = page.getViewport({ scale });
-        // Limit canvas width to container for responsiveness
-        const maxWidth = Math.min(viewport.width, 1400);
-        const scaled = maxWidth / viewport.width;
-        const vp = page.getViewport({ scale: scale * scaled });
-
-        canvas.width = vp.width;
-        canvas.height = vp.height;
-
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: vp
-        };
-        const renderTask = page.render(renderContext);
-        renderTask.promise.then(function () {
-          rendering = false;
-          if (pending !== null) {
-            renderPage(pending);
-            pending = null;
-          }
-        });
-
-        zoomEl.textContent = Math.round(scale * 100) + "%";
-        pageEl.textContent = num + " / " + pdfDoc.numPages;
-      });
-    }
-
-    function queueRender(num) {
-      if (rendering) pending = num;
-      else renderPage(num);
-    }
-
-    function onPrev() {
-      if (pageNum <= 1) return;
-      pageNum--;
-      queueRender(pageNum);
-    }
-    function onNext() {
-      if (pageNum >= pdfDoc.numPages) return;
-      pageNum++;
-      queueRender(pageNum);
-    }
-    function onZoomIn() {
-      scale = Math.min(SCALE_MAX, scale + 0.1);
-      queueRender(pageNum);
-    }
-    function onZoomOut() {
-      scale = Math.max(SCALE_MIN, scale - 0.1);
-      queueRender(pageNum);
-    }
-
-    btnPrev.addEventListener("click", onPrev);
-    btnNext.addEventListener("click", onNext);
-    btnIn.addEventListener("click", onZoomIn);
-    btnOut.addEventListener("click", onZoomOut);
-
-    // Load the PDF
-    pdfjsLib.getDocument(PDF_URL).promise.then(function (pdf) {
-      pdfDoc = pdf;
-      pageNum = 1;
-      renderPage(pageNum);
-    });
-  })();
-</script>
-
-  
-    <!-- Registration Section -->
-<div id="register" class="py-16 bg-[#8A9A5B] overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-12 items-center">
-      
-      <!-- LEFT: image (centered vertically) -->
-      <div class="flex items-center justify-center">
-        <div class="relative w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
-          <img
-            class="w-full h-auto object-contain"
-            src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry zoomed.png"
-            alt="Join our community at The Village Hub"
-          />
-        </div>
-      </div>
-
-      <!-- RIGHT: form -->
-      <div class="w-full">
-        <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Register Your Interest</h2>
-        <p class="mt-2 text-[#E8D9C5]">
-          Be the first to know when we launch and get exclusive early-bird offers.
-        </p>
-
-        <div class="mt-6">
-          <div class="rounded-xl border border-[#E8D9C5]/70 bg-white/95 shadow-xl p-6 md:p-8">
-            <form name="interest" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-5">
-              <input type="hidden" name="form-name" value="interest" />
-
-              <!-- Row 1 -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label for="first-name" class="block text-sm font-medium text-gray-700">First name *</label>
-                  <input id="first-name" name="first-name" type="text" required
-                         class="mt-1 h-10 px-3 w-full rounded-md border border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-                <div>
-                  <label for="last-name" class="block text-sm font-medium text-gray-700">Last name *</label>
-                  <input id="last-name" name="last-name" type="text" required
-                         class="mt-1 h-10 px-3 w-full rounded-md border border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-              </div>
-
-              <!-- Row 2 -->
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
-                <input id="email" name="email" type="email" required
-                       class="mt-1 h-10 px-3 w-full rounded-md border border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-              </div>
-
-              <!-- Row 3 -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                  <input id="phone" name="phone" type="tel"
-                         class="mt-1 h-10 px-3 w-full rounded-md border border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-                <div>
-                  <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
-                  <input id="company" name="company" type="text"
-                         class="mt-1 h-10 px-3 w-full rounded-md border border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-              </div>
-
-              <!-- Row 4 -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                  <input id="role" name="role" type="text"
-                         class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-                <div>
-                  <label for="interest" class="block text-sm font-medium text-gray-700">I'm interested in *</label>
-                  <select id="interest" name="interest" required
-                          class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]">
-                    <option value="" disabled selected>Select an option</option>
-                    <option value="Hot Desk">Hot Desk</option>
-                    <option value="Dedicated Desk">Dedicated Desk</option>
-                    <option value="Private Office">Private Office</option>
-                    <option value="Meeting Room">Meeting Room</option>
-                    <option value="Day Passes">Day Passes</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Row 5 -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label for="team-size" class="block text-sm font-medium text-gray-700">Team size</label>
-                  <input id="team-size" name="team-size" type="number" min="1" value="1"
-                         class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-                <div>
-                  <label for="start-date" class="block text-sm font-medium text-gray-700">Ideal start date</label>
-                  <input id="start-date" name="start-date" type="date"
-                         class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-                </div>
-              </div>
-
-              <!-- Row 6 -->
-              <div>
-                <label for="days-per-week" class="block text-sm font-medium text-gray-700">Days per week</label>
-                <select id="days-per-week" name="days-per-week"
-                        class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]">
-                  <option value="Flexible">Flexible</option>
-                  <option value="1-2 days">1–2 days</option>
-                  <option value="3 days">3 days</option>
-                  <option value="4-5 days">4–5 days</option>
-                </select>
-              </div>
-
-              <!-- Row 7 -->
-              <div>
-                <label for="hear-about" class="block text-sm font-medium text-gray-700">How did you hear about us?</label>
-                <input id="hear-about" name="hear-about" type="text"
-                       class="mt-1 h-10 px-3 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"/>
-              </div>
-
-              <!-- Row 8 -->
-              <div>
-                <label for="message" class="block text-sm font-medium text-gray-700">Anything else?</label>
-                <textarea id="message" name="message" rows="3"
-                          class="mt-1 px-3 py-2 w-full rounded-md border-gray-300 focus:ring-[#8B5A2B] focus:border-[#8B5A2B]"></textarea>
-              </div>
-
-              <!-- Consent -->
-              <div class="flex items-start gap-3">
-                <input id="consent" name="consent" type="checkbox" required
-                       class="mt-1 h-4 w-4 rounded border-gray-300 text-[#8B5A2B] focus:ring-[#8B5A2B]"/>
-                <label for="consent" class="text-sm text-gray-700">
-                  I agree to be contacted about The Village Hub *
-                </label>
-              </div>
-
-              <!-- Submit -->
-              <button type="submit"
-                      class="w-full h-11 rounded-md text-sm font-medium text-[#8A9A5B] bg-white border border-[#8A9A5B]/30 hover:bg-[#F8F1E5]">
-                Register your interest
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 
 
