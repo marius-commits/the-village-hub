@@ -310,106 +310,116 @@
             </div>
         </div>
     </div>
-    <!-- Register Interest Section -->
-    <div id="interest" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
-                    Register Your Interest
-                </h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Be the first to know when The Village Hub launches!
-                </p>
-            </div>
-            <div class="mt-12 max-w-4xl mx-auto">
-                <form name="interest" method="POST" data-netlify="true" class="bg-[#FAF8F6] p-8 rounded-2xl border border-[#D9C8A6] shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <input type="hidden" name="form-name" value="interest" />
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="firstname" class="block text-sm font-medium text-[#111111] mb-1">First name *</label>
-                            <input type="text" id="firstname" name="firstname" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                        <div>
-                            <label for="lastname" class="block text-sm font-medium text-[#111111] mb-1">Last name *</label>
-                            <input type="text" id="lastname" name="lastname" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <label for="email" class="block text-sm font-medium text-[#111111] mb-1">Email *</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-[#111111] mb-1">Phone</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                        <div>
-                            <label for="company" class="block text-sm font-medium text-[#111111] mb-1">Company</label>
-                            <input type="text" id="company" name="company" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="role" class="block text-sm font-medium text-[#111111] mb-1">Role</label>
-                            <input type="text" id="role" name="role" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                        <div>
-                            <label for="interest" class="block text-sm font-medium text-[#111111] mb-1">I'm interested in *</label>
-                            <select id="interest" name="interest" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                                <option value="" disabled selected>Select an option</option>
-                                <option value="Hot Desk">Hot Desk</option>
-                                <option value="Dedicated Desk">Dedicated Desk</option>
-                                <option value="Private Office">Private Office</option>
-                                <option value="Meeting Room">Meeting Room</option>
-                                <option value="Day Passes">Day Passes</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="team-size" class="block text-sm font-medium text-[#111111] mb-1">Team size</label>
-                            <input type="number" id="team-size" name="team-size" min="1" value="1" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                        <div>
-                            <label for="start-date" class="block text-sm font-medium text-[#111111] mb-1">Ideal start date</label>
-                            <input type="date" id="start-date" name="start-date" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <label for="days-per-week" class="block text-sm font-medium text-[#111111] mb-1">Days per week</label>
-                        <select id="days-per-week" name="days-per-week" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                            <option value="Flexible">Flexible</option>
-                            <option value="1-2 days">1-2 days</option>
-                            <option value="3 days">3 days</option>
-                            <option value="4-5 days">4-5 days</option>
-                        </select>
-                    </div>
-                    <div class="mb-6">
-                        <label for="hear-about" class="block text-sm font-medium text-[#111111] mb-1">How did you hear about us?</label>
-                        <input type="text" id="hear-about" name="hear-about" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
-                    </div>
-                    <div class="mb-6">
-                        <label for="message" class="block text-sm font-medium text-[#111111] mb-1">Anything else?</label>
-                        <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]"></textarea>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="consent" name="consent" type="checkbox" required class="focus:ring-[#8FA985] h-4 w-4 text-[#8FA985] border-[#D9C8A6] rounded">
-                            </div>
-                            <label for="consent" class="ml-3 text-sm text-[#111111]">
-                                I agree to be contacted about The Village Hub.
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-[#3E4E63] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3E4E63]/90 transition-colors">Register your interest</button>
-                    <div id="form-success" class="hidden mt-4 p-3 bg-[#8FA985]/10 text-[#8FA985] rounded-lg text-center">
-                        Thank you! We'll be in touch soon.
-                    </div>
-                </form>
-            </div>
-        </div>
+
+  <!-- Register Interest Section (form only) -->
+<form name="interest"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/success.html"
+      class="bg-[#FAF8F6] p-8 rounded-2xl border border-[#D9C8A6] shadow-lg hover:shadow-xl transition-shadow duration-300">
+
+  <!-- Netlify requires this hidden input -->
+  <input type="hidden" name="form-name" value="interest" />
+  <!-- Honeypot (spam trap) -->
+  <p hidden>
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <label for="firstname" class="block text-sm font-medium text-[#111111] mb-1">First name *</label>
+      <input type="text" id="firstname" name="firstname" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
     </div>
+    <div>
+      <label for="lastname" class="block text-sm font-medium text-[#111111] mb-1">Last name *</label>
+      <input type="text" id="lastname" name="lastname" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <label for="email" class="block text-sm font-medium text-[#111111] mb-1">Email *</label>
+    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <label for="phone" class="block text-sm font-medium text-[#111111] mb-1">Phone</label>
+      <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+    <div>
+      <label for="company" class="block text-sm font-medium text-[#111111] mb-1">Company</label>
+      <input type="text" id="company" name="company" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <label for="role" class="block text-sm font-medium text-[#111111] mb-1">Role</label>
+      <input type="text" id="role" name="role" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+    <div>
+      <!-- Note id changed from 'interest' to 'interest-type' to avoid duplicate IDs -->
+      <label for="interest-type" class="block text-sm font-medium text-[#111111] mb-1">I'm interested in *</label>
+      <select id="interest-type" name="interest" required class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+        <option value="" disabled selected>Select an option</option>
+        <option value="Hot Desk">Hot Desk</option>
+        <option value="Dedicated Desk">Dedicated Desk</option>
+        <option value="Private Office">Private Office</option>
+        <option value="Meeting Room">Meeting Room</option>
+        <option value="Day Passes">Day Passes</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <label for="team-size" class="block text-sm font-medium text-[#111111] mb-1">Team size</label>
+      <input type="number" id="team-size" name="team-size" min="1" value="1" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+    <div>
+      <label for="start-date" class="block text-sm font-medium text-[#111111] mb-1">Ideal start date</label>
+      <input type="date" id="start-date" name="start-date" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <label for="days-per-week" class="block text-sm font-medium text-[#111111] mb-1">Days per week</label>
+    <select id="days-per-week" name="days-per-week" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+      <option value="Flexible">Flexible</option>
+      <option value="1-2 days">1-2 days</option>
+      <option value="3 days">3 days</option>
+      <option value="4-5 days">4-5 days</option>
+    </select>
+  </div>
+
+  <div class="mb-6">
+    <label for="hear-about" class="block text-sm font-medium text-[#111111] mb-1">How did you hear about us?</label>
+    <input type="text" id="hear-about" name="hear-about" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]">
+  </div>
+
+  <div class="mb-6">
+    <label for="message" class="block text-sm font-medium text-[#111111] mb-1">Anything else?</label>
+    <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-[#D9C8A6] rounded-lg focus:ring-[#8FA985] focus:border-[#8FA985]"></textarea>
+  </div>
+
+  <div class="mb-6">
+    <div class="flex items-start">
+      <div class="flex items-center h-5">
+        <input id="consent" name="consent" type="checkbox" required class="focus:ring-[#8FA985] h-4 w-4 text-[#8FA985] border-[#D9C8A6] rounded">
+      </div>
+      <label for="consent" class="ml-3 text-sm text-[#111111]">
+        I agree to be contacted about The Village Hub.
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="w-full bg-[#3E4E63] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3E4E63]/90 transition-colors">
+    Register your interest
+  </button>
+</form>
+
+  
     <!-- Footer -->
     <footer class="bg-gray-800">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -505,26 +515,7 @@
     <script>
         // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
-            // Form submission handler
-            const form = document.querySelector('form[name="interest"]');
-            if(form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    // Simple client-side validation
-                    if (!formData.get('firstname') || !formData.get('lastname') || !formData.get('email')) {
-                        alert('Please fill in all required fields');
-                        return;
-                    }
-                    // Show success message
-                    const successDiv = document.getElementById('form-success');
-                    successDiv.classList.remove('hidden');
-                    successDiv.textContent = 'Thank you! We will be in touch soon.';
-                    form.reset();
-                    // For Netlify, we'll let it handle the actual submission
-                    this.submit();
-                });
-            }
+         
             const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', function() {
