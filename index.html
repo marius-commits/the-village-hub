@@ -25,25 +25,22 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-    <style>
-  /* ...keep your existing styles... */
-
-  /* Sage button */
-  .btn-sage {
-    background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%); /* sage */
-    color: #fff;
-    transition: all .2s ease;
-  }
-  .btn-sage:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(138,154,91,.25);
-    filter: brightness(0.98);
-  }
-  .btn-sage:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(138,154,91,.35);
-  }
-</style>
+        /* Sage button */
+        .btn-sage {
+            background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%); /* sage */
+            color: #fff;
+            transition: all .2s ease;
+        }
+        .btn-sage:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(138,154,91,.25);
+            filter: brightness(0.98);
+        }
+        .btn-sage:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(138,154,91,.35);
+        }
+    </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
     <!-- Navigation -->
@@ -60,7 +57,7 @@
                     <a href="#about" class="text-[#6B4423] inline-flex items-center px-1 pt-1 border-b-2 border-[#8B5A2B] text-sm font-medium">About</a>
                     <a href="#features" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Features</a>
                     <a href="#gallery" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Gallery</a>
-                  <a href="#register" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Register Interest</a>
+                    <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Register Interest</a>
                 </div>
                 <div class="-mr-2 flex items-center md:hidden">
                     <button type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
@@ -69,59 +66,48 @@
                 </div>
             </div>
         </div>
-
         <!-- Mobile menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="pt-2 pb-3 space-y-1">
                 <a href="#about" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
                 <a href="#features" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Features</a>
                 <a href="#gallery" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Gallery</a>
-                <a href="#register" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Register Interest</a>
+                <a href="#interest" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Register Interest</a>
             </div>
         </div>
     </nav>
-
-   <!-- Hero Section (aligned button to image bottom) -->
-<div class="hero-gradient pt-24 pb-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-      <!-- LEFT: make it a column and push CTA to the bottom -->
-      <div class="relative z-10 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:flex-col lg:justify-between">
-        <div>
-          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" data-aos="fade-right">
-            <span class="block">Welcome to The</span>
-            <span class="block text-[#8B5A2B]">Village Hub</span>
-          </h1>
-          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-right" data-aos-delay="100">
-            A vibrant coworking space coming soon to Nooitgedacht Village. Connect, create, and collaborate in our inspiring workspace.
-          </p>
+    <!-- Hero Section (aligned button to image bottom) -->
+    <div class="hero-gradient pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <!-- LEFT: make it a column and push CTA to the bottom -->
+                <div class="relative z-10 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:flex-col lg:justify-between">
+                    <div>
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" data-aos="fade-right">
+                            <span class="block">Welcome to The</span>
+                            <span class="block text-[#8B5A2B]">Village Hub</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-right" data-aos-delay="100">
+                            A vibrant coworking space coming soon to Nooitgedacht Village. Connect, create, and collaborate in our inspiring workspace.
+                        </p>
+                    </div>
+                    <!-- CTA sits at the bottom of the left column on lg+ -->
+                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0" data-aos="fade-right" data-aos-delay="200">
+                        <p class="text-base font-medium text-gray-900">Sign up to get notified when we launch:</p>
+                        <a href="#interest" class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#8A9A5B] hover:bg-[#7a8a50] md:py-4 md:text-lg md:px-10 transition-colors duration-300">
+                            Register Your Interest
+                        </a>
+                    </div>
+                </div>
+                <!-- RIGHT: image -->
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center" data-aos="fade-left">
+                    <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                        <img class="w-full rounded-lg" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png" alt="Coworking space">
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- CTA sits at the bottom of the left column on lg+ -->
-        <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0" data-aos="fade-right" data-aos-delay="200">
-          <p class="text-base font-medium text-gray-900">Sign up to get notified when we launch:</p>
-          <a href="#register" 
-   class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#8A9A5B] hover:bg-[#7a8a50] md:py-4 md:text-lg md:px-10 transition-colors duration-300">
-   Register Your Interest
-</a>
-
-
-        </div>
-      </div>
-
-      <!-- RIGHT: image -->
-     <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center" data-aos="fade-left">
-  <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-    <img class="w-full rounded-lg" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png" alt="Coworking space">
-  </div>
-</div>
-
-
     </div>
-  </div>
-</div>
-
-
     <!-- About Section -->
     <div id="about" class="py-16 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -176,7 +162,6 @@
             </div>
         </div>
     </div>
-
     <!-- Features Section -->
     <div id="features" class="py-16 bg-gray-50 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -188,7 +173,6 @@
                     Designed to boost your productivity and creativity
                 </p>
             </div>
-
             <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex-shrink-0">
@@ -203,7 +187,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#C38D9E] text-white">
@@ -217,7 +200,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="400">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#41B3A3] text-white">
@@ -231,7 +213,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#E27D60] text-white">
@@ -245,7 +226,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#85CDCA] text-white">
@@ -259,7 +239,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-6 feature-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="400">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#D79922] text-white">
@@ -276,7 +255,6 @@
             </div>
         </div>
     </div>
-
     <!-- Gallery Section -->
     <div id="gallery" class="py-16 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -288,7 +266,6 @@
                     Take a peek at our inspiring workspace
                 </p>
             </div>
-
             <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
                     <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_4.jpg" alt="Workspace area">
@@ -297,7 +274,7 @@
                     <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_5.jpg" alt="Meeting room">
                 </div>
                 <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="400">
-                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry outside.png" alt="Lounge area">
+                    <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry%20outside.png" alt="Lounge area">
                 </div>
                 <div class="overflow-hidden rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
                     <img class="w-full h-64 object-cover" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_c1557gc1557gc155.png" alt="Outdoor space">
@@ -311,34 +288,64 @@
             </div>
         </div>
     </div>
-  
-
-<!-- Floorplan Section -->
-<div id="floorplan" class="py-16 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-3xl font-extrabold text-gray-900">Floorplan</h2>
-    <p class="mt-4 text-lg text-gray-600">
-      Explore the proposed layout of hot desks, private offices, meeting rooms, and community areas.
-    </p>
-    
-    <div class="mt-8">
-      <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorplan.png" 
-           alt="Village Hub Floorplan" 
-           class="mx-auto rounded-lg shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105" 
-           onclick="window.open(this.src,'_blank')">
+    <!-- Floorplan Section -->
+    <div id="floorplan" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900">Floorplan</h2>
+            <p class="mt-4 text-lg text-gray-600">
+                Explore the proposed layout of hot desks, private offices, meeting rooms, and community areas.
+            </p>
+            <div class="mt-8">
+                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorplan.png"
+                     alt="Village Hub Floorplan"
+                     class="mx-auto rounded-lg shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105"
+                     onclick="window.open(this.src,'_blank')">
+            </div>
+            <div class="mt-6">
+                <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorplan.pdf"
+                   target="_blank"
+                   class="px-6 py-3 bg-[#8A9A5B] text-white font-medium rounded-md shadow hover:bg-[#6F7A45]">
+                    Download PDF
+                </a>
+            </div>
+        </div>
     </div>
-    
-    <div class="mt-6">
-      <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/Floorpan.pdf"
-         target="_blank"
-         class="px-6 py-3 bg-[#8A9A5B] text-white font-medium rounded-md shadow hover:bg-[#6F7A45]">
-        Download PDF
-      </a>
+    <!-- Register Interest Section -->
+    <div id="interest" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
+                    Register Your Interest
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Be the first to know when The Village Hub launches!
+                </p>
+            </div>
+            <div class="mt-12 max-w-lg mx-auto">
+                <form name="interest" method="POST" data-netlify="true" class="grid grid-cols-1 gap-y-6" data-aos="fade-up" data-aos-delay="200">
+                    <input type="hidden" name="form-name" value="interest">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" name="name" id="name" autocomplete="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#8B5A2B] focus:border-[#8B5A2B] sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="email" autocomplete="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#8B5A2B] focus:border-[#8B5A2B] sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Message (Optional)</label>
+                        <textarea name="message" id="message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#8B5A2B] focus:border-[#8B5A2B] sm:text-sm"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-[#8A9A5B] hover:bg-[#7a8a50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8B5A2B]">
+                            Submit
+                        </button>
+                    </div>
+                    <div id="form-success" class="hidden text-center text-green-600"></div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-           
-
     <!-- Footer -->
     <footer class="bg-gray-800">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -383,7 +390,7 @@
                                     <a href="#gallery" class="text-base text-gray-400 hover:text-white">Gallery</a>
                                 </li>
                                 <li>
-                                    <a href="#register" class="text-base text-gray-400 hover:text-white">Register</a>
+                                    <a href="#interest" class="text-base text-gray-400 hover:text-white">Register</a>
                                 </li>
                             </ul>
                         </div>
@@ -431,7 +438,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
@@ -441,48 +447,39 @@
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
                     const formData = new FormData(form);
-                    
                     // Simple client-side validation
                     const email = formData.get('email');
                     if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
                         alert('Please enter a valid email address');
                         return;
                     }
-                    
                     // Show success message
                     const successDiv = document.getElementById('form-success');
                     successDiv.classList.remove('hidden');
                     successDiv.textContent = 'Thank you for your interest! We will be in touch soon.';
                     form.reset();
-                    
                     // For Netlify, we'll let it handle the actual submission
                     this.submit();
                 });
             }
-            
             const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
             const mobileMenu = document.getElementById('mobile-menu');
-            
             mobileMenuButton.addEventListener('click', function() {
                 const expanded = this.getAttribute('aria-expanded') === 'true' || false;
                 this.setAttribute('aria-expanded', !expanded);
                 mobileMenu.classList.toggle('hidden');
             });
-
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
                     if(this.getAttribute('href') === '#') return;
-                    
                     const target = document.querySelector(this.getAttribute('href'));
                     if(target) {
                         window.scrollTo({
                             top: target.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                        
                         // Close mobile menu if open
                         if(!mobileMenu.classList.contains('hidden')) {
                             mobileMenuButton.setAttribute('aria-expanded', 'false');
@@ -495,33 +492,30 @@
     </script>
     <script>AOS.init();</script>
     <script>feather.replace();</script>
-  <!-- Image Modal -->
-<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center p-4">
-  <span id="closeModal" class="absolute top-4 right-6 text-white text-3xl cursor-pointer">&times;</span>
-  <img id="modalImg" class="max-h-full max-w-full rounded-lg shadow-2xl" alt="enlarged view">
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById("imgModal");
-  const modalImg = document.getElementById("modalImg");
-  const closeModal = document.getElementById("closeModal");
-
-  // Attach click to all images in gallery & register/floorplan
-  document.querySelectorAll("img").forEach(img => {
-    img.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-      modalImg.src = img.src;
-      modalImg.alt = img.alt || "enlarged view";
-    });
-  });
-
-  // Close modal on click of X or backdrop
-  closeModal.addEventListener("click", () => modal.classList.add("hidden"));
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
-  });
-});
-</script> 
-
+    <!-- Image Modal -->
+    <div id="imgModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center p-4">
+        <span id="closeModal" class="absolute top-4 right-6 text-white text-3xl cursor-pointer">&times;</span>
+        <img id="modalImg" class="max-h-full max-w-full rounded-lg shadow-2xl" alt="enlarged view">
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById("imgModal");
+            const modalImg = document.getElementById("modalImg");
+            const closeModal = document.getElementById("closeModal");
+            // Attach click to all images in gallery & register/floorplan
+            document.querySelectorAll("img").forEach(img => {
+                img.addEventListener("click", () => {
+                    modal.classList.remove("hidden");
+                    modalImg.src = img.src;
+                    modalImg.alt = img.alt || "enlarged view";
+                });
+            });
+            // Close modal on click of X or backdrop
+            closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) modal.classList.add("hidden");
+            });
+        });
+    </script>
 </body>
 </html>
