@@ -50,3 +50,4 @@ images/Foundry[[:space:]]zoomed.png filter=lfs diff=lfs merge=lfs -text
 2025.08.28_VDS_NOOITGEDACHT_S100[[:space:]]SKETCH[[:space:]]DRAWING_REV[[:space:]]04[[:space:]]OF[[:space:]]03-A0.pdf filter=lfs diff=lfs merge=lfs -text
 Floorplan.png filter=lfs diff=lfs merge=lfs -text
 Floorpan.pdf filter=lfs diff=lfs merge=lfs -text
+images/11.jpg filter=lfs diff=lfs merge=lfs -text
