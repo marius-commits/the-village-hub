@@ -64,3 +64,13 @@ change About The Village Hub photo
 change About The Village Hub image
 https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png replace photo with 
 how can i change a photo
+Put in center above button: Sign up to get notified when we launch:
+
+
+chancge logos of Prime location and Vibrant Community to the same sage green as the regsister your interest button
+Center to button: Sign up to get notified when we launch:
+Make the Prime Location and Vibrant community icons the same color as the register your interest button
+Make the about section and the picture on left allign with its height
+replace http://static.photos/workspace/640x360/8 with attached
+Create Privacy and terms
+Add new section between gallery and floorplan and add attached. Also add link in top bar as well as bottom footer
