@@ -51,3 +51,4 @@ images/Foundry[[:space:]]zoomed.png filter=lfs diff=lfs merge=lfs -text
 Floorplan.png filter=lfs diff=lfs merge=lfs -text
 Floorpan.pdf filter=lfs diff=lfs merge=lfs -text
 images/11.jpg filter=lfs diff=lfs merge=lfs -text
+images/Co[[:space:]]working[[:space:]]vs[[:space:]]Traditional.png filter=lfs diff=lfs merge=lfs -text
