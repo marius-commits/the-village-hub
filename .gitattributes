@@ -53,3 +53,4 @@ Floorpan.pdf filter=lfs diff=lfs merge=lfs -text
 images/11.jpg filter=lfs diff=lfs merge=lfs -text
 images/Co[[:space:]]working[[:space:]]vs[[:space:]]Traditional.png filter=lfs diff=lfs merge=lfs -text
 Floorplan.pdf filter=lfs diff=lfs merge=lfs -text
+images/ChatGPT[[:space:]]Image[[:space:]]Sep[[:space:]]26,[[:space:]]2025,[[:space:]]09_42_32[[:space:]]AM.png filter=lfs diff=lfs merge=lfs -text
