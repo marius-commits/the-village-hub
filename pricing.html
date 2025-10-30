@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing & Membership Options | The Village Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #333;
+    }
+    .bg-sage {
+      background-color: #8A9A5B;
+    }
+    .membership-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .membership-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      border-left: 4px solid #8A9A5B;
+    }
+    .price-tag {
+      background-color: #F8F1E5;
+      color: #6B4423;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-normal">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <img class="h-16 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
+            <span class="ml-3 text-2xl font-bold text-[#6B4423]">The Village Hub</span>
+          </div>
+        </div>
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+          <a href="/" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Home</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl" data-aos="fade-up">
+        Our Pricing & Membership Options
+      </h1>
+      <p class="mt-4 text-xl text-gray-600" data-aos="fade-up" data-aos-delay="100">
+        Find the perfect workspace solution for your needs
+      </p>
+    </div>
+
+    <!-- Hotdesk Memberships -->
+    <div class="mb-16" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-[#6B4423] mb-8 text-center">Hotdesk Memberships</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Village Resident -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R3,500 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🏡 Village Resident</h3>
+          <p class="text-gray-600 mb-4 italic">"Your forever home in the Hub."</p>
+          <p class="text-gray-700 mb-4">
+            You've got your own dedicated spot, your mug lives here, and everyone knows your favorite coffee by heart. Perfect if you want a permanent desk and a true sense of belonging.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Local -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R3,000 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌾 Village Local</h3>
+          <p class="text-gray-600 mb-4 italic">"Unlimited access. Any desk, any day — you belong here."</p>
+          <p class="text-gray-700 mb-4">
+            Come and go as you please, choose your favorite spot, and make the Village your everyday workspace. Whether it's a focused morning, a creative afternoon, or a full day of flow, your seat — and your community — are always waiting.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Nomad -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R250 / Day
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🏕 Village Nomad</h3>
+          <p class="text-gray-600 mb-4 italic">"Here for a day."</p>
+          <p class="text-gray-700 mb-4">
+            Pop in when you need a change of scene, great coffee, and good energy. You're welcome to settle in, get your work done, and soak up the Village vibes — no long-term strings attached.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Wanderer -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R200 / Day (5 Days/Month)
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🚶‍♀️ Village Wanderer</h3>
+          <p class="text-gray-600 mb-4 italic">"Five days a month — your rhythm, your route."</p>
+          <p class="text-gray-700 mb-4">
+            Drop in, do your thing, and wander on. The perfect balance of structure and spontaneity for those who thrive on freedom and flexibility.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Visitor -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R160 / Day (10 Days/Month)
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌿 Village Visitor</h3>
+          <p class="text-gray-600 mb-4 italic">"10 days a month. Here often enough to get a nickname."</p>
+          <p class="text-gray-700 mb-4">
+            You swing by regularly, claim your favorite seat, and people know your order at the coffee bar. Flexible, familiar, and full of friendly faces — just the way a village should feel.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Drifter -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R150 / Half Day
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">☕ Village Drifter</h3>
+          <p class="text-gray-600 mb-4 italic">"You're just passing through but still part of the story."</p>
+          <p class="text-gray-700 mb-4">
+            Pop in for 4 hours of productivity with good coffee, friendly faces, and a warm village vibe. Perfect for freelancers, travelers, or anyone needing a creative space between meetings.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Moment -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R60 / Hour
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🪶 Village Moment</h3>
+          <p class="text-gray-600 mb-4 italic">"For a quick pause, a thought, or the right burst of focus."</p>
+          <p class="text-gray-700 mb-4">
+            Need a desk for just the hour? Settle in, plug in, and soak up the calm energy of the Village Hub. Ideal for remote calls, short tasks, or catching up between appointments.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Private Offices -->
+    <div class="mb-16" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-[#6B4423] mb-8 text-center">Private Office Options</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Village Manor -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R20,950 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🏡 Village Manor — 6-Seater</h3>
+          <p class="text-gray-600 mb-4 italic">"Where leadership meets community."</p>
+          <p class="text-gray-700 mb-4">
+            Your own corner of the Village — designed for teams who build, lead, and grow together. Spacious, private, and fully yours, this is where strategy meets inspiration.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Cottage -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R13,950 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌳 Village Cottage — 4-Seater</h3>
+          <p class="text-gray-600 mb-4 italic">"Comfort, creativity, and collaboration under one roof."</p>
+          <p class="text-gray-700 mb-4">
+            Ideal for small teams who thrive on connection and focus. A cozy private space where ideas flow as freely as the coffee.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Studio -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R10,450 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌿 Village Studio — 3-Seater</h3>
+          <p class="text-gray-600 mb-4 italic">"Intimate. Inspired. Independent."</p>
+          <p class="text-gray-700 mb-4">
+            Perfect for a tight-knit team or growing startup. It's your own creative pocket of the Village — private, peaceful, and filled with potential.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Nook -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R6,950 / Month
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌼 Village Nook — 1–2 Seater</h3>
+          <p class="text-gray-600 mb-4 italic">"Your quiet corner in the Village."</p>
+          <p class="text-gray-700 mb-4">
+            A private workspace made for focus and flow. Whether you're flying solo or sharing the space, this is your personal hideaway to think, create, and thrive.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meeting & Conference Spaces -->
+    <div class="mb-16" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-[#6B4423] mb-8 text-center">Meeting & Conference Spaces</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Village Gathering -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R800/hr (2hr min)
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🎤 Village Gathering</h3>
+          <p class="text-gray-600 mb-4 italic">"Perfect for quick collaborations and powerful conversations."</p>
+          <p class="text-gray-700 mb-4">
+            Host impactful sessions in a bright, connected space designed to inspire clarity and creativity. Ideal for short workshops, briefings, or presentations.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Assembly -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R650/hr (4hr min)
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🌿 Village Assembly</h3>
+          <p class="text-gray-600 mb-4 italic">"Where ideas take root and grow."</p>
+          <p class="text-gray-700 mb-4">
+            For longer sessions that need focus and flow — gather your team, clients, or community for half a day of meaningful work and inspired discussion.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Den -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R180 / Hour
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">💬 Village Den (4-Seater)</h3>
+          <p class="text-gray-600 mb-4 italic">"Small space. Big thinking."</p>
+          <p class="text-gray-700 mb-4">
+            An intimate setting for brainstorming, mentoring, or team catch-ups — perfect for when great ideas need quiet surroundings.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Chamber -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R390 / Hour
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🤝 Village Chamber (10-Seater)</h3>
+          <p class="text-gray-600 mb-4 italic">"Where strategy meets synergy."</p>
+          <p class="text-gray-700 mb-4">
+            A professional meeting space equipped for collaboration and connection. Ideal for team planning, client sessions, or creative discussions.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Boardroom -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R390 / Hour
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🪴 Village Boardroom</h3>
+          <p class="text-gray-600 mb-4 italic">"The heart of decision-making."</p>
+          <p class="text-gray-700 mb-4">
+            Designed for productivity and presence, this is where leadership conversations, partnerships, and progress come together.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+
+        <!-- Village Stay -->
+        <div class="bg-white rounded-lg shadow-md p-6 membership-card">
+          <div class="price-tag inline-block px-4 py-2 rounded-full font-bold mb-4">
+            R1,350 / Night
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">🛏️ Village Stay</h3>
+          <p class="text-gray-600 mb-4 italic">"Rest in the Village — and wake up inspired."</p>
+          <p class="text-gray-700 mb-4">
+            Modern, peaceful accommodation right in the Village. Perfect for out-of-town professionals, guests, or anyone wanting to stay close to the energy and creativity of the Hub.
+          </p>
+          <a href="#interest" class="btn-sage px-4 py-2 rounded-md text-sm font-medium inline-block mt-4">Register Interest</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="bg-[#FAF8F6] p-6 rounded-lg border border-[#D9C8A6] mt-8" data-aos="fade-up">
+      <p class="text-center text-gray-700">
+        <strong>Note:</strong> All private office options include all services & utilities and are furnished. Talk to us for unfurnished options & pricing. For any tailor-made requests, please get in touch. We are happy to assist.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center">
+        <div class="flex items-center">
+          <img class="h-12 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
+          <span class="ml-3 text-xl font-bold text-white">The Village Hub</span>
+        </div>
+        <div class="mt-8 flex space-x-6">
+          <a href="/privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
+          <a href="/terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
+        </div>
+        <p class="mt-8 text-base text-gray-400">
+          &copy; 2024 The Village Hub. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
