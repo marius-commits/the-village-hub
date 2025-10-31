@@ -1,200 +1,338 @@
 <!DOCTYPE html>
-<html lang="en-ZA">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Co-Working vs Traditional Offices | The Village Hub</title>
-  <meta name="description" content="Compare coworking spaces with traditional offices - cost-effective, hassle-free alternative with The Village Hub at Nooitgedacht Village." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="canonical" href="https://www.villagehub.co.za/coworking-vs-traditional" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="Co-Working vs Traditional Offices | The Village Hub" />
-  <meta property="og:description" content="Why coworking can be cheaper and easier for freelancers, startups & small businesses" />
-  <meta property="og:url" content="https://www.villagehub.co.za/coworking-vs-traditional" />
-  <meta property="og:site_name" content="The Village Hub" />
-  <meta property="og:image" content="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Co-Working vs Traditional Offices | The Village Hub" />
-  <meta name="twitter:description" content="Why coworking can be cheaper and easier for freelancers, startups & small businesses" />
-  <meta name="twitter:image" content="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/High%20Res%20Logo.png" />
-
-  <!-- Styles -->
+  <title>Co-Working vs Traditional Office — The Village Hub</title>
+  <meta name="description" content="Compare Private Offices at The Village Hub with traditional office rentals in Central Stellenbosch. See cost-per-person, inclusions, and why co-working wins." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
+      --vh-green: #6f8f79;
+      --vh-green-dark:#486554;
+      --vh-cream: #f5f2ea;
+      --vh-charcoal: #2b3230;
       --vh-gold:#D4AF37;
-      --vh-dark:#0a0a0a;
-      --vh-muted:#666;
-      --vh-bg:#ffffff;
+      --vh-muted:#5e6a66;
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(0,0,0,.08);
+      --vh-sage: #8A9A5B;
+      --vh-brown: #6B4423;
     }
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;line-height:1.6}
-    .wrap{max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,40px)}
-    h1{font-size:clamp(28px,3.4vw,44px);line-height:1.15;margin:8px 0 12px;color:#111}
-    h2{font-size:clamp(22px,2.6vw,30px);margin:32px 0 10px}
-    h3{font-size:clamp(18px,2.2vw,24px);margin:24px 0 8px}
-    p.lede{font-size:clamp(16px,2vw,20px);color:#333;max-width:70ch}
-    .badge{display:inline-block;font-weight:600;letter-spacing:.04em;background:#111;color:#fff;border-radius:999px;padding:6px 12px;font-size:13px}
-    .pill{display:inline-block;border:1px solid var(--vh-gold);color:#111;border-radius:999px;padding:6px 12px;font-size:13px;margin:8px 8px 0 0}
-    .grid{display:grid;gap:18px}
-    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
-    .card{border:1px solid #eee;border-radius:14px;padding:18px 18px 14px;background:#fff}
-    .note{font-size:13px;color:#555}
-    table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto}
-    th,td{padding:12px 10px;text-align:left;vertical-align:top}
-    thead th{background:#fafafa;font-weight:700;border-bottom:1px solid #eee}
-    tbody tr+tr td{border-top:1px solid #f0f0f0}
-    .money{white-space:nowrap}
-    .highlight{background:linear-gradient(120deg, rgba(212,175,55,.18), rgba(212,175,55,.08));padding:.1em .25em;border-radius:.35em}
-    .cta{margin:28px 0 6px;display:flex;gap:12px;flex-wrap:wrap}
-    .btn{background:var(--vh-gold);color:#111;border:none;border-radius:12px;padding:12px 18px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn.alt{background:#111;color:#fff}
-    .footnotes{font-size:12px;color:#666;margin-top:24px}
-    .kicker{font-weight:700;color:var(--vh-gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-    .checklist{display:grid;gap:8px;margin:10px 0}
-    .checklist li{list-style:none;padding-left:28px;position:relative}
-    .checklist li:before{content:"✓";position:absolute;left:0;top:0;color:var(--vh-gold);font-weight:900}
-    .strip{background:#0f0f0f;color:#fff;margin:30px 0;border-radius:16px}
-    .strip .wrap{padding:28px}
-    .strip h2{color:#fff}
-    .strip .note{color:#bbb}
-    .muted{color:#666}
-    .table-wrap{overflow:auto;border:1px solid #eee;border-radius:12px}
-    .prose{max-width:none}
-    .benefit-card{border-left:4px solid #8A9A5B}
-    .price-tag{background-color:#F8F1E5;color:#6B4423}
-    .membership-card{transition:all 0.3s ease;border-left:4px solid transparent}
-    .membership-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px -5px rgba(0,0,0,0.1);border-left:4px solid #8A9A5B}
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--vh-charcoal);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background:linear-gradient(180deg, var(--vh-cream), #fff);
+    }
+    header{
+      background: linear-gradient(135deg, var(--vh-green-dark), var(--vh-green));
+      color:#fff; padding:48px 20px 24px;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:0 20px}
+    .tag{display:inline-block; font-weight:600; letter-spacing:.02em; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); padding:6px 12px; border-radius:999px; font-size:.9rem}
+    h1{
+      font-family: Montserrat, Inter, sans-serif; font-weight:700; line-height:1.15;
+      margin:16px 0 8px; font-size: clamp(1.8rem, 2.4vw + 1rem, 3rem);
+    }
+    header p{max-width:800px; font-size: clamp(1rem, .5vw + .9rem, 1.15rem); opacity:.95}
+    .hero{
+      position:relative; margin-top:22px; border-radius: var(--radius);
+      overflow:hidden; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.35)
+    }
+    .hero img{width:100%; height:420px; object-fit:cover; display:block}
+    .hero .badge{
+      position:absolute; bottom:14px; left:14px; background:rgba(0,0,0,.5);
+      color:#fff; padding:8px 12px; border-radius:999px; font-size:.9rem; backdrop-filter: blur(6px)
+    }
+
+    main{padding:40px 0 70px}
+    section{margin:40px 0; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid #ece9e0}
+    section .inner{padding:28px}
+    h2{
+      font-family: Montserrat, Inter, sans-serif; font-weight:700; margin:0 0 10px;
+      font-size: clamp(1.35rem, .9vw + 1rem, 1.8rem);
+    }
+    .lead{color:var(--vh-muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; font-weight:600;
+      color: var(--vh-green-dark); background: #eaf0eb; border:1px solid #dde6df; font-size:.95rem
+    }
+    .grid{display:grid; gap:18px}
+    @media(min-width:880px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+
+    .card{
+      border:1px solid #eee8dc; border-radius:14px; padding:18px; background:#fff
+    }
+
+    /* Tables */
+    .table-wrap{overflow:auto}
+    table{width:100%; border-collapse:separate; border-spacing:0; min-width:680px}
+    thead th{
+      text-align:left; background: #f7f4ed; color:#2d3532; font-weight:700; font-family: Montserrat, Inter, sans-serif
+    }
+    th, td{padding:12px 14px; border-bottom:1px solid #eee7db}
+    tbody tr:hover{background:#faf8f2}
+    .kpi{font-weight:700; color:var(--vh-sage)}
+    .accent{color: var(--vh-gold); font-weight:700}
+    .sage{color: var(--vh-sage)}
+
+    /* CTA */
+    .cta{
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+      background: linear-gradient(135deg, #f7f4ed, #ffffff); border:1px dashed #e5ddcc; padding:18px; border-radius:14px
+    }
+    .btn{
+      display:inline-block; text-decoration:none; font-weight:700; letter-spacing:.2px;
+      padding:12px 18px; border-radius:12px; background: var(--vh-sage); color:#fff;
+      border:1px solid var(--vh-brown); transition: transform .06s ease;
+    }
+    .btn:hover{transform: translateY(-1px); background: var(--vh-brown);}
+    .btn.alt{
+      background:#fff; color:var(--vh-brown); border-color:#dcd6c7
+    }
+    .btn.alt:hover{background: var(--vh-cream);}
+
+    footer{color:#6b746f; text-align:center; padding:28px 0 36px}
+    
+    /* Benefits section */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .benefit-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--vh-sage);
+    }
+    .benefit-card h3 {
+      color: var(--vh-brown);
+      margin-top: 0;
+    }
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .checklist li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 10px;
+    }
+    .checklist li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--vh-sage);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <article class="wrap">
-    <span class="badge">Coworking vs Traditional</span>
-    <h1>Co-Working vs Traditional Offices — Why The Village Hub Wins Every Time</h1>
-    <p class="lede">A cost-effective, hassle-free alternative for freelancers, startups & small businesses at <span class="highlight">The Village Hub @ Nooitgedacht</span>.</p>
 
-    <div class="grid cols-2">
-      <section class="card">
-        <h2>All-Inclusive Private Offices at The Village Hub</h2>
-        <p>Move-in ready, fully furnished, and designed for focus and community. No fit-out. No long leases. No surprise bills.</p>
-        <div class="table-wrap">
-          <table aria-label="Village Hub Private Office Pricing">
-            <thead><tr><th>Option</th><th>Seats</th><th>Monthly</th><th>Per Person</th></tr></thead>
-            <tbody>
-              <tr><td>🌼 Village Nook</td><td>1–2</td><td class="money">R6,950</td><td class="money">R3,475–R6,950</td></tr>
-              <tr><td>🌿 Village Studio</td><td>3</td><td class="money">R10,450</td><td class="money">~R3,483</td></tr>
-              <tr><td>🌳 Village Cottage</td><td>4</td><td class="money">R13,950</td><td class="money">~R3,487</td></tr>
-              <tr><td>🏡 Village Manor</td><td>6</td><td class="money">R20,950</td><td class="money">~R3,492</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <ul class="checklist">
-          <li>Fibre Wi-Fi & utilities included</li>
-          <li>Fully furnished + daily cleaning</li>
-          <li>Boardrooms, kitchenette & bathrooms</li>
-          <li>Reception/concierge & business community</li>
-          <li>Month-to-month flexibility</li>
-        </ul>
-        <p class="note">Average per-person cost: <strong>~R3,500 / month</strong>.</p>
-      </section>
+  <header>
+    <div class="wrap">
+      <span class="tag">🌿 Co-Working vs Traditional Office</span>
+      <h1>Why a Private Office at <span class="accent">The Village Hub</span> Beats a Traditional Office</h1>
+      <p>A comprehensive comparison of cost, flexibility, amenities and community benefits between coworking spaces and traditional offices.</p>
 
-      <section class="card">
-        <h2>Traditional Office — The Full Monthly Picture</h2>
-        <p>Using a realistic 80&nbsp;m² office in Central Stellenbosch at <strong>R250/m²</strong> as the baseline (R20,000/month):</p>
-        <div class="table-wrap">
-          <table aria-label="Traditional Office Cost Build-Up">
-            <thead><tr><th>Cost Item</th><th>Description</th><th>Monthly Estimate</th></tr></thead>
-            <tbody>
-              <tr><td>Base Rental</td><td>80 m² @ R250/m²</td><td class="money">R20,000</td></tr>
-              <tr><td>Parking (4 bays)</td><td>R900–R1,200 per bay</td><td class="money">R3,600–R4,800</td></tr>
-              <tr><td>Utilities</td><td>Water & electricity</td><td class="money">R1,500–R2,500</td></tr>
-              <tr><td>Internet</td><td>Business fibre + Wi-Fi</td><td class="money">R1,200–R1,800</td></tr>
-              <tr><td>Cleaning</td><td>2× weekly</td><td class="money">R1,500–R2,000</td></tr>
-              <tr><td>Furniture (amortised)</td><td>Desks, chairs, storage</td><td class="money">R2,000–R3,000</td></tr>
-              <tr><td>Kitchenette fit-out (amortised)</td><td>Cabinets, sink, appliances</td><td class="money">R1,000</td></tr>
-              <tr><td>Boardroom access</td><td>External bookings or internal build</td><td class="money">R1,000–R2,000</td></tr>
-              <tr><td>Reception/Admin</td><td>Shared resource or part-time</td><td class="money">R1,500–R3,000</td></tr>
-              <tr><td>Printer (lease + toner)</td><td>Multifunction business device</td><td class="money">R1,000–R1,500</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="note">Total monthly estimate: <strong>R34,300–R41,600</strong>. For a team of 6, that's roughly <strong>R5,700–R6,900 per person</strong>.</p>
-      </section>
+      <figure class="hero" aria-label="Village Hub coworking imagery">
+        <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_4.jpg" alt="Light, greenery-filled coworking interiors with collaboration zones at The Village Hub">
+        <figcaption class="badge">✨ Inspired spaces for focused work & real connections</figcaption>
+      </figure>
     </div>
+  </header>
 
-    <section>
-      <h2>1. Flexibility That Grows With You</h2>
-      <p>Unlike rigid traditional leases that lock you into long-term commitments, coworking spaces like ours adapt to your changing needs. Whether you're a solopreneur needing a hot desk twice a week or a growing startup requiring private offices, we offer scalable solutions without the overhead of managing your own space.</p>
-    </section>
+  <main>
+    <div class="wrap">
 
-    <section>
-      <h2>2. Built-In Community & Networking</h2>
-      <p>Traditional offices often isolate teams from fresh perspectives. Our members regularly discover new collaborations - a graphic designer connecting with a marketing consultant, or a tech startup finding their ideal developer. These organic connections happen naturally in our shared spaces and curated events.</p>
-    </section>
-
-    <section>
-      <h2>3. Cost-Effective Infrastructure</h2>
-      <p>Forget the hassle of setting up internet, printers, and meeting rooms. We provide premium amenities including:</p>
-      <ul class="checklist">
-        <li>High-speed fiber internet with enterprise-grade security</li>
-        <li>Professional meeting rooms with video conferencing</li>
-        <li>Well-stocked refreshment stations with artisanal coffee</li>
-        <li>On-site support staff handling maintenance and IT issues</li>
-      </ul>
-    </section>
-
-    <section class="strip">
-      <div class="wrap">
-        <div class="kicker">Real-World Example</div>
-        <h2>Team of Six — Annual Impact</h2>
-        <div class="table-wrap">
-          <table aria-label="Annual Comparison for Six">
-            <thead><tr><th>Setup</th><th>Monthly</th><th>Annual Total</th></tr></thead>
-            <tbody>
-              <tr><td>Village Hub (Private Office)</td><td class="money">R20,950</td><td class="money">R251,400</td></tr>
-              <tr><td>Traditional Office</td><td class="money">R34,300–R41,600</td><td class="money">R411,600–R499,200</td></tr>
-            </tbody>
-          </table>
+      <section>
+        <div class="inner">
+          <h2>1) The Village Hub Advantage: All-Inclusive, Ready-to-Work ✍️</h2>
+          <p class="lead">Your private office at The Village Hub includes <strong>fibre Wi-Fi, furniture, utilities, cleaning, boardrooms, kitchenette, bathrooms, reception</strong> — even community perks and events. Bring your laptop; we'll handle the rest.</p>
+          <div class="table-wrap" aria-label="Village Hub private office pricing">
+            <table>
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Seats</th>
+                  <th>Monthly Rate (R)</th>
+                  <th>Cost per Person (R)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>🌼 Village Nook</td><td>1–2</td><td>6,950</td><td>3,475 – 6,950</td></tr>
+                <tr><td>🌿 Village Studio</td><td>3</td><td>10,450</td><td>3,483</td></tr>
+                <tr><td>🌳 Village Cottage</td><td>4</td><td>13,950</td><td>3,487</td></tr>
+                <tr><td>🏡 Village Manor</td><td>6</td><td>20,950</td><td>3,492</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="pill">💡 Average cost per person: <span class="kpi">~ R3,500 / month (all-inclusive)</span></p>
         </div>
-        <p class="note">That's up to a <strong>~45% lower</strong> per-person cost with more flexibility, services and community.</p>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <h2>4. Designed for Productivity & Wellbeing</h2>
-      <p>Our space blends thoughtful design with natural elements to create an environment that stimulates creativity while reducing stress. Unlike sterile corporate offices, we incorporate:</p>
-      <ul class="checklist">
-        <li>Ergonomic furniture that supports posture and movement</li>
-        <li>Abundant natural light and greenery throughout</li>
-        <li>Quiet zones for deep work alongside collaborative areas</li>
-        <li>Outdoor spaces to recharge amidst nature</li>
-      </ul>
-    </section>
+      <section>
+        <div class="inner">
+          <h2>2) Traditional Office Reality in Central Stellenbosch 🧾</h2>
+          <p class="lead">A typical ~80&nbsp;m² office at <strong>R250/m²</strong> starts at R20,000 before add-ons. Once you factor in parking, utilities, cleaning, furniture, printer, and boardrooms — the true monthly cost rises fast.</p>
+          <div class="table-wrap" aria-label="Traditional office monthly cost breakdown">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cost Item</th>
+                  <th>Description</th>
+                  <th>Monthly Estimate (R)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Base Rental</td><td>~R250/m² for ~80 m²</td><td>20,000</td></tr>
+                <tr><td>Parking (4 bays)</td><td>R900–R1,200 per bay</td><td>3,600 – 4,800</td></tr>
+                <tr><td>Utilities</td><td>Water & electricity</td><td>1,500 – 2,500</td></tr>
+                <tr><td>Internet</td><td>Fibre + Wi-Fi router</td><td>1,200 – 1,800</td></tr>
+                <tr><td>Cleaning services</td><td>Twice weekly</td><td>1,500 – 2,000</td></tr>
+                <tr><td>Furniture (amortised)</td><td>Desks, chairs, storage</td><td>2,000 – 3,000</td></tr>
+                <tr><td>Kitchenette fit-out (amortised)</td><td>Appliances & cabinetry</td><td>1,000</td></tr>
+                <tr><td>Boardroom / Meeting</td><td>External bookings or internal setup</td><td>1,000 – 2,000</td></tr>
+                <tr><td>Reception / Admin</td><td>Shared receptionist or self-service</td><td>1,500 – 3,000</td></tr>
+                <tr><td>Printer (lease + toner)</td><td>Business multifunction device</td><td>1,000 – 1,500</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="pill">➡️ Total estimated monthly: <span class="kpi">R34,300 – R41,600</span> • For a 6-person team: <span class="kpi">~ R5,700 – R6,900 pp/month</span></p>
+        </div>
+      </section>
 
-    <section>
-      <h2>5. Prime Location Without the Premium</h2>
-      <p>Nestled in Nooitgedacht Village, we offer easy access to quality cafes, wellness studios, and transport links - all while avoiding the congestion and costs of traditional business districts. Members enjoy the village lifestyle with professional-grade infrastructure.</p>
-    </section>
+      <section>
+        <div class="inner">
+          <h2>3) Side-by-Side Snapshot 📊</h2>
+          <div class="grid cols-2">
+            <div class="card">
+              <h3 style="margin-top:0;font-family:Montserrat">✅ The Village Hub</h3>
+              <ul>
+                <li><strong>~R3,500 per person</strong> (all-in)</li>
+                <li>Month-to-month flexibility</li>
+                <li>Wi-Fi, utilities, cleaning included</li>
+                <li>Printer & boardrooms included</li>
+                <li>Furnished, plug-and-play</li>
+                <li>Vibrant community & events</li>
+                <li>Easy to scale up/down</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 style="margin-top:0;font-family:Montserrat">⚠️ Traditional Office</h3>
+              <ul>
+                <li><strong>~R6,000 per person</strong> average</li>
+                <li>1–3 year leases typical</li>
+                <li>Multiple separate bills</li>
+                <li>Printer/boardroom extra</li>
+                <li>Capex for furniture & fit-out</li>
+                <li>Limited serendipity/community</li>
+                <li>Harder to scale quickly</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section>
-      <h2>Is Coworking Right for Your Team?</h2>
-      <p>While traditional offices suit some established corporations, modern professionals are increasingly choosing coworking for its agility and advantages. Consider:</p>
-      <ul class="checklist">
-        <li>Do you value flexibility over fixed overhead?</li>
-        <li>Would your team benefit from cross-industry connections?</li>
-        <li>Do you want to outsource office management?</li>
-        <li>Is employee experience a priority?</li>
-      </ul>
-    </section>
+      <section>
+        <div class="inner">
+          <h2>4) Real-World Example: Team of Six 👥</h2>
+          <div class="table-wrap" aria-label="Annual cost comparison for six-person team">
+            <table>
+              <thead>
+                <tr><th>Setup</th><th>Monthly Total</th><th>Annual Total</th><th>Impact</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Village Hub (Private Office)</td>
+                  <td>R20,950</td>
+                  <td>R251,400</td>
+                  <td><span class="accent">Predictable, all-inclusive, zero setup</span></td>
+                </tr>
+                <tr>
+                  <td>Traditional Office</td>
+                  <td>R34,300 – R41,600</td>
+                  <td>R411,600 – R499,200</td>
+                  <td><strong>Saves up to R160,000 – R248,000 / year at Village Hub</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead" style="margin-top:14px">That's up to a <strong>~45% lower</strong> total cost per person — with better flexibility and experience.</p>
+        </div>
+      </section>
 
-    <section>
-      <div class="cta">
-        <a class="btn" href="/#interest">Register Interest</a>
-        <a class="btn alt" href="/pricing.html">Explore Plans</a>
-      </div>
-      <p class="muted">Located at Nooitgedacht Village — with easy access, parking, and a calm, inspiring setting.</p>
-    </section>
-  </article>
+      <section>
+        <div class="inner">
+          <h2>5) Beyond the Numbers: How You Work 🧠🌱</h2>
+          <p class="lead">Our greenery-rich interiors, natural light, quiet focus areas, and collaboration zones are designed for modern work — from deep focus to client presentations and community events.</p>
+          
+          <h3>Key Benefits of Coworking at The Village Hub</h3>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <h3>Flexibility That Grows With You</h3>
+              <p>Unlike rigid traditional leases that lock you into long-term commitments, coworking spaces like ours adapt to your changing needs.</p>
+            </div>
+            
+            <div class="benefit-card">
+              <h3>Built-In Community & Networking</h3>
+              <p>Traditional offices often isolate teams from fresh perspectives. Our members regularly discover new collaborations organically.</p>
+            </div>
+            
+            <div class="benefit-card">
+              <h3>Cost-Effective Infrastructure</h3>
+              <p>Forget the hassle of setting up internet, printers, and meeting rooms. We provide premium amenities including:</p>
+              <ul class="checklist">
+                <li>High-speed fiber internet</li>
+                <li>Professional meeting rooms</li>
+                <li>Refreshment stations</li>
+                <li>On-site support staff</li>
+              </ul>
+            </div>
+            
+            <div class="benefit-card">
+              <h3>Designed for Productivity & Wellbeing</h3>
+              <p>Our space blends thoughtful design with natural elements to create an environment that stimulates creativity while reducing stress.</p>
+            </div>
+            
+            <div class="benefit-card">
+              <h3>Prime Location Without the Premium</h3>
+              <p>Nestled in Nooitgedacht Village, we offer easy access to quality cafes, wellness studios, and transport links.</p>
+            </div>
+            
+            <div class="benefit-card">
+              <h3>Is Coworking Right for Your Team?</h3>
+              <p>Consider:</p>
+              <ul class="checklist">
+                <li>Do you value flexibility over fixed overhead?</li>
+                <li>Would your team benefit from connections?</li>
+                <li>Do you want to outsource office management?</li>
+                <li>Is employee experience a priority?</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="cta">
+            <div><strong>Ready to simplify your workspace & lower costs?</strong><br/>Book a tour or secure a Private Office today.</div>
+            <div>
+              <a class="btn" href="/#interest">🚀 Register your interest</a>
+              <a class="btn alt" href="/pricing.html">🌿 Explore The Village Hub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">© 2025 The Village Hub — Nooitgedacht Village, Stellenbosch</div>
+  </footer>
+
 </body>
 </html>
