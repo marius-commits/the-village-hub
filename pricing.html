@@ -122,8 +122,15 @@
     .price div {
       display:flex; align-items:baseline; gap:6px;
     }
-.price .amt{font-size:1.6rem}
-    .price .unit{color:var(--vh-muted); font-weight:600}
+    .price .amt{font-size:1.6rem}
+    .section-title {
+      font-size: 1.8rem;
+      color: #111827;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #8A9A5B;
+    }
+.price .unit{color:var(--vh-muted); font-weight:600}
     .cta-row{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
     .btn-gold{
       background:var(--vh-gold); color:#111; border:1px solid #b9962d; font-weight:800
@@ -208,24 +215,26 @@
       <div class="hero-media" role="img" aria-label="Warm, modern coworking space with natural light"></div>
     </div>
   </header>
-
-  <!-- TABS -->
-  <nav class="tabs" aria-label="Pricing categories">
+  <!-- Navigation Links -->
+  <nav class="pricing-nav">
     <div class="container">
-      <div class="tablist" role="tablist" aria-orientation="horizontal">
-        <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
-        <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
-        <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
-</div>
+      <div class="nav-links">
+        <a href="#individuals" class="nav-link">Individuals</a>
+        <a href="#teams" class="nav-link">Teams & Private Offices</a>
+        <a href="#meetings" class="nav-link">Meetings & Events</a>
+      </div>
     </div>
   </nav>
 
   <main id="main">
     <!-- INDIVIDUALS -->
-    <section id="panel-individuals" role="tabpanel" aria-labelledby="tab-individuals" data-active="true">
-      <div class="container">
+    <section id="individuals">
+<div class="container">
+        <h2 class="section-title">Individuals</h2>
+        <h2 class="section-title">Teams & Private Offices</h2>
+        <h2 class="section-title">Meetings & Events</h2>
         <div class="grid">
-          <!-- Resident -->
+<!-- Resident -->
           <article class="card col-4">
             <span class="badge"><span aria-hidden="true">⭐</span> Most Popular</span>
             <h3>Village Resident — Dedicated Desk</h3>
@@ -367,10 +376,9 @@
         <div class="grid">
 </div>
     </section>
-
     <!-- TEAMS & OFFICES -->
-    <section id="panel-teams" role="tabpanel" aria-labelledby="tab-teams" data-active="false">
-      <div class="container">
+    <section id="teams">
+<div class="container">
         <div class="grid">
           <article class="card col-4">
             <span class="badge"><span aria-hidden="true">🏢</span> Private Office</span>
@@ -435,10 +443,9 @@
         </div>
       </div>
     </section>
-
     <!-- MEETINGS & EVENTS -->
-    <section id="panel-meetings" role="tabpanel" aria-labelledby="tab-meetings" data-active="false">
-      <div class="container">
+    <section id="meetings">
+<div class="container">
         <div class="grid">
           <article class="card col-4">
             <span class="badge"><span aria-hidden="true">🎥</span> Boardroom</span>
@@ -523,38 +530,59 @@
       <div class="muted">Pricing inclusive of amenities unless noted. Subject to availability & change.</div>
     </div>
   </footer>
+  <style>
+    .pricing-nav {
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-link:hover {
+      background: #e5e7eb;
+    }
+    
+    section[id] {
+      scroll-margin-top: 100px;
+    }
+  </style>
 
   <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Tabs
-    const tabs = document.querySelectorAll('.tab');
-    const panels = document.querySelectorAll('[role="tabpanel"]');
-    tabs.forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        tabs.forEach(t=>t.setAttribute('aria-selected','false'));
-        tab.setAttribute('aria-selected','true');
-        panels.forEach(p=>p.dataset.active='false');
-        const panel = document.getElementById(tab.getAttribute('aria-controls'));
-        panel.dataset.active = 'true';
+    // Smooth scrolling for nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       });
     });
 
-    // Keyboard support for tabs
-    document.querySelector('.tablist').addEventListener('keydown', (e)=>{
-      const currentIndex = [...tabs].findIndex(t=>t.getAttribute('aria-selected')==='true');
-      if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
-        e.preventDefault();
-        let nextIndex = currentIndex;
-        if(e.key==='ArrowRight') nextIndex = (currentIndex+1)%tabs.length;
-        if(e.key==='ArrowLeft') nextIndex = (currentIndex-1+tabs.length)%tabs.length;
-        if(e.key==='Home') nextIndex = 0;
-        if(e.key==='End') nextIndex = tabs.length-1;
-        tabs[nextIndex].focus();
-        tabs[nextIndex].click();
-      }
-    });
+    // Update year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
