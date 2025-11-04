@@ -515,46 +515,77 @@
       </a>
     </div>
   </aside>
-
   <!-- Mini Footer -->
   <footer class="mini">
     <div class="container">
       <div>© <span id="year"></span> The Village Hub. All rights reserved.</div>
       <div class="muted">Pricing inclusive of amenities unless noted. Subject to availability & change.</div>
+      
+      <!-- Bottom Tab Navigation -->
+      <div class="tabs" style="margin-top: 2rem; position: static;">
+        <div class="container">
+          <div class="tablist" role="tablist" aria-orientation="horizontal">
+            <button class="tab" role="tab" id="tab-individuals-bottom" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
+            <button class="tab" role="tab" id="tab-teams-bottom" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
+            <button class="tab" role="tab" id="tab-meetings-bottom" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
-
-  <script>
+<script>
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Tabs
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('[role="tabpanel"]');
+    
+    function handleTabClick(tab) {
+      tabs.forEach(t=>t.setAttribute('aria-selected','false'));
+      tab.setAttribute('aria-selected','true');
+      panels.forEach(p=>p.dataset.active='false');
+      const panel = document.getElementById(tab.getAttribute('aria-controls'));
+      panel.dataset.active = 'true';
+      
+      // Keep bottom tabs in sync
+      const tabType = tab.id.replace('-bottom', '');
+      const oppositeTab = tabType.includes('bottom') ? 
+        document.getElementById(tabType.replace('-bottom', '')) : 
+        document.getElementById(tabType + '-bottom');
+      if (oppositeTab) {
+        oppositeTab.setAttribute('aria-selected', 'true');
+        tabs.forEach(t => {
+          if (t !== oppositeTab && t.id.includes(tabType.replace('-bottom', '')) === false) {
+            t.setAttribute('aria-selected', 'false');
+          }
+        });
+      }
+    }
+
     tabs.forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        tabs.forEach(t=>t.setAttribute('aria-selected','false'));
-        tab.setAttribute('aria-selected','true');
-        panels.forEach(p=>p.dataset.active='false');
-        const panel = document.getElementById(tab.getAttribute('aria-controls'));
-        panel.dataset.active = 'true';
-      });
+      tab.addEventListener('click', ()=>handleTabClick(tab));
     });
 
     // Keyboard support for tabs
-    document.querySelector('.tablist').addEventListener('keydown', (e)=>{
-      const currentIndex = [...tabs].findIndex(t=>t.getAttribute('aria-selected')==='true');
-      if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
-        e.preventDefault();
-        let nextIndex = currentIndex;
-        if(e.key==='ArrowRight') nextIndex = (currentIndex+1)%tabs.length;
-        if(e.key==='ArrowLeft') nextIndex = (currentIndex-1+tabs.length)%tabs.length;
-        if(e.key==='Home') nextIndex = 0;
-        if(e.key==='End') nextIndex = tabs.length-1;
-        tabs[nextIndex].focus();
-        tabs[nextIndex].click();
-      }
+    const tablists = document.querySelectorAll('.tablist');
+    tablists.forEach(tablist => {
+      tablist.addEventListener('keydown', (e)=>{
+        const currentTab = e.target;
+        const currentIndex = [...tablist.querySelectorAll('.tab')].findIndex(t=>t.getAttribute('aria-selected')==='true');
+        if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
+          e.preventDefault();
+          let nextIndex = currentIndex;
+          if(e.key==='ArrowRight') nextIndex = (currentIndex+1)%tablist.querySelectorAll('.tab').length;
+          if(e.key==='ArrowLeft') nextIndex = (currentIndex-1+tablist.querySelectorAll('.tab').length)%tablist.querySelectorAll('.tab').length;
+          if(e.key==='Home') nextIndex = 0;
+          if(e.key==='End') nextIndex = tablist.querySelectorAll('.tab').length-1;
+          const nextTab = tablist.querySelectorAll('.tab')[nextIndex];
+          nextTab.focus();
+          handleTabClick(nextTab);
+        }
+      });
     });
-  </script>
+</script>
 </body>
 </html>
