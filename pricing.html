@@ -525,6 +525,14 @@
       </div>
     </section>
   </main>
+  <!-- Tab Navigation at Bottom -->
+  <div class="container" style="margin: 40px auto;">
+    <div class="tablist" role="tablist" aria-orientation="horizontal">
+      <button class="tab" role="tab" id="tab-individuals-bottom" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
+      <button class="tab" role="tab" id="tab-teams-bottom" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
+      <button class="tab" role="tab" id="tab-meetings-bottom" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
+    </div>
+  </div>
 
   <!-- Sticky Mobile CTA -->
   <aside class="sticky-cta" aria-label="Quick booking">
@@ -535,10 +543,22 @@
       <a class="btn btn-outline" href="https://wa.me/27723476703?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
         <span class="icon" aria-hidden="true">💬</span> Schedule a Tour
       </a>
-    </div>
+</div>
   </aside>
 
-  <!-- Mini Footer -->
+  <script>
+    // Connect bottom tabs to same functionality
+    document.getElementById('tab-individuals-bottom').addEventListener('click', () => {
+      document.getElementById('tab-individuals').click();
+    });
+    document.getElementById('tab-teams-bottom').addEventListener('click', () => {
+      document.getElementById('tab-teams').click();
+    });
+    document.getElementById('tab-meetings-bottom').addEventListener('click', () => {
+      document.getElementById('tab-meetings').click();
+    });
+  </script>
+<!-- Mini Footer -->
   <footer class="mini">
     <div class="container">
       <div>© <span id="year"></span> The Village Hub. All rights reserved.</div>
