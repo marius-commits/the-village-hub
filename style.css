@@ -1,8 +1,50 @@
+
 body {
 	padding: 2rem;
 	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
 }
 
+/* Pricing card styling */
+.card {
+    background-color: #f8faf7; /* Very light sage color */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8e0;
+}
+
+.badge {
+    background-color: #8a9a5b; /* Sage color */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6b4423; /* Dark brown */
+    margin: 15px 0;
+}
+
+.btn {
+    background-color: #8a9a5b; /* Sage color */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #768a4f; /* Darker sage */
+}
 h1 {
 	font-size: 16px;
 	margin-top: 0;
