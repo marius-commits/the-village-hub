@@ -84,10 +84,11 @@
     }
     .tablist::-webkit-scrollbar{display:none}
     .tab{
-      flex:0 0 auto; padding:10px 14px; border:1px solid var(--vh-border); border-radius:999px;
+      flex:0 0 auto; padding:14px 24px; border:1px solid var(--vh-border); border-radius:999px;
       background:#fff; font-weight:600; color:#2b2e30; cursor:pointer;
+      font-size:1.1rem;
     }
-    .tab[aria-selected="true"]{
+.tab[aria-selected="true"]{
       background:var(--vh-green); border-color:var(--vh-green); color:#fff
     }
 
@@ -215,7 +216,7 @@
         <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
         <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
         <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
-      </div>
+</div>
     </div>
   </nav>
 
