@@ -11,11 +11,11 @@
 
   <style>
     :root{
-      --vh-green:#6E8F6C;    /* Village Hub sage */
-      --vh-green-600:#5c7a5a;
-      --vh-green-50:#f3f6f3;
-      --vh-gold:#D4AF37;     /* Brickfield gold accent */
-      --vh-dark:#0b0b0b;
+      --vh-green:#D4AF37;    /* Golden yellow */
+      --vh-green-600:#b9962d;
+--vh-green-50:#f3f6f3;
+      --vh-gold:#D4AF37;     /* Golden yellow accent */
+--vh-dark:#0b0b0b;
       --vh-text:#1e1f20;
       --vh-muted:#6b7280;
       --vh-bg:#ffffff;
@@ -91,25 +91,25 @@
     .tab{
       flex:0 0 auto; 
       padding:12px 24px; 
-      border:2px solid var(--vh-green); 
+      border:2px solid #D4AF37; 
       border-radius:12px;
       background:#fff; 
       font-weight:700; 
-      color:var(--vh-green); 
+      color:#D4AF37; 
       cursor:pointer;
       transition: all 0.3s ease;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     .tab:hover {
-      background:rgba(110,143,108,0.1);
+      background:rgba(212,175,55,0.1);
       transform: translateY(-1px);
     }
     .tab[aria-selected="true"]{
-      background:var(--vh-green); 
-      border-color:var(--vh-green); 
+      background:#D4AF37; 
+      border-color:#D4AF37; 
       color:#fff;
-      box-shadow: 0 4px 12px rgba(110,143,108,0.2);
-    }
+      box-shadow: 0 4px 12px rgba(212,175,55,0.2);
+}
 /* Sections */
     section[role="tabpanel"]{display:none; padding:24px 0 46px}
     section[role="tabpanel"][data-active="true"]{display:block}
