@@ -50,8 +50,47 @@
   </style>
 </head>
 <body class="font-sans antialiased text-gray-800 font-normal">
-<custom-navbar></custom-navbar>
-<!-- Hero Section (aligned button to image bottom) -->
+<!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-16 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
+                        <span class="ml-3 text-2xl font-bold text-[#6B4423]">The Village Hub</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#about" class="text-[#6B4423] inline-flex items-center px-1 pt-1 border-b-2 border-[#8B5A2B] text-sm font-medium">About</a>
+                    <a href="#features" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Features</a>
+                    <a href="#gallery" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Gallery</a>
+                    <a href="#community" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Community</a>
+                    <a href="/pricing.html" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Pricing</a>
+                    <a href="https://mariusvj86-the-village-hub.static.hf.space/coworking-vs-traditional-2.html" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Comparison</a>
+<a href="/pricing.html" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Explore Village Options</a>
+</div>
+        <div class="-mr-2 flex items-center md:hidden">
+            <button type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                <i data-feather="menu"></i>
+            </button>
+        </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
+                <a href="#about" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
+                <a href="#features" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Features</a>
+                <a href="#gallery" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Gallery</a>
+                <a href="#community" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Community</a>
+                <a href="/pricing.html" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Pricing</a>
+                <a href="/coworking-vs-traditional.html" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Articles</a>
+                <a href="#interest" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Register Interest</a>
+            </div>
+</div>
+    </nav>
+    <!-- Hero Section (aligned button to image bottom) -->
     <div class="hero-gradient pt-24 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-8">
