@@ -76,41 +76,22 @@
 
     /* Tabs */
     .tabs{
-      position:sticky; 
-      top:0; 
-      z-index:6; 
-      background:#fff; 
-      border-top:1px solid var(--vh-border);
-      border-bottom:1px solid var(--vh-border);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position:sticky; top:0; z-index:6; background:#fff; border-top:1px solid var(--vh-border);
+      border-bottom:1px solid var(--vh-border)
     }
-.tablist{
+    .tablist{
       display:flex; gap:8px; padding:10px 0; overflow:auto; scrollbar-width:none
     }
     .tablist::-webkit-scrollbar{display:none}
     .tab{
-      flex:0 0 auto; 
-      padding:12px 24px; 
-      border:2px solid var(--vh-green); 
-      border-radius:12px;
-      background:#fff; 
-      font-weight:700; 
-      color:var(--vh-green); 
-      cursor:pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .tab:hover {
-      background:rgba(110,143,108,0.1);
-      transform: translateY(-1px);
+      flex:0 0 auto; padding:10px 14px; border:1px solid var(--vh-border); border-radius:999px;
+      background:#fff; font-weight:600; color:#2b2e30; cursor:pointer;
     }
     .tab[aria-selected="true"]{
-      background:var(--vh-green); 
-      border-color:var(--vh-green); 
-      color:#fff;
-      box-shadow: 0 4px 12px rgba(110,143,108,0.2);
+      background:var(--vh-green); border-color:var(--vh-green); color:#fff
     }
-/* Sections */
+
+    /* Sections */
     section[role="tabpanel"]{display:none; padding:24px 0 46px}
     section[role="tabpanel"][data-active="true"]{display:block}
 
@@ -231,17 +212,11 @@
   <nav class="tabs" aria-label="Pricing categories">
     <div class="container">
       <div class="tablist" role="tablist" aria-orientation="horizontal">
-        <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">
-          <span class="icon" aria-hidden="true">👤</span> Individuals
-        </button>
-        <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">
-          <span class="icon" aria-hidden="true">👥</span> Teams &amp; Private Offices
-        </button>
-        <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">
-          <span class="icon" aria-hidden="true">🎪</span> Meetings &amp; Events
-        </button>
+        <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
+        <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
+        <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
       </div>
-</div>
+    </div>
   </nav>
 
   <main id="main">
