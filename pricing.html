@@ -216,14 +216,14 @@
       <div class="hero-media" style="background-image: url('https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_4.jpg')" role="img" aria-label="Modern coworking space at The Village Hub"></div>
 </div>
   </header>
-
-  <!-- TABS -->
-  <nav class="tabs" aria-label="Pricing categories">
-    <div class="container">
-      <div class="tablist" role="tablist" aria-orientation="horizontal">
-        <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
-        <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
-        <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
+    <!-- TABS -->
+    <nav class="tabs" aria-label="Pricing categories">
+        <div class="container">
+            <div class="tablist" role="tablist" aria-orientation="horizontal">
+                <button class="tab" role="tab" id="tab-individuals" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
+                <button class="tab" role="tab" id="tab-teams" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
+                <button class="tab" role="tab" id="tab-meetings" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
+                <button class="tab" role="tab" id="tab-accommodation" aria-controls="panel-accommodation" aria-selected="false">Accommodation</button>
 </div>
     </div>
   </nav>
@@ -635,8 +635,35 @@
       <button class="tab" role="tab" id="tab-individuals-bottom" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
       <button class="tab" role="tab" id="tab-teams-bottom" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
       <button class="tab" role="tab" id="tab-meetings-bottom" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
-    </div>
+      <button class="tab" role="tab" id="tab-accommodation-bottom" aria-controls="panel-accommodation" aria-selected="false">Accommodation</button>
+</div>
   </div>
+  <!-- ACCOMMODATION SECTION -->
+  <section id="panel-accommodation" role="tabpanel" aria-labelledby="tab-accommodation" data-active="false">
+    <div class="container">
+      <div class="grid">
+        <article class="card col-4">
+          <span class="badge"><span aria-hidden="true">🌿</span> Village Stay</span>
+          <h3>The Foundry Studio Apartments</h3>
+          <p class="tagline">"Work. Rest. Refresh."</p>
+          <ul class="features">
+            <li><span aria-hidden="true">🛏️</span> Two single beds (convertible to king)</li>
+            <li><span aria-hidden="true">📶</span> High-speed Wi-Fi & smart TV</li>
+            <li><span aria-hidden="true">🍳</span> Compact kitchenette</li>
+            <li><span aria-hidden="true">🚿</span> Modern bathroom with shower</li>
+            <li><span aria-hidden="true">💼</span> Free coworking space access</li>
+            <li><span aria-hidden="true">🍽️</span> Restaurant discounts</li>
+            <li><span aria-hidden="true">🌳</span> Estate trails & vineyards</li>
+          </ul>
+          <div class="price"><span class="amt">R1,200</span><span class="unit">/ night</span></div>
+          <div class="cta-row">
+            <a class="btn btn-gold" href="https://members.villagehub.co.za/" target="_blank" rel="noreferrer noopener">Book Your Stay</a>
+            <a class="btn btn-ghost" href="https://wa.me/27721900939?text=The%20Foundry%20Studio%20enquiry" target="_blank" rel="noreferrer noopener">Ask Questions</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
   <!-- Sticky Mobile CTA -->
   <aside class="sticky-cta" aria-label="Quick booking">
@@ -645,7 +672,7 @@
         <span class="icon" aria-hidden="true">🗓️</span> Book Now
       </a>
       <a class="btn btn-outline" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
-<span class="icon" aria-hidden="true">💬</span> Schedule a Tour
+        <span class="icon" aria-hidden="true">💬</span> Schedule a Tour
       </a>
 </div>
   </aside>
@@ -661,7 +688,10 @@
     document.getElementById('tab-meetings-bottom').addEventListener('click', () => {
       document.getElementById('tab-meetings').click();
     });
-  </script>
+    document.getElementById('tab-accommodation-bottom').addEventListener('click', () => {
+      document.getElementById('tab-accommodation').click();
+    });
+</script>
 <!-- Mini Footer -->
   <footer class="mini">
     <div class="container">
