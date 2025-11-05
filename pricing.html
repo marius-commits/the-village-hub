@@ -88,6 +88,20 @@
       background:#fff; font-weight:600; color:#2b2e30; cursor:pointer;
       font-size:1.1rem;
     }
+    @media (max-width: 768px) {
+      .tablist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 8px;
+      }
+      .tab {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        text-align: center;
+      }
+    }
 .tab[aria-selected="true"]{
       background:var(--vh-green); border-color:var(--vh-green); color:#fff
     }

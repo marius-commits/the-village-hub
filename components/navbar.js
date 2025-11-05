@@ -79,8 +79,20 @@ class CustomNavbar extends HTMLElement {
           .mobile-menu-btn {
             display: block;
           }
+          .tablist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 8px;
+          }
+          .tab {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+          }
         }
-      </style>
+</style>
       <nav>
         <div class="container">
           <div class="logo-container">
