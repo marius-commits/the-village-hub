@@ -616,7 +616,6 @@
       <button class="tab" role="tab" id="tab-meetings-bottom" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
     </div>
   </div>
-
   <!-- Sticky Mobile CTA -->
   <aside class="sticky-cta" aria-label="Quick booking">
     <div class="container">
@@ -624,7 +623,10 @@
         <span class="icon" aria-hidden="true">🗓️</span> Book Now
       </a>
       <a class="btn btn-outline" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
-<span class="icon" aria-hidden="true">💬</span> Schedule a Tour
+        <span class="icon" aria-hidden="true">💬</span> Schedule a Tour
+      </a>
+      <a class="btn btn-gold" href="#accommodation" style="margin-top: 8px;">
+        <span class="icon" aria-hidden="true">🛏️</span> Book Suite
       </a>
 </div>
   </aside>
@@ -640,10 +642,66 @@
     document.getElementById('tab-meetings-bottom').addEventListener('click', () => {
       document.getElementById('tab-meetings').click();
     });
-  </script>
-<!-- Mini Footer -->
+    document.getElementById('tab-accommodation-bottom').addEventListener('click', () => {
+      document.getElementById('tab-accommodation').click();
+    });
+</script>
+    <!-- ACCOMMODATION -->
+    <section id="panel-accommodation" role="tabpanel" aria-labelledby="tab-accommodation" data-active="false">
+      <div class="container">
+        <div class="grid">
+          <article class="card col-4">
+            <span class="badge"><span aria-hidden="true">🌿</span> Village Stay Suites</span>
+            <h3>Studio Suite @ The Foundry</h3>
+            <p class="tagline">"Work. Rest. Connect."</p>
+            <ul class="features">
+              <li><span aria-hidden="true">🛏️</span> Two single beds (convertible to king)</li>
+              <li><span aria-hidden="true">📶</span> High-speed Wi-Fi & smart TV</li>
+              <li><span aria-hidden="true">🍳</span> Compact kitchenette</li>
+              <li><span aria-hidden="true">🚿</span> Modern bathroom with shower</li>
+              <li><span aria-hidden="true">💼</span> 50% off coworking access</li>
+              <li><span aria-hidden="true">🍽️</span> Discounts at Village Table</li>
+            </ul>
+            <div class="price"><span class="amt">R1,350</span><span class="unit">/ night</span></div>
+            <div class="cta-row">
+              <a class="btn btn-gold" href="https://members.villagehub.co.za/" target="_blank" rel="noreferrer noopener">Book Suite</a>
+              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=Village%20Stay%20Suite%20enquiry" target="_blank" rel="noreferrer noopener">Ask a question</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="faq">
+          <details>
+            <summary>What's included in the suite?</summary>
+            <p>Each suite includes bedding, towels, toiletries, kitchen essentials, high-speed Wi-Fi, smart TV, and daily cleaning service.</p>
+          </details>
+          <details>
+            <summary>Can I get long-term rates?</summary>
+            <p>Yes! Weekly and monthly rates available. Contact us for extended stay discounts.</p>
+          </details>
+          <details>
+            <summary>Is parking available?</summary>
+            <p>Complimentary secure parking is provided for all guests.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Navigation at Bottom -->
+    <div class="container" style="margin: 40px auto;">
+      <div class="tablist" role="tablist" aria-orientation="horizontal">
+        <button class="tab" role="tab" id="tab-individuals-bottom" aria-controls="panel-individuals" aria-selected="true">Individuals</button>
+        <button class="tab" role="tab" id="tab-teams-bottom" aria-controls="panel-teams" aria-selected="false">Teams &amp; Private Offices</button>
+        <button class="tab" role="tab" id="tab-meetings-bottom" aria-controls="panel-meetings" aria-selected="false">Meetings &amp; Events</button>
+        <button class="tab" role="tab" id="tab-accommodation-bottom" aria-controls="panel-accommodation" aria-selected="false">Accommodation</button>
+      </div>
+    </div>
+
+  <!-- Mini Footer -->
   <footer class="mini">
-    <div class="container">
+<div class="container">
       <div>© <span id="year"></span> The Village Hub. All rights reserved.</div>
       <div class="muted">Pricing inclusive of amenities unless noted. Subject to availability & change.</div>
     </div>
@@ -652,11 +710,14 @@
   <script>
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
-
     // Tabs
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('[role="tabpanel"]');
-    tabs.forEach(tab=>{
+    // Initialize accommodation tab if URL hash matches
+    if(window.location.hash === '#accommodation') {
+      document.getElementById('tab-accommodation').click();
+    }
+tabs.forEach(tab=>{
       tab.addEventListener('click', ()=>{
         tabs.forEach(t=>t.setAttribute('aria-selected','false'));
         tab.setAttribute('aria-selected','true');
