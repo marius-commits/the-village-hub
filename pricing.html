@@ -177,12 +177,12 @@
       width:100%; aspect-ratio:16/7; border-radius:18px; border:1px solid var(--vh-border);
       background:#f7f8f7 url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
     }
-
     /* Improve tap targets on mobile */
     @media (max-width:700px){
-      .btn{padding:14px 16px}
+      .btn{padding:8px 12px; font-size:0.9rem}
+      .sticky-cta .btn{padding:8px 12px}
     }
-  </style>
+</style>
 
   <!-- Offer Catalog Schema (edit prices/URLs as needed) -->
   <script type="application/ld+json">
@@ -702,12 +702,11 @@
         <span class="icon" aria-hidden="true">🗓️</span> Book Now
       </a>
       <a class="btn btn-outline" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
-        <span class="icon" aria-hidden="true">💬</span> Schedule a Tour
+        <span class="icon" aria-hidden="true">💬</span> Tour
       </a>
 </div>
   </aside>
-
-  <script>
+<script>
     // Connect bottom tabs to same functionality
     const connectTabs = (id) => {
       document.getElementById(id).addEventListener('click', () => {
