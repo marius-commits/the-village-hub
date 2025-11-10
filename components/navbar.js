@@ -10,8 +10,13 @@ class CustomNavbar extends HTMLElement {
           width: 100%;
           top: 0;
           z-index: 1000;
+          opacity: 1;
+          backdrop-filter: none;
         }
         .container {
+          background: white;
+        }
+.container {
           max-width: 1200px;
           margin: 0 auto;
           padding: 0 20px;
