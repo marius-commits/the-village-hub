@@ -1,9 +1,9 @@
 
 body {
-	padding: 2rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+  padding-top: 80px; /* Added space for fixed nav */
 }
-
 /* Pricing card styling */
 .card {
     background-color: #f8faf7; /* Very light sage color */
