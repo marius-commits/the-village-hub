@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Our Suites | The Village Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .suite-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .suite-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+    .ember-suite { border-left-color: #E27D60; }
+    .sol-suite { border-left-color: #D79922; }
+    .olive-suite { border-left-color: #8A9A5B; }
+    .azure-suite { border-left-color: #41B3A3; }
+    .slate-suite { border-left-color: #3E4E63; }
+  </style>
+</head>
+<body class="bg-[#FAF8F6] font-sans">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <img class="h-16 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
+            <span class="ml-3 text-2xl font-bold text-[#6B4423]">The Village Hub</span>
+          </div>
+        </div>
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+          <a href="/" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Home</a>
+          <a href="/pricing.html" class="text-[#6B4423] hover:text-[#8B5A2B] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-[#8B5A2B] text-sm font-medium">Pricing</a>
+          <a href="/booking.html" class="text-[#6B4423] inline-flex items-center px-1 pt-1 border-b-2 border-[#8B5A2B] text-sm font-medium">Book a Suite</a>
+        </div>
+        <div class="-mr-2 flex items-center md:hidden">
+          <button type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+            <i data-feather="menu"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="pt-2 pb-3 space-y-1">
+        <a href="/" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
+        <a href="/pricing.html" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Pricing</a>
+        <a href="/booking.html" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Book a Suite</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl" data-aos="fade-up">
+        Our Luxury Suites
+      </h1>
+      <p class="mt-4 text-xl text-gray-600" data-aos="fade-up" data-aos-delay="100">
+        Comfortable stays in the heart of Nooitgedacht Village
+      </p>
+    </div>
+
+    <!-- Suites Grid -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Ember Suite -->
+      <div class="suite-card ember-suite bg-white rounded-lg shadow-md p-6" data-aos="fade-up">
+        <div class="mb-4">
+          <h3 class="text-2xl font-bold text-[#E27D60]">Ember Suite</h3>
+          <p class="text-gray-600">Warm red tones for a cozy retreat</p>
+        </div>
+        <img src="http://static.photos/red/640x360/1" alt="Ember Suite" class="w-full rounded-lg mb-4">
+        <ul class="mb-6 space-y-2">
+          <li class="flex items-center"><i data-feather="check" class="text-[#E27D60] mr-2"></i> King-size bed</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#E27D60] mr-2"></i> Workspace with desk</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#E27D60] mr-2"></i> Ensuite bathroom</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#E27D60] mr-2"></i> Kitchenette</li>
+        </ul>
+        <div class="text-2xl font-bold text-[#E27D60] mb-4">R1,350 / night</div>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20book%20the%20Ember%20Suite" class="w-full bg-[#E27D60] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#D46F54] transition-colors text-center block">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Sol Suite -->
+      <div class="suite-card sol-suite bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="mb-4">
+          <h3 class="text-2xl font-bold text-[#D79922]">Sol Suite</h3>
+          <p class="text-gray-600">Sunny yellow ambiance to brighten your stay</p>
+        </div>
+        <img src="http://static.photos/yellow/640x360/1" alt="Sol Suite" class="w-full rounded-lg mb-4">
+        <ul class="mb-6 space-y-2">
+          <li class="flex items-center"><i data-feather="check" class="text-[#D79922] mr-2"></i> King-size bed</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#D79922] mr-2"></i> Workspace with desk</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#D79922] mr-2"></i> Ensuite bathroom</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#D79922] mr-2"></i> Kitchenette</li>
+        </ul>
+        <div class="text-2xl font-bold text-[#D79922] mb-4">R1,350 / night</div>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20book%20the%20Sol%20Suite" class="w-full bg-[#D79922] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#C58A1F] transition-colors text-center block">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Olive Suite -->
+      <div class="suite-card olive-suite bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="mb-4">
+          <h3 class="text-2xl font-bold text-[#8A9A5B]">Olive Suite</h3>
+          <p class="text-gray-600">Natural green tones for a peaceful stay</p>
+        </div>
+        <img src="http://static.photos/green/640x360/1" alt="Olive Suite" class="w-full rounded-lg mb-4">
+        <ul class="mb-6 space-y-2">
+          <li class="flex items-center"><i data-feather="check" class="text-[#8A9A5B] mr-2"></i> King-size bed</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#8A9A5B] mr-2"></i> Workspace with desk</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#8A9A5B] mr-2"></i> Ensuite bathroom</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#8A9A5B] mr-2"></i> Kitchenette</li>
+        </ul>
+        <div class="text-2xl font-bold text-[#8A9A5B] mb-4">R1,350 / night</div>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20book%20the%20Olive%20Suite" class="w-full bg-[#8A9A5B] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#7A8A4F] transition-colors text-center block">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Azure Suite -->
+      <div class="suite-card azure-suite bg-white rounded-lg shadow-md p-6" data-aos="fade-up">
+        <div class="mb-4">
+          <h3 class="text-2xl font-bold text-[#41B3A3]">Azure Suite</h3>
+          <p class="text-gray-600">Cool blue tones for a refreshing stay</p>
+        </div>
+        <img src="http://static.photos/blue/640x360/1" alt="Azure Suite" class="w-full rounded-lg mb-4">
+        <ul class="mb-6 space-y-2">
+          <li class="flex items-center"><i data-feather="check" class="text-[#41B3A3] mr-2"></i> King-size bed</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#41B3A3] mr-2"></i> Workspace with desk</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#41B3A3] mr-2"></i> Ensuite bathroom</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#41B3A3] mr-2"></i> Kitchenette</li>
+        </ul>
+        <div class="text-2xl font-bold text-[#41B3A3] mb-4">R1,350 / night</div>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20book%20the%20Azure%20Suite" class="w-full bg-[#41B3A3] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#38A093] transition-colors text-center block">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Slate Suite -->
+      <div class="suite-card slate-suite bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="mb-4">
+          <h3 class="text-2xl font-bold text-[#3E4E63]">Slate Suite</h3>
+          <p class="text-gray-600">Elegant grey tones for a sophisticated stay</p>
+        </div>
+        <img src="http://static.photos/black/640x360/1" alt="Slate Suite" class="w-full rounded-lg mb-4">
+        <ul class="mb-6 space-y-2">
+          <li class="flex items-center"><i data-feather="check" class="text-[#3E4E63] mr-2"></i> King-size bed</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#3E4E63] mr-2"></i> Workspace with desk</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#3E4E63] mr-2"></i> Ensuite bathroom</li>
+          <li class="flex items-center"><i data-feather="check" class="text-[#3E4E63] mr-2"></i> Kitchenette</li>
+        </ul>
+        <div class="text-2xl font-bold text-[#3E4E63] mb-4">R1,350 / night</div>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20book%20the%20Slate%20Suite" class="w-full bg-[#3E4E63] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#2D3C4F] transition-colors text-center block">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Group Booking -->
+      <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-center mb-4">
+          <h3 class="text-2xl font-bold text-[#6B4423]">Group Booking</h3>
+          <p class="text-gray-600">Need multiple suites for your team?</p>
+        </div>
+        <img src="http://static.photos/office/640x360/1" alt="Group Booking" class="w-full rounded-lg mb-4">
+        <p class="mb-6 text-center">We offer special rates for group bookings of 3 or more suites. Contact us to arrange your team's stay.</p>
+        <a href="https://wa.me/27721900939?text=I'd%20like%20to%20inquire%20about%20a%20group%20booking" class="w-full bg-[#6B4423] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#5A381D] transition-colors text-center block">
+          Inquire About Group Rates
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center">
+            <img class="h-12 w-auto" src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Logo%20without%20words.png" alt="Village Hub Logo">
+            <span class="ml-3 text-xl font-bold">The Village Hub</span>
+          </div>
+          <p class="mt-4">
+            A vibrant coworking and accommodation space coming soon to Nooitgedacht Village.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium">Quick Links</h3>
+          <ul class="mt-4 space-y-2">
+            <li><a href="/" class="text-gray-300 hover:text-white">Home</a></li>
+            <li><a href="/pricing.html" class="text-gray-300 hover:text-white">Pricing</a></li>
+            <li><a href="/booking.html" class="text-gray-300 hover:text-white">Book a Suite</a></li>
+            <li><a href="/privacy.html" class="text-gray-300 hover:text-white">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium">Contact</h3>
+          <ul class="mt-4 space-y-2">
+            <li>Nooitgedacht Village</li>
+            <li>info@villagehub.co.za</li>
+            <li>+27 72 190 0939</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-gray-700 pt-8 text-center">
+        <p>&copy; 2024 The Village Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    AOS.init();
+    feather.replace();
+  </script>
+</body>
+</html>
