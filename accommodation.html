@@ -44,15 +44,11 @@
       </div>
     </div>
   </div>
+
   <div class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-[#6B4423]">Check Availability</h2>
-        <div id="calendar" class="mt-8 mx-auto" style="max-width: 900px"></div>
-      </div>
-      
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Ember Suite -->
+        <!-- Ember Suite -->
         <div class="suite-card ember bg-white rounded-lg shadow-md p-6">
           <div class="flex justify-between items-start">
             <h3 class="text-2xl font-bold text-[#6B4423]">Ember Suite</h3>
@@ -90,11 +86,13 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-              Book Now
-            </a>
-          </div>
+            <div class="mt-4">
+              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-ember"></div>
+              <button onclick="openBookingModal('Ember Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+                Request Booking
+              </button>
+            </div>
+</div>
         </div>
 
         <!-- Sol Suite -->
@@ -135,11 +133,13 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-              Book Now
-            </a>
-          </div>
+            <div class="mt-4">
+              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-sol"></div>
+              <button onclick="openBookingModal('Sol Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+                Request Booking
+              </button>
+            </div>
+</div>
         </div>
 
         <!-- Olive Suite -->
@@ -180,11 +180,13 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-              Book Now
-            </a>
-          </div>
+            <div class="mt-4">
+              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-olive"></div>
+              <button onclick="openBookingModal('Olive Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+                Request Booking
+              </button>
+            </div>
+</div>
         </div>
 
         <!-- Azure Suite -->
@@ -225,11 +227,13 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-              Book Now
-            </a>
-          </div>
+            <div class="mt-4">
+              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-azure"></div>
+              <button onclick="openBookingModal('Azure Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+                Request Booking
+              </button>
+            </div>
+</div>
         </div>
 
         <!-- Slate Suite -->
@@ -270,148 +274,184 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-              Book Now
-            </a>
-          </div>
+            <div class="mt-4">
+              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-slate"></div>
+              <button onclick="openBookingModal('Slate Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+                Request Booking
+              </button>
+            </div>
+</div>
         </div>
       </div>
     </div>
   </div>
-
-  <custom-footer></custom-footer>
-  <!-- Booking Form Modal -->
-  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full">
-      <h3 class="text-xl font-bold text-[#6B4423] mb-4">Booking Request</h3>
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-[#6B4423]" id="modalTitle">Request Booking</h3>
+        <button onclick="closeBookingModal()" class="text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
       <form id="bookingForm" class="space-y-4">
+        <input type="hidden" id="suiteType">
+        
         <div>
-          <label for="suite" class="block text-sm font-medium text-gray-700">Suite</label>
-          <select id="suite" name="suite" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-            <option value="" disabled selected>Select a suite</option>
-            <option value="Ember">Ember Suite</option>
-            <option value="Sol">Sol Suite</option>
-            <option value="Olive">Olive Suite</option>
-            <option value="Azure">Azure Suite</option>
-            <option value="Slate">Slate Suite</option>
-          </select>
+          <label for="checkIn" class="block text-sm font-medium text-gray-700">Check-in Date</label>
+          <input type="date" id="checkIn" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
+        
         <div>
-          <label for="checkin" class="block text-sm font-medium text-gray-700">Check-in Date</label>
-          <input type="date" id="checkin" name="checkin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+          <label for="checkOut" class="block text-sm font-medium text-gray-700">Check-out Date</label>
+          <input type="date" id="checkOut" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
+        
         <div>
-          <label for="checkout" class="block text-sm font-medium text-gray-700">Check-out Date</label>
-          <input type="date" id="checkout" name="checkout" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+          <label for="guests" class="block text-sm font-medium text-gray-700">Number of Guests (1-2)</label>
+          <input type="number" id="guests" min="1" max="2" value="1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
+        
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-          <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+          <input type="text" id="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
+        
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+          <input type="email" id="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
+        
         <div>
           <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-          <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+          <input type="tel" id="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
         </div>
-        <div class="flex justify-end space-x-4">
-          <button type="button" id="cancelBooking" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-[#8A9A5B] text-white rounded-md text-sm font-medium hover:bg-[#6F7A45]">Request Booking</button>
+        
+        <div>
+          <label for="notes" class="block text-sm font-medium text-gray-700">Special Requests</label>
+          <textarea id="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]"></textarea>
+        </div>
+        
+        <div class="flex justify-end space-x-3">
+          <button type="button" onclick="closeBookingModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#8A9A5B] hover:bg-[#6F7A45]">
+            Submit Request
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+  <custom-footer></custom-footer>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize calendar
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,dayGridWeek'
-        },
-        height: 'auto',
-        events: [
-          // Ember Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y19iYzkwNTdkOWUzZDM1MWU0MWZmMjM3ZWFiMWI3NmNjMDk0ZGRlM2ExMGM3ZGM1MjMwMGE0NmZlZjViMDVmNmJiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#E27D60',
-            display: 'background'
-          },
-          // Sol Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y185NjA0MDA1Y2NlMmM2ODIwMzcwODY4YzY5YTliNTk2OTMxOGRiOTBlYTYwMmQwMmJlZGY2ODY0MTMyMzFmNmM2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#E8A87C',
-            display: 'background'
-          },
-          // Olive Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18yZDk4ZGY5MTdhNWQ3MjM1OTE3MjgzMjcxMDRiODIyMzY2YjhkNTBlOWExNDYwNzRkYWQyMjc1MWMzOWViM2NmQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#41B3A3',
-            display: 'background'
-          },
-          // Azure Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18xYzE1YmYzNGI1NTgwMDgxMTdjYjBmMzAwYmRmODI1MWNiYjJiZmRlMjhhYzQ5MzgxNTI2Y2E5ZTY3ZmIzMThjQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#C38D9E',
-            display: 'background'
-          },
-          // Slate Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18yYjA4NTQ1MTMzZmJlYjg2ZDhlOGIzZGUyMGQ5Yjk4ODQzZWY5YWJkYWIyMDdjNWFhNTA5YjliZjBiZDAxOTUwQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#85CDCA',
-            display: 'background'
+    // Google Calendar IDs for each suite
+    const calendarIds = {
+      'ember': 'c_bc9057d9e3d351e41ff237eab1b76cc094dde3a10c7dc52300a46fef5b05f6bb@group.calendar.google.com',
+      'sol': 'c_9604005cce2c6820370868c69a9b5969318db90ea602d02bedf686413231f6c6@group.calendar.google.com',
+      'olive': 'c_2d98df917a5d723591728327104b822366b8d50e9a146074dad22751c39eb3cf@group.calendar.google.com',
+      'azure': 'c_1c15bf34b558008117cb0f300bdf8251cbb2bfde28ac49381526ca9e67fb318c@group.calendar.google.com',
+      'slate': 'c_2b08545133fbeb86d8e8b3de20d9b98843ef9abdab207c5aa509b9bf0bd01950@group.calendar.google.com'
+    };
+
+    // Check availability for all suites
+    async function checkAvailability() {
+      for (const [suite, calId] of Object.entries(calendarIds)) {
+        try {
+          const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calId}/events?key=YOUR_API_KEY`);
+          const data = await response.json();
+          const badge = document.getElementById(`availability-${suite}`);
+          
+          if (data.items && data.items.length > 0) {
+            // Has bookings - mark as partially available
+            badge.textContent = 'Limited Availability';
+            badge.className = 'text-sm text-yellow-600 mb-2 availability-badge';
+          } else {
+            // No bookings - fully available
+            badge.textContent = 'Available';
+            badge.className = 'text-sm text-green-600 mb-2 availability-badge';
           }
-        ],
-        dateClick: function(info) {
-          document.getElementById('checkin').value = info.dateStr;
-          document.getElementById('bookingModal').classList.remove('hidden');
-        },
-        eventClick: function(info) {
-          window.open(info.event.url);
+        } catch (error) {
+          console.error('Error checking availability:', error);
+          const badge = document.getElementById(`availability-${suite}`);
+          badge.textContent = 'Check Availability';
+          badge.className = 'text-sm text-gray-500 mb-2 availability-badge';
         }
-      });
-      calendar.render();
+      }
+    }
 
-      // Modal handling
-      const bookingModal = document.getElementById('bookingModal');
-      const bookingForm = document.getElementById('bookingForm');
-      const cancelBtn = document.getElementById('cancelBooking');
+    // Booking modal functions
+    function openBookingModal(suiteType) {
+      document.getElementById('suiteType').value = suiteType;
+      document.getElementById('modalTitle').textContent = `Book ${suiteType}`;
+      document.getElementById('bookingModal').classList.remove('hidden');
+      
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('checkIn').min = today;
+    }
 
-      cancelBtn.addEventListener('click', function() {
-        bookingModal.classList.add('hidden');
-      });
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+      document.getElementById('bookingForm').reset();
+    }
 
-      bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(bookingForm);
-        const data = Object.fromEntries(formData.entries());
-        
-        // Send email request (you would need a backend for this)
-        const mailtoLink = `mailto:stay@villagehub.co.za?subject=Booking Request for ${data.suite}&body=Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0APhone: ${data.phone}%0D%0ASuite: ${data.suite}%0D%0ACheck-in: ${data.checkin}%0D%0ACheck-out: ${data.checkout}%0D%0A%0D%0AAdditional requests:`;
-        
-        window.location.href = mailtoLink;
-        bookingModal.classList.add('hidden');
-        bookingForm.reset();
-        
-        alert('Your booking request has been submitted. We will contact you shortly.');
-      });
+    // Handle form submission
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        suite: document.getElementById('suiteType').value,
+        checkIn: document.getElementById('checkIn').value,
+        checkOut: document.getElementById('checkOut').value,
+        guests: document.getElementById('guests').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        notes: document.getElementById('notes').value
+      };
+
+      // Validate min 2 night stay
+      const checkIn = new Date(formData.checkIn);
+      const checkOut = new Date(formData.checkOut);
+      const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+      
+      if (nights < 2) {
+        alert('Minimum stay is 2 nights');
+        return;
+      }
+
+      // Send email (simulated)
+      try {
+        const response = await fetch('https://formspree.io/f/stay@villagehub.co.za', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          alert('Booking request sent successfully! We will contact you shortly.');
+          closeBookingModal();
+        } else {
+          throw new Error('Failed to send booking request');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error submitting your request. Please try again or contact us directly.');
+      }
     });
+
+    // Initialize availability check when page loads
+    document.addEventListener('DOMContentLoaded', checkAvailability);
   </script>
 </body>
 </html>
