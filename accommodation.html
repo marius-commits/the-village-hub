@@ -44,15 +44,11 @@
       </div>
     </div>
   </div>
+
   <div class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-[#6B4423]">Check Availability</h2>
-        <div id="calendar" class="mt-8 mx-auto" style="max-width: 900px"></div>
-      </div>
-      
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Ember Suite -->
+        <!-- Ember Suite -->
         <div class="suite-card ember bg-white rounded-lg shadow-md p-6">
           <div class="flex justify-between items-start">
             <h3 class="text-2xl font-bold text-[#6B4423]">Ember Suite</h3>
@@ -281,137 +277,7 @@
   </div>
 
   <custom-footer></custom-footer>
-  <!-- Booking Form Modal -->
-  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full">
-      <h3 class="text-xl font-bold text-[#6B4423] mb-4">Booking Request</h3>
-      <form id="bookingForm" class="space-y-4">
-        <div>
-          <label for="suite" class="block text-sm font-medium text-gray-700">Suite</label>
-          <select id="suite" name="suite" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-            <option value="" disabled selected>Select a suite</option>
-            <option value="Ember">Ember Suite</option>
-            <option value="Sol">Sol Suite</option>
-            <option value="Olive">Olive Suite</option>
-            <option value="Azure">Azure Suite</option>
-            <option value="Slate">Slate Suite</option>
-          </select>
-        </div>
-        <div>
-          <label for="checkin" class="block text-sm font-medium text-gray-700">Check-in Date</label>
-          <input type="date" id="checkin" name="checkin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-        </div>
-        <div>
-          <label for="checkout" class="block text-sm font-medium text-gray-700">Check-out Date</label>
-          <input type="date" id="checkout" name="checkout" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-        </div>
-        <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-          <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-        </div>
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-        </div>
-        <div>
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-          <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-        </div>
-        <div class="flex justify-end space-x-4">
-          <button type="button" id="cancelBooking" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-[#8A9A5B] text-white rounded-md text-sm font-medium hover:bg-[#6F7A45]">Request Booking</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize calendar
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,dayGridWeek'
-        },
-        height: 'auto',
-        events: [
-          // Ember Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y19iYzkwNTdkOWUzZDM1MWU0MWZmMjM3ZWFiMWI3NmNjMDk0ZGRlM2ExMGM3ZGM1MjMwMGE0NmZlZjViMDVmNmJiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#E27D60',
-            display: 'background'
-          },
-          // Sol Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y185NjA0MDA1Y2NlMmM2ODIwMzcwODY4YzY5YTliNTk2OTMxOGRiOTBlYTYwMmQwMmJlZGY2ODY0MTMyMzFmNmM2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#E8A87C',
-            display: 'background'
-          },
-          // Olive Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18yZDk4ZGY5MTdhNWQ3MjM1OTE3MjgzMjcxMDRiODIyMzY2YjhkNTBlOWExNDYwNzRkYWQyMjc1MWMzOWViM2NmQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#41B3A3',
-            display: 'background'
-          },
-          // Azure Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18xYzE1YmYzNGI1NTgwMDgxMTdjYjBmMzAwYmRmODI1MWNiYjJiZmRlMjhhYzQ5MzgxNTI2Y2E5ZTY3ZmIzMThjQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#C38D9E',
-            display: 'background'
-          },
-          // Slate Suite
-          {
-            title: 'Booked',
-            url: 'https://calendar.google.com/calendar/u/3?cid=Y18yYjA4NTQ1MTMzZmJlYjg2ZDhlOGIzZGUyMGQ5Yjk4ODQzZWY5YWJkYWIyMDdjNWFhNTA5YjliZjBiZDAxOTUwQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20',
-            color: '#85CDCA',
-            display: 'background'
-          }
-        ],
-        dateClick: function(info) {
-          document.getElementById('checkin').value = info.dateStr;
-          document.getElementById('bookingModal').classList.remove('hidden');
-        },
-        eventClick: function(info) {
-          window.open(info.event.url);
-        }
-      });
-      calendar.render();
-
-      // Modal handling
-      const bookingModal = document.getElementById('bookingModal');
-      const bookingForm = document.getElementById('bookingForm');
-      const cancelBtn = document.getElementById('cancelBooking');
-
-      cancelBtn.addEventListener('click', function() {
-        bookingModal.classList.add('hidden');
-      });
-
-      bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(bookingForm);
-        const data = Object.fromEntries(formData.entries());
-        
-        // Send email request (you would need a backend for this)
-        const mailtoLink = `mailto:stay@villagehub.co.za?subject=Booking Request for ${data.suite}&body=Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0APhone: ${data.phone}%0D%0ASuite: ${data.suite}%0D%0ACheck-in: ${data.checkin}%0D%0ACheck-out: ${data.checkout}%0D%0A%0D%0AAdditional requests:`;
-        
-        window.location.href = mailtoLink;
-        bookingModal.classList.add('hidden');
-        bookingForm.reset();
-        
-        alert('Your booking request has been submitted. We will contact you shortly.');
-      });
-    });
-  </script>
 </body>
 </html>
