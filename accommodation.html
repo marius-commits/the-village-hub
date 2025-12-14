@@ -27,6 +27,12 @@
       gap: 8px;
       margin-bottom: 8px;
     }
+
+    /* Modal micro-animations */
+    .vh-modal-enter { animation: vhFadeIn .18s ease-out both; }
+    .vh-panel-enter { animation: vhSlideUp .18s ease-out both; }
+    @keyframes vhFadeIn { from {opacity:0} to {opacity:1} }
+    @keyframes vhSlideUp { from {opacity:0; transform: translateY(10px) scale(.99)} to {opacity:1; transform: translateY(0) scale(1)} }
   </style>
 </head>
 <body class="font-sans antialiased">
@@ -94,10 +100,11 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms"
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+            <button
+              onclick="openBookingModal('Ember Suite (Red)')"
+              class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
               Book Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -118,10 +125,11 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms"
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+            <button
+              onclick="openBookingModal('Sol Suite (Yellow)')"
+              class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
               Book Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -142,10 +150,11 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms"
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+            <button
+              onclick="openBookingModal('Olive Suite (Green)')"
+              class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
               Book Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -166,10 +175,11 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms"
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+            <button
+              onclick="openBookingModal('Azure Suite (Blue)')"
+              class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
               Book Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -190,10 +200,11 @@
           </div>
           <div class="mt-6">
             <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms"
-               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+            <button
+              onclick="openBookingModal('Slate Suite (Grey)')"
+              class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
               Book Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -201,8 +212,347 @@
     </div>
   </div>
 
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden bg-black/50 px-4">
+    <div class="min-h-full flex items-center justify-center">
+      <div class="vh-modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-[#E9E4DE] overflow-hidden">
+        <!-- Header -->
+        <div class="vh-panel-enter bg-[#FAF8F6] px-6 sm:px-8 py-5 border-b border-[#E9E4DE]">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-extrabold text-[#6B4423]">Request a Booking</h2>
+              <p class="mt-1 text-sm text-gray-600">
+                We’ll check availability, place a temporary hold, and email payment details to confirm.
+              </p>
+            </div>
+            <button
+              type="button"
+              onclick="closeBookingModal()"
+              class="h-10 w-10 rounded-full bg-white border border-[#E9E4DE] text-gray-500 hover:text-gray-700 hover:bg-[#F3EFEA] transition flex items-center justify-center"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="px-6 sm:px-8 py-6">
+          <!-- Status -->
+          <div id="availabilityStatus" class="text-sm text-gray-500 mb-4"></div>
+
+          <!-- Success -->
+          <div id="successBox" class="hidden mb-4 rounded-lg bg-green-50 border border-green-200 p-4 text-green-800">
+            ✅ Request received! We’ve placed a temporary hold and will email payment details shortly.
+          </div>
+
+          <!-- Error -->
+          <div id="errorBox" class="hidden mb-4 rounded-lg bg-red-50 border border-red-200 p-4 text-red-800"></div>
+
+          <form id="bookingForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700">Suite</label>
+              <select id="suiteField" name="suite" required
+                class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+                <option>Ember Suite (Red)</option>
+                <option>Sol Suite (Yellow)</option>
+                <option>Olive Suite (Green)</option>
+                <option>Azure Suite (Blue)</option>
+                <option>Slate Suite (Grey)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Check-in</label>
+                <input id="checkInField" type="date" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Check-out</label>
+                <input id="checkOutField" type="date" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Rooms</label>
+                <input id="roomsField" type="number" min="1" max="5" value="1" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+                <p class="mt-1 text-xs text-gray-500">If you need multiple suites, add details in Notes.</p>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Guests</label>
+                <input id="guestsField" type="number" min="1" max="10" value="1" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Full name</label>
+                <input id="fullNameField" type="text" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Mobile</label>
+                <input id="mobileField" type="tel" required
+                  class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-700">Email</label>
+              <input id="emailField" type="email" required
+                class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-700">Notes (optional)</label>
+              <textarea id="notesField" rows="3"
+                class="mt-1 w-full rounded-md border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]"
+                placeholder="Example: We’d like 2 suites if available, late check-in, etc."></textarea>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                id="submitBtn"
+                type="submit"
+                class="w-full sm:flex-1 bg-[#8A9A5B] text-white py-3 rounded-md font-semibold hover:bg-[#6F7A45] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                Send Booking Request
+              </button>
+              <button
+                type="button"
+                onclick="closeBookingModal()"
+                class="w-full sm:w-auto px-5 py-3 rounded-md font-semibold border border-[#E9E4DE] text-gray-700 hover:bg-[#F3EFEA] transition">
+                Cancel
+              </button>
+            </div>
+
+            <p class="text-xs text-gray-500 text-center pt-1">
+              Booking is confirmed only once availability is approved and payment is received.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <custom-footer></custom-footer>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
+
+  <script>
+    const BOOKING_API_URL = "https://script.google.com/macros/s/AKfycbymn0GgcoKIlsT1I6ZQn8GTL36XXVdr61OsCvnHS_dhzJPN5r7X81j5m6Z00Zp_F3e9/exec";
+
+    function openBookingModal(suiteName) {
+      // reset messages
+      setText("availabilityStatus", "");
+      hide("successBox");
+      hide("errorBox");
+
+      // set suite
+      document.getElementById("suiteField").value = suiteName;
+
+      // show modal
+      document.getElementById("bookingModal").classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+
+      // trigger availability check if dates already present
+      checkAvailability().catch(() => {});
+    }
+
+    function closeBookingModal() {
+      document.getElementById("bookingModal").classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+    function show(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove("hidden");
+    }
+    function hide(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("hidden");
+    }
+
+    function todayIso() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    async function checkAvailability() {
+      const suite = document.getElementById("suiteField").value;
+      const checkIn = document.getElementById("checkInField").value;
+      const checkOut = document.getElementById("checkOutField").value;
+
+      if (!suite || !checkIn || !checkOut) {
+        setText("availabilityStatus", "");
+        return;
+      }
+
+      // quick client-side validation
+      if (checkOut <= checkIn) {
+        setText("availabilityStatus", "❌ Check-out must be after check-in.");
+        document.getElementById("availabilityStatus").className = "text-sm text-red-600 mb-4";
+        return;
+      }
+
+      setText("availabilityStatus", "Checking availability…");
+      document.getElementById("availabilityStatus").className = "text-sm text-gray-600 mb-4";
+
+      const url = `${BOOKING_API_URL}?suite=${encodeURIComponent(suite)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
+      const res = await fetch(url, { method: "GET" });
+      const data = await res.json();
+
+      if (!data.ok) {
+        setText("availabilityStatus", data.error || "Could not check availability.");
+        document.getElementById("availabilityStatus").className = "text-sm text-red-600 mb-4";
+        return;
+      }
+
+      if (data.available) {
+        setText("availabilityStatus", "✅ Available for your selected dates.");
+        document.getElementById("availabilityStatus").className = "text-sm text-green-700 mb-4";
+      } else {
+        setText("availabilityStatus", "❌ Not available for those dates. Please choose different dates.");
+        document.getElementById("availabilityStatus").className = "text-sm text-red-600 mb-4";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // prevent past dates
+      const min = todayIso();
+      const ci = document.getElementById("checkInField");
+      const co = document.getElementById("checkOutField");
+      if (ci) ci.min = min;
+      if (co) co.min = min;
+
+      // When check-in changes, push check-out min forward
+      ci.addEventListener("change", () => {
+        if (co && ci.value) {
+          co.min = ci.value;
+          if (co.value && co.value <= ci.value) co.value = "";
+        }
+        checkAvailability().catch(() => {});
+      });
+
+      ["suiteField", "checkOutField"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("change", () => checkAvailability().catch(() => {}));
+      });
+
+      // Close modal when clicking backdrop
+      document.getElementById("bookingModal").addEventListener("click", (e) => {
+        if (e.target.id === "bookingModal") closeBookingModal();
+      });
+
+      // ESC closes modal
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !document.getElementById("bookingModal").classList.contains("hidden")) {
+          closeBookingModal();
+        }
+      });
+
+      // Submit -> validate -> create HOLD via Apps Script
+      document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hide("successBox");
+        hide("errorBox");
+
+        const suite = document.getElementById("suiteField").value;
+        const checkIn = document.getElementById("checkInField").value;
+        const checkOut = document.getElementById("checkOutField").value;
+
+        if (!suite || !checkIn || !checkOut) {
+          setText("errorBox", "Please select suite and dates.");
+          show("errorBox");
+          return;
+        }
+        if (checkOut <= checkIn) {
+          setText("errorBox", "Check-out must be after check-in.");
+          show("errorBox");
+          return;
+        }
+
+        // Confirm availability right before booking
+        try {
+          await checkAvailability();
+          const statusText = document.getElementById("availabilityStatus").textContent || "";
+          if (statusText.includes("Not available") || statusText.includes("❌")) {
+            setText("errorBox", "Those dates are not available for the selected suite. Please adjust and try again.");
+            show("errorBox");
+            return;
+          }
+        } catch (_) {
+          // if availability check fails, block submission
+          setText("errorBox", "Could not verify availability right now. Please try again in a moment.");
+          show("errorBox");
+          return;
+        }
+
+        const payload = {
+          suite,
+          checkIn,
+          checkOut,
+          rooms: document.getElementById("roomsField").value,
+          guests: document.getElementById("guestsField").value,
+          fullName: document.getElementById("fullNameField").value,
+          mobile: document.getElementById("mobileField").value,
+          email: document.getElementById("emailField").value,
+          notes: document.getElementById("notesField").value
+        };
+
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.textContent = "Placing hold…";
+
+        try {
+          const res = await fetch(BOOKING_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json();
+
+          if (!data.ok) {
+            setText("errorBox", data.error || "Something went wrong. Please try again.");
+            show("errorBox");
+            return;
+          }
+
+          show("successBox");
+          setText("availabilityStatus", "✅ Hold placed successfully. We’ll email payment details shortly.");
+          document.getElementById("availabilityStatus").className = "text-sm text-green-700 mb-4";
+
+          // Clear form inputs (keep suite preselected for convenience)
+          document.getElementById("checkInField").value = "";
+          document.getElementById("checkOutField").value = "";
+          document.getElementById("roomsField").value = "1";
+          document.getElementById("guestsField").value = "1";
+          document.getElementById("fullNameField").value = "";
+          document.getElementById("mobileField").value = "";
+          document.getElementById("emailField").value = "";
+          document.getElementById("notesField").value = "";
+
+        } catch (err) {
+          setText("errorBox", "Network error. Please try again.");
+          show("errorBox");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Send Booking Request";
+        }
+      });
+    });
+  </script>
 </body>
 </html>
