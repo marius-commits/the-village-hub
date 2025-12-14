@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accommodation Booking | The Village Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <style>
+    .suite-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .suite-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+    .ember { border-left-color: #e53e3e; }
+    .sol { border-left-color: #ecc94b; }
+    .olive { border-left-color: #48bb78; }
+    .azure { border-left-color: #4299e1; }
+    .slate { border-left-color: #718096; }
+    .suite-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <custom-navbar></custom-navbar>
+
+  <div class="bg-[#FAF8F6] py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl font-extrabold text-[#6B4423] sm:text-5xl">
+          The Village Suites
+        </h1>
+        <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+          Your stay, rooted in tranquility. Wake up in the heart of Nooitgedacht Village — where modern comfort meets the calm of the winelands.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Ember Suite -->
+        <div class="suite-card ember bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <h3 class="text-2xl font-bold text-[#6B4423]">Ember Suite</h3>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">Red</span>
+          </div>
+          <div class="mt-4">
+            <div class="suite-feature">
+              <span>🛏</span>
+              <span>Two single beds (convertible to a King)</span>
+            </div>
+            <div class="suite-feature">
+              <span>📺</span>
+              <span>Smart TV with unlimited Wi-Fi</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍳</span>
+              <span>Compact kitchenette for light meals</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚿</span>
+              <span>Private bathroom with walk-in shower</span>
+            </div>
+            <div class="suite-feature">
+              <span>✨</span>
+              <span>50% off access to Village Hub Co-Working</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍽</span>
+              <span>Discounts at The Village Table Restaurant</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚶‍♀️</span>
+              <span>Full estate amenities & trails access</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
+            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
+               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+              Book Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Sol Suite -->
+        <div class="suite-card sol bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <h3 class="text-2xl font-bold text-[#6B4423]">Sol Suite</h3>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">Yellow</span>
+          </div>
+          <div class="mt-4">
+            <div class="suite-feature">
+              <span>🛏</span>
+              <span>Two single beds (convertible to a King)</span>
+            </div>
+            <div class="suite-feature">
+              <span>📺</span>
+              <span>Smart TV with unlimited Wi-Fi</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍳</span>
+              <span>Compact kitchenette for light meals</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚿</span>
+              <span>Private bathroom with walk-in shower</span>
+            </div>
+            <div class="suite-feature">
+              <span>✨</span>
+              <span>50% off access to Village Hub Co-Working</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍽</span>
+              <span>Discounts at The Village Table Restaurant</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚶‍♀️</span>
+              <span>Full estate amenities & trails access</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
+            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
+               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+              Book Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Olive Suite -->
+        <div class="suite-card olive bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <h3 class="text-2xl font-bold text-[#6B4423]">Olive Suite</h3>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">Green</span>
+          </div>
+          <div class="mt-4">
+            <div class="suite-feature">
+              <span>🛏</span>
+              <span>Two single beds (convertible to a King)</span>
+            </div>
+            <div class="suite-feature">
+              <span>📺</span>
+              <span>Smart TV with unlimited Wi-Fi</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍳</span>
+              <span>Compact kitchenette for light meals</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚿</span>
+              <span>Private bathroom with walk-in shower</span>
+            </div>
+            <div class="suite-feature">
+              <span>✨</span>
+              <span>50% off access to Village Hub Co-Working</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍽</span>
+              <span>Discounts at The Village Table Restaurant</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚶‍♀️</span>
+              <span>Full estate amenities & trails access</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
+            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
+               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+              Book Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Azure Suite -->
+        <div class="suite-card azure bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <h3 class="text-2xl font-bold text-[#6B4423]">Azure Suite</h3>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">Blue</span>
+          </div>
+          <div class="mt-4">
+            <div class="suite-feature">
+              <span>🛏</span>
+              <span>Two single beds (convertible to a King)</span>
+            </div>
+            <div class="suite-feature">
+              <span>📺</span>
+              <span>Smart TV with unlimited Wi-Fi</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍳</span>
+              <span>Compact kitchenette for light meals</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚿</span>
+              <span>Private bathroom with walk-in shower</span>
+            </div>
+            <div class="suite-feature">
+              <span>✨</span>
+              <span>50% off access to Village Hub Co-Working</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍽</span>
+              <span>Discounts at The Village Table Restaurant</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚶‍♀️</span>
+              <span>Full estate amenities & trails access</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
+            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
+               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+              Book Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Slate Suite -->
+        <div class="suite-card slate bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <h3 class="text-2xl font-bold text-[#6B4423]">Slate Suite</h3>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">Grey</span>
+          </div>
+          <div class="mt-4">
+            <div class="suite-feature">
+              <span>🛏</span>
+              <span>Two single beds (convertible to a King)</span>
+            </div>
+            <div class="suite-feature">
+              <span>📺</span>
+              <span>Smart TV with unlimited Wi-Fi</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍳</span>
+              <span>Compact kitchenette for light meals</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚿</span>
+              <span>Private bathroom with walk-in shower</span>
+            </div>
+            <div class="suite-feature">
+              <span>✨</span>
+              <span>50% off access to Village Hub Co-Working</span>
+            </div>
+            <div class="suite-feature">
+              <span>🍽</span>
+              <span>Discounts at The Village Table Restaurant</span>
+            </div>
+            <div class="suite-feature">
+              <span>🚶‍♀️</span>
+              <span>Full estate amenities & trails access</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
+            <a href="https://app.spacebring.com/thevillagehub/locations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" 
+               class="mt-4 inline-block w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
+              Book Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <custom-footer></custom-footer>
+  <script src="components/navbar.js"></script>
+  <script src="components/footer.js"></script>
+</body>
+</html>
