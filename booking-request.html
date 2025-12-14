@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Request | The Village Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .booking-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid #8A9A5B;
+    }
+    .booking-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+    .form-input {
+      border: 1px solid #E8D9C5;
+      border-radius: 6px;
+      padding: 10px 12px;
+      width: 100%;
+      transition: border-color 0.3s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #8A9A5B;
+      box-shadow: 0 0 0 3px rgba(138, 154, 91, 0.2);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased bg-[#FAF8F6]">
+  <custom-navbar></custom-navbar>
+
+  <div class="py-16 bg-gradient-to-b from-[#F8F1E5] to-[#E8D9C5]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl font-extrabold text-[#6B4423] sm:text-5xl">
+        Booking Request
+      </h1>
+      <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+        Reserve your workspace or accommodation at The Village Hub
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Booking Form -->
+      <div class="booking-card bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-[#6B4423] mb-6">Request Details</h2>
+        
+        <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
+          <input type="hidden" name="form-name" value="booking">
+          <p class="hidden">
+            <label>Don't fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="firstname" class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+              <input type="text" id="firstname" name="firstname" required class="form-input">
+            </div>
+            <div>
+              <label for="lastname" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+              <input type="text" id="lastname" name="lastname" required class="form-input">
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+            <input type="email" id="email" name="email" required class="form-input">
+          </div>
+
+          <div class="mb-6">
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required class="form-input">
+          </div>
+
+          <div class="mb-6">
+            <label for="booking-type" class="block text-sm font-medium text-gray-700 mb-1">Booking Type *</label>
+            <select id="booking-type" name="booking-type" required class="form-input">
+              <option value="" disabled selected>Select booking type</option>
+              <option value="Coworking - Day Pass">Coworking - Day Pass</option>
+              <option value="Coworking - Dedicated Desk">Coworking - Dedicated Desk</option>
+              <option value="Private Office">Private Office</option>
+              <option value="Meeting Room">Meeting Room</option>
+              <option value="Event Space">Event Space</option>
+              <option value="Accommodation">Accommodation</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Start Date *</label>
+              <input type="date" id="start-date" name="start-date" required class="form-input">
+            </div>
+            <div>
+              <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+              <input type="date" id="end-date" name="end-date" class="form-input">
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+            <textarea id="notes" name="notes" rows="4" class="form-input"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-[#8A9A5B] text-white py-3 px-4 rounded-md hover:bg-[#6F7A45] transition-colors font-medium">
+            Submit Booking Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Booking Info -->
+      <div class="space-y-6">
+        <div class="booking-card bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-[#6B4423] mb-4">Need Help?</h2>
+          <p class="text-gray-600 mb-4">Our team is happy to assist with your booking or answer any questions about our spaces.</p>
+          <div class="space-y-3">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 h-10 w-10 rounded-full bg-[#F8F1E5] flex items-center justify-center text-[#6B4423]">
+                ✉️
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">Email Us</h3>
+                <p class="text-gray-600">bookings@villagehub.co.za</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex-shrink-0 h-10 w-10 rounded-full bg-[#F8F1E5] flex items-center justify-center text-[#6B4423]">
+                📞
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">Call Us</h3>
+                <p class="text-gray-600">+27 72 190 0939</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex-shrink-0 h-10 w-10 rounded-full bg-[#F8F1E5] flex items-center justify-center text-[#6B4423]">
+                💬
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">WhatsApp</h3>
+                <p class="text-gray-600">
+                  <a href="https://wa.me/27721900939" class="text-[#6B4423] underline">Chat with us</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-card bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-[#6B4423] mb-4">Booking Policies</h2>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-[#8A9A5B]">✓</div>
+              <p class="ml-2 text-gray-600">Confirmation within 24 hours</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-[#8A9A5B]">✓</div>
+              <p class="ml-2 text-gray-600">Flexible cancellation (varies by booking type)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-[#8A9A5B]">✓</div>
+              <p class="ml-2 text-gray-600">Secure payment options</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-[#8A9A5B]">✓</div>
+              <p class="ml-2 text-gray-600">24/7 access for members</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <custom-footer></custom-footer>
+  <script src="components/navbar.js"></script>
+  <script src="components/footer.js"></script>
+</body>
+</html>
