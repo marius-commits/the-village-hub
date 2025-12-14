@@ -111,7 +111,6 @@ class CustomNavbar extends HTMLElement {
             <a href="/#gallery" class="nav-link">Gallery</a>
             <a href="/#community" class="nav-link">Community</a>
             <a href="/pricing.html" class="nav-link">Pricing</a>
-            <a href="/booking-request.html" class="nav-link">Book Now</a>
             <a href="https://www.villagehub.co.za/coworking-vs-traditional-2" class="nav-link">Comparison</a>
 <a href="/pricing.html" class="cta-button">Explore Village Options</a>
           </div>
