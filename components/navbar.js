@@ -112,10 +112,9 @@ class CustomNavbar extends HTMLElement {
             <a href="/#community" class="nav-link">Community</a>
             <a href="/pricing.html" class="nav-link">Pricing</a>
             <a href="https://www.villagehub.co.za/coworking-vs-traditional-2" class="nav-link">Comparison</a>
-            <a href="/accommodation.html" class="nav-link">Stay With Us</a>
-            <a href="/pricing.html" class="cta-button">Explore Village Options</a>
+<a href="/pricing.html" class="cta-button">Explore Village Options</a>
           </div>
-<button class="mobile-menu-btn">
+          <button class="mobile-menu-btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
