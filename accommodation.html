@@ -57,9 +57,8 @@
             </select>
           </div>
         </div>
-
-        <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <button id="checkBtn"
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+<button id="checkBtn"
             class="w-full sm:w-auto bg-[#8A9A5B] text-white py-2 px-5 rounded-md hover:bg-[#6F7A45] transition-colors">
             Check availability
           </button>
@@ -333,10 +332,83 @@
 
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
+  <style>
+    .slideshow-container {
+      max-width: 100%;
+      position: relative;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .slide {
+      flex: 0 0 100%;
+    }
+    .slideshow-prev, .slideshow-next {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .slideshow-prev:hover, .slideshow-next:hover {
+      background-color: white;
+    }
+    .dot.active {
+      background-color: white;
+    }
+  </style>
 
   <script>
+    // Slideshow functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const slides = document.querySelector('.slides');
+      const slideItems = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      const prevBtn = document.querySelector('.slideshow-prev');
+      const nextBtn = document.querySelector('.slideshow-next');
+      
+      let currentIndex = 0;
+      const totalSlides = slideItems.length;
+
+      function updateSlide() {
+        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+      }
+
+      // Next slide
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlide();
+      });
+
+      // Previous slide
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlide();
+      });
+
+      // Dot navigation
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          currentIndex = index;
+          updateSlide();
+        });
+      });
+
+      // Auto-advance every 5 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlide();
+      }, 5000);
+
+      // Initialize first dot as active
+      dots[0].classList.add('active');
+    });
+
     // ---------- Helpers ----------
-    function showGlobalError(msg) {
+function showGlobalError(msg) {
       const el = document.getElementById('globalError');
       el.textContent = msg;
       el.classList.remove('hidden');
