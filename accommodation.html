@@ -1,457 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accommodation Booking | The Village Hub</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+
   <style>
-    .suite-card {
-      transition: all 0.3s ease;
-      border-left: 4px solid transparent;
-    }
-    .suite-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-    }
-    .ember { border-left-color: #e53e3e; }
-    .sol { border-left-color: #ecc94b; }
-    .olive { border-left-color: #48bb78; }
-    .azure { border-left-color: #4299e1; }
-    .slate { border-left-color: #718096; }
-    .suite-feature {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
+    .suite-card { transition: all 0.25s ease; border: 1px solid rgba(0,0,0,0.06); }
+    .suite-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -10px rgba(0,0,0,0.18); }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700; }
+    .dot { width:10px; height:10px; border-radius:999px; display:inline-block; }
+    .backdrop { background: rgba(0,0,0,0.55); }
+    .fade-in { animation: fadeIn .15s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
-<body class="font-sans antialiased">
+
+<body class="font-sans antialiased bg-[#FAF8F6] text-gray-900">
   <custom-navbar></custom-navbar>
 
-  <div class="bg-[#FAF8F6] py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- HERO -->
+  <section class="pt-12 pb-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <h1 class="text-4xl font-extrabold text-[#6B4423] sm:text-5xl">
-          The Village Suites
-        </h1>
-        <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-          Your stay, rooted in tranquility. Wake up in the heart of Nooitgedacht Village — where modern comfort meets the calm of the winelands.
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#6B4423]">The Village Suites</h1>
+        <p class="mt-4 text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto">
+          A peaceful stay in Nooitgedacht Village — modern comfort meets winelands calm.
         </p>
       </div>
+
+      <!-- BOOKING BAR -->
+      <div class="mt-10 bg-white rounded-2xl shadow-sm border border-black/5 p-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Check-in</label>
+            <input id="checkInTop" type="date"
+              class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Check-out</label>
+            <input id="checkOutTop" type="date"
+              class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Guests</label>
+            <select id="guestsTop"
+              class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button id="checkBtn"
+              class="w-full rounded-lg bg-[#8A9A5B] text-white font-semibold py-3 hover:bg-[#6F7A45] transition">
+              Check availability
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div class="text-sm text-gray-600">
+            <span class="font-semibold">Minimum stay:</span> 2 nights • <span class="font-semibold">Sleeps:</span> 1–2 guests
+          </div>
+          <div class="text-sm text-gray-600">
+            Need help? Email <a class="underline font-semibold" href="mailto:stay@villagehub.co.za">stay@villagehub.co.za</a>
+          </div>
+        </div>
+
+        <div id="validationMsg" class="mt-3 text-sm font-semibold hidden"></div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Ember Suite -->
-        <div class="suite-card ember bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Ember Suite</h3>
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">Red</span>
-          </div>
-          <div class="mt-4">
-            <div class="suite-feature">
-              <span>🛏</span>
-              <span>Two single beds (convertible to a King)</span>
-            </div>
-            <div class="suite-feature">
-              <span>📺</span>
-              <span>Smart TV with unlimited Wi-Fi</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍳</span>
-              <span>Compact kitchenette for light meals</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚿</span>
-              <span>Private bathroom with walk-in shower</span>
-            </div>
-            <div class="suite-feature">
-              <span>✨</span>
-              <span>50% off access to Village Hub Co-Working</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍽</span>
-              <span>Discounts at The Village Table Restaurant</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚶‍♀️</span>
-              <span>Full estate amenities & trails access</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <div class="mt-4">
-              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-ember"></div>
-              <button onclick="openBookingModal('Ember Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-                Request Booking
-              </button>
-            </div>
-</div>
-        </div>
+  <!-- SUITES -->
+  <section class="pb-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-2xl font-extrabold text-[#6B4423]">Choose your suite</h2>
+        <div id="resultsHint" class="text-sm text-gray-600">Select dates to see availability.</div>
+      </div>
 
-        <!-- Sol Suite -->
-        <div class="suite-card sol bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Sol Suite</h3>
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">Yellow</span>
-          </div>
-          <div class="mt-4">
-            <div class="suite-feature">
-              <span>🛏</span>
-              <span>Two single beds (convertible to a King)</span>
-            </div>
-            <div class="suite-feature">
-              <span>📺</span>
-              <span>Smart TV with unlimited Wi-Fi</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍳</span>
-              <span>Compact kitchenette for light meals</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚿</span>
-              <span>Private bathroom with walk-in shower</span>
-            </div>
-            <div class="suite-feature">
-              <span>✨</span>
-              <span>50% off access to Village Hub Co-Working</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍽</span>
-              <span>Discounts at The Village Table Restaurant</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚶‍♀️</span>
-              <span>Full estate amenities & trails access</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <div class="mt-4">
-              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-sol"></div>
-              <button onclick="openBookingModal('Sol Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-                Request Booking
-              </button>
-            </div>
-</div>
-        </div>
+      <div id="suitesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-        <!-- Olive Suite -->
-        <div class="suite-card olive bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Olive Suite</h3>
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">Green</span>
-          </div>
-          <div class="mt-4">
-            <div class="suite-feature">
-              <span>🛏</span>
-              <span>Two single beds (convertible to a King)</span>
-            </div>
-            <div class="suite-feature">
-              <span>📺</span>
-              <span>Smart TV with unlimited Wi-Fi</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍳</span>
-              <span>Compact kitchenette for light meals</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚿</span>
-              <span>Private bathroom with walk-in shower</span>
-            </div>
-            <div class="suite-feature">
-              <span>✨</span>
-              <span>50% off access to Village Hub Co-Working</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍽</span>
-              <span>Discounts at The Village Table Restaurant</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚶‍♀️</span>
-              <span>Full estate amenities & trails access</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <div class="mt-4">
-              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-olive"></div>
-              <button onclick="openBookingModal('Olive Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-                Request Booking
-              </button>
-            </div>
-</div>
-        </div>
-
-        <!-- Azure Suite -->
-        <div class="suite-card azure bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Azure Suite</h3>
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">Blue</span>
-          </div>
-          <div class="mt-4">
-            <div class="suite-feature">
-              <span>🛏</span>
-              <span>Two single beds (convertible to a King)</span>
-            </div>
-            <div class="suite-feature">
-              <span>📺</span>
-              <span>Smart TV with unlimited Wi-Fi</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍳</span>
-              <span>Compact kitchenette for light meals</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚿</span>
-              <span>Private bathroom with walk-in shower</span>
-            </div>
-            <div class="suite-feature">
-              <span>✨</span>
-              <span>50% off access to Village Hub Co-Working</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍽</span>
-              <span>Discounts at The Village Table Restaurant</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚶‍♀️</span>
-              <span>Full estate amenities & trails access</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <div class="mt-4">
-              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-azure"></div>
-              <button onclick="openBookingModal('Azure Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-                Request Booking
-              </button>
-            </div>
-</div>
-        </div>
-
-        <!-- Slate Suite -->
-        <div class="suite-card slate bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Slate Suite</h3>
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">Grey</span>
-          </div>
-          <div class="mt-4">
-            <div class="suite-feature">
-              <span>🛏</span>
-              <span>Two single beds (convertible to a King)</span>
-            </div>
-            <div class="suite-feature">
-              <span>📺</span>
-              <span>Smart TV with unlimited Wi-Fi</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍳</span>
-              <span>Compact kitchenette for light meals</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚿</span>
-              <span>Private bathroom with walk-in shower</span>
-            </div>
-            <div class="suite-feature">
-              <span>✨</span>
-              <span>50% off access to Village Hub Co-Working</span>
-            </div>
-            <div class="suite-feature">
-              <span>🍽</span>
-              <span>Discounts at The Village Table Restaurant</span>
-            </div>
-            <div class="suite-feature">
-              <span>🚶‍♀️</span>
-              <span>Full estate amenities & trails access</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-lg font-normal text-gray-600">/ night</span></div>
-            <div class="mt-4">
-              <div class="text-sm text-gray-500 mb-2 availability-badge" id="availability-slate"></div>
-              <button onclick="openBookingModal('Slate Suite')" class="w-full bg-[#8A9A5B] text-white text-center py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors">
-                Request Booking
-              </button>
-            </div>
-</div>
+      <!-- SHARED INCLUDES -->
+      <div class="mt-10 bg-white rounded-2xl shadow-sm border border-black/5 p-6">
+        <h3 class="text-lg font-extrabold text-[#6B4423]">Included with every suite</h3>
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-gray-700">
+          <div>📶 Unlimited Wi-Fi</div>
+          <div>📺 Smart TV</div>
+          <div>🍳 Compact kitchenette</div>
+          <div>🚿 Private bathroom (walk-in shower)</div>
+          <div>🚶‍♀️ Estate amenities & trails access</div>
+          <div>✨ 50% off Village Hub co-working access</div>
+          <div>🍽 Discounts at The Village Table Restaurant</div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Booking Modal -->
-  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-bold text-[#6B4423]" id="modalTitle">Request Booking</h3>
-        <button onclick="closeBookingModal()" class="text-gray-500 hover:text-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </section>
+
+  <!-- BOOKING MODAL -->
+  <div id="bookingModal" class="fixed inset-0 hidden z-50 flex items-center justify-center p-4 backdrop">
+    <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 fade-in">
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 class="text-xl font-extrabold text-[#6B4423]" id="modalTitle">Request booking</h3>
+          <p class="text-sm text-gray-600 mt-1" id="modalSubtitle">We’ll confirm availability via email.</p>
+        </div>
+        <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-      
-      <form id="bookingForm" class="space-y-4">
-        <input type="hidden" id="suiteType">
-        
-        <div>
-          <label for="checkIn" class="block text-sm font-medium text-gray-700">Check-in Date</label>
-          <input type="date" id="checkIn" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+
+      <!-- Netlify Form (AJAX) -->
+      <form id="bookingForm"
+            name="suite-booking"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="mt-5 space-y-4">
+
+        <input type="hidden" name="form-name" value="suite-booking" />
+        <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+
+        <!-- Hidden fields -->
+        <input type="hidden" name="Suite" id="suiteField" />
+        <input type="hidden" name="CheckIn" id="checkInField" />
+        <input type="hidden" name="CheckOut" id="checkOutField" />
+        <input type="hidden" name="Guests" id="guestsField" />
+        <input type="hidden" name="Nights" id="nightsField" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Full name</label>
+            <input name="Name" id="name" required
+                   class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Email</label>
+            <input name="Email" id="email" type="email" required
+                   class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+          </div>
         </div>
-        
-        <div>
-          <label for="checkOut" class="block text-sm font-medium text-gray-700">Check-out Date</label>
-          <input type="date" id="checkOut" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Phone</label>
+            <input name="Phone" id="phone" type="tel" required
+                   class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Guests</label>
+            <input id="guestsDisplay" disabled
+                   class="mt-1 w-full rounded-lg border-gray-200 bg-gray-50 text-gray-700" />
+          </div>
         </div>
-        
-        <div>
-          <label for="guests" class="block text-sm font-medium text-gray-700">Number of Guests (1-2)</label>
-          <input type="number" id="guests" min="1" max="2" value="1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Check-in</label>
+            <input id="checkInDisplay" disabled
+                   class="mt-1 w-full rounded-lg border-gray-200 bg-gray-50 text-gray-700" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700">Check-out</label>
+            <input id="checkOutDisplay" disabled
+                   class="mt-1 w-full rounded-lg border-gray-200 bg-gray-50 text-gray-700" />
+          </div>
         </div>
-        
+
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-          <input type="text" id="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+          <label class="block text-sm font-semibold text-gray-700">Special requests</label>
+          <textarea name="Notes" id="notes" rows="3"
+                    class="mt-1 w-full rounded-lg border-gray-300 focus:border-[#8A9A5B] focus:ring-[#8A9A5B]"
+                    placeholder="Late check-in, travel cot, etc."></textarea>
         </div>
-        
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
-        </div>
-        
-        <div>
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-          <input type="tel" id="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
-        </div>
-        
-        <div>
-          <label for="notes" class="block text-sm font-medium text-gray-700">Special Requests</label>
-          <textarea id="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]"></textarea>
-        </div>
-        
-        <div class="flex justify-end space-x-3">
-          <button type="button" onclick="closeBookingModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+
+        <div class="flex items-center justify-between gap-3 pt-2">
+          <button type="button" id="cancelBtn"
+                  class="px-4 py-2 rounded-lg border border-gray-300 font-semibold text-gray-700 hover:bg-gray-50">
             Cancel
           </button>
-          <button type="submit" class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#8A9A5B] hover:bg-[#6F7A45]">
-            Submit Request
+          <button type="submit" id="submitBtn"
+                  class="px-5 py-2 rounded-lg bg-[#8A9A5B] text-white font-extrabold hover:bg-[#6F7A45]">
+            Submit request
           </button>
         </div>
+
+        <p id="submitError" class="hidden text-sm font-semibold text-red-700"></p>
       </form>
+    </div>
+  </div>
+
+  <!-- THANK YOU POPUP -->
+  <div id="thanksToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden z-[60]">
+    <div class="bg-white border border-black/10 shadow-xl rounded-2xl px-5 py-4 max-w-md fade-in">
+      <div class="flex items-start gap-3">
+        <div class="mt-0.5">✅</div>
+        <div class="flex-1">
+          <div class="font-extrabold text-[#6B4423]">Thanks! Your request was sent successfully.</div>
+          <div class="text-sm text-gray-700 mt-1">
+            We’ll confirm your booking as soon as availability is verified and reply via email.
+          </div>
+        </div>
+        <button id="closeThanks" class="text-gray-500 hover:text-gray-800">✕</button>
+      </div>
     </div>
   </div>
 
   <custom-footer></custom-footer>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+
   <script>
-    // Google Calendar IDs for each suite
-    const calendarIds = {
-      'ember': 'c_bc9057d9e3d351e41ff237eab1b76cc094dde3a10c7dc52300a46fef5b05f6bb@group.calendar.google.com',
-      'sol': 'c_9604005cce2c6820370868c69a9b5969318db90ea602d02bedf686413231f6c6@group.calendar.google.com',
-      'olive': 'c_2d98df917a5d723591728327104b822366b8d50e9a146074dad22751c39eb3cf@group.calendar.google.com',
-      'azure': 'c_1c15bf34b558008117cb0f300bdf8251cbb2bfde28ac49381526ca9e67fb318c@group.calendar.google.com',
-      'slate': 'c_2b08545133fbeb86d8e8b3de20d9b98843ef9abdab207c5aa509b9bf0bd01950@group.calendar.google.com'
-    };
+    const suites = [
+      { key:'ember', name:'Ember Suite', price:1350, color:'#e53e3e' },
+      { key:'sol',   name:'Sol Suite',   price:1350, color:'#ecc94b' },
+      { key:'olive', name:'Olive Suite', price:1350, color:'#48bb78' },
+      { key:'azure', name:'Azure Suite', price:1350, color:'#4299e1' },
+      { key:'slate', name:'Slate Suite', price:1350, color:'#718096' }
+    ];
 
-    // Check availability for all suites
-    async function checkAvailability() {
-      for (const [suite, calId] of Object.entries(calendarIds)) {
-        try {
-          const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calId}/events?key=YOUR_API_KEY`);
-          const data = await response.json();
-          const badge = document.getElementById(`availability-${suite}`);
-          
-          if (data.items && data.items.length > 0) {
-            // Has bookings - mark as partially available
-            badge.textContent = 'Limited Availability';
-            badge.className = 'text-sm text-yellow-600 mb-2 availability-badge';
-          } else {
-            // No bookings - fully available
-            badge.textContent = 'Available';
-            badge.className = 'text-sm text-green-600 mb-2 availability-badge';
-          }
-        } catch (error) {
-          console.error('Error checking availability:', error);
-          const badge = document.getElementById(`availability-${suite}`);
-          badge.textContent = 'Check Availability';
-          badge.className = 'text-sm text-gray-500 mb-2 availability-badge';
-        }
+    const $ = (id) => document.getElementById(id);
+
+    function todayISO() {
+      const d = new Date();
+      const tzOffset = d.getTimezoneOffset() * 60000;
+      return new Date(d - tzOffset).toISOString().slice(0,10);
+    }
+
+    function addDaysISO(dateISO, days) {
+      const d = new Date(dateISO + "T00:00:00");
+      d.setDate(d.getDate() + days);
+      const tzOffset = d.getTimezoneOffset() * 60000;
+      return new Date(d - tzOffset).toISOString().slice(0,10);
+    }
+
+    function daysBetween(startISO, endISO) {
+      const s = new Date(startISO + "T00:00:00");
+      const e = new Date(endISO + "T00:00:00");
+      return Math.round((e - s) / (1000 * 60 * 60 * 24));
+    }
+
+    function validateDates(checkIn, checkOut) {
+      if (!checkIn || !checkOut) return { ok:false, reason:'Select both dates.' };
+
+      const nights = daysBetween(checkIn, checkOut);
+      if (isNaN(nights) || nights <= 0) return { ok:false, reason:'Check-out must be after check-in.' };
+      if (nights < 2) return { ok:false, reason:'Minimum stay is 2 nights.' };
+
+      return { ok:true, nights };
+    }
+
+    function showValidation(text, type='error') {
+      const msg = $('validationMsg');
+      msg.classList.remove('hidden');
+      msg.textContent = text;
+      msg.className = 'mt-3 text-sm font-semibold ' + (type === 'error' ? 'text-red-700' : 'text-green-700');
+    }
+
+    function hideValidation() {
+      const msg = $('validationMsg');
+      msg.classList.add('hidden');
+      msg.textContent = '';
+    }
+
+    function money(n) {
+      return "R" + n.toLocaleString("en-ZA");
+    }
+
+    // Availability cache from API: { ember: { available: true }, ... }
+    let availabilityMap = null;
+    let lastRange = null;
+
+    async function fetchAvailability(checkIn, checkOut) {
+      const url = `/.netlify/functions/availability?checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Availability request failed');
       }
+      return await res.json();
     }
 
-    // Booking modal functions
-    function openBookingModal(suiteType) {
-      document.getElementById('suiteType').value = suiteType;
-      document.getElementById('modalTitle').textContent = `Book ${suiteType}`;
-      document.getElementById('bookingModal').classList.remove('hidden');
-      
-      // Set min date to today
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('checkIn').min = today;
+    function renderSuites(checkIn=null, checkOut=null) {
+      const grid = $('suitesGrid');
+      const hasDates = Boolean(checkIn && checkOut);
+
+      grid.innerHTML = suites.map(s => {
+        let statusHtml = `<span class="pill bg-gray-100 text-gray-700">Select dates above</span>`;
+        let btnHtml = `<button class="w-full mt-4 rounded-lg bg-[#8A9A5B] text-white font-semibold py-3 hover:bg-[#6F7A45] transition"
+                         onclick="openBookingModal('${s.key}')">Request booking</button>`;
+
+        if (hasDates) {
+          const record = availabilityMap?.[s.key];
+          if (!record) {
+            statusHtml = `<span class="pill bg-gray-100 text-gray-700">Checking…</span>`;
+            btnHtml = `<button class="w-full mt-4 rounded-lg bg-gray-200 text-gray-600 font-semibold py-3 cursor-not-allowed" disabled>
+                         Checking availability…
+                       </button>`;
+          } else if (record.available) {
+            statusHtml = `<span class="pill bg-green-100 text-green-800"><span class="dot" style="background:#16a34a"></span>Available</span>`;
+          } else {
+            statusHtml = `<span class="pill bg-red-100 text-red-800"><span class="dot" style="background:#dc2626"></span>Unavailable</span>`;
+            btnHtml = `<button class="w-full mt-4 rounded-lg bg-gray-200 text-gray-600 font-semibold py-3 cursor-not-allowed" disabled>
+                         Not available for these dates
+                       </button>`;
+          }
+        }
+
+        return `
+          <div class="suite-card bg-white rounded-2xl p-6">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="text-2xl font-extrabold text-[#6B4423]">${s.name}</h3>
+                <p class="mt-2 text-sm text-gray-700">Sleeps 2 • King/Twin • Kitchenette • Shower • Wi-Fi</p>
+              </div>
+              <span class="pill bg-gray-50 text-gray-700 border border-black/5">
+                <span class="dot" style="background:${s.color}"></span>${s.key.toUpperCase()}
+              </span>
+            </div>
+
+            <div class="mt-5 flex items-end justify-between">
+              <div>
+                <div class="text-2xl font-extrabold text-[#6B4423]">${money(s.price)}
+                  <span class="text-sm font-semibold text-gray-500">/ night</span>
+                </div>
+                <div class="mt-2">${statusHtml}</div>
+              </div>
+
+              <div class="text-right">
+                <div class="text-xs text-gray-500 font-semibold">From</div>
+                <div class="text-sm text-gray-700 font-semibold">Nooitgedacht Village</div>
+              </div>
+            </div>
+
+            ${btnHtml}
+          </div>
+        `;
+      }).join('');
     }
 
-    function closeBookingModal() {
-      document.getElementById('bookingModal').classList.add('hidden');
-      document.getElementById('bookingForm').reset();
-    }
+    function openBookingModal(suiteKey) {
+      const suite = suites.find(x => x.key === suiteKey);
+      const checkIn = $('checkInTop').value;
+      const checkOut = $('checkOutTop').value;
+      const guests = $('guestsTop').value;
 
-    // Handle form submission
-    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const formData = {
-        suite: document.getElementById('suiteType').value,
-        checkIn: document.getElementById('checkIn').value,
-        checkOut: document.getElementById('checkOut').value,
-        guests: document.getElementById('guests').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        notes: document.getElementById('notes').value
-      };
-
-      // Validate min 2 night stay
-      const checkIn = new Date(formData.checkIn);
-      const checkOut = new Date(formData.checkOut);
-      const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-      
-      if (nights < 2) {
-        alert('Minimum stay is 2 nights');
+      const v = validateDates(checkIn, checkOut);
+      if (!v.ok) {
+        showValidation(v.reason, 'error');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
-      // Send email (simulated)
-      try {
-        const response = await fetch('https://formspree.io/f/stay@villagehub.co.za', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          alert('Booking request sent successfully! We will contact you shortly.');
-          closeBookingModal();
-        } else {
-          throw new Error('Failed to send booking request');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('There was an error submitting your request. Please try again or contact us directly.');
+      // Enforce availability
+      const record = availabilityMap?.[suiteKey];
+      if (!record) {
+        showValidation('Still checking availability — please click “Check availability” and try again.', 'error');
+        return;
       }
+      if (!record.available) {
+        showValidation('That suite is not available for your selected dates. Please choose different dates.', 'error');
+        return;
+      }
+
+      // Fill modal title
+      $('modalTitle').textContent = `Request booking: ${suite.name}`;
+      $('modalSubtitle').textContent = `Minimum stay 2 nights • Your stay: ${v.nights} nights`;
+
+      // Fill hidden Netlify fields
+      $('suiteField').value = suite.name;
+      $('checkInField').value = checkIn;
+      $('checkOutField').value = checkOut;
+      $('guestsField').value = guests;
+      $('nightsField').value = String(v.nights);
+
+      // Fill disabled display
+      $('guestsDisplay').value = guests + ' guest' + (guests === '2' ? 's' : '');
+      $('checkInDisplay').value = checkIn;
+      $('checkOutDisplay').value = checkOut;
+
+      $('submitError').classList.add('hidden');
+      $('submitError').textContent = '';
+
+      $('bookingModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingModal() {
+      $('bookingModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function showThanks() {
+      $('thanksToast').classList.remove('hidden');
+      setTimeout(() => $('thanksToast').classList.add('hidden'), 7000);
+    }
+
+    function encodeFormData(form) {
+      const data = new FormData(form);
+      const params = new URLSearchParams();
+      for (const [k, v] of data.entries()) params.append(k, v);
+      return params.toString();
+    }
+
+    async function checkAndRender() {
+      const checkIn = $('checkInTop').value;
+      const checkOut = $('checkOutTop').value;
+
+      const v = validateDates(checkIn, checkOut);
+      if (!v.ok) {
+        availabilityMap = null;
+        lastRange = null;
+        renderSuites();
+        $('resultsHint').textContent = 'Select valid dates to see availability.';
+        showValidation(v.reason, 'error');
+        return;
+      }
+
+      // UI: enforce minimum 2-night checkout in picker (best-effort)
+      $('checkOutTop').min = addDaysISO(checkIn, 2);
+
+      hideValidation();
+      $('resultsHint').textContent = `Availability for ${checkIn} → ${checkOut}`;
+      renderSuites(checkIn, checkOut); // will show "Checking…"
+
+      try {
+        const result = await fetchAvailability(checkIn, checkOut);
+        availabilityMap = result;
+        lastRange = { checkIn, checkOut };
+        showValidation(`Showing availability for ${v.nights} nights.`, 'ok');
+        renderSuites(checkIn, checkOut);
+      } catch (err) {
+        availabilityMap = null;
+        lastRange = null;
+        showValidation('Could not load availability right now. Please try again shortly.', 'error');
+        renderSuites(checkIn, checkOut);
+        console.error(err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const t = todayISO();
+      $('checkInTop').min = t;
+      $('checkOutTop').min = addDaysISO(t, 2);
+
+      renderSuites();
+
+      $('checkInTop').addEventListener('change', () => {
+        const checkIn = $('checkInTop').value;
+        if (checkIn) {
+          $('checkOutTop').min = addDaysISO(checkIn, 2);
+          // If user already picked a checkout that is now invalid, clear it
+          const co = $('checkOutTop').value;
+          if (co && validateDates(checkIn, co).ok === false) $('checkOutTop').value = '';
+        }
+      });
+
+      $('checkBtn').addEventListener('click', checkAndRender);
+
+      $('closeModalBtn').addEventListener('click', closeBookingModal);
+      $('cancelBtn').addEventListener('click', closeBookingModal);
+
+      $('bookingModal').addEventListener('click', (e) => {
+        if (e.target === $('bookingModal')) closeBookingModal();
+      });
+
+      $('closeThanks').addEventListener('click', () => $('thanksToast').classList.add('hidden'));
+
+      // AJAX submit to Netlify Forms (no redirect)
+      $('bookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Final enforce 2-night stay
+        const checkIn = $('checkInTop').value;
+        const checkOut = $('checkOutTop').value;
+        const v = validateDates(checkIn, checkOut);
+        if (!v.ok) {
+          $('submitError').classList.remove('hidden');
+          $('submitError').textContent = v.reason;
+          return;
+        }
+
+        // Ensure availability still okay
+        const suiteName = $('suiteField').value;
+        const suiteKey = suites.find(s => s.name === suiteName)?.key;
+        if (!suiteKey || !availabilityMap?.[suiteKey]?.available) {
+          $('submitError').classList.remove('hidden');
+          $('submitError').textContent = 'Availability changed. Please re-check availability and try again.';
+          return;
+        }
+
+        const btn = $('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+
+        try {
+          const body = encodeFormData(e.target);
+
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body
+          });
+
+          if (!res.ok) throw new Error('Form submit failed');
+
+          closeBookingModal();
+          e.target.reset();
+          showThanks();
+        } catch (err) {
+          console.error(err);
+          $('submitError').classList.remove('hidden');
+          $('submitError').textContent = 'Could not send your request right now. Please try again or email stay@villagehub.co.za';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Submit request';
+        }
+      });
     });
 
-    // Initialize availability check when page loads
-    document.addEventListener('DOMContentLoaded', checkAvailability);
+    window.openBookingModal = openBookingModal;
   </script>
 </body>
 </html>
