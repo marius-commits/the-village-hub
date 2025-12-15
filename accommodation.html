@@ -8,10 +8,66 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
-
   <style>
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      margin: 2rem auto;
+    }
+    .slides {
+      display: flex;
+      overflow: hidden;
+      scroll-behavior: smooth;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .slide {
+      flex: 0 0 100%;
+      transition: transform 0.5s ease;
+    }
+    .slide img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .slideshow-prev, .slideshow-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(138, 154, 91, 0.8);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.2rem;
+    }
+    .slideshow-prev:hover, .slideshow-next:hover {
+      background: rgba(138, 154, 91, 1);
+    }
+    .slideshow-prev {
+      left: 15px;
+    }
+    .slideshow-next {
+      right: 15px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(138, 154, 91, 0.3);
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dot.active {
+      background: rgba(138, 154, 91, 1);
+    }
+
     .suite-card { transition: all .25s ease; border-left: 4px solid transparent; }
-    .suite-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); }
+.suite-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); }
     .ember { border-left-color: #e53e3e; }
     .sol   { border-left-color: #ecc94b; }
     .olive { border-left-color: #48bb78; }
@@ -68,13 +124,64 @@
           </div>
         </div>
 
-        <div id="globalError" class="mt-3 text-sm text-red-600 hidden"></div>
+        <div id="globalError" class="mt-3 text-sm text-red-600 hidden">
+        </div>
+        
+        <!-- Slideshow Section -->
+        <div class="mt-12 slideshow-container max-w-4xl mx-auto">
+          <div class="slides">
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry%20outside.png" alt="Foundry outside view" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" alt="Suite interior" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(9).jpeg" alt="Suite bathroom" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg" alt="Suite bedroom" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" alt="Suite living area" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg" alt="Suite kitchenette" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg" alt="Suite workspace" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg" alt="Suite relaxing area" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" alt="Suite exterior" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+          </div>
+          <button class="slideshow-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#8A9A5B]/80 text-white p-2 rounded-full">
+            ❮
+          </button>
+          <button class="slideshow-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#8A9A5B]/80 text-white p-2 rounded-full">
+            ❯
+          </button>
+          <div class="flex justify-center mt-4 space-x-2">
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+            <span class="dot w-3 h-3 bg-[#8A9A5B]/30 rounded-full cursor-pointer"></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SUITES -->
-  <section class="py-14">
+<section class="py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <div class="flex items-end justify-between gap-4 flex-wrap">
@@ -355,10 +462,14 @@
       background-color: white;
     }
   </style>
-
   <script>
-    // Slideshow functionality
+    // Initialize slideshow
     document.addEventListener('DOMContentLoaded', function() {
+      const slideshowContainer = document.querySelector('.slideshow-container');
+      if (!slideshowContainer) return;
+
+      // Slideshow functionality
+document.addEventListener('DOMContentLoaded', function() {
       const slides = document.querySelector('.slides');
       const slideItems = document.querySelectorAll('.slide');
       const dots = document.querySelectorAll('.dot');
