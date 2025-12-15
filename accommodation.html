@@ -57,8 +57,9 @@
             </select>
           </div>
         </div>
-          <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-<button id="checkBtn"
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <button id="checkBtn"
             class="w-full sm:w-auto bg-[#8A9A5B] text-white py-2 px-5 rounded-md hover:bg-[#6F7A45] transition-colors">
             Check availability
           </button>
@@ -67,14 +68,38 @@
             <span class="font-semibold">Minimum stay:</span> 2 nights · <span class="font-semibold">Sleeps:</span> 1–2 guests
           </div>
         </div>
-
         <div id="globalError" class="mt-3 text-sm text-red-600 hidden"></div>
+      </div>
+
+      <!-- Image Slideshow -->
+      <div class="mt-8 mx-auto max-w-3xl rounded-lg overflow-hidden shadow-lg">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Foundry%20outside.png" alt="Village Hub exterior" class="w-full h-64 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" alt="Suite interior" class="w-full h-64 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" alt="Suite interior" class="w-full h-64 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" alt="Suite interior" class="w-full h-64 object-cover">
+            </div>
+          </div>
+          <!-- Add navigation buttons -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <!-- Add pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SUITES -->
-  <section class="py-14">
+<section class="py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <div class="flex items-end justify-between gap-4 flex-wrap">
@@ -101,7 +126,7 @@
             <div>📺 Smart TV + unlimited Wi-Fi</div>
             <div>🍳 Compact kitchenette for light meals</div>
             <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 50% off Village Hub Co-Working</div>
+            <div>✨ 20% off Village Hub Co-Working</div>
           </div>
 
           <div class="mt-6 flex items-center justify-between">
@@ -130,7 +155,7 @@
             <div>📺 Smart TV + unlimited Wi-Fi</div>
             <div>🍳 Compact kitchenette for light meals</div>
             <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 50% off Village Hub Co-Working</div>
+            <div>✨ 20% off Village Hub Co-Working</div>
           </div>
 
           <div class="mt-6 flex items-center justify-between">
@@ -159,7 +184,7 @@
             <div>📺 Smart TV + unlimited Wi-Fi</div>
             <div>🍳 Compact kitchenette for light meals</div>
             <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 50% off Village Hub Co-Working</div>
+            <div>✨ 20% off Village Hub Co-Working</div>
           </div>
 
           <div class="mt-6 flex items-center justify-between">
@@ -188,7 +213,7 @@
             <div>📺 Smart TV + unlimited Wi-Fi</div>
             <div>🍳 Compact kitchenette for light meals</div>
             <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 50% off Village Hub Co-Working</div>
+            <div>✨ 20% off Village Hub Co-Working</div>
           </div>
 
           <div class="mt-6 flex items-center justify-between">
@@ -217,7 +242,7 @@
             <div>📺 Smart TV + unlimited Wi-Fi</div>
             <div>🍳 Compact kitchenette for light meals</div>
             <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 50% off Village Hub Co-Working</div>
+            <div>✨ 20% off Village Hub Co-Working</div>
           </div>
 
           <div class="mt-6 flex items-center justify-between">
@@ -329,86 +354,36 @@
   </div>
 
   <custom-footer></custom-footer>
+  <!-- Add Swiper JS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
-  <style>
-    .slideshow-container {
-      max-width: 100%;
-      position: relative;
-    }
-    .slides {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-    .slide {
-      flex: 0 0 100%;
-    }
-    .slideshow-prev, .slideshow-next {
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .slideshow-prev:hover, .slideshow-next:hover {
-      background-color: white;
-    }
-    .dot.active {
-      background-color: white;
-    }
-  </style>
 
   <script>
-    // Slideshow functionality
+    // Initialize Swiper
     document.addEventListener('DOMContentLoaded', function() {
-      const slides = document.querySelector('.slides');
-      const slideItems = document.querySelectorAll('.slide');
-      const dots = document.querySelectorAll('.dot');
-      const prevBtn = document.querySelector('.slideshow-prev');
-      const nextBtn = document.querySelector('.slideshow-next');
-      
-      let currentIndex = 0;
-      const totalSlides = slideItems.length;
-
-      function updateSlide() {
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
-        // Update dots
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
-        });
-      }
-
-      // Next slide
-      nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlide();
+      new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
       });
-
-      // Previous slide
-      prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        updateSlide();
-      });
-
-      // Dot navigation
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          currentIndex = index;
-          updateSlide();
-        });
-      });
-
-      // Auto-advance every 5 seconds
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlide();
-      }, 5000);
-
-      // Initialize first dot as active
-      dots[0].classList.add('active');
     });
-
+  </script>
+<script>
     // ---------- Helpers ----------
-function showGlobalError(msg) {
+    function showGlobalError(msg) {
       const el = document.getElementById('globalError');
       el.textContent = msg;
       el.classList.remove('hidden');
