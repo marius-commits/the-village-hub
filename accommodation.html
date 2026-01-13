@@ -118,11 +118,10 @@
             class="w-full sm:w-auto bg-[#8A9A5B] text-white py-2 px-5 rounded-md hover:bg-[#6F7A45] transition-colors">
             Check availability
           </button>
-
           <div class="text-sm text-gray-600">
-            <span class="font-semibold">Minimum stay:</span> 2 nights · <span class="font-semibold">Sleeps:</span> 1–2 guests
+            <span class="font-semibold">Sleeps:</span> 1–2 guests
           </div>
-        </div>
+</div>
 
         <div id="globalError" class="mt-3 text-sm text-red-600 hidden">
         </div>
@@ -699,19 +698,13 @@ function showGlobalError(msg) {
         "phone": document.getElementById('phone').value,
         "notes": document.getElementById('notes').value,
       };
-
-      // Validate minimum 2 nights
-      const nights = nightsBetween(formData.checkIn, formData.checkOut);
-      if (!Number.isFinite(nights) || nights <= 0) {
-        showModalError('Please make sure your check-out date is after your check-in date.');
-        return;
-      }
-      if (nights < 2) {
-        showModalError('Minimum stay is 2 nights. Please adjust your dates.');
-        return;
-      }
-
-      // Optional: quick re-check availability before sending (prevents requesting booked suite)
+    // Validate dates
+    const nights = nightsBetween(formData.checkIn, formData.checkOut);
+    if (!Number.isFinite(nights) || nights <= 0) {
+      showModalError('Please make sure your check-out date is after your check-in date.');
+      return;
+    }
+// Optional: quick re-check availability before sending (prevents requesting booked suite)
       try {
         const url = `/.netlify/functions/availability?checkIn=${encodeURIComponent(formData.checkIn)}&checkOut=${encodeURIComponent(formData.checkOut)}`;
         const res = await fetch(url);
