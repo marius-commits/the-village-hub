@@ -3,78 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Accommodation Booking | The Village Hub</title>
+  <title>The Village Stay | Accommodation at Nooitgedacht Village</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <style>
-    .slideshow-container {
-      position: relative;
-      max-width: 100%;
-      margin: 2rem auto;
-    }
-    .slides {
-      display: flex;
-      overflow: hidden;
-      scroll-behavior: smooth;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    .slide {
-      flex: 0 0 100%;
-      transition: transform 0.5s ease;
-    }
-    .slide img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-    .slideshow-prev, .slideshow-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(138, 154, 91, 0.8);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 10;
-      font-size: 1.2rem;
-    }
-    .slideshow-prev:hover, .slideshow-next:hover {
-      background: rgba(138, 154, 91, 1);
-    }
-    .slideshow-prev {
-      left: 15px;
-    }
-    .slideshow-next {
-      right: 15px;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      background: rgba(138, 154, 91, 0.3);
-      border-radius: 50%;
-      display: inline-block;
-      margin: 0 4px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .dot.active {
-      background: rgba(138, 154, 91, 1);
-    }
-
     .suite-card { transition: all .25s ease; border-left: 4px solid transparent; }
-.suite-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); }
+    .suite-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); }
     .ember { border-left-color: #e53e3e; }
     .sol   { border-left-color: #ecc94b; }
     .olive { border-left-color: #48bb78; }
     .azure { border-left-color: #4299e1; }
     .slate { border-left-color: #718096; }
     .pill { font-size: 12px; line-height: 1; padding: 6px 10px; border-radius: 999px; font-weight: 600; }
-    .btn-disabled { opacity: .55; cursor: not-allowed; }
+
+    .book-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .book-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(138, 154, 91, 0.35);
+    }
+    .book-btn svg {
+      transition: transform 0.2s ease;
+    }
+    .book-btn:hover svg {
+      transform: translateX(2px);
+    }
+
+    .nb-cta {
+      background: linear-gradient(135deg, #8A9A5B 0%, #6F7A45 100%);
+      transition: all 0.3s ease;
+    }
+    .nb-cta:hover {
+      background: linear-gradient(135deg, #6F7A45 0%, #556032 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(138, 154, 91, 0.4);
+    }
+
+    .glightbox img {
+      transition: transform 0.3s ease;
+    }
+    .glightbox:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Amenity icons */
+    .amenity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: #4a5568;
+    }
+
+    /* Powered-by badge */
+    .nb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: #a0aec0;
+      letter-spacing: 0.02em;
+    }
   </style>
 </head>
 
@@ -85,111 +86,114 @@
   <section class="bg-[#FAF8F6] py-14">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#6B4423]">The Village Suites</h1>
+        <img src="https://lh3.googleusercontent.com/d/1amXTsXrB4pl9zJDfU3wUdAo7PQ9FNg6i" alt="The Village Stay" class="mx-auto h-28 sm:h-36 mb-4">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#6B4423]">The Village Stay</h1>
         <p class="mt-4 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
           A peaceful stay in Nooitgedacht Village — modern comfort meets winelands calm.
         </p>
       </div>
 
-      <!-- SEARCH / AVAILABILITY -->
-      <div class="mt-10 bg-white rounded-xl shadow-md p-5 sm:p-6 max-w-3xl mx-auto">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Check-in</label>
-            <input id="globalCheckIn" type="date"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Check-out</label>
-            <input id="globalCheckOut" type="date"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Guests</label>
-            <select id="globalGuests"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
-              <option value="1">1 guest</option>
-              <option value="2">2 guests</option>
-            </select>
-          </div>
-        </div>
-          <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-<button id="checkBtn"
-            class="w-full sm:w-auto bg-[#8A9A5B] text-white py-2 px-5 rounded-md hover:bg-[#6F7A45] transition-colors">
-            Check availability
-          </button>
-          <div class="text-sm text-gray-600">
-            <span class="font-semibold">Sleeps:</span> 1–2 guests
-          </div>
-</div>
+      <!-- BOOKING CTA -->
+      <div class="mt-10 bg-white rounded-xl shadow-md p-6 sm:p-8 max-w-3xl mx-auto text-center">
+        <h2 class="text-xl font-bold text-[#6B4423]">Ready to book your stay?</h2>
+        <p class="mt-2 text-gray-600 text-sm sm:text-base">
+          Check real-time availability, view rates, and book instantly — secure online payment included.
+        </p>
 
-        <div id="globalError" class="mt-3 text-sm text-red-600 hidden">
+        <a href="https://book.nightsbridge.com/39429"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="nb-cta mt-5 inline-flex items-center gap-2 text-white font-semibold py-3 px-8 rounded-lg text-lg">
+          Check Availability & Book
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+        </a>
+
+        <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-500">
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Instant confirmation
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Secure payment
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            No minimum stay
+          </span>
         </div>
-          <!-- Gallery Section -->
-          <div class="mt-12 max-w-4xl mx-auto">
-            <h3 class="text-xl font-bold text-[#6B4423] mb-4 text-center">Gallery</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg" 
-                     alt="Suite bedroom with modern design" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg" 
-                     alt="Suite bathroom with rain shower" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" 
-                     alt="Suite living area with comfortable seating" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" 
-                     alt="Suite kitchenette with modern appliances" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg" 
-                     alt="Suite workspace with desk and chair" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg" 
-                     alt="Suite relaxation area with comfortable seating" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" 
-                     alt="Suite exterior with natural lighting" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg" 
-                     alt="Suite additional view" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-              <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg" class="glightbox">
-                <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg" 
-                     alt="Suite additional view" 
-                     class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-              </a>
-            </div>
-          </div>
-</div>
+
+        <p class="mt-3 nb-badge justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          Powered by NightsBridge — South Africa's trusted booking platform
+        </p>
+      </div>
+
+      <!-- Gallery Section -->
+      <div class="mt-12 max-w-4xl mx-auto">
+        <h3 class="text-xl font-bold text-[#6B4423] mb-4 text-center">Gallery</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg"
+                 alt="Suite bedroom with modern design"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg"
+                 alt="Suite bathroom with rain shower"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg"
+                 alt="Suite living area with comfortable seating"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png"
+                 alt="Suite kitchenette with modern appliances"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg"
+                 alt="Suite workspace with desk and chair"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg"
+                 alt="Suite relaxation area with comfortable seating"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg"
+                 alt="Suite exterior with natural lighting"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg"
+                 alt="Suite additional view"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg" class="glightbox">
+            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg"
+                 alt="Suite additional view"
+                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- SUITES -->
-<section class="py-14">
+  <section class="py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <div class="flex items-end justify-between gap-4 flex-wrap">
         <div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423]">Choose your suite</h2>
-          <p class="text-gray-600 mt-1">Availability updates after you select dates and click “Check availability”.</p>
+          <p class="text-gray-600 mt-1">Five individually styled suites — all at R1,350 per night. Select a suite to book directly.</p>
         </div>
-        <div id="rangeLabel" class="text-sm text-gray-600"></div>
       </div>
 
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -203,24 +207,27 @@
 
           <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
 
-          <div class="mt-4 space-y-2 text-sm text-gray-700">
-            <div>🛏 Two single beds (convertible to a King)</div>
-            <div>📺 Smart TV + unlimited Wi-Fi</div>
-            <div>🍳 Compact kitchenette for light meals</div>
-            <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 20% off Village Hub Co-Working</div>
-</div>
-            <div class="mt-6 flex items-center justify-between">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,500 <span class="text-base font-normal text-gray-600">/ night</span></div>
-            <div id="availability-ember" class="text-sm font-semibold text-gray-500">—</div>
+          <div class="mt-4 amenity-grid">
+            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
+            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
+            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
+            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
           </div>
-          <div class="mt-8">
-            <a href="https://www.airbnb.co.za/rooms/1575046170222843983?source_impression_id=p3_1768917298_P3CtvUrJtdUw56i6" 
-              class="w-full bg-[#8A9A5B] text-white py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors text-center inline-block">
-              Book your stay
-            </a>
+
+          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
+
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-base font-normal text-gray-600">/ night</span></div>
           </div>
-</div>
+
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
+            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
+            Book Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
 
         <!-- Sol -->
         <div class="suite-card sol bg-white rounded-lg shadow-md p-6">
@@ -231,24 +238,27 @@
 
           <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
 
-          <div class="mt-4 space-y-2 text-sm text-gray-700">
-            <div>🛏 Two single beds (convertible to a King)</div>
-            <div>📺 Smart TV + unlimited Wi-Fi</div>
-            <div>🍳 Compact kitchenette for light meals</div>
-            <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 20% off Village Hub Co-Working</div>
-</div>
-            <div class="mt-6 flex items-center justify-between">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,500 <span class="text-base font-normal text-gray-600">/ night</span></div>
-            <div id="availability-sol" class="text-sm font-semibold text-gray-500">—</div>
+          <div class="mt-4 amenity-grid">
+            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
+            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
+            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
+            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
           </div>
-          <div class="mt-8">
-            <a href="https://www.airbnb.co.za/rooms/1597867877933942813?source_impression_id=p3_1768917298_P3kIuauX4bvh122c" 
-              class="w-full bg-[#8A9A5B] text-white py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors text-center inline-block">
-              Book your stay
-            </a>
+
+          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
+
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-base font-normal text-gray-600">/ night</span></div>
           </div>
-</div>
+
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
+            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
+            Book Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
 
         <!-- Olive -->
         <div class="suite-card olive bg-white rounded-lg shadow-md p-6">
@@ -259,24 +269,27 @@
 
           <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
 
-          <div class="mt-4 space-y-2 text-sm text-gray-700">
-            <div>🛏 Two single beds (convertible to a King)</div>
-            <div>📺 Smart TV + unlimited Wi-Fi</div>
-            <div>🍳 Compact kitchenette for light meals</div>
-            <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 20% off Village Hub Co-Working</div>
-</div>
-            <div class="mt-6 flex items-center justify-between">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,500 <span class="text-base font-normal text-gray-600">/ night</span></div>
-            <div id="availability-olive" class="text-sm font-semibold text-gray-500">—</div>
+          <div class="mt-4 amenity-grid">
+            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
+            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
+            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
+            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
           </div>
-          <div class="mt-8">
-            <a href="https://www.airbnb.co.za/rooms/1599292401794525561?source_impression_id=p3_1768917298_P3RsrXkcDE-dJH0Y" 
-              class="w-full bg-[#8A9A5B] text-white py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors text-center inline-block">
-              Book your stay
-            </a>
+
+          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
+
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-base font-normal text-gray-600">/ night</span></div>
           </div>
-</div>
+
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
+            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
+            Book Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
 
         <!-- Azure -->
         <div class="suite-card azure bg-white rounded-lg shadow-md p-6">
@@ -287,24 +300,27 @@
 
           <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
 
-          <div class="mt-4 space-y-2 text-sm text-gray-700">
-            <div>🛏 Two single beds (convertible to a King)</div>
-            <div>📺 Smart TV + unlimited Wi-Fi</div>
-            <div>🍳 Compact kitchenette for light meals</div>
-            <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 20% off Village Hub Co-Working</div>
-</div>
-            <div class="mt-6 flex items-center justify-between">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,500 <span class="text-base font-normal text-gray-600">/ night</span></div>
-            <div id="availability-azure" class="text-sm font-semibold text-gray-500">—</div>
+          <div class="mt-4 amenity-grid">
+            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
+            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
+            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
+            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
           </div>
-          <div class="mt-8">
-            <a href="https://www.airbnb.co.za/rooms/1599298728269551470?source_impression_id=p3_1768917298_P3N7oK06HM8piUYL" 
-              class="w-full bg-[#8A9A5B] text-white py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors text-center inline-block">
-              Book your stay
-            </a>
+
+          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
+
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-base font-normal text-gray-600">/ night</span></div>
           </div>
-</div>
+
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
+            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
+            Book Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
 
         <!-- Slate -->
         <div class="suite-card slate bg-white rounded-lg shadow-md p-6">
@@ -315,465 +331,103 @@
 
           <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
 
-          <div class="mt-4 space-y-2 text-sm text-gray-700">
-            <div>🛏 Two single beds (convertible to a King)</div>
-            <div>📺 Smart TV + unlimited Wi-Fi</div>
-            <div>🍳 Compact kitchenette for light meals</div>
-            <div>🚿 Private bathroom with walk-in shower</div>
-            <div>✨ 20% off Village Hub Co-Working</div>
-</div>
-            <div class="mt-6 flex items-center justify-between">
-            <div class="text-2xl font-bold text-[#6B4423]">R1,500 <span class="text-base font-normal text-gray-600">/ night</span></div>
-            <div id="availability-slate" class="text-sm font-semibold text-gray-500">—</div>
+          <div class="mt-4 amenity-grid">
+            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
+            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
+            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
+            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
           </div>
-          <div class="mt-8">
-            <a href="https://www.airbnb.co.za/rooms/1599300708887418248?source_impression_id=p3_1768917298_P3eKhoZh6YyZXKYy" 
-              class="w-full bg-[#8A9A5B] text-white py-2 px-4 rounded-md hover:bg-[#6F7A45] transition-colors text-center inline-block">
-              Book your stay
-            </a>
+
+          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
+
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-2xl font-bold text-[#6B4423]">R1,350 <span class="text-base font-normal text-gray-600">/ night</span></div>
           </div>
-</div>
+
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
+            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
+            Book Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
 
       </div>
     </div>
   </section>
 
-  <!-- BOOKING MODAL -->
-  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-bold text-[#6B4423]" id="modalTitle">Request Booking</h3>
-        <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <div id="modalError" class="mb-3 text-sm text-red-600 hidden"></div>
-
-      <!-- NETLIFY FORM -->
-      <form id="bookingForm" name="suite-booking" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-4">
-        <!-- required for Netlify Forms -->
-        <input type="hidden" name="form-name" value="suite-booking" />
-        <p class="hidden">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
-        <input type="hidden" id="suiteType" name="suite" />
-        <input type="hidden" id="suiteKey" name="suiteKey" />
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label for="checkIn" class="block text-sm font-medium text-gray-700">Check-in</label>
-            <input type="date" id="checkIn" name="checkIn" required
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
-          </div>
-          <div>
-            <label for="checkOut" class="block text-sm font-medium text-gray-700">Check-out</label>
-            <input type="date" id="checkOut" name="checkOut" required
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
-          </div>
+  <!-- WHAT'S INCLUDED -->
+  <section class="bg-[#FAF8F6] py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423] text-center">What's included in every stay</h2>
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">🛏</div>
+          <h3 class="font-bold text-[#6B4423]">Flexible bedding</h3>
+          <p class="text-sm text-gray-600 mt-1">Two single beds convertible to a King — your choice on arrival.</p>
         </div>
-
-        <div>
-          <label for="guests" class="block text-sm font-medium text-gray-700">Guests (1–2)</label>
-          <input type="number" id="guests" name="guests" min="1" max="2" value="1" required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">📶</div>
+          <h3 class="font-bold text-[#6B4423]">Unlimited Wi-Fi</h3>
+          <p class="text-sm text-gray-600 mt-1">High-speed fibre connection throughout the property.</p>
         </div>
-
-        <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-          <input type="text" id="name" name="name" required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">🍳</div>
+          <h3 class="font-bold text-[#6B4423]">Kitchenette</h3>
+          <p class="text-sm text-gray-600 mt-1">Microwave, mini-fridge, kettle, and essentials for light meals.</p>
         </div>
-
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" name="email" required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">💼</div>
+          <h3 class="font-bold text-[#6B4423]">Co-working discount</h3>
+          <p class="text-sm text-gray-600 mt-1">20% off Village Hub hot desks and meeting rooms during your stay.</p>
         </div>
-
-        <div>
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-          <input type="tel" id="phone" name="phone" required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]">
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">🚗</div>
+          <h3 class="font-bold text-[#6B4423]">Free parking</h3>
+          <p class="text-sm text-gray-600 mt-1">Secure on-site parking included for all guests.</p>
         </div>
-
-        <div>
-          <label for="notes" class="block text-sm font-medium text-gray-700">Special requests</label>
-          <textarea id="notes" name="notes" rows="3"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8A9A5B] focus:ring-[#8A9A5B]"></textarea>
+        <div class="bg-white rounded-lg p-5 shadow-sm">
+          <div class="text-2xl mb-2">🏔</div>
+          <h3 class="font-bold text-[#6B4423]">Winelands location</h3>
+          <p class="text-sm text-gray-600 mt-1">Minutes from Stellenbosch wine farms, restaurants, and nature trails.</p>
         </div>
-
-        <div class="flex justify-end gap-3 pt-1">
-          <button type="button" id="cancelBtn"
-            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-            Cancel
-          </button>
-          <button type="submit" id="submitBtn"
-            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#8A9A5B] hover:bg-[#6F7A45]">
-            Submit request
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- TOAST -->
-  <div id="toast" class="fixed bottom-5 right-5 z-[60] hidden">
-    <div id="toastInner" class="max-w-sm rounded-lg shadow-lg bg-[#0F172A] text-white px-4 py-3">
-      <div class="font-semibold" id="toastTitle">Thanks!</div>
-      <div class="text-sm text-white/90 mt-1" id="toastMsg">
-        We will confirm your booking as soon as it’s successfully processed.
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="py-14">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423]">Secure your stay today</h2>
+      <p class="mt-3 text-gray-600">
+        All five suites book up fast — especially over weekends and holidays. Lock in your dates now.
+      </p>
+      <a href="https://book.nightsbridge.com/39429"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="nb-cta mt-6 inline-flex items-center gap-2 text-white font-semibold py-3 px-8 rounded-lg text-lg">
+        Check Availability & Book
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        </svg>
+      </a>
+      <p class="mt-3 text-sm text-gray-500">
+        Questions? Email <a href="mailto:stay@villagehub.co.za" class="text-[#8A9A5B] underline">stay@villagehub.co.za</a>
+        or call <a href="tel:+27878220802" class="text-[#8A9A5B] underline">087 822 0802</a>
+      </p>
+    </div>
+  </section>
 
   <custom-footer></custom-footer>
 
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
-  <style>
-    .glightbox img {
-      transition: transform 0.3s ease;
-    }
-    .glightbox:hover img {
-      transform: scale(1.02);
-    }
-  </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const lightbox = GLightbox({
-        selector: '.glightbox'
-      });
-    });
-  </script>
-<script>
-    // Initialize slideshow
-    document.addEventListener('DOMContentLoaded', function() {
-      const slideshowContainer = document.querySelector('.slideshow-container');
-      if (!slideshowContainer) return;
-
-      // Slideshow functionality
-document.addEventListener('DOMContentLoaded', function() {
-      const slides = document.querySelector('.slides');
-      const slideItems = document.querySelectorAll('.slide');
-      const dots = document.querySelectorAll('.dot');
-      const prevBtn = document.querySelector('.slideshow-prev');
-      const nextBtn = document.querySelector('.slideshow-next');
-      
-      let currentIndex = 0;
-      const totalSlides = slideItems.length;
-
-      function updateSlide() {
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
-        // Update dots
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
-        });
-      }
-
-      // Next slide
-      nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlide();
-      });
-
-      // Previous slide
-      prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        updateSlide();
-      });
-
-      // Dot navigation
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          currentIndex = index;
-          updateSlide();
-        });
-      });
-
-      // Auto-advance every 5 seconds
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlide();
-      }, 5000);
-
-      // Initialize first dot as active
-      dots[0].classList.add('active');
-    });
-
-    // ---------- Helpers ----------
-function showGlobalError(msg) {
-      const el = document.getElementById('globalError');
-      el.textContent = msg;
-      el.classList.remove('hidden');
-    }
-    function hideGlobalError() {
-      const el = document.getElementById('globalError');
-      el.classList.add('hidden');
-      el.textContent = '';
-    }
-    function showModalError(msg) {
-      const el = document.getElementById('modalError');
-      el.textContent = msg;
-      el.classList.remove('hidden');
-    }
-    function hideModalError() {
-      const el = document.getElementById('modalError');
-      el.classList.add('hidden');
-      el.textContent = '';
-    }
-    function nightsBetween(checkIn, checkOut) {
-      const a = new Date(checkIn);
-      const b = new Date(checkOut);
-      return (b - a) / (1000 * 60 * 60 * 24);
-    }
-    function showToast(title, msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toastTitle').textContent = title || 'Thanks!';
-      document.getElementById('toastMsg').textContent = msg || 'We will confirm your booking as soon as it’s successfully processed.';
-      toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 5200);
-    }
-    function setBadge(key, state, message) {
-      const el = document.getElementById(`availability-${key}`);
-      // state: 'idle' | 'checking' | 'available' | 'unavailable' | 'error'
-      if (!el) return;
-      const clsBase = 'text-sm font-semibold';
-      if (state === 'checking') { el.className = clsBase + ' text-gray-500'; el.textContent = 'Checking…'; }
-      else if (state === 'available') { el.className = clsBase + ' text-green-700'; el.textContent = message || 'Available'; }
-      else if (state === 'unavailable') { el.className = clsBase + ' text-red-600'; el.textContent = message || 'Unavailable'; }
-      else if (state === 'error') { el.className = clsBase + ' text-gray-500'; el.textContent = message || 'Check dates'; }
-      else { el.className = clsBase + ' text-gray-500'; el.textContent = '—'; }
-    }
-    function setBookEnabled(key, enabled) {
-      const btn = document.querySelector(`.suiteBookBtn[data-key="${key}"]`);
-      if (!btn) return;
-      if (enabled) {
-        btn.disabled = false;
-        btn.classList.remove('btn-disabled');
-      } else {
-        btn.disabled = true;
-        btn.classList.add('btn-disabled');
-      }
-    }
-    function formatRangeLabel(ci, co) {
-      if (!ci || !co) return '';
-      return `Availability for ${ci} → ${co}`;
-    }
-
-    // ---------- Modal ----------
-    function openBookingModal(suiteName, suiteKey) {
-      hideModalError();
-
-      const globalCI = document.getElementById('globalCheckIn').value;
-      const globalCO = document.getElementById('globalCheckOut').value;
-      const globalGuests = document.getElementById('globalGuests').value;
-
-      document.getElementById('suiteType').value = suiteName;
-      document.getElementById('suiteKey').value = suiteKey;
-      document.getElementById('modalTitle').textContent = `Request booking: ${suiteName}`;
-
-      // Pre-fill from global search
-      if (globalCI) document.getElementById('checkIn').value = globalCI;
-      if (globalCO) document.getElementById('checkOut').value = globalCO;
-      if (globalGuests) document.getElementById('guests').value = globalGuests;
-
-      // Set min date to today
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('checkIn').min = today;
-
-      document.getElementById('bookingModal').classList.remove('hidden');
-    }
-
-    function closeBookingModal() {
-      document.getElementById('bookingModal').classList.add('hidden');
-      document.getElementById('bookingForm').reset();
-      hideModalError();
-    }
-
-    document.getElementById('closeModalBtn').addEventListener('click', closeBookingModal);
-    document.getElementById('cancelBtn').addEventListener('click', closeBookingModal);
-
-    // ---------- Availability ----------
-    async function checkAvailability() {
-      hideGlobalError();
-
-      const checkIn = document.getElementById('globalCheckIn').value;
-      const checkOut = document.getElementById('globalCheckOut').value;
-
-      if (!checkIn || !checkOut) {
-        showGlobalError('Please select both check-in and check-out dates.');
-        return;
-      }
-
-      const nights = nightsBetween(checkIn, checkOut);
-      if (!Number.isFinite(nights) || nights <= 0) {
-        showGlobalError('Please make sure your check-out date is after your check-in date.');
-        return;
-      }
-      if (nights < 2) {
-        showGlobalError('Minimum stay is 2 nights. Please adjust your dates.');
-        return;
-      }
-
-      document.getElementById('rangeLabel').textContent = formatRangeLabel(checkIn, checkOut);
-
-      // UI: show checking state
-      ['ember','sol','olive','azure','slate'].forEach(k => {
-        setBadge(k, 'checking');
-        setBookEnabled(k, false);
-      });
-
-      try {
-        const url = `/.netlify/functions/availability?checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Availability request failed');
-        const data = await res.json();
-
-        // Update each suite
-        for (const key of ['ember','sol','olive','azure','slate']) {
-          const available = !!data?.[key]?.available;
-          if (available) {
-            setBadge(key, 'available', 'Available');
-            setBookEnabled(key, true);
-          } else {
-            setBadge(key, 'unavailable', 'Booked');
-            setBookEnabled(key, false);
-          }
-        }
-      } catch (e) {
-        console.error(e);
-        showGlobalError('Could not load availability right now. Please try again shortly.');
-        ['ember','sol','olive','azure','slate'].forEach(k => {
-          setBadge(k, 'error', 'Try again');
-          setBookEnabled(k, false);
-        });
-      }
-    }
-
-    document.getElementById('checkBtn').addEventListener('click', checkAvailability);
-
-    // Suite buttons open modal
-    document.querySelectorAll('.suiteBookBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const suiteName = btn.getAttribute('data-suite');
-        const suiteKey = btn.getAttribute('data-key');
-        openBookingModal(suiteName, suiteKey);
-      });
-    });
-
-    // ---------- Netlify Forms Submit + Toast ----------
-    function encodeForm(data) {
-      return Object.keys(data)
-        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-        .join("&");
-    }
-
-    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideModalError();
-
-      const form = e.target;
-
-      const formData = {
-        "form-name": form.getAttribute("name"),
-        "suite": document.getElementById('suiteType').value,
-        "suiteKey": document.getElementById('suiteKey').value,
-        "checkIn": document.getElementById('checkIn').value,
-        "checkOut": document.getElementById('checkOut').value,
-        "guests": document.getElementById('guests').value,
-        "name": document.getElementById('name').value,
-        "email": document.getElementById('email').value,
-        "phone": document.getElementById('phone').value,
-        "notes": document.getElementById('notes').value,
-      };
-    // Validate dates
-    const nights = nightsBetween(formData.checkIn, formData.checkOut);
-    if (!Number.isFinite(nights) || nights <= 0) {
-      showModalError('Please make sure your check-out date is after your check-in date.');
-      return;
-    }
-// Optional: quick re-check availability before sending (prevents requesting booked suite)
-      try {
-        const url = `/.netlify/functions/availability?checkIn=${encodeURIComponent(formData.checkIn)}&checkOut=${encodeURIComponent(formData.checkOut)}`;
-        const res = await fetch(url);
-        const avail = await res.json();
-        const key = formData.suiteKey;
-        if (avail?.[key] && avail[key].available === false) {
-          showModalError('That suite is no longer available for your selected dates. Please choose a different suite or dates.');
-          return;
-        }
-      } catch (_) {
-        // If availability check fails, still allow request to go through (optional). You can block if you prefer.
-      }
-
-      const submitBtn = document.getElementById('submitBtn');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Submitting…';
-      submitBtn.disabled = true;
-
-      try {
-        // Netlify Forms submission (POST to the site root)
-        const response = await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encodeForm(formData),
-        });
-
-        if (!response.ok) throw new Error("Form submission failed");
-
-        closeBookingModal();
-        showToast(
-          "Thanks! ✅",
-          "Your booking request was received. We will confirm your booking as soon as it’s successfully processed."
-        );
-
-        // Refresh availability after submit
-        await checkAvailability();
-      } catch (err) {
-        console.error(err);
-        showModalError("There was an error submitting your request. Please try again or email stay@villagehub.co.za.");
-      } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }
-    });
-
-    // ---------- Initialize defaults ----------
-    document.addEventListener('DOMContentLoaded', () => {
-      // Set min dates + default check-in to today and check-out to +2 days
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
-      const todayStr = `${yyyy}-${mm}-${dd}`;
-
-      const plus2 = new Date(today);
-      plus2.setDate(today.getDate() + 2);
-      const yyyy2 = plus2.getFullYear();
-      const mm2 = String(plus2.getMonth() + 1).padStart(2, '0');
-      const dd2 = String(plus2.getDate()).padStart(2, '0');
-      const plus2Str = `${yyyy2}-${mm2}-${dd2}`;
-
-      const ci = document.getElementById('globalCheckIn');
-      const co = document.getElementById('globalCheckOut');
-      ci.min = todayStr;
-      co.min = todayStr;
-
-      // If empty, set defaults
-      if (!ci.value) ci.value = todayStr;
-      if (!co.value) co.value = plus2Str;
-
-      document.getElementById('rangeLabel').textContent = formatRangeLabel(ci.value, co.value);
-
-      // Optionally auto-check on load:
-      // checkAvailability();
+      const lightbox = GLightbox({ selector: '.glightbox' });
     });
   </script>
 </body>
