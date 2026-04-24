@@ -416,17 +416,8 @@
   <!-- Register Interest Section -->
   <form
     id="interest"
-    name="interest"
-    method="POST"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
-    action="/success.html"
     class="bg-[#FAF8F6] p-8 rounded-2xl border border-[#D9C8A6] shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-5xl mx-auto my-16"
   >
-    <input type="hidden" name="form-name" value="interest" />
-    <p hidden>
-      <label>Don’t fill this out: <input name="bot-field" /></label>
-    </p>
 
     <div class="grid md:grid-cols-2 gap-6 mb-6">
       <div>
@@ -527,10 +518,67 @@
       </div>
     </div>
 
-    <button type="submit" class="w-full bg-[#3E4E63] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3E4E63]/90 transition-colors">
+    <button type="submit" id="submit-btn" class="w-full bg-[#3E4E63] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3E4E63]/90 transition-colors">
       Register your interest
     </button>
+    <p id="form-success" class="hidden mt-4 text-center text-[#8FA985] font-semibold text-base">Thank you! We'll be in touch soon. ✓</p>
+    <p id="form-error" class="hidden mt-4 text-center text-red-600 font-medium">Something went wrong. Please <a href="https://wa.me/27782750001" class="underline">WhatsApp us</a> directly.</p>
   </form>
+  <script>
+    document.getElementById('interest').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const successMsg = document.getElementById('form-success');
+      const errorMsg = document.getElementById('form-error');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      successMsg.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+      const form = e.target;
+      const planInterest = form.querySelector('#interest-type')?.value || '';
+      const officeType = form.querySelector('#office-type')?.value || '';
+      const eventDetails = form.querySelector('#event-details')?.value || '';
+      const extraDetails = officeType ? `Office Type: ${officeType}` : (eventDetails ? `Event Details: ${eventDetails}` : '');
+      const data = new URLSearchParams({
+        first_name: form.querySelector('#firstname')?.value || '',
+        last_name: form.querySelector('#lastname')?.value || '',
+        email: form.querySelector('#email')?.value || '',
+        phone: form.querySelector('#phone')?.value || '',
+        company: form.querySelector('#company')?.value || '',
+        plan_interest: planInterest,
+        description: [
+          form.querySelector('#role')?.value ? `Role: ${form.querySelector('#role').value}` : '',
+          `Team Size: ${form.querySelector('#team-size')?.value || ''}`,
+          form.querySelector('#start-date')?.value ? `Start Date: ${form.querySelector('#start-date').value}` : '',
+          `Days/Week: ${form.querySelector('#days-per-week')?.value || ''}`,
+          form.querySelector('#hear-about')?.value ? `How they heard: ${form.querySelector('#hear-about').value}` : '',
+          extraDetails,
+          form.querySelector('#message')?.value || ''
+        ].filter(Boolean).join('\n')
+      });
+      try {
+        const res = await fetch('/.netlify/functions/submit-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: data.toString()
+        });
+        const json = await res.json();
+        if (json.success) {
+          successMsg.classList.remove('hidden');
+          form.reset();
+          document.getElementById('office-type-container').classList.add('hidden');
+          document.getElementById('event-details-container').classList.add('hidden');
+        } else {
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorMsg.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Register your interest';
+      }
+    });
+  </script>
 
   <!-- Footer -->
   <footer class="bg-gray-800">

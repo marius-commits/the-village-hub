@@ -1,2 +1,7 @@
 [build]
   functions = "netlify/functions"
+
+[[redirects]]
+  from = "/hotdesks"
+  to = "/hotdesks.html"
+  status = 200
