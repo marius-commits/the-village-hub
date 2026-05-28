@@ -1,0 +1,9 @@
+# The Village Hub - Stellenbosch Coworking
+# https://www.villagehub.co.za
+
+User-agent: *
+Allow: /
+Disallow: /Netlify/
+Disallow: /.netlify/
+
+Sitemap: https://www.villagehub.co.za/sitemap.xml

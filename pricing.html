@@ -1,10 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-ZA">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Village Hub — Pricing & Memberships</title>
-  <meta name="description" content="Flexible coworking memberships, private offices, and meeting spaces at The Village Hub. Choose a plan that fits your work and team." />
+  <title>Coworking Pricing in Stellenbosch | Hot Desks, Offices, Boardrooms | The Village Hub</title>
+  <meta name="description" content="Coworking pricing at The Village Hub Stellenbosch. Hot desks from R60/hr, dedicated desks R3,500/month, private offices, boardroom hire from R800/hr, meeting rooms and event packages at Nooitgedacht Village." />
+  <meta name="keywords" content="coworking pricing Stellenbosch, hot desk price Stellenbosch, private office rent Stellenbosch, boardroom hire price Stellenbosch, meeting room hire Stellenbosch, day pass Stellenbosch coworking" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="geo.region" content="ZA-WC" />
+  <meta name="geo.placename" content="Stellenbosch" />
+  <meta name="geo.position" content="-33.8766828;18.8213637" />
+  <link rel="canonical" href="https://www.villagehub.co.za/pricing.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="The Village Hub" />
+  <meta property="og:url" content="https://www.villagehub.co.za/pricing.html" />
+  <meta property="og:title" content="Coworking Pricing in Stellenbosch | The Village Hub" />
+  <meta property="og:description" content="Hot desks from R60/hr, private offices, boardroom hire and meeting rooms at Nooitgedacht Village, Stellenbosch." />
+  <meta property="og:image" content="https://www.villagehub.co.za/images/web/hotdesks-1.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Coworking Pricing in Stellenbosch | The Village Hub" />
+  <meta name="twitter:description" content="Hot desks from R60/hr, private offices, boardroom hire and meeting rooms at Nooitgedacht Village." />
+  <meta name="twitter:image" content="https://www.villagehub.co.za/images/web/hotdesks-1.jpg" />
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -175,7 +198,7 @@
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
     .hero-media{
       width:100%; aspect-ratio:16/7; border-radius:18px; border:1px solid var(--vh-border);
-      background:#f7f8f7 url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      background:#f7f8f7 url('/images/web/hotdesks-1.jpg') center/cover no-repeat;
     }
     /* Improve tap targets on mobile */
     @media (max-width:700px){
@@ -184,20 +207,103 @@
     }
 </style>
 
-  <!-- Offer Catalog Schema (edit prices/URLs as needed) -->
+  <!-- Structured Data: Breadcrumb -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "OfferCatalog",
-    "name": "The Village Hub Memberships",
+    "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type":"Offer","name":"Village Resident — Dedicated Desk","priceCurrency":"ZAR","price":"3500","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Village Local — Month Pass (Any Desk)","priceCurrency":"ZAR","price":"3000","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Village Nomad — Day Pass","priceCurrency":"ZAR","price":"250","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Village Visitor — 10 Days / Month (R160/day)","priceCurrency":"ZAR","price":"1600","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Village Drifter — Half Day","priceCurrency":"ZAR","price":"150","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Village Moment — Per Hour","priceCurrency":"ZAR","price":"60","url":"https://members.villagehub.co.za/","category":"Coworking"},
-      {"@type":"Offer","name":"Meeting Rooms — Hourly","priceCurrency":"ZAR","price":"800","url":"https://members.villagehub.co.za/","category":"MeetingRoom"}
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://www.villagehub.co.za/"},
+      {"@type":"ListItem","position":2,"name":"Pricing","item":"https://www.villagehub.co.za/pricing.html"}
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Coworking Products with prices (eligible for rich snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Hot Desk Coworking — Stellenbosch",
+    "description": "Hot desk coworking in Stellenbosch at The Village Hub. Pay by the hour, half day or full day. Fast fibre Wi-Fi, ergonomic seating, coffee included.",
+    "brand": {"@type":"Brand","name":"The Village Hub"},
+    "image": "https://www.villagehub.co.za/images/web/hotdesks-1.jpg",
+    "category": "Coworking",
+    "offers": [
+      {"@type":"Offer","name":"Village Moment — Hourly","price":"60","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Drifter — Half Day","price":"150","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Nomad — Day Pass","price":"250","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Wanderer — 5 Days/Month","price":"1000","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Visitor — 10 Days/Month","price":"1600","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Local — Month Pass","price":"3000","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"Village Resident — Dedicated Desk","price":"3500","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Private Office Rental — Stellenbosch",
+    "description": "Furnished private offices in Stellenbosch at The Village Hub. 1-seater to 6-seater suites with 24/7 access, fibre Wi-Fi and printing.",
+    "brand": {"@type":"Brand","name":"The Village Hub"},
+    "image": "https://www.villagehub.co.za/images/web/office.jpg",
+    "category": "PrivateOffice",
+    "offers": [
+      {"@type":"Offer","name":"1–2 Seater Private Office","price":"4500","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"3 Seater Private Office","price":"6000","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"4 Seater Private Office","price":"7500","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"},
+      {"@type":"Offer","name":"6 Seater Private Office","price":"8500","priceCurrency":"ZAR","availability":"https://schema.org/InStock","url":"https://www.villagehub.co.za/pricing.html","priceValidUntil":"2026-12-31"}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Boardroom & Meeting Room Hire — Stellenbosch",
+    "description": "Boardroom and meeting room hire in Stellenbosch at The Village Hub. Three rooms: Village Boardroom (12-seater), Village Chamber (10-seater), Village Den (4-seater).",
+    "provider": {"@type":"Organization","name":"The Village Hub","url":"https://www.villagehub.co.za/"},
+    "serviceType": "Boardroom Hire",
+    "areaServed": {"@type":"City","name":"Stellenbosch"},
+    "image": "https://www.villagehub.co.za/images/web/village-boardroom.jpg",
+    "offers": {
+      "@type":"AggregateOffer",
+      "priceCurrency":"ZAR",
+      "lowPrice":"180",
+      "highPrice":"390",
+      "offerCount":3
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Event Space & Conference Hire — Stellenbosch",
+    "description": "Event space, workshop venue and conference packages at The Village Hub in Stellenbosch. Catering, A/V and parking included.",
+    "provider": {"@type":"Organization","name":"The Village Hub","url":"https://www.villagehub.co.za/"},
+    "serviceType": "Event Space Hire",
+    "areaServed": {"@type":"City","name":"Stellenbosch"},
+    "image": "https://www.villagehub.co.za/images/web/hotdesks-5.jpg"
+  }
+  </script>
+
+  <!-- Pricing FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"How much does a hot desk cost in Stellenbosch?","acceptedAnswer":{"@type":"Answer","text":"At The Village Hub, hot desks start at R60 per hour, R150 for a half day, R250 for a full day pass, or R3,000/month for unlimited weekday access."}},
+      {"@type":"Question","name":"What does a private office cost at The Village Hub?","acceptedAnswer":{"@type":"Answer","text":"Private offices in Stellenbosch at The Village Hub start from approximately R4,500/month for a 1–2 seater and scale up to R8,500/month for a 6-seater executive office. All offices are furnished with 24/7 access included."}},
+      {"@type":"Question","name":"How much is boardroom hire in Stellenbosch?","acceptedAnswer":{"@type":"Answer","text":"Meeting and boardroom hire at The Village Hub starts from R180/hour for the Village Den (4-seater), R350/hour for the Village Chamber (10-seater), and R390/hour for the Village Boardroom (12-seater). Conference packages are quoted on application."}},
+      {"@type":"Question","name":"Are there any setup fees or long-term contracts?","acceptedAnswer":{"@type":"Answer","text":"No setup fees and no long-term lock-in. Memberships are month-to-month and you can upgrade, downgrade, or cancel with reasonable notice. Try a day pass first if you want to test the space."}},
+      {"@type":"Question","name":"What's included in the price?","acceptedAnswer":{"@type":"Answer","text":"All plans include fast fibre Wi-Fi, ergonomic seating, complimentary coffee and tea, printing credits, access to community events, and discounted rates at The Village Table restaurant."}},
+      {"@type":"Question","name":"Do you offer corporate or team discounts?","acceptedAnswer":{"@type":"Answer","text":"Yes. Teams of 3+ on private office plans qualify for volume discounts. Corporate clients booking regular boardroom or event hire can also access bulk rates. Contact us for a tailored quote."}}
     ]
   }
   </script>
@@ -215,21 +321,28 @@
 <!-- HERO -->
   <header class="hero" aria-labelledby="hero-title">
     <div class="container hero-inner">
-      <span class="eyebrow" aria-hidden="true" style="margin-top: 20px;">Innovate. Thrive. Connect.</span>
-<h1 id="hero-title">Our Pricing &amp; Membership Options</h1>
-      <p>Whether you’re dropping in for a day, joining monthly, or moving your team into a private office — The Village Hub gives you focus, community, and flexibility.</p>
+      <span class="eyebrow" aria-hidden="true" style="margin-top: 20px;">Stellenbosch &middot; Nooitgedacht Village &middot; Now Open</span>
+      <h1 id="hero-title">Coworking Pricing in Stellenbosch &mdash; Hot Desks, Offices &amp; Boardrooms</h1>
+      <p>Flexible coworking memberships at <strong>The Village Hub in Stellenbosch</strong>. Hot desks from <strong>R60/hour</strong>, dedicated desks from <strong>R3,500/month</strong>, furnished private offices for teams, boardroom hire from <strong>R400/hour</strong>, meeting rooms and event space. No setup fees. No long-term lock-in.</p>
       <div class="hero-ctas" role="group" aria-label="Primary actions">
       <a class="btn btn-primary" href="https://members.villagehub.co.za/">
 <span class="icon" aria-hidden="true">🗓️</span> Book Now
         </a>
-      <a class="btn btn-outline" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour">
+      <a class="btn btn-outline" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour">
 <span class="icon" aria-hidden="true">👋</span> Schedule a Tour
         </a>
       </div>
       <p class="subnote">No long-term lock-in. Upgrade, downgrade, or cancel with notice. Coffee &amp; fast Wi-Fi included on all plans.</p>
-      <div class="hero-media" style="background-image: url('https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/2025.08.28%20Nooitgedacht%20%20Co-working%20Stage%2001%20Presentation_4.jpg')" role="img" aria-label="Modern coworking space at The Village Hub"></div>
+      <div class="hero-media" style="background-image: url('/images/web/hotdesks-1.jpg')" role="img" aria-label="Hot desk coworking space in Stellenbosch at The Village Hub"></div>
 </div>
   </header>
+  <!-- SEO Intro Block -->
+  <section class="container" style="margin: 24px auto 8px; max-width: 880px;">
+    <p style="color:#4a4a4a; line-height:1.7; font-size:1.02rem;">
+      The Village Hub is <strong>Stellenbosch&rsquo;s premium coworking space</strong>, located at Nooitgedacht Village just off the R304. We offer transparent month-to-month pricing across four product lines: <a href="#panel-individuals" style="color:var(--vh-green-600); font-weight:600;">individual hot desks &amp; dedicated desks</a>, <a href="#panel-teams" style="color:var(--vh-green-600); font-weight:600;">furnished private offices</a>, <a href="#panel-meetings" style="color:var(--vh-green-600); font-weight:600;">boardroom &amp; meeting room hire</a>, and <a href="#panel-accommodation" style="color:var(--vh-green-600); font-weight:600;">on-site accommodation suites</a>. All plans include fibre Wi-Fi, ergonomic seating, complimentary coffee and access to our community events.
+    </p>
+  </section>
+
     <!-- TABS -->
     <nav class="tabs" aria-label="Pricing categories">
         <div class="container">
@@ -261,7 +374,7 @@
             <div class="price"><span class="amt">R3,500</span><span class="unit">/ month</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Reserve Desk</a>
-              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%2C%20tell%20me%20more%20about%20Dedicated%20Desk" target="_blank" rel="noreferrer noopener">Ask a question</a>
+              <a class="btn btn-ghost" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20tell%20me%20more%20about%20Dedicated%20Desk" target="_blank" rel="noreferrer noopener">Ask a question</a>
             </div>
 </article>
 
@@ -278,7 +391,7 @@
             <div class="price"><span class="amt">R3,000</span><span class="unit">/ month</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Join as Local</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%2C%20I%27m%20interested%20in%20the%20Month%20Pass" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27m%20interested%20in%20the%20Month%20Pass" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
 </div>
           </article>
 
@@ -295,7 +408,7 @@
             <div class="price"><span class="amt">R250</span><span class="unit">/ day</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Book a Day</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%2C%20I%20want%20to%20book%20a%20Day%20Pass" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%20want%20to%20book%20a%20Day%20Pass" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
 </div>
           </article>
 
@@ -312,7 +425,7 @@
             <div class="price"><span class="amt">R160</span><span class="unit">/ day</span><span class="muted"> (10-day bundle)</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Activate Plan</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Village%20Visitor%20(10%20days)%20enquiry" target="_blank" rel="noreferrer noopener">Chat First</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Village%20Visitor%20(10%20days)%20enquiry" target="_blank" rel="noreferrer noopener">Chat First</a>
 </div>
           </article>
           <!-- Wanderer (5 days) -->
@@ -329,7 +442,7 @@
             <div class="price"><span class="amt">R1,000</span><span class="unit">/ month</span><span class="muted">(R200/day)</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" target="_blank" rel="noreferrer noopener">Activate Plan</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%2C%20tell%20me%20more%20about%20Wanderer%205%2Fmonth" target="_blank" rel="noreferrer noopener">Chat first</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20tell%20me%20more%20about%20Wanderer%205%2Fmonth" target="_blank" rel="noreferrer noopener">Chat first</a>
 </div>
           </article>
 <!-- Drifter (Half Day) -->
@@ -346,7 +459,7 @@
 <div class="price"><span class="amt">R150</span><span class="unit">/ half day</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Book Half Day</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Half%20Day%20(Drifter)%20booking%20question" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Half%20Day%20(Drifter)%20booking%20question" target="_blank" rel="noreferrer noopener">WhatsApp us</a>
 </div>
           </article>
           <!-- Moment (Per Hour) -->
@@ -363,7 +476,7 @@
             <div class="price"><span class="amt">R60</span><span class="unit">/ hour</span></div>
             <div class="cta-row">
               <a class="btn btn-gold" href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks">Start by the Hour</a>
-<a class="btn btn-ghost" href="https://wa.me/27721900939?text=Hourly%20(Moment)%20desk%20question" target="_blank" rel="noreferrer noopener">Chat first</a>
+<a class="btn btn-ghost" href="https://wa.me/27725310904?text=Hourly%20(Moment)%20desk%20question" target="_blank" rel="noreferrer noopener">Chat first</a>
 </div>
           </article>
 <!-- Add-on locker -->
@@ -428,8 +541,8 @@
             </ul>
             <div class="price"><span class="amt">R20,950</span><span class="unit">/ month</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=I'm%20interested%20in%20the%20Village%20Executive%20Office%20private%20office">Book Executive Office</a>
-              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=I%20have%20questions%20about%20the%20Village%20Executive%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Executive%20Office%20private%20office">Book Executive Office</a>
+              <a class="btn btn-ghost" href="https://wa.me/27725310904?text=I%20have%20questions%20about%20the%20Village%20Executive%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
 </div>
             <p class="text-xs text-gray-500 mt-4">Availability for Village Manor (6-seater)</p>
 </article>
@@ -446,8 +559,8 @@
             </ul>
 <div class="price"><span class="amt">R13,950</span><span class="unit">/ month</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=I'm%20interested%20in%20the%20Village%20Team%20Office%20private%20office">Book Team Office</a>
-              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=I%20have%20questions%20about%20the%20Village%20Team%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Team%20Office%20private%20office">Book Team Office</a>
+              <a class="btn btn-ghost" href="https://wa.me/27725310904?text=I%20have%20questions%20about%20the%20Village%20Team%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
 </div>
 </article>
 
@@ -463,8 +576,8 @@
             </ul>
 <div class="price"><span class="amt">R10,450</span><span class="unit">/ month</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=I'm%20interested%20in%20the%20Village%20Private%20Office%20private%20office">Book Private Office</a>
-              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=I%20have%20questions%20about%20the%20Village%20Private%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Private%20Office%20private%20office">Book Private Office</a>
+              <a class="btn btn-ghost" href="https://wa.me/27725310904?text=I%20have%20questions%20about%20the%20Village%20Private%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
 </div>
 </article>
 
@@ -480,8 +593,8 @@
             </ul>
 <div class="price"><span class="amt">R6,950</span><span class="unit">/ month</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=I'm%20interested%20in%20the%20Village%20Personal%20Office%20private%20office">Book Personal Office</a>
-              <a class="btn btn-ghost" href="https://wa.me/27721900939?text=I%20have%20questions%20about%20the%20Village%20Personal%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Personal%20Office%20private%20office">Book Personal Office</a>
+              <a class="btn btn-ghost" href="https://wa.me/27725310904?text=I%20have%20questions%20about%20the%20Village%20Personal%20Office" target="_blank" rel="noreferrer noopener">Talk to Us</a>
 </div>
 </article>
 </div>
@@ -516,7 +629,7 @@
             </ul>
             <div class="price"><span class="amt">From R—</span><span class="unit">/ hour</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Workshop%20room%20enquiry">Get a quote</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Workshop%20room%20enquiry">Get a quote</a>
 </div>
           </article>
           <article class="card col-4">
@@ -530,7 +643,7 @@
             </ul>
 <div class="price"><span class="amt">Custom</span><span class="unit"> — POA</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Event%20space%20enquiry">Plan an event</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Event%20space%20enquiry">Plan an event</a>
 </div>
           </article>
 <article class="card col-4">
@@ -542,24 +655,24 @@
               <li><span aria-hidden="true">💡</span> Bright, connected space</li>
               <li><span aria-hidden="true">🖥️</span> AV equipment included</li>
             </ul>
-            <div class="price"><span class="amt">R800</span><span class="unit">/ hour</span><span class="muted"> (R1,600/2hrs)</span></div>
+            <div class="price"><span class="amt">POA</span><span class="unit"> &mdash; tailored quote</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Gathering%20Conference%20enquiry">Book Now</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Gathering%20Conference%20enquiry">Request a Quote</a>
 </div>
           </article>
 
           <article class="card col-4">
             <span class="badge"><span aria-hidden="true">🌿</span> Conference</span>
-            <h3>Village Assembly — Conference Package</h3>
+            <h3>Village Assembly &mdash; Conference Package</h3>
             <p class="tagline">"Where ideas take root and grow."</p>
             <ul class="features">
               <li><span aria-hidden="true">⏱️</span> 4-hour minimum booking</li>
               <li><span aria-hidden="true">🧠</span> Designed for focus and flow</li>
               <li><span aria-hidden="true">☕</span> Coffee service included</li>
             </ul>
-            <div class="price"><span class="amt">R650</span><span class="unit">/ hour</span><span class="muted"> (R2,800/4hrs)</span></div>
+            <div class="price"><span class="amt">POA</span><span class="unit"> &mdash; tailored quote</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Assembly%20Conference%20enquiry">Book Now</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Assembly%20Conference%20enquiry">Request a Quote</a>
 </div>
           </article>
 
@@ -574,7 +687,7 @@
             </ul>
             <div class="price"><span class="amt">R180</span><span class="unit">/ hour</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Village%20Den%20enquiry">Reserve</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Village%20Den%20enquiry">Reserve</a>
 </div>
           </article>
 
@@ -587,32 +700,24 @@
               <li><span aria-hidden="true">🖥️</span> Presentation equipment</li>
               <li><span aria-hidden="true">📶</span> High-speed connectivity</li>
             </ul>
-            <div class="price"><span class="amt">R390</span><span class="unit">/ hour</span></div>
+            <div class="price"><span class="amt">R350</span><span class="unit">/ hour</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Village%20Chamber%20enquiry">Reserve</a>
-            </div>
-            <div class="mt-4">
-              <iframe src="https://calendar.google.com/calendar/embed?src=c_1c15bf34b558008117cb0f300bdf8251cbb2bfde28ac49381526ca9e67fb318c%40group.calendar.google.com&ctz=Africa%2FJohannesburg" 
-                style="border:0; width:100%; height:300px; border-radius:8px;" 
-                frameborder="0" 
-                scrolling="no">
-              </iframe>
-              <p class="text-xs text-gray-500 mt-1">Availability for Village Chamber (10-seater)</p>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Village%20Chamber%20enquiry">Reserve</a>
             </div>
 </article>
 
           <article class="card col-4">
             <span class="badge"><span aria-hidden="true">🪴</span> Meeting</span>
-            <h3>Village Boardroom</h3>
+            <h3>Village Boardroom (12-Seater)</h3>
             <p class="tagline">"The heart of decision-making."</p>
             <ul class="features">
-              <li><span aria-hidden="true">🪑</span> Premium seating</li>
+              <li><span aria-hidden="true">🪑</span> Premium seating for 12</li>
               <li><span aria-hidden="true">📊</span> Executive presentation tools</li>
               <li><span aria-hidden="true">🗣️</span> Acoustic optimization</li>
             </ul>
             <div class="price"><span class="amt">R390</span><span class="unit">/ hour</span></div>
             <div class="cta-row">
-              <a class="btn btn-gold" href="https://wa.me/27721900939?text=Village%20Boardroom%20enquiry">Reserve</a>
+              <a class="btn btn-gold" href="https://wa.me/27725310904?text=Village%20Boardroom%20enquiry">Reserve</a>
 </div>
           </article>
         </div>
@@ -653,11 +758,11 @@
 <li><span aria-hidden="true">🍽</span> Discounts at The Village Table Restaurant</li>
               <li><span aria-hidden="true">🚶‍♀️</span> Full estate amenities & trails access</li>
             </ul>
-            <div class="price"><span class="amt">R1,350</span><span class="unit">/ night</span></div>
+            <div class="price"><a href="/accommodation.html" style="color:var(--vh-green-600); text-decoration:none; font-weight:700; font-size:1.1rem;">Click for latest rates &rarr;</a></div>
             <div class="cta-row">
-            <a class="btn btn-gold" href="/accommodation.html">View Suites</a>
-<a class="btn btn-ghost" href="/accommodation.html">Book Your Stay</a>
-</div>
+              <a class="btn btn-gold" href="/accommodation.html">View Suites</a>
+              <a class="btn btn-ghost" href="/accommodation.html">Book Your Stay</a>
+            </div>
 </article>
         </div>
 
@@ -687,13 +792,79 @@
       <button class="tab" role="tab" id="tab-accommodation-bottom-2" aria-controls="panel-accommodation" aria-selected="false">Accommodation</button>
     </div>
   </div>
+<!-- Quick Lead Form -->
+  <section class="container" style="max-width:720px; margin: 56px auto 48px; padding: 32px 28px; background:#FAF8F6; border:1px solid var(--vh-border); border-radius: var(--radius); box-shadow: var(--shadow);">
+    <h2 style="margin:0 0 8px; font-size:1.5rem; color:#3a4a3a;">Not sure which plan fits? Let&rsquo;s talk.</h2>
+    <p style="margin:0 0 20px; color:var(--vh-muted);">Tell us a bit about what you need and we&rsquo;ll come back with the right option for your work style. We&rsquo;ll also schedule a free tour of the Stellenbosch space.</p>
+    <form id="pricing-lead" style="display:grid; gap:14px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <input type="text" id="pl-firstname" name="firstname" placeholder="First name *" required style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem;">
+        <input type="text" id="pl-lastname" name="lastname" placeholder="Last name *" required style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem;">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <input type="email" id="pl-email" name="email" placeholder="Email *" required style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem;">
+        <input type="tel" id="pl-phone" name="phone" placeholder="Phone / WhatsApp" style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem;">
+      </div>
+      <select id="pl-interest" name="interest" required style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem; background:#fff;">
+        <option value="" disabled selected>What are you interested in? *</option>
+        <option value="Hot Desk">Hot desk / day pass</option>
+        <option value="Dedicated Desk">Dedicated desk (monthly)</option>
+        <option value="Private Office">Private office (team)</option>
+        <option value="Boardroom">Boardroom / meeting room hire</option>
+        <option value="Event Space">Event space / workshop</option>
+        <option value="Tour">Just a tour of the space</option>
+      </select>
+      <textarea id="pl-message" name="message" rows="3" placeholder="Anything else we should know? (team size, dates, etc.)" style="padding:12px 14px; border:1px solid var(--vh-border); border-radius:10px; font-family:inherit; font-size:1rem; resize:vertical;"></textarea>
+      <button type="submit" id="pl-submit" class="btn btn-primary" style="justify-content:center; width:100%; padding:14px;">Send Enquiry &rarr;</button>
+      <p id="pl-success" style="display:none; margin:8px 0 0; text-align:center; color:var(--vh-green-600); font-weight:600;">Thanks &mdash; we&rsquo;ll be in touch shortly.</p>
+      <p id="pl-error" style="display:none; margin:8px 0 0; text-align:center; color:#b91c1c;">Something went wrong. <a href="https://wa.me/27725310904" style="text-decoration:underline;">WhatsApp us</a> directly.</p>
+    </form>
+  </section>
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get('plan');
+      const sel = document.getElementById('pl-interest');
+      if (plan && sel) {
+        for (const opt of sel.options) {
+          if (opt.value.toLowerCase().includes(plan.toLowerCase())) { sel.value = opt.value; break; }
+        }
+      }
+      const form = document.getElementById('pricing-lead');
+      if (!form) return;
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        const btn = document.getElementById('pl-submit');
+        const ok = document.getElementById('pl-success');
+        const err = document.getElementById('pl-error');
+        ok.style.display='none'; err.style.display='none';
+        btn.disabled = true; btn.textContent = 'Sending...';
+        const body = new URLSearchParams({
+          first_name: form.querySelector('#pl-firstname').value,
+          last_name:  form.querySelector('#pl-lastname').value,
+          email:      form.querySelector('#pl-email').value,
+          phone:      form.querySelector('#pl-phone').value,
+          plan_interest: form.querySelector('#pl-interest').value,
+          description: form.querySelector('#pl-message').value
+        });
+        try {
+          const res = await fetch('/.netlify/functions/submit-lead', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body.toString() });
+          const j = await res.json();
+          if (j.success) { ok.style.display='block'; form.reset(); }
+          else { err.style.display='block'; }
+        } catch(e) { err.style.display='block'; }
+        finally { btn.disabled = false; btn.textContent = 'Send Enquiry →'; }
+      });
+    })();
+  </script>
+
 <!-- Sticky Mobile CTA -->
   <aside class="sticky-cta" aria-label="Quick booking">
     <div class="container">
       <a class="btn btn-primary" href="https://members.villagehub.co.za/" target="_blank" rel="noreferrer noopener">
         <span class="icon" aria-hidden="true">🗓️</span> Book Now
       </a>
-      <a class="btn btn-outline" href="https://wa.me/27721900939?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
+      <a class="btn btn-outline" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%20%F0%9F%8C%BF%20I%27d%20like%20to%20schedule%20a%20tour" target="_blank" rel="noreferrer noopener">
         <span class="icon" aria-hidden="true">💬</span> Tour
       </a>
 </div>
@@ -715,11 +886,44 @@
       }
     });
 </script>
+<!-- Pricing FAQ Section -->
+  <section class="container" style="max-width:880px; margin: 48px auto;">
+    <h2 style="text-align:center; font-size:1.8rem; color:#3a4a3a; margin-bottom:8px;">Pricing FAQs</h2>
+    <p style="text-align:center; color:var(--vh-muted); margin-bottom:24px;">Common questions about coworking pricing, contracts and what&rsquo;s included at The Village Hub Stellenbosch.</p>
+    <div class="faq">
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">How much does a hot desk cost in Stellenbosch?</summary>
+        <p>At The Village Hub, hot desks start at R60/hour, R150 for a half day, R250 for a full day pass, or R3,000/month for unlimited weekday access. We also offer 5-day (R1,000) and 10-day (R1,600) packages for hybrid workers.</p>
+      </details>
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">What does a private office cost?</summary>
+        <p>Private offices in Stellenbosch at The Village Hub start at approximately R4,500/month for a 1&ndash;2 seater and scale up to R8,500/month for a 6-seater executive office. All offices are fully furnished, with 24/7 access included.</p>
+      </details>
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">How much is boardroom and meeting room hire in Stellenbosch?</summary>
+        <p>The Village Den (4-seater) is from R180/hour, the Village Chamber (10-seater) is R350/hour, and the Village Boardroom (12-seater) is R390/hour. Conference packages are priced on application.</p>
+      </details>
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">Are there setup fees or long-term contracts?</summary>
+        <p>No. Memberships are month-to-month with no setup fees and no long-term lock-in. Upgrade, downgrade or cancel with reasonable notice. You can also try a day pass before committing.</p>
+      </details>
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">What&rsquo;s included in the price?</summary>
+        <p>All plans include fast fibre Wi-Fi, ergonomic seating, complimentary coffee &amp; tea, printing credits, access to community events, and discounted rates at The Village Table restaurant on site.</p>
+      </details>
+      <details style="background:#fff; border:1px solid var(--vh-border); border-radius:12px; padding:14px 18px; margin-bottom:12px;">
+        <summary style="cursor:pointer; font-weight:600; color:#3a4a3a;">Do you offer corporate or team discounts?</summary>
+        <p>Yes. Teams of 3+ on private office plans qualify for volume discounts. Corporate clients booking regular boardroom or event hire can access bulk rates. <a href="https://wa.me/27725310904" style="color:var(--vh-green-600);">Contact us</a> for a tailored quote.</p>
+      </details>
+    </div>
+  </section>
+
 <!-- Mini Footer -->
   <footer class="mini">
     <div class="container">
-      <div>© <span id="year"></span> The Village Hub. All rights reserved.</div>
-      <div class="muted">Pricing inclusive of amenities unless noted. Subject to availability & change.</div>
+      <div>© <span id="year"></span> The Village Hub &middot; Coworking in Stellenbosch &middot; All rights reserved.</div>
+      <div class="muted">1st Floor, The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch 7600 &middot; <a href="tel:+27725310904">+27 72 531 0904</a> &middot; <a href="mailto:info@villagehub.co.za">info@villagehub.co.za</a></div>
+      <div class="muted" style="margin-top:6px;">Pricing inclusive of amenities unless noted. Subject to availability &amp; change.</div>
     </div>
   </footer>
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
+
+  <url>
+    <loc>https://www.villagehub.co.za/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/reception.jpg</image:loc>
+      <image:title>The Village Hub Coworking Space Reception, Stellenbosch</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/foundry.jpg</image:loc>
+      <image:title>The Foundry Lounge, The Village Hub Stellenbosch</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/open-area.jpg</image:loc>
+      <image:title>Open coworking area at The Village Hub, Nooitgedacht Village</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/pricing.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/hotdesks-1.jpg</image:loc>
+      <image:title>Hot desk coworking pricing in Stellenbosch</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/meeting-rooms-stellenbosch.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/boardroom-hire-stellenbosch.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/event-space-stellenbosch.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/private-offices-stellenbosch.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/accommodation.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/coworking-vs-traditional-2.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/privacy.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/terms.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+</urlset>

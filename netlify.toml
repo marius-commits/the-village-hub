@@ -1,7 +1,46 @@
 [build]
   functions = "netlify/functions"
 
+# Pretty URLs for landing pages
 [[redirects]]
   from = "/hotdesks"
   to = "/hotdesks.html"
   status = 200
+
+[[redirects]]
+  from = "/meeting-rooms-stellenbosch"
+  to = "/meeting-rooms-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/boardroom-hire-stellenbosch"
+  to = "/boardroom-hire-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/event-space-stellenbosch"
+  to = "/event-space-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/private-offices-stellenbosch"
+  to = "/private-offices-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/pricing"
+  to = "/pricing.html"
+  status = 200
+
+# Long-cache web-optimized images
+[[headers]]
+  for = "/images/web/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sensible defaults for HTML
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
