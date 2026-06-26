@@ -32,6 +32,11 @@
   to = "/pricing.html"
   status = 200
 
+[[redirects]]
+  from = "/ads-dashboard"
+  to = "/ads-dashboard.html"
+  status = 200
+
 # Long-cache web-optimized images
 [[headers]]
   for = "/images/web/*"

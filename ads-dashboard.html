@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Google Ads — Live Performance | The Village Hub</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#13110d; --panel:#1c1a15; --panel2:#232019; --line:#322d23;
+    --gold:#C9A24B; --gold-soft:#e3c47e; --sage:#8A9A5B; --text:#ece6d8;
+    --muted:#9a917f; --good:#5fa463; --warn:#d9a441; --crit:#d4654f; --info:#6c8fb0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  a{color:var(--gold-soft)}
+  .wrap{max-width:1200px;margin:0 auto;padding:20px 16px 60px;}
+  header.bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+    padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:22px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{height:38px;width:38px;object-fit:contain;border-radius:6px;background:#000;padding:3px}
+  .brand h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.3px}
+  .brand .sub{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+  .spacer{flex:1}
+  .ranges{display:flex;gap:6px;flex-wrap:wrap}
+  .ranges button{background:var(--panel);color:var(--text);border:1px solid var(--line);
+    padding:7px 12px;border-radius:8px;font-size:13px;cursor:pointer}
+  .ranges button.active{background:var(--gold);color:#1a1a1a;border-color:var(--gold);font-weight:700}
+  .meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:10px}
+  .meta button{background:none;border:1px solid var(--line);color:var(--muted);
+    border-radius:6px;padding:5px 9px;cursor:pointer;font-size:12px}
+  /* KPI strip */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .kpi .v{font-size:24px;font-weight:800;margin-top:6px}
+  .kpi .v small{font-size:13px;font-weight:600;color:var(--muted)}
+  h2.section{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);
+    margin:30px 0 14px;font-weight:700}
+  /* charts */
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .chartbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .chartbox h3{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:600}
+  .chartbox canvas{max-height:230px}
+  /* campaign cards */
+  .camp{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+  .camp .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .camp .top h3{margin:0;font-size:17px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.5px}
+  .badge.ENABLED{background:rgba(95,164,99,.18);color:var(--good)}
+  .badge.PAUSED{background:rgba(217,164,65,.18);color:var(--warn)}
+  .camp .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px}
+  .cell .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+  .cell .v{font-size:18px;font-weight:700;margin-top:3px}
+  /* suggestions */
+  .sug{list-style:none;padding:0;margin:14px 0 0}
+  .sug li{display:flex;gap:10px;padding:10px 12px;border-radius:9px;background:var(--panel2);
+    margin-bottom:8px;font-size:14px;line-height:1.5;border-left:3px solid var(--info)}
+  .sug li.good{border-color:var(--good)} .sug li.warn{border-color:var(--warn)}
+  .sug li.crit{border-color:var(--crit)} .sug li.info{border-color:var(--info)}
+  .sug .ico{font-weight:800}
+  .sug li.good .ico{color:var(--good)} .sug li.warn .ico{color:var(--warn)}
+  .sug li.crit .ico{color:var(--crit)} .sug li.info .ico{color:var(--info)}
+  .panel-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:18px;color:var(--muted);font-size:14px;line-height:1.6}
+  .center{text-align:center;padding:60px 20px}
+  .center h2{color:var(--gold)}
+  .spin{display:inline-block;width:26px;height:26px;border:3px solid var(--line);
+    border-top-color:var(--gold);border-radius:50%;animation:s 1s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  code{background:#000;padding:2px 6px;border-radius:4px;color:var(--gold-soft);font-size:13px}
+  .footer{margin-top:40px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="brand">
+      <img src="/images/web/logo.png" alt="The Village Hub">
+      <div>
+        <div class="sub">The Village Hub</div>
+        <h1>Google Ads — Live Performance</h1>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="ranges" id="ranges">
+      <button data-r="7">7d</button>
+      <button data-r="14">14d</button>
+      <button data-r="30" class="active">30d</button>
+      <button data-r="90">90d</button>
+      <button data-r="month">This month</button>
+    </div>
+  </header>
+
+  <div class="meta" style="margin-bottom:18px">
+    <span id="updated">—</span>
+    <button id="refresh">↻ Refresh</button>
+    <button id="rekey">Change access key</button>
+  </div>
+
+  <div id="state" class="center"><span class="spin"></span><p>Loading live data…</p></div>
+  <div id="content" style="display:none">
+    <div class="kpis" id="kpis"></div>
+
+    <h2 class="section">Trends</h2>
+    <div class="charts">
+      <div class="chartbox"><h3>Daily spend (R)</h3><canvas id="cSpend"></canvas></div>
+      <div class="chartbox"><h3>Daily clicks</h3><canvas id="cClicks"></canvas></div>
+      <div class="chartbox"><h3>Daily conversions</h3><canvas id="cConv"></canvas></div>
+    </div>
+
+    <h2 class="section">Campaigns</h2>
+    <div id="campaigns"></div>
+
+    <h2 class="section">Account-level read &amp; next moves</h2>
+    <div class="panel-note" id="accountNotes"></div>
+  </div>
+
+  <div class="footer">
+    Live data pulled directly from Google Ads via a secure Netlify function. Spend in ZAR.<br>
+    Suggestions are automated heuristics — directional, not gospel. The Village Hub · internal use.
+  </div>
+</div>
+
+<script>
+const FN = '/.netlify/functions/google-ads';
+let currentRange = '30';
+let charts = {};
+
+function key(){ return localStorage.getItem('vh_dash_key') || ''; }
+function askKey(){
+  const k = prompt('Enter dashboard access key:');
+  if(k){ localStorage.setItem('vh_dash_key', k.trim()); }
+  return key();
+}
+const R = n => 'R' + (Number(n)||0).toLocaleString('en-ZA',{maximumFractionDigits:0});
+const R1 = n => 'R' + (Number(n)||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = n => (Number(n)*100).toLocaleString('en-ZA',{maximumFractionDigits:1}) + '%';
+const num = n => (Number(n)||0).toLocaleString('en-ZA',{maximumFractionDigits:1});
+
+async function load(){
+  if(!key()){ if(!askKey()){ showState('Access key required. Reload to try again.'); return; } }
+  showState('<span class="spin"></span><p>Loading live data…</p>', true);
+  let data;
+  try{
+    const res = await fetch(`${FN}?range=${currentRange}&key=${encodeURIComponent(key())}&debug=1`);
+    if(res.status === 401){ localStorage.removeItem('vh_dash_key'); showState('Invalid access key. <a href="#" onclick="location.reload()">Try again</a>.'); return; }
+    data = await res.json();
+  }catch(e){ showState('Could not reach the data function. '+e.message); return; }
+
+  if(data.configured === false){
+    showState(`<h2>Awaiting setup</h2><p>The dashboard is live, but the Google Ads API credentials aren't set yet.</p>
+      <p style="color:var(--muted)">Missing: <code>${(data.missing||[]).join('</code> <code>')}</code></p>
+      <p style="color:var(--muted)">Follow <b>Google-Ads-Dashboard-SETUP.md</b> to finish, then refresh.</p>`);
+    return;
+  }
+  if(data.error){ showState(`<h2>Data error</h2><p>${data.message||data.error}</p>
+    ${data.detail?`<pre style="text-align:left;white-space:pre-wrap;color:var(--muted);font-size:12px">${escapeHtml(JSON.stringify(data.detail,null,2)).slice(0,1200)}</pre>`:''}`); return; }
+
+  render(data);
+}
+
+function showState(html, plain){
+  document.getElementById('content').style.display='none';
+  const s=document.getElementById('state'); s.style.display='block'; s.innerHTML=html;
+}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+function render(data){
+  document.getElementById('state').style.display='none';
+  document.getElementById('content').style.display='block';
+  document.getElementById('updated').textContent =
+    'Updated ' + new Date(data.fetchedAt).toLocaleString('en-ZA') + ' · ' + data.rangeLabel;
+
+  const camps = data.summary || [];
+  // ---- Account KPIs ----
+  const tot = camps.reduce((a,c)=>({
+    cost:a.cost+c.cost, clicks:a.clicks+c.clicks, impr:a.impr+c.impressions,
+    conv:a.conv+c.conversions, val:a.val+c.convValue }),{cost:0,clicks:0,impr:0,conv:0,val:0});
+  const blendedCpl = tot.conv>0 ? tot.cost/tot.conv : null;
+  const blendedCtr = tot.impr>0 ? tot.clicks/tot.impr : 0;
+  const kpi = (l,v)=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div></div>`;
+  document.getElementById('kpis').innerHTML =
+    kpi('Total spend', R(tot.cost)) +
+    kpi('Clicks', num(tot.clicks)) +
+    kpi('Impressions', num(tot.impr)) +
+    kpi('CTR', pct(blendedCtr)) +
+    kpi('Conversions', num(tot.conv)) +
+    kpi('Cost / conv', blendedCpl!=null?R(blendedCpl):'—') +
+    kpi('Conv. value', R(tot.val));
+
+  // ---- Charts ----
+  const dates = [...new Set((data.daily||[]).map(d=>d.date))].sort();
+  const byCamp = {};
+  (data.daily||[]).forEach(d=>{ (byCamp[d.name]=byCamp[d.name]||{}); });
+  const palette = ['#C9A24B','#8A9A5B','#6c8fb0','#d4654f','#b07bbf'];
+  const names = camps.map(c=>c.name);
+  function series(metric){
+    return names.map((nm,i)=>{
+      const map={}; (data.daily||[]).filter(d=>d.name===nm).forEach(d=>map[d.date]=d[metric]);
+      return { label:nm, data:dates.map(dt=>map[dt]||0), borderColor:palette[i%palette.length],
+        backgroundColor:palette[i%palette.length]+'22', tension:.3, fill:true, pointRadius:2 };
+    });
+  }
+  drawChart('cSpend', dates, series('cost'));
+  drawChart('cClicks', dates, series('clicks'));
+  drawChart('cConv', dates, series('conversions'));
+
+  // ---- Campaign cards ----
+  const host=document.getElementById('campaigns'); host.innerHTML='';
+  camps.forEach(c=>{
+    const cpl = c.conversions>0 ? c.cost/c.conversions : null;
+    const cell=(l,v)=>`<div class="cell"><div class="l">${l}</div><div class="v">${v}</div></div>`;
+    const sugs = suggest(c, tot);
+    const div=document.createElement('div'); div.className='camp';
+    div.innerHTML=`
+      <div class="top"><h3>${c.name}</h3><span class="badge ${c.status}">${c.status}</span></div>
+      <div class="grid">
+        ${cell('Spend', R(c.cost))}
+        ${cell('Clicks', num(c.clicks))}
+        ${cell('Impr.', num(c.impressions))}
+        ${cell('CTR', pct(c.ctr))}
+        ${cell('Avg CPC', R1(c.avgCpc))}
+        ${cell('Conv.', num(c.conversions))}
+        ${cell('Cost/conv', cpl!=null?R(cpl):'—')}
+        ${cell('Impr. share', c.imprShare!=null?pct(c.imprShare):'—')}
+      </div>
+      <ul class="sug">${sugs.map(s=>`<li class="${s.sev}"><span class="ico">${ico(s.sev)}</span><span>${s.text}</span></li>`).join('')}</ul>`;
+    host.appendChild(div);
+  });
+
+  // ---- Account notes ----
+  document.getElementById('accountNotes').innerHTML = accountNotes(camps, tot, blendedCpl);
+}
+
+function ico(s){return s==='good'?'✓':s==='warn'?'▲':s==='crit'?'✕':'ℹ';}
+
+function drawChart(id, labels, datasets){
+  if(charts[id]) charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id),{
+    type:'line', data:{labels,datasets},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#9a917f',boxWidth:12,font:{size:11}}}},
+      scales:{x:{ticks:{color:'#6f6857',maxTicksLimit:8,font:{size:10}},grid:{color:'#26221b'}},
+        y:{ticks:{color:'#6f6857',font:{size:10}},grid:{color:'#26221b'},beginAtZero:true}}}});
+}
+
+// ---- Heuristic suggestion engine (reacts to live numbers) ----
+function suggest(c, tot){
+  const out=[]; const isSearch = (c.channel||'').toUpperCase().includes('SEARCH');
+  const cpl = c.conversions>0 ? c.cost/c.conversions : null;
+  if(c.conversions===0 && c.cost>=150){
+    out.push({sev:'crit',text:`No conversions yet despite ${R(c.cost)} spent. Check the search-terms report for junk queries, confirm the landing page matches intent, and pause any broad/low-intent keywords.`});
+  } else if(c.conversions===0 && c.cost<150){
+    out.push({sev:'info',text:`Still gathering data (${R(c.cost)} spent, no conversions). Hyper-local terms are volume-limited — judge over 6–8 weeks, don't react to small numbers.`});
+  } else if(cpl!=null){
+    if(cpl<300) out.push({sev:'good',text:`Healthy cost per conversion at ${R(cpl)}. This campaign is working — consider feeding it more budget.`});
+    else if(cpl<=600) out.push({sev:'warn',text:`Cost per conversion is ${R(cpl)} — workable but watch it. Tighten keywords and lift Quality Score to bring it down.`});
+    else out.push({sev:'crit',text:`Cost per conversion is high at ${R(cpl)}. Review which keywords convert and cut the rest; check landing-page friction.`});
+  }
+  if(isSearch && c.impressions>50){
+    if(c.ctr<0.03) out.push({sev:'crit',text:`CTR is ${pct(c.ctr)} — low for tight local search. Refresh RSA headlines and test sharper, benefit-led angles.`});
+    else if(c.ctr<0.05) out.push({sev:'warn',text:`CTR ${pct(c.ctr)} is a touch under the ~5%+ you'd want. Add/rotate headlines and test new hooks.`});
+    else out.push({sev:'good',text:`Strong CTR at ${pct(c.ctr)} — your ad copy is resonating.`});
+  }
+  if(c.lostBudget!=null && c.lostBudget>0.10){
+    out.push({sev:'warn',text:`Losing ${pct(c.lostBudget)} of impressions to budget. There's demand you're not capturing — a small daily-budget bump would buy more clicks at the same efficiency.`});
+  }
+  if(c.lostRank!=null && c.lostRank>0.30){
+    out.push({sev:'warn',text:`Losing ${pct(c.lostRank)} of impressions to Ad Rank. Improve Quality Score (relevance, landing page) or raise max CPC selectively.`});
+  }
+  if(c.imprShare!=null && c.imprShare<0.40 && c.impressions>50){
+    out.push({sev:'info',text:`Impression share is ${pct(c.imprShare)} — lots of headroom in this market if you choose to scale.`});
+  }
+  if(c.clicks<10 && c.cost>0){
+    out.push({sev:'info',text:`Only ${num(c.clicks)} clicks this period — volume-limited. Normal for a hyper-local budget; let it run before drawing conclusions.`});
+  }
+  if(out.length===0) out.push({sev:'good',text:`Metrics look stable — nothing flagged this period.`});
+  return out;
+}
+
+function accountNotes(camps, tot, blendedCpl){
+  const parts=[];
+  parts.push(`<b>Account snapshot:</b> ${R(tot.cost)} spent · ${num(tot.clicks)} clicks · ${num(tot.conv)} conversions${blendedCpl!=null?` · blended cost/conv ${R(blendedCpl)}`:''}.`);
+  const converters = camps.filter(c=>c.conversions>0);
+  const zero = camps.filter(c=>c.conversions===0 && c.cost>=150);
+  if(converters.length && zero.length){
+    parts.push(`One or more campaigns are converting while <b>${zero.map(c=>c.name).join(', ')}</b> is spending without conversions — consider shifting budget toward the proven performer until the laggard is fixed.`);
+  }
+  const totalLostBudget = camps.some(c=>c.lostBudget!=null && c.lostBudget>0.10);
+  if(totalLostBudget) parts.push(`You're leaving impressions on the table due to budget caps — scaling spend is a lever whenever you're ready.`);
+  if(tot.conv===0) parts.push(`No conversions account-wide yet. Make sure conversion tracking is firing (test the thank-you page) before judging performance — and remember fast human follow-up on every lead is the #1 conversion lever.`);
+  parts.push(`<span style="color:var(--muted)">Tip: switch bidding from Maximise Clicks to Maximise Conversions only after ~20 logged conversions.</span>`);
+  return parts.map(p=>`<p style="margin:0 0 10px">${p}</p>`).join('');
+}
+
+// events
+document.getElementById('ranges').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  [...document.querySelectorAll('#ranges button')].forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); currentRange=b.dataset.r; load();
+});
+document.getElementById('refresh').addEventListener('click',load);
+document.getElementById('rekey').addEventListener('click',()=>{localStorage.removeItem('vh_dash_key');askKey();load();});
+load();
+setInterval(load, 10*60*1000); // auto-refresh every 10 min
+</script>
+</body>
+</html>
