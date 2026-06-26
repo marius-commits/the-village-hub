@@ -72,9 +72,32 @@
   @keyframes s{to{transform:rotate(360deg)}}
   code{background:#000;padding:2px 6px;border-radius:4px;color:var(--gold-soft);font-size:13px}
   .footer{margin-top:40px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
+  /* access gate overlay */
+  #gate{position:fixed;inset:0;background:rgba(10,9,6,.92);display:none;align-items:center;
+    justify-content:center;z-index:100}
+  #gate .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:30px 28px;width:90%;max-width:360px;text-align:center}
+  #gate img{height:44px;width:44px;border-radius:8px;background:#000;padding:4px;margin-bottom:10px}
+  #gate h2{margin:6px 0 4px;font-size:18px}
+  #gate p{color:var(--muted);font-size:13px;margin:0 0 18px}
+  #gate input{width:100%;padding:11px 12px;border-radius:9px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--text);font-size:15px;margin-bottom:12px}
+  #gate button{width:100%;padding:11px;border-radius:9px;border:none;background:var(--gold);
+    color:#1a1a1a;font-weight:700;font-size:15px;cursor:pointer}
+  #gate .err{color:var(--crit);font-size:12px;min-height:16px;margin-bottom:8px}
 </style>
 </head>
 <body>
+<div id="gate">
+  <div class="box">
+    <img src="/images/web/logo.png" alt="The Village Hub">
+    <h2>Ads Dashboard</h2>
+    <p>Enter the access key to view live performance.</p>
+    <div class="err" id="gateErr"></div>
+    <input id="gateInput" type="password" placeholder="Access key" autocomplete="off">
+    <button id="gateBtn">Unlock</button>
+  </div>
+</div>
 <div class="wrap">
   <header class="bar">
     <div class="brand">
@@ -130,10 +153,16 @@ let currentRange = '30';
 let charts = {};
 
 function key(){ return localStorage.getItem('vh_dash_key') || ''; }
-function askKey(){
-  const k = prompt('Enter dashboard access key:');
-  if(k){ localStorage.setItem('vh_dash_key', k.trim()); }
-  return key();
+function showGate(msg){
+  document.getElementById('gateErr').textContent = msg || '';
+  document.getElementById('gate').style.display='flex';
+  setTimeout(()=>{const i=document.getElementById('gateInput'); if(i){i.focus();}},50);
+}
+function hideGate(){ document.getElementById('gate').style.display='none'; }
+function submitGate(){
+  const v=document.getElementById('gateInput').value.trim();
+  if(!v){ document.getElementById('gateErr').textContent='Please enter a key.'; return; }
+  localStorage.setItem('vh_dash_key', v); hideGate(); load();
 }
 const R = n => 'R' + (Number(n)||0).toLocaleString('en-ZA',{maximumFractionDigits:0});
 const R1 = n => 'R' + (Number(n)||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -141,12 +170,12 @@ const pct = n => (Number(n)*100).toLocaleString('en-ZA',{maximumFractionDigits:1
 const num = n => (Number(n)||0).toLocaleString('en-ZA',{maximumFractionDigits:1});
 
 async function load(){
-  if(!key()){ if(!askKey()){ showState('Access key required. Reload to try again.'); return; } }
+  if(!key()){ showGate(); return; }
   showState('<span class="spin"></span><p>Loading live data…</p>', true);
   let data;
   try{
     const res = await fetch(`${FN}?range=${currentRange}&key=${encodeURIComponent(key())}&debug=1`);
-    if(res.status === 401){ localStorage.removeItem('vh_dash_key'); showState('Invalid access key. <a href="#" onclick="location.reload()">Try again</a>.'); return; }
+    if(res.status === 401){ localStorage.removeItem('vh_dash_key'); showGate('Invalid access key — try again.'); return; }
     data = await res.json();
   }catch(e){ showState('Could not reach the data function. '+e.message); return; }
 
@@ -302,7 +331,9 @@ document.getElementById('ranges').addEventListener('click',e=>{
   b.classList.add('active'); currentRange=b.dataset.r; load();
 });
 document.getElementById('refresh').addEventListener('click',load);
-document.getElementById('rekey').addEventListener('click',()=>{localStorage.removeItem('vh_dash_key');askKey();load();});
+document.getElementById('rekey').addEventListener('click',()=>{localStorage.removeItem('vh_dash_key');showGate();});
+document.getElementById('gateBtn').addEventListener('click',submitGate);
+document.getElementById('gateInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitGate();});
 load();
 setInterval(load, 10*60*1000); // auto-refresh every 10 min
 </script>
