@@ -3,7 +3,7 @@
  "source": "auto-pull (browser)",
  "currency": "ZAR",
  "rangeLabel": "Last 30 days",
- "fetchedAt": "2026-06-26T11:59:45Z",
+ "fetchedAt": "2026-06-29T07:26:06Z",
  "summary": [
   {
    "id": "hotdesk",
@@ -11,13 +11,13 @@
    "status": "ENABLED",
    "channel": "SEARCH",
    "budget": 21.43,
-   "impressions": 0,
-   "clicks": 0,
-   "cost": 0,
+   "impressions": 15,
+   "clicks": 1,
+   "cost": 2.43,
    "conversions": 0,
    "convValue": 0,
-   "ctr": 0,
-   "avgCpc": 0,
+   "ctr": 0.0667,
+   "avgCpc": 2.43,
    "imprShare": null,
    "lostBudget": null,
    "lostRank": null
@@ -27,7 +27,7 @@
    "name": "Boardroom Hire – Search",
    "status": "ENABLED",
    "channel": "SEARCH",
-   "budget": 10,
+   "budget": 14.0,
    "impressions": 0,
    "clicks": 0,
    "cost": 0,
@@ -53,6 +53,24 @@
   {
    "name": "Boardroom Hire – Search",
    "date": "2026-06-26",
+   "impressions": 0,
+   "clicks": 0,
+   "cost": 0,
+   "conversions": 0,
+   "convValue": 0
+  },
+  {
+   "name": "Winter Hot Desk Special 2026",
+   "date": "2026-06-28",
+   "impressions": 9,
+   "clicks": 1,
+   "cost": 2.43,
+   "conversions": 0,
+   "convValue": 0
+  },
+  {
+   "name": "Boardroom Hire – Search",
+   "date": "2026-06-28",
    "impressions": 0,
    "clicks": 0,
    "cost": 0,
