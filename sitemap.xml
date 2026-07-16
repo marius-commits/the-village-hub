@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://www.villagehub.co.za/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,6 +18,14 @@
     <image:image>
       <image:loc>https://www.villagehub.co.za/images/web/open-area.jpg</image:loc>
       <image:title>Open coworking area at The Village Hub, Nooitgedacht Village</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/village-stay-suite-1.jpg</image:loc>
+      <image:title>The Village Stay boutique suite, Nooitgedacht Village Stellenbosch</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/village-stay-bathroom.jpg</image:loc>
+      <image:title>The Village Stay private bathroom with walk-in shower</image:title>
     </image:image>
   </url>
 
@@ -62,9 +70,9 @@
 
   <url>
     <loc>https://www.villagehub.co.za/accommodation.html</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>

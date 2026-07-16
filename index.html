@@ -666,6 +666,45 @@
     </div>
   </div>
 
+  <!-- Structured Data: Village Stay accommodation -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "@id": "https://www.villagehub.co.za/accommodation#lodging",
+    "name": "The Village Stay",
+    "description": "Modern boutique studio suites at Nooitgedacht Village, Stellenbosch. Five individually styled suites with king/twin beds, kitchenette, walk-in shower, Smart TV and fibre Wi-Fi. Guests get 20% off Village Hub coworking.",
+    "url": "https://www.villagehub.co.za/accommodation",
+    "image": [
+      "https://www.villagehub.co.za/images/web/village-stay-suite-1.jpg",
+      "https://www.villagehub.co.za/images/web/village-stay-suite-2.jpg",
+      "https://www.villagehub.co.za/images/web/village-stay-bathroom.jpg"
+    ],
+    "parentOrganization": { "@id": "https://www.villagehub.co.za/#business" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1st Floor, The Foundry, Sauvignon Street, Nooitgedacht Village",
+      "addressLocality": "Stellenbosch",
+      "addressRegion": "Western Cape",
+      "postalCode": "7600",
+      "addressCountry": "ZA"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": -33.8766828, "longitude": 18.8213637 },
+    "telephone": "+27878220802",
+    "email": "stay@villagehub.co.za",
+    "numberOfRooms": 5,
+    "petsAllowed": false,
+    "checkinTime": "14:00",
+    "checkoutTime": "10:00",
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Free Wi-Fi", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Kitchenette", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Free parking", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Coworking access discount", "value": true }
+    ]
+  }
+  </script>
+
   <!-- Village Stay Accommodation Section -->
   <div id="stay" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
