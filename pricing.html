@@ -965,5 +965,13 @@
       }
     });
   </script>
+  <!-- WhatsApp click conversion tracking -->
+  <script>
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
+    if(!a) return;
+    try { gtag('event','conversion',{'send_to':'AW-18265049370/n8xeCNDIuNMcEJqSuoVE','value':1.0,'currency':'ZAR'}); } catch(err) {}
+  }, true);
+  </script>
 </body>
 </html>

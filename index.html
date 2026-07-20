@@ -1095,7 +1095,7 @@
       Register your interest
     </button>
     <p id="form-success" class="hidden mt-4 text-center text-[#8FA985] font-semibold text-base">Thank you! We'll be in touch soon. ✓</p>
-    <p id="form-error" class="hidden mt-4 text-center text-red-600 font-medium">Something went wrong. Please <a href="https://wa.me/27782750001" class="underline">WhatsApp us</a> directly.</p>
+    <p id="form-error" class="hidden mt-4 text-center text-red-600 font-medium">Something went wrong. Please <a href="https://wa.me/27725310904" class="underline">WhatsApp us</a> directly.</p>
   </form>
   <script>
     document.getElementById('interest').addEventListener('submit', async function(e) {
@@ -1407,5 +1407,13 @@
     });
   </script>
 
+  <!-- WhatsApp click conversion tracking -->
+  <script>
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
+    if(!a) return;
+    try { gtag('event','conversion',{'send_to':'AW-18265049370/n8xeCNDIuNMcEJqSuoVE','value':1.0,'currency':'ZAR'}); } catch(err) {}
+  }, true);
+  </script>
 </body>
 </html>
