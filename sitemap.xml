@@ -161,4 +161,15 @@
     <priority>0.9</priority>
   </url>
 
+  <url>
+    <loc>https://www.villagehub.co.za/coworking-somerset-west-durbanville.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/foundry.jpg</image:loc>
+      <image:title>Coworking for Somerset West and Durbanville commuters &#8212; The Village Hub</image:title>
+    </image:image>
+  </url>
+
 </urlset>
