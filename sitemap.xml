@@ -172,4 +172,15 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://www.villagehub.co.za/workshop-training-venue-stellenbosch.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/village-boardroom.jpg</image:loc>
+      <image:title>Workshop and training venue in Stellenbosch &#8212; The Village Hub</image:title>
+    </image:image>
+  </url>
+
 </urlset>
