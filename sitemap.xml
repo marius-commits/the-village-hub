@@ -194,4 +194,15 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://www.villagehub.co.za/nooitgedacht-village-stellenbosch.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/foundry.jpg</image:loc>
+      <image:title>Nooitgedacht Village Stellenbosch &#8212; The Village Hub</image:title>
+    </image:image>
+  </url>
+
 </urlset>
