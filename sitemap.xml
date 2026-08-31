@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://www.villagehub.co.za/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -202,6 +202,17 @@
     <image:image>
       <image:loc>https://www.villagehub.co.za/images/web/foundry.jpg</image:loc>
       <image:title>Nooitgedacht Village Stellenbosch &#8212; The Village Hub</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/work-and-stay-stellenbosch.html</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/hero-overview.jpg</image:loc>
+      <image:title>Work and stay in Stellenbosch &#8212; The Village Hub &amp; The Village Stay</image:title>
     </image:image>
   </url>
 
