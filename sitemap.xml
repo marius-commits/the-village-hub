@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://www.villagehub.co.za/</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -31,7 +31,7 @@
 
   <url>
     <loc>https://www.villagehub.co.za/pricing.html</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -235,6 +235,17 @@
     <image:image>
       <image:loc>https://www.villagehub.co.za/images/web/office.jpg</image:loc>
       <image:title>Registered business address in Stellenbosch &#8212; The Village Hub</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.villagehub.co.za/boardroom-hire-prices-stellenbosch.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.villagehub.co.za/images/web/village-boardroom.jpg</image:loc>
+      <image:title>Boardroom &#38; meeting room hire prices in Stellenbosch &#8212; The Village Hub</image:title>
     </image:image>
   </url>
 
