@@ -9,6 +9,19 @@ export default { async fetch(req: Request) {
   if (req.method === "GET") {
     if (view === "summary") { const { data, error } = await db.rpc("control_room_summary"); if (error) return json({ error: error.message }, 500); return json({ data, admin }); }
     if (view === "bookings") { const from = url.searchParams.get("from") ?? new Date(Date.now() - 86400000).toISOString(); const to = url.searchParams.get("to") ?? new Date(Date.now() + 7 * 86400000).toISOString(); const { data, error } = await db.from("bookings").select("*,contact:contacts(id,first_name,last_name,email,phone_e164,company_name)").gte("start_at", from).lte("start_at", to).order("start_at", { ascending: true }).limit(limit); if (error) return json({ error: error.message }, 500); return json({ data }); }
+    if (view === "operations") {
+      const [{ data: summary, error: summaryError }, { data: resources, error: resourceError }, { data: subscriptions, error: subscriptionError }] = await Promise.all([
+        db.rpc("control_room_operations_summary"),
+        db.from("spacebring_resources").select("resource_id,title,resource_type,capacity,rack_price,rack_period,assignment_count,assigned_capacity,assignment_names,metadata,synced_at").order("resource_type").order("title").limit(200),
+        db.from("spacebring_subscriptions").select("subscription_id,customer_name,customer_type,status,period,price,credits,day_passes,start_at,end_at,item_titles,resource_refs,mapping_status,metadata,synced_at").in("status", ["active","scheduled","incomplete"]).order("price", { ascending: false }).limit(200)
+      ]);
+      if (summaryError) return json({ error: summaryError.message }, 500); if (resourceError) return json({ error: resourceError.message }, 500); if (subscriptionError) return json({ error: subscriptionError.message }, 500);
+      const issues = (subscriptions ?? []).filter((s: any) => ["unlinked_office","pending_assignment"].includes(s.mapping_status));
+      const offices = (resources ?? []).filter((r: any) => r.resource_type === "office");
+      const rooms = (resources ?? []).filter((r: any) => r.resource_type === "room");
+      const flex = (resources ?? []).filter((r: any) => ["hotDesk","dedicatedDesk"].includes(r.resource_type));
+      return json({ summary, offices, rooms, flex, subscriptions, issues });
+    }
     if (view === "messages") { const { data, error } = await db.from("message_log").select("*,contact:contacts(id,first_name,last_name,phone_e164),booking:bookings(spacebring_booking_id,resource_name,booking_title,start_at,end_at)").order("created_at", { ascending: false }).limit(limit); if (error) return json({ error: error.message }, 500); const { data: queue } = await db.from("message_queue").select("*,contact:contacts(first_name,last_name,phone_e164),booking:bookings(resource_name,booking_title,start_at)").in("status", ["queued","processing","failed","dead_letter"]).order("due_at", { ascending: true }).limit(limit); return json({ data, queue: queue ?? [] }); }
     if (view === "leads") { const { data, error } = await db.from("leads").select("*").order("created_at", { ascending: false }).limit(limit); if (error) return json({ error: error.message }, 500); return json({ data }); }
     if (view === "feedback") { const { data, error } = await db.from("feedback").select("*,contact:contacts(first_name,last_name,email,phone_e164),booking:bookings(resource_name,booking_title,start_at)").order("created_at", { ascending: false }).limit(limit); if (error) return json({ error: error.message }, 500); return json({ data }); }
