@@ -1,9 +1,26 @@
 # The Village Hub - Stellenbosch Coworking
 # https://www.villagehub.co.za
+# Public marketing content is intentionally crawlable by search and AI-search agents.
 
 User-agent: *
 Allow: /
 Disallow: /Netlify/
 Disallow: /.netlify/
+Disallow: /ads-dashboard.html
+
+# OpenAI search discovery
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /ads-dashboard.html
+
+# User-requested ChatGPT page retrieval
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /ads-dashboard.html
+
+# Perplexity search discovery
+User-agent: PerplexityBot
+Allow: /
+Disallow: /ads-dashboard.html
 
 Sitemap: https://www.villagehub.co.za/sitemap.xml
