@@ -1,0 +1,29 @@
+cluster,query,intent,priority,primary_landing_page,paid_policy,organic_target,ai_test
+Coworking,coworking stellenbosch,transactional,A,/coworking-stellenbosch.html,Measure demand and defend profitable visibility,#1,Yes
+Coworking,coworking space stellenbosch,transactional,A,/coworking-stellenbosch.html,Measure demand and defend profitable visibility,#1,Yes
+Coworking,co working stellenbosch,transactional,B,/coworking-stellenbosch.html,Organic first unless paid demand proves out,Top 3,No
+Coworking,shared office stellenbosch,transactional,B,/coworking-stellenbosch.html,Organic first,Top 3,Yes
+Coworking,flexible workspace stellenbosch,transactional,B,/coworking-stellenbosch.html,Organic first,Top 3,Yes
+Office,office space stellenbosch,transactional,A,/office-space-to-rent-stellenbosch.html,High commercial priority,#1,Yes
+Office,offices to let stellenbosch,transactional,A,/office-space-to-rent-stellenbosch.html,High commercial priority,#1,Yes
+Office,office rental stellenbosch,transactional,A,/office-space-to-rent-stellenbosch.html,High commercial priority,Top 3,Yes
+Office,private office stellenbosch,transactional,A,/private-offices-stellenbosch.html,High commercial priority,#1,Yes
+Office,serviced offices stellenbosch,transactional,A,/private-offices-stellenbosch.html,High commercial priority,Top 3,Yes
+Office,furnished office stellenbosch,transactional,B,/private-offices-stellenbosch.html,Organic first,Top 3,Yes
+Office,small office stellenbosch,transactional,B,/private-offices-stellenbosch.html,Organic first,Top 3,Yes
+Meeting,boardroom hire stellenbosch,transactional,A,/boardroom-hire-stellenbosch.html,ACTIVE priority search campaign,#1,Yes
+Meeting,meeting room hire stellenbosch,transactional,A,/meeting-rooms-stellenbosch.html,Test only where conversion economics support it,#1,Yes
+Meeting,meeting rooms stellenbosch,transactional,A,/meeting-rooms-stellenbosch.html,Test only where conversion economics support it,Top 3,Yes
+Meeting,conference room stellenbosch,transactional,B,/meeting-rooms-stellenbosch.html,Organic first,Top 3,Yes
+Meeting,training room stellenbosch,transactional,B,/workshop-training-venue-stellenbosch.html,Organic first,Top 3,Yes
+Meeting,workshop venue stellenbosch,transactional,B,/workshop-training-venue-stellenbosch.html,Organic first,Top 3,Yes
+Local,coworking with parking stellenbosch,transactional,B,/coworking-with-parking-stellenbosch.html,Organic first,#1,Yes
+Local,nooitgedacht coworking,transactional,B,/nooitgedacht-village-stellenbosch.html,Organic first,#1,Yes
+Local,nooitgedacht office space,transactional,B,/office-space-to-rent-stellenbosch.html,Organic first,#1,Yes
+Local,workspace near nooitgedacht village,transactional,B,/nooitgedacht-village-stellenbosch.html,Organic first,Top 3,Yes
+Wedge,business address stellenbosch,transactional,B,/registered-business-address-stellenbosch.html,Validate search volume and product readiness first,Top 3,Yes
+Wedge,registered business address stellenbosch,transactional,B,/registered-business-address-stellenbosch.html,Validate search volume and product readiness first,Top 3,Yes
+WorkStay,work and stay stellenbosch,transactional,B,/work-and-stay-stellenbosch.html,Organic first,#1,Yes
+Discovery,where to work in stellenbosch,informational,C,/coworking-stellenbosch-guide.html,No paid campaign,Top 3,Yes
+Discovery,remote work stellenbosch,informational,C,/coworking-stellenbosch-guide.html,No paid campaign,Top 5,Yes
+Discovery,workspace stellenbosch,mixed,C,/coworking-stellenbosch.html,Only if commercial query mix proves valuable,Top 5,Yes
