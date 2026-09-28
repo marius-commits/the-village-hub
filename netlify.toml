@@ -37,10 +37,26 @@
   to = "/ads-dashboard.html"
   status = 200
 
+# Control Room callbacks can arrive with or without a trailing slash.
+# Force all callback variants to the private Control Room document so
+# Netlify never falls back to the public Village Hub homepage.
 [[redirects]]
   from = "/control-room"
   to = "/control-room.html"
   status = 200
+  force = true
+
+[[redirects]]
+  from = "/control-room/"
+  to = "/control-room.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/control-room/*"
+  to = "/control-room.html"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/images/web/*"
