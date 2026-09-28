@@ -2,11 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.villagehub.co.za/</loc><lastmod>2026-09-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.villagehub.co.za/coworking-stellenbosch.html</loc><lastmod>2026-09-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.villagehub.co.za/hot-desk-stellenbosch.html</loc><lastmod>2026-09-28</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.villagehub.co.za/private-offices-stellenbosch.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.villagehub.co.za/office-space-to-rent-stellenbosch.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.villagehub.co.za/boardroom-hire-stellenbosch.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.villagehub.co.za/meeting-rooms-stellenbosch.html</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://www.villagehub.co.za/pricing.html</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://www.villagehub.co.za/pricing.html</loc><lastmod>2026-09-28</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
   <url><loc>https://www.villagehub.co.za/event-space-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://www.villagehub.co.za/workshop-training-venue-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.villagehub.co.za/registered-business-address-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -20,4 +21,5 @@
   <url><loc>https://www.villagehub.co.za/coworking-somerset-west-durbanville.html</loc><changefreq>monthly</changefreq><priority>0.65</priority></url>
   <url><loc>https://www.villagehub.co.za/stellenbosch-coworking-compared.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.villagehub.co.za/stellenbosch-tech-hub-2026.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.villagehub.co.za/office-space-to-rent-techno-park-stellenbosch.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
 </urlset>
