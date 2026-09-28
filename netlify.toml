@@ -37,15 +37,41 @@
   to = "/ads-dashboard.html"
   status = 200
 
-# Long-cache web-optimized images
+# Control Room callbacks can arrive with or without a trailing slash.
+# Force all callback variants to the private Control Room document so
+# Netlify never falls back to the public Village Hub homepage.
+[[redirects]]
+  from = "/control-room"
+  to = "/control-room.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/control-room/"
+  to = "/control-room.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/control-room/*"
+  to = "/control-room.html"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/images/web/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Sensible defaults for HTML
 [[headers]]
   for = "/*.html"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/control-room.html"
+  [headers.values]
+    Cache-Control = "no-store"
+    X-Robots-Tag = "noindex, nofollow, noarchive"
