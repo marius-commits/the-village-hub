@@ -11,8 +11,8 @@
   <url><loc>https://www.villagehub.co.za/event-space-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://www.villagehub.co.za/workshop-training-venue-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.villagehub.co.za/registered-business-address-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.villagehub.co.za/accommodation.html</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://www.villagehub.co.za/work-and-stay-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.villagehub.co.za/accommodation.html</loc><lastmod>2026-10-05</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.villagehub.co.za/work-and-stay-stellenbosch.html</loc><lastmod>2026-10-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.villagehub.co.za/nooitgedacht-village-stellenbosch.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.villagehub.co.za/coworking-stellenbosch-guide.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.villagehub.co.za/boardroom-hire-stellenbosch-guide.html</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
@@ -22,4 +22,6 @@
   <url><loc>https://www.villagehub.co.za/stellenbosch-coworking-compared.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.villagehub.co.za/stellenbosch-tech-hub-2026.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.villagehub.co.za/office-space-to-rent-techno-park-stellenbosch.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.villagehub.co.za/remote-work-and-stay-stellenbosch.html</loc><lastmod>2026-10-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.villagehub.co.za/hot-desk-cost-stellenbosch.html</loc><lastmod>2026-10-05</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
 </urlset>
