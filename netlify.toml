@@ -38,6 +38,21 @@
   status = 200
 
 [[redirects]]
+  from = "/student-study-space-stellenbosch"
+  to = "/student-study-space-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/students"
+  to = "/student-study-space-stellenbosch"
+  status = 301
+
+[[redirects]]
+  from = "/exam-pass"
+  to = "/student-study-space-stellenbosch"
+  status = 301
+
+[[redirects]]
   from = "/virtual-office-stellenbosch"
   to = "/virtual-office-stellenbosch.html"
   status = 200
