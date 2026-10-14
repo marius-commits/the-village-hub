@@ -19,7 +19,7 @@
   <meta property="og:url" content="https://www.villagehub.co.za/virtual-office-stellenbosch" />
   <meta property="og:title" content="Virtual Office in Stellenbosch from R595/month | The Village Hub" />
   <meta property="og:description" content="A real Stellenbosch business address at Nooitgedacht Village. Mail handled, calls forwarded, a desk or boardroom when you come to town." />
-  <meta property="og:image" content="https://www.villagehub.co.za/images/web/foundry-front.jpg" />
+  <meta property="og:image" content="https://www.villagehub.co.za/images/web/foundry-exterior.jpg" />
 
   <!-- Service + offers schema -->
   <script type="application/ld+json">
@@ -114,6 +114,19 @@
     .plan-card.featured { border: 2px solid #C9A24B; box-shadow: 0 18px 40px rgba(107,68,35,.12); }
     .plan-card ul li { padding-left: 1.5rem; position: relative; margin: .45rem 0; }
     .plan-card ul li::before { content: ""; position:absolute; left:0; top:.55rem; width:.7rem; height:.4rem; border-left:2px solid #7F9368; border-bottom:2px solid #7F9368; transform: rotate(-45deg); }
+    .vo-carousel { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 18px 40px rgba(107,68,35,.12); background:#E8D9C5; }
+    .vo-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+    .vo-track::-webkit-scrollbar { display: none; }
+    .vo-slide { flex: 0 0 100%; scroll-snap-align: start; position: relative; margin: 0; aspect-ratio: 16 / 9; }
+    .vo-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vo-slide figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 20px 16px; color: #fff; font-weight: 600; font-size: 1rem; background: linear-gradient(to top, rgba(20,22,19,.75), rgba(20,22,19,0)); }
+    .vo-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgba(255,255,255,.88); color: #6B4423; font-size: 30px; line-height: 40px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+    .vo-nav:hover { background: #fff; }
+    .vo-prev { left: 12px; } .vo-next { right: 12px; }
+    .vo-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+    .vo-dot { width: 9px; height: 9px; border-radius: 999px; border: 0; background: #D9C8A6; cursor: pointer; padding: 0; }
+    .vo-dot.active { background: #7F9368; width: 22px; }
+    @media (max-width: 640px) { .vo-slide { aspect-ratio: 4 / 3; } .vo-nav { width: 36px; height: 36px; font-size: 24px; line-height: 32px; } .vo-slide figcaption { font-size: .9rem; padding: 32px 14px 12px; } }
     .vo-input { width:100%; padding:12px 14px; border:1px solid #D9C8A6; border-radius:10px; font-size:1rem; background:#fff; }
   </style>
 
@@ -163,6 +176,50 @@
       </div>
       <p class="mt-4 text-sm text-gray-500">Prices excl. VAT &middot; 3-month minimum, then month to month &middot; Live within 24 hours of sign-up</p>
     </div>
+  </section>
+
+
+  <!-- Photo carousel -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10" aria-label="Photos of The Village Hub">
+    <div class="vo-carousel" aria-roledescription="carousel">
+      <div class="vo-track" id="vo-track" tabindex="0">
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="1 of 8">
+          <img src="/images/web/foundry-exterior.jpg" alt="The Foundry at Nooitgedacht Village, Stellenbosch" width="1600" height="900" fetchpriority="high" decoding="async">
+          <figcaption>Your business address: The Foundry, Nooitgedacht Village</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="2 of 8">
+          <img src="/images/web/foundry-front.jpg" alt="The Foundry lawn and The Village Table restaurant" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>Meet clients on the lawn or at The Village Table downstairs</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="3 of 8">
+          <img src="/images/web/reception.jpg" alt="Village Hub reception on the first floor" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>Reception receives your mail and parcels</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="4 of 8">
+          <img src="/images/web/village-boardroom.jpg" alt="12-seat Village Boardroom" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>12-seat Village Boardroom at member rates</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="5 of 8">
+          <img src="/images/web/village-chamber.jpg" alt="10-seat Village Chamber meeting room" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>10-seat Village Chamber for smaller meetings</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="6 of 8">
+          <img src="/images/web/hotdesks-1.jpg" alt="Hot desks at The Village Hub" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>Hot desk days included on every plan</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="7 of 8">
+          <img src="/images/web/open-area.jpg" alt="First-floor coworking space at The Foundry" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>A staffed coworking space, not a mailbox</figcaption>
+        </figure>
+        <figure class="vo-slide" role="group" aria-roledescription="slide" aria-label="8 of 8">
+          <img src="/images/web/kitchen.jpg" alt="Member kitchen at The Village Hub" width="1600" height="900" loading="lazy" decoding="async">
+          <figcaption>Coffee and kitchen when you work from the Hub</figcaption>
+        </figure>
+      </div>
+      <button type="button" class="vo-nav vo-prev" id="vo-prev" aria-label="Previous photo">&#8249;</button>
+      <button type="button" class="vo-nav vo-next" id="vo-next" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="vo-dots" id="vo-dots"><button type="button" class="vo-dot" aria-label="Go to slide 1"></button><button type="button" class="vo-dot" aria-label="Go to slide 2"></button><button type="button" class="vo-dot" aria-label="Go to slide 3"></button><button type="button" class="vo-dot" aria-label="Go to slide 4"></button><button type="button" class="vo-dot" aria-label="Go to slide 5"></button><button type="button" class="vo-dot" aria-label="Go to slide 6"></button><button type="button" class="vo-dot" aria-label="Go to slide 7"></button><button type="button" class="vo-dot" aria-label="Go to slide 8"></button></div>
   </section>
 
   <!-- Plans -->
@@ -332,6 +389,27 @@
 
   <script>
     document.getElementById('yr').textContent = new Date().getFullYear();
+    (function(){
+      var track=document.getElementById('vo-track'); if(!track) return;
+      var slides=track.querySelectorAll('.vo-slide'), dots=document.querySelectorAll('#vo-dots .vo-dot'), n=slides.length, timer=null;
+      function idx(){ return Math.round(track.scrollLeft / track.clientWidth); }
+      function go(i){ i=(i+n)%n; track.scrollTo({left: i*track.clientWidth, behavior:'smooth'}); }
+      function mark(){ var i=idx(); dots.forEach(function(d,k){ d.classList.toggle('active', k===i); d.setAttribute('aria-current', k===i ? 'true' : 'false'); }); }
+      document.getElementById('vo-prev').addEventListener('click', function(){ go(idx()-1); restart(); });
+      document.getElementById('vo-next').addEventListener('click', function(){ go(idx()+1); restart(); });
+      dots.forEach(function(d,k){ d.addEventListener('click', function(){ go(k); restart(); }); });
+      track.addEventListener('keydown', function(e){ if(e.key==='ArrowRight'){ go(idx()+1); restart(); } if(e.key==='ArrowLeft'){ go(idx()-1); restart(); } });
+      var t; track.addEventListener('scroll', function(){ clearTimeout(t); t=setTimeout(mark, 60); });
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function start(){ if(reduce) return; stop(); timer=setInterval(function(){ go(idx()+1); }, 5000); }
+      function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+      function restart(){ stop(); start(); }
+      ['mouseenter','touchstart','focusin'].forEach(function(ev){ track.parentNode.addEventListener(ev, stop, {passive:true}); });
+      track.parentNode.addEventListener('mouseleave', start);
+      document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+      mark(); start();
+    })();
+
     (function(){
       var sel = document.getElementById('vo-plan');
       var qp = new URLSearchParams(location.search).get('plan');
