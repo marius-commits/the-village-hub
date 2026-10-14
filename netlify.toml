@@ -37,6 +37,21 @@
   to = "/ads-dashboard.html"
   status = 200
 
+[[redirects]]
+  from = "/virtual-office-stellenbosch"
+  to = "/virtual-office-stellenbosch.html"
+  status = 200
+
+[[redirects]]
+  from = "/virtual-office"
+  to = "/virtual-office-stellenbosch"
+  status = 301
+
+[[redirects]]
+  from = "/business-address-stellenbosch"
+  to = "/virtual-office-stellenbosch"
+  status = 301
+
 # Long-cache web-optimized images
 [[headers]]
   for = "/images/web/*"
