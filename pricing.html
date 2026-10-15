@@ -158,92 +158,24 @@
       boxShadow: { soft:'0 10px 30px -12px rgba(31,29,26,.18)', lift:'0 24px 48px -16px rgba(31,29,26,.28)' }
     } } }
   </script>
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
   <style>
-    html { scroll-behavior: smooth; }
-    html, body { overflow-x: hidden; }
-    body { font-family: Inter, system-ui, sans-serif; color: #1F1D1A; background: #fff; -webkit-font-smoothing: antialiased; }
-    .font-display { font-family: Fraunces, Georgia, serif; font-variation-settings: "opsz" 144; letter-spacing: -0.015em; }
-    .eyebrow { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 600; border-radius: 9999px; padding: .85rem 1.5rem; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease; white-space: nowrap; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-sage { background: #8A9A5B; color: #fff; box-shadow: 0 10px 24px -10px rgba(138,154,91,.7); }
-    .btn-sage:hover { background: #7A8A4F; }
-    .btn-bark { background: #6B4423; color: #fff; box-shadow: 0 10px 24px -10px rgba(107,68,35,.6); }
-    .btn-bark:hover { background: #57361B; }
-    .btn-gold { background: #C9A24B; color: #0E0F0C; box-shadow: 0 10px 24px -10px rgba(201,162,75,.7); }
-    .btn-gold:hover { background: #D8B25E; }
-    .btn-ghost { border: 1.5px solid rgba(255,255,255,.7); color: #fff; }
-    .btn-ghost:hover { background: rgba(255,255,255,.12); }
-    .btn-outline { border: 1.5px solid #6B4423; color: #6B4423; }
-    .btn-outline:hover { background: #6B4423; color: #fff; }
-    .btn-wa { background: #25D366; color: #fff; }
-    .btn-wa:hover { background: #1FB855; }
-    .card-lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1); }
-    .card-lift:hover { transform: translateY(-5px); box-shadow: 0 24px 48px -16px rgba(31,29,26,.28); }
-    .ticks li { position: relative; padding-left: 1.65rem; }
-    .ticks li::before { content: ""; position: absolute; left: 0; top: .3rem; width: 1rem; height: 1rem; background-repeat: no-repeat; background-size: contain; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A9A5B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); }
-    .ticks-gold li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A24B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); }
-    .price { font-family: Fraunces, Georgia, serif; font-variation-settings: "opsz" 144; font-weight: 600; letter-spacing: -0.02em; }
-    .nav-link { position: relative; font-weight: 500; color: #4A2E17; padding: .25rem 0; }
-    .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #8A9A5B; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
-    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
-    .jump { white-space: nowrap; border-radius: 9999px; padding: .5rem .95rem; font-size: .85rem; font-weight: 600; color: #4A2E17; background: #fff; border: 1px solid #E8D9C5; transition: all .2s; }
+    .jump { white-space: nowrap; border-radius: 9999px; padding: .5rem .95rem; font-size: .85rem; font-weight: 600; color: #4A2E17; background: #fff; border: 1px solid #E8D9C5; transition: all .2s; text-decoration: none; }
     .jump:hover, .jump.active { background: #6B4423; color: #fff; border-color: #6B4423; }
     .jumpbar { scrollbar-width: none; } .jumpbar::-webkit-scrollbar { display: none; }
-    details > summary { list-style: none; } details > summary::-webkit-details-marker { display: none; }
-    details[open] .chev { transform: rotate(180deg); } .chev { transition: transform .25s ease; }
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
-    .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-    .field { width: 100%; border: 1px solid #DED3C2; background: #fff; border-radius: .75rem; padding: .8rem 1rem; font-size: .95rem; font-family: inherit; transition: border-color .2s, box-shadow .2s; }
-    .field:focus { outline: none; border-color: #8A9A5B; box-shadow: 0 0 0 3px rgba(138,154,91,.22); }
-    .label { display: block; font-size: .8rem; font-weight: 600; color: #4A2E17; margin-bottom: .35rem; }
+    .jumpwrap { position: fixed; top: 76px; left: 0; right: 0; z-index: 990; border-top: 1px solid rgba(232,217,197,.7); background: rgba(250,248,246,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    .ticks li { position: relative; padding-left: 1.65rem; }
+    .ticks li::before { content: ""; position: absolute; left: 0; top: .3rem; width: 1rem; height: 1rem; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A9A5B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") no-repeat center / contain; }
+    .ticks-gold li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A24B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); }
     section[id] { scroll-margin-top: 140px; }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-sans" data-anchor-offset="136">
 
-  <!-- ===================== NAVIGATION ===================== -->
-  <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur shadow-soft">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main">
-      <div class="flex h-20 items-center justify-between">
-        <a href="/" class="flex items-center gap-3 shrink-0" aria-label="The Village Hub home">
-          <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub logo" width="48" height="48">
-          <span class="font-display text-[1.45rem] font-semibold text-bark leading-none">The Village Hub</span>
-        </a>
-        <div class="hidden lg:flex items-center gap-7 text-[0.92rem]">
-          <a href="/#spaces" class="nav-link">Spaces</a>
-          <a href="/virtual-office-stellenbosch" class="nav-link">Virtual Office</a>
-          <a href="/student-study-space-stellenbosch" class="nav-link">Students</a>
-          <a href="/pricing" class="nav-link active" aria-current="page">Pricing</a>
-          <a href="/accommodation" class="nav-link">Stay</a>
-          <a href="/#reviews" class="nav-link">Reviews</a>
-          <a href="/#contact" class="nav-link">Contact</a>
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-sage !py-2.5 !px-5 text-sm">Book a Free Tour</a>
-        </div>
-        <button type="button" id="menu-btn" class="lg:hidden inline-flex items-center justify-center rounded-full p-2.5 text-bark hover:bg-cream" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
-          <svg id="icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
-          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-    </nav>
-    <div id="mobile-menu" class="lg:hidden hidden border-t border-sand bg-white/95 backdrop-blur">
-      <div class="px-4 py-4 space-y-1 text-[1.02rem]">
-        <a href="/#spaces" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Spaces</a>
-        <a href="/virtual-office-stellenbosch" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Virtual Office</a>
-        <a href="/student-study-space-stellenbosch" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Students</a>
-        <a href="/accommodation" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Village Stay</a>
-        <a href="/#reviews" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Reviews</a>
-        <a href="/#contact" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Contact</a>
-        <div class="pt-3 grid grid-cols-2 gap-3">
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-wa text-sm">WhatsApp</a>
-          <a href="#enquire" class="btn btn-bark text-sm">Enquire</a>
-        </div>
-      </div>
-    </div>
-    <!-- Jump bar -->
-    <div class="border-t border-sand/70 bg-linen/95">
+  <div data-vh-nav></div>
+  <div class="jumpwrap">
       <div class="jumpbar mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-2.5 sm:px-6 lg:px-8">
+        <a href="#finder" class="jump" data-jump>Plan finder</a>
         <a href="#desks" class="jump" data-jump>Desks</a>
         <a href="#offices" class="jump" data-jump>Private offices</a>
         <a href="#virtual-office" class="jump" data-jump>Virtual office</a>
@@ -253,11 +185,11 @@
         <a href="#addons" class="jump" data-jump>Add-ons</a>
         <a href="#faq" class="jump" data-jump>FAQ</a>
       </div>
-    </div>
-  </header>
+</div>
+
 
   <!-- ===================== HERO ===================== -->
-  <section class="bg-cream pt-40 pb-14 sm:pt-44 sm:pb-20">
+  <section class="bg-cream pt-44 pb-14 sm:pt-48 sm:pb-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-8">
@@ -280,6 +212,20 @@
     </div>
   </section>
 
+  <!-- ===================== PLAN FINDER ===================== -->
+  <section id="finder" class="py-16 sm:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+        <div class="lg:col-span-4 reveal">
+          <p class="eyebrow text-sage">Not sure where to start?</p>
+          <h2 class="mt-3 font-display text-3xl sm:text-4xl font-medium text-ink">Three taps. The right plan, with the maths.</h2>
+          <p class="mt-4 text-ink/70">Tell us who you are and how often you will be here. We show the cheapest plan that fits and the one next to it.</p>
+        </div>
+        <div class="lg:col-span-8 reveal" data-plan-finder></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== DESKS ===================== -->
   <section id="desks" class="py-20 sm:py-24 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -292,23 +238,23 @@
         <a href="/hot-desk-stellenbosch" class="btn btn-outline !py-2.5 text-sm shrink-0">Hot desk guide</a>
       </div>
 
-      <p class="eyebrow mt-12 text-ink/50 reveal">Pay as you go</p>
-      <div class="mt-4 grid gap-5 md:grid-cols-3">
-        <article class="card-lift rounded-3xl bg-linen p-7 reveal">
+      <p class="eyebrow mt-12 text-ink/50">Pay as you go</p>
+      <div class="mt-4 grid gap-5 md:grid-cols-3 reveal-stagger">
+        <article data-tilt="5" class="card-lift rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Moment</h3>
           <p class="mt-1 text-sm text-ink/60">By the hour. A call, a task, a burst of focus.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R60</span><span class="ml-1 text-sm text-ink/60">/ hour</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80"><li>Any hot desk, pay as you need</li><li>Power and fast Wi-Fi</li><li>Coffee included, Village Table discounts</li></ul>
           <div class="mt-6 flex gap-2"><a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" class="btn btn-bark flex-1 !py-2.5 text-sm">Book</a><a href="https://wa.me/27725310904?text=Hourly%20(Moment)%20desk%20question" class="btn btn-outline !py-2.5 text-sm">Ask</a></div>
         </article>
-        <article class="card-lift rounded-3xl bg-linen p-7 reveal">
+        <article data-tilt="5" class="card-lift rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Drifter</h3>
           <p class="mt-1 text-sm text-ink/60">Half day. Four focused hours, any seat.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R150</span><span class="ml-1 text-sm text-ink/60">/ half day</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80"><li>4 hours at any hot desk</li><li>Power and fast Wi-Fi</li><li>Coffee included, Village Table discounts</li></ul>
           <div class="mt-6 flex gap-2"><a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" class="btn btn-bark flex-1 !py-2.5 text-sm">Book</a><a href="https://wa.me/27725310904?text=Half%20Day%20(Drifter)%20booking%20question" class="btn btn-outline !py-2.5 text-sm">Ask</a></div>
         </article>
-        <article class="card-lift rounded-3xl bg-linen p-7 reveal">
+        <article data-tilt="5" class="card-lift rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Nomad</h3>
           <p class="mt-1 text-sm text-ink/60">Day pass. Here for the day, part of the story.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R250</span><span class="ml-1 text-sm text-ink/60">/ day</span></p>
@@ -317,30 +263,30 @@
         </article>
       </div>
 
-      <p class="eyebrow mt-12 text-ink/50 reveal">Monthly plans</p>
-      <div class="mt-4 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <article class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
+      <p class="eyebrow mt-12 text-ink/50">Monthly plans</p>
+      <div class="mt-4 grid gap-5 md:grid-cols-2 lg:grid-cols-4 reveal-stagger">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Wanderer</h3>
           <p class="mt-1 text-sm text-ink/60">5 days a month. R200 a day.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R1 000</span><span class="ml-1 text-sm text-ink/60">/ month</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>5 day-pass credits a month</li><li>Any hot desk, priority booking</li><li>Member rates on boardrooms</li><li>Coffee included, Village Table discounts</li></ul>
           <a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Activate plan</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Visitor</h3>
           <p class="mt-1 text-sm text-ink/60">10 days a month. R160 a day.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R1 600</span><span class="ml-1 text-sm text-ink/60">/ month</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>10 day-pass credits a month</li><li>Any hot desk, pick your favourite seat</li><li>Member rates on boardrooms</li><li>Coffee included, Village Table discounts</li></ul>
           <a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Activate plan</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-linen p-7 reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Local</h3>
           <p class="mt-1 text-sm text-ink/60">Unlimited month pass, any desk.</p>
           <p class="mt-5"><span class="price text-4xl text-ink">R3 000</span><span class="ml-1 text-sm text-ink/60">/ month</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>Unlimited weekdays, any hot desk</li><li>Fast Wi-Fi, power, printing credits</li><li>Member rates on boardrooms</li><li>Community events and perks</li></ul>
           <a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Join as a Local</a>
         </article>
-        <article class="card-lift relative flex flex-col rounded-3xl bg-white p-7 shadow-lift ring-2 ring-sage reveal">
+        <article data-tilt="5" class="card-lift relative flex flex-col rounded-3xl bg-white p-7 shadow-lift ring-2 ring-sage reveal">
           <span class="absolute -top-3 left-7 rounded-full bg-sage px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">Most popular</span>
           <h3 class="font-display text-2xl font-semibold text-bark">Village Resident</h3>
           <p class="mt-1 text-sm text-ink/60">Your own dedicated desk. Your forever home in the Hub.</p>
@@ -363,8 +309,8 @@
         </div>
         <a href="/private-offices-stellenbosch" class="btn btn-outline !py-2.5 text-sm shrink-0">See the offices</a>
       </div>
-      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4 reveal-stagger">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <p class="eyebrow text-sage">Village Personal</p>
           <h3 class="mt-2 font-display text-2xl font-semibold text-bark">1&ndash;2 seater</h3>
           <p class="mt-1 text-sm text-ink/60">Your quiet corner in the Village.</p>
@@ -372,7 +318,7 @@
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>Noise-reducing, ergonomic setup</li><li>24/7 secure access</li><li>Dedicated Wi-Fi, coffee, cleaning</li></ul>
           <a href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Personal%20Office%20(1-2%20seater)" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Enquire</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <p class="eyebrow text-sage">Village Private</p>
           <h3 class="mt-2 font-display text-2xl font-semibold text-bark">3 seater</h3>
           <p class="mt-1 text-sm text-ink/60">Intimate. Inspired. Independent.</p>
@@ -380,7 +326,7 @@
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>24/7 secure access</li><li>Business address for mail</li><li>Daily cleaning, community networking</li></ul>
           <a href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Private%20Office%20(3%20seater)" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Enquire</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <p class="eyebrow text-sage">Village Team</p>
           <h3 class="mt-2 font-display text-2xl font-semibold text-bark">4 seater</h3>
           <p class="mt-1 text-sm text-ink/60">Comfort, creativity and collaboration.</p>
@@ -388,7 +334,7 @@
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>Dedicated high-speed Wi-Fi</li><li>Lounge access and meeting room credits</li><li>Premium coffee service</li></ul>
           <a href="https://wa.me/27725310904?text=I'm%20interested%20in%20the%20Village%20Team%20Office%20(4%20seater)" class="btn btn-bark mt-6 w-full !py-2.5 text-sm">Enquire</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <p class="eyebrow text-sage">Village Executive</p>
           <h3 class="mt-2 font-display text-2xl font-semibold text-bark">6 seater</h3>
           <p class="mt-1 text-sm text-ink/60">Where leadership meets community.</p>
@@ -411,29 +357,30 @@
           <p class="mt-4 text-ink/70">Mail photographed to your WhatsApp the day it lands, a local number forwarded to your phone, hot desk days when you come to town. Per month excl. VAT, 3-month minimum, then month to month. Live within 24 hours of sign-up.</p>
         </div>
         <div class="lg:col-span-5 lg:text-right">
-          <p class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-bark shadow-soft"><span class="h-2 w-2 rounded-full bg-sage"></span> Founding pricing locked for 12 months, first 20 clients</p>
+          <div class="vh-toggle" data-toggle-group="vo" role="group" aria-label="Billing period"><button type="button" class="on" data-mode="monthly">Monthly</button><button type="button" data-mode="annual">Annual upfront <span class="save">save 10%</span></button></div>
+          <p class="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-bark shadow-soft"><span class="h-2 w-2 rounded-full bg-sage"></span> Founding pricing locked for 12 months, first 20 clients</p>
         </div>
       </div>
-      <div class="mt-12 grid gap-5 lg:grid-cols-3">
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+      <div class="mt-12 grid gap-5 lg:grid-cols-3 reveal-stagger">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Address</h3>
           <p class="mt-1 text-sm text-ink/60">Your business address, sorted</p>
-          <p class="mt-5"><span class="price text-4xl text-ink">R595</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
+          <p class="mt-5"><span class="price text-4xl text-ink" data-price="595" data-scope="vo">R595</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li>Nooitgedacht Village address for website, invoices and Google profile</li><li>Mail and parcel receipt, same-day WhatsApp photo</li><li>1 hot desk day a month</li><li>Hub app, community feed, directory listing</li><li>Member rates on boardrooms</li></ul>
           <a href="/virtual-office-stellenbosch#apply" class="btn btn-outline mt-6 w-full !py-2.5 text-sm">Apply for Village Address</a>
         </article>
-        <article class="card-lift relative flex flex-col rounded-3xl bg-white p-7 shadow-lift ring-2 ring-sage reveal">
+        <article data-tilt="5" class="card-lift relative flex flex-col rounded-3xl bg-white p-7 shadow-lift ring-2 ring-sage reveal">
           <span class="absolute -top-3 left-7 rounded-full bg-sage px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">Most popular</span>
           <h3 class="font-display text-2xl font-semibold text-bark">Village Virtual</h3>
           <p class="mt-1 text-sm text-ink/60">Address, local number and a desk in town</p>
-          <p class="mt-5"><span class="price text-4xl text-ink">R1 095</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
+          <p class="mt-5"><span class="price text-4xl text-ink" data-price="1095" data-scope="vo">R1&#8239;095</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li><strong>Everything in Village Address</strong></li><li>Dedicated local phone number forwarded to your mobile</li><li>2 hot desk days a month</li><li>Monthly mail forwarding anywhere in SA (postage at cost)</li><li>1 boardroom hour a month, networking invites</li></ul>
           <a href="/virtual-office-stellenbosch#apply" class="btn btn-sage mt-6 w-full !py-2.5 text-sm">Apply for Village Virtual</a>
         </article>
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
+        <article data-tilt="5" class="card-lift flex flex-col rounded-3xl bg-white p-7 shadow-soft reveal">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Virtual Pro</h3>
           <p class="mt-1 text-sm text-ink/60">The full virtual presence</p>
-          <p class="mt-5"><span class="price text-4xl text-ink">R1 695</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
+          <p class="mt-5"><span class="price text-4xl text-ink" data-price="1695" data-scope="vo">R1&#8239;695</span><span class="ml-1 text-sm text-ink/60">/ month excl. VAT</span></p>
           <ul class="ticks mt-5 space-y-2 text-sm text-ink/80 flex-1"><li><strong>Everything in Village Virtual</strong></li><li>3 hot desk days and 2 boardroom hours a month</li><li>Registered CIPC / SARS address included</li><li>10% off private office and event space hire</li><li>Priority on Hub-hosted business events</li></ul>
           <a href="/virtual-office-stellenbosch#apply" class="btn btn-outline mt-6 w-full !py-2.5 text-sm">Apply for Virtual Pro</a>
         </article>
@@ -451,7 +398,7 @@
         <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium">Study all day for less than the price of a coffee. <span class="text-gold">Coffee included.</span></h2>
         <p class="mt-4 text-cream/75">For students living at Nooitgedacht and around Stellenbosch. Valid student card and proof of 2026 registration required. Personal study use only.</p>
       </div>
-      <div class="mt-12 grid gap-5 lg:grid-cols-4">
+      <div class="mt-12 grid gap-5 lg:grid-cols-4 reveal-stagger">
         <article class="relative overflow-hidden rounded-3xl bg-[#15170F] p-7 ring-1 ring-gold/60 reveal lg:col-span-1">
           <span class="absolute right-5 top-5 rounded-full border border-dashed border-gold px-2.5 py-1 text-[0.6rem] font-bold uppercase tracking-wider text-gold">20 only</span>
           <p class="eyebrow text-gold pr-16">Exam season 2026</p>
@@ -500,7 +447,7 @@
         <a href="/boardroom-hire-stellenbosch" class="btn btn-outline !py-2.5 text-sm shrink-0">Boardroom hire guide</a>
       </div>
       <div class="mt-12 grid gap-5 md:grid-cols-2">
-        <article class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
+        <article data-tilt="5" class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
           <img src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12-seat boardroom hire in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="900">
           <div class="p-7">
             <div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Village Boardroom</h3><p><span class="price text-3xl text-ink">R390</span><span class="ml-1 text-sm text-ink/60">/ hour</span></p></div>
@@ -509,7 +456,7 @@
             <div class="mt-6 flex gap-2"><a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" class="btn btn-bark flex-1 !py-2.5 text-sm">Book online</a><a href="https://wa.me/27725310904?text=Village%20Boardroom%20enquiry" class="btn btn-outline !py-2.5 text-sm">WhatsApp</a></div>
           </div>
         </article>
-        <article class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
+        <article data-tilt="5" class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
           <img src="/images/web/village-chamber.jpg" alt="The Village Chamber, 10-seat meeting room in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="901">
           <div class="p-7">
             <div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Village Chamber</h3><p><span class="price text-3xl text-ink">R350</span><span class="ml-1 text-sm text-ink/60">/ hour</span></p></div>
@@ -520,7 +467,7 @@
         </article>
       </div>
 
-      <p class="eyebrow mt-12 text-ink/50 reveal">Events, workshops &amp; conferences</p>
+      <p class="eyebrow mt-12 text-ink/50">Events, workshops &amp; conferences</p>
       <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <article class="flex flex-col rounded-3xl border border-sand bg-white p-6 reveal">
           <h3 class="font-display text-xl font-semibold text-bark">Workshop / training room</h3>
@@ -679,102 +626,13 @@
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-charcoal text-cream/80">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-      <div class="grid gap-12 lg:grid-cols-12">
-        <div class="lg:col-span-4">
-          <a href="/" class="flex items-center gap-3"><img class="h-12 w-12 object-contain" src="/images/web/logo-white.png" alt="The Village Hub logo" width="48" height="48" onerror="this.src='/images/web/logo.png'"><span class="font-display text-2xl font-semibold text-cream">The Village Hub</span></a>
-          <p class="mt-5 text-sm leading-relaxed text-cream/70">Stellenbosch&rsquo;s premium coworking space at Nooitgedacht Village. Hot desks, private offices, boardrooms, virtual office, student study passes, event space and boutique stays. A Brickfield Spaces location.</p>
-          <address class="mt-5 not-italic text-sm text-cream/60 space-y-1">
-            <div>1st Floor, The Foundry, Sauvignon Street</div>
-            <div>Nooitgedacht Village, Stellenbosch 7600</div>
-            <div><a href="tel:+27725310904" class="hover:text-cream">+27 72 531 0904</a> &middot; <a href="https://wa.me/27725310904" class="hover:text-cream">WhatsApp</a></div>
-            <div><a href="mailto:info@villagehub.co.za" class="hover:text-cream">info@villagehub.co.za</a></div>
-          </address>
-        </div>
-        <div class="lg:col-span-8 grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div>
-            <h3 class="eyebrow text-cream/50">Workspaces</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/hot-desk-stellenbosch" class="hover:text-cream">Hot desks</a></li>
-              <li><a href="/private-offices-stellenbosch" class="hover:text-cream">Private offices</a></li>
-              <li><a href="/boardroom-hire-stellenbosch" class="hover:text-cream">Boardroom hire</a></li>
-              <li><a href="/meeting-rooms-stellenbosch" class="hover:text-cream">Meeting rooms</a></li>
-              <li><a href="/event-space-stellenbosch" class="hover:text-cream">Event space</a></li>
-              <li><a href="/workshop-training-venue-stellenbosch" class="hover:text-cream">Workshop &amp; training venue</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">New</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/virtual-office-stellenbosch" class="hover:text-cream">Virtual office</a></li>
-              <li><a href="/registered-business-address-stellenbosch" class="hover:text-cream">Registered business address</a></li>
-              <li><a href="/student-study-space-stellenbosch" class="hover:text-cream">Student study space</a></li>
-              <li><a href="/student-study-space-stellenbosch#exam-pass" class="hover:text-cream">Exam Pass 2026</a></li>
-              <li><a href="/accommodation" class="hover:text-cream">The Village Stay</a></li>
-              <li><a href="/work-and-stay-stellenbosch" class="hover:text-cream">Work and stay</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">Guides</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/coworking-stellenbosch-guide" class="hover:text-cream">Coworking in Stellenbosch</a></li>
-              <li><a href="/stellenbosch-coworking-compared" class="hover:text-cream">Stellenbosch coworking compared</a></li>
-              <li><a href="/coworking-vs-traditional-2" class="hover:text-cream">Coworking vs traditional office</a></li>
-              <li><a href="/hot-desk-cost-stellenbosch" class="hover:text-cream">What a hot desk costs</a></li>
-              <li><a href="/boardroom-hire-prices-stellenbosch" class="hover:text-cream">Boardroom hire prices</a></li>
-              <li><a href="/nooitgedacht-village-stellenbosch" class="hover:text-cream">Nooitgedacht Village</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">Visit</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/#about" class="hover:text-cream">About</a></li>
-              <li><a href="/#gallery" class="hover:text-cream">Gallery</a></li>
-              <li><a href="/#reviews" class="hover:text-cream">Reviews (5.0 &#9733;)</a></li>
-              <li><a href="/#contact" class="hover:text-cream">Contact</a></li>
-              <li><a href="https://members.villagehub.co.za/" class="hover:text-cream">Member app</a></li>
-            </ul>
-            <h3 class="eyebrow text-cream/50 mt-8">Hours</h3>
-            <ul class="mt-4 space-y-1.5 text-sm text-cream/70"><li>Mon &ndash; Fri 06:30 &ndash; 18:00</li><li>Sat 08:00 &ndash; 14:00</li><li>24/7 for tag-access plans</li></ul>
-          </div>
-        </div>
-      </div>
-      <div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
-        <p>&copy; <span id="year">2026</span> The Village Hub &middot; Brickfield Spaces (Pty) Ltd. Hub prices exclude VAT; student prices include VAT. Subject to availability and change.</p>
-        <p class="flex gap-4"><a href="/privacy" class="hover:text-cream">Privacy</a><a href="/terms" class="hover:text-cream">Terms</a></p>
-      </div>
-    </div>
-  </footer>
+  <div data-vh-footer></div>
 
-  <!-- Sticky WhatsApp -->
-  <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-wa text-white shadow-lift transition hover:scale-110" aria-label="WhatsApp The Village Hub">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-  </a>
 
+
+  <script src="/assets/vh.js?v=3" defer></script>
   <script>
     (function () {
-      // Mobile menu
-      var btn = document.getElementById('menu-btn'), menu = document.getElementById('mobile-menu');
-      var io = document.getElementById('icon-open'), ic = document.getElementById('icon-close');
-      btn.addEventListener('click', function () {
-        var open = menu.classList.toggle('hidden') === false;
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        io.classList.toggle('hidden', open); ic.classList.toggle('hidden', !open);
-      });
-
-      // Anchor offset for the fixed header + jump bar
-      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-        a.addEventListener('click', function (e) {
-          var id = a.getAttribute('href'); if (!id || id === '#') return;
-          var t = document.querySelector(id); if (!t) return;
-          e.preventDefault();
-          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 130, behavior: 'smooth' });
-          menu.classList.add('hidden');
-        });
-      });
-
       // Jump bar active state
       var jumps = document.querySelectorAll('[data-jump]');
       var sections = Array.prototype.map.call(jumps, function (j) { return document.querySelector(j.getAttribute('href')); });
@@ -786,18 +644,7 @@
       }
       window.addEventListener('scroll', setActive, { passive: true }); setActive();
 
-      // Reveal on scroll
-      var els = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); } });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-        els.forEach(function (el) { obs.observe(el); });
-      } else { els.forEach(function (el) { el.classList.add('in'); }); }
-      setTimeout(function () { els.forEach(function (el) { el.classList.add('in'); }); }, 7000);
-
       // Year
-      document.getElementById('year').textContent = new Date().getFullYear();
 
       // ?plan= prefill
       var params = new URLSearchParams(window.location.search);
@@ -830,13 +677,6 @@
     })();
   </script>
 
-  <!-- WhatsApp click conversion tracking -->
-  <script>
-  document.addEventListener('click', function(e){
-    var a = e.target && e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
-    if(!a) return;
-    try { gtag('event','conversion',{'send_to':'AW-18265049370/n8xeCNDIuNMcEJqSuoVE','value':1.0,'currency':'ZAR'}); } catch(err) {}
-  }, true);
-  </script>
+
 </body>
 </html>

@@ -123,19 +123,18 @@
     .related li:last-child { border: none; }
     @media (max-width: 600px) { h1 { font-size: 1.7rem; } nav.site a { margin-left: 10px; font-size: 13px; } }
   </style>
+
+  <!-- Village Hub shared design layer -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
+  <style>.vh-page h1,.vh-page h2{font-family:var(--vh-display);font-weight:600;letter-spacing:-.015em}.vh-page h3{font-family:var(--vh-display);font-weight:600}.vh-page{font-family:var(--vh-sans)}</style>
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="/"><img src="/images/web/logo.png" alt="The Village Hub" /><span>The Village Hub</span></a>
-    <nav class="site">
-      <a href="/pricing.html">Pricing</a>
-      <a href="/accommodation.html">Stay</a>
-      <a href="/boardroom-hire-stellenbosch.html">Boardroom</a>
-    </nav>
-  </div>
-</header>
+<div data-vh-nav></div>
+<div class="vh-nav-spacer"></div>
 
 <section class="hero">
   <div class="wrap">
@@ -269,12 +268,8 @@
   <a class="alt" href="https://members.villagehub.co.za">Book a desk or room</a>
 </section>
 
-<footer class="site">
-  <div>
-    <a href="/">Home</a> · <a href="/pricing.html">Pricing</a> · <a href="/boardroom-hire-stellenbosch.html">Boardroom</a> · <a href="/accommodation.html">Stay</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
-  </div>
-  <div style="margin-top: 10px;">© 2026 The Village Hub · Nooitgedacht Village, Stellenbosch · <a href="https://wa.me/27725310904">WhatsApp +27 72 531 0904</a></div>
-</footer>
+<div data-vh-footer></div>
 
+  <script src="/assets/vh.js?v=3" defer></script>
 </body>
 </html>

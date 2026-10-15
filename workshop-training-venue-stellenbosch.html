@@ -86,24 +86,17 @@
     article th { background: #FAF0DC; color: #6B4423; font-weight: 600; }
     article tr:nth-child(even) td { background: #FAF8F6; }
   </style>
+
+  <!-- Village Hub shared design layer -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
+  <style>.vh-page h1,.vh-page h2{font-family:var(--vh-display);font-weight:600;letter-spacing:-.015em}.vh-page h3{font-family:var(--vh-display);font-weight:600}.vh-page{font-family:var(--vh-sans)}</style>
 </head>
 <body class="font-sans antialiased text-gray-800">
 
-  <nav class="bg-white shadow-sm fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-      <a href="/" class="flex items-center">
-        <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub Logo">
-        <span class="ml-3 text-xl font-bold text-[#6B4423]">The Village Hub</span>
-      </a>
-      <div class="hidden md:flex items-center space-x-6 text-sm">
-        <a href="/" class="text-[#6B4423] hover:text-[#8B5A2B]">Home</a>
-        <a class='text-[#6B4423] hover:text-[#8B5A2B]' href='/pricing'>Pricing</a>
-        <a class='text-[#6B4423] hover:text-[#8B5A2B]' href='/meeting-rooms-stellenbosch'>Meeting Rooms</a>
-        <a class='text-[#6B4423] hover:text-[#8B5A2B]' href='/private-offices-stellenbosch'>Offices</a>
-        <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub" class="btn-sage px-4 py-2 rounded-md text-sm font-medium">Book a Tour</a>
-      </div>
-    </div>
-  </nav>
+  <div data-vh-nav></div>
 
   <section class="hero-gradient pt-24 pb-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -209,12 +202,8 @@
 
   </article>
 
-  <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-sm">&copy; <span id="yr"></span> The Village Hub. All rights reserved.</p>
-      <p class="text-xs text-gray-400 mt-2">1st Floor, The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch, 7600 &middot; 072 531 0904 &middot; info@villagehub.co.za</p>
-    </div>
-  </footer>
-  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <div data-vh-footer></div>
+  <script>(function(){var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();})();</script>
+  <script src="/assets/vh.js?v=3" defer></script>
 </body>
         </html>

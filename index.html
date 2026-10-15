@@ -228,172 +228,85 @@
   }
   </script>
 
-  <!-- Tailwind -->
+    <!-- Tailwind (layout utilities) + shared Village Hub layer -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bark: '#6B4423',
-            barkdeep: '#4A2E17',
-            sage: '#8A9A5B',
-            sagedeep: '#6F7A45',
-            gold: '#C9A24B',
-            cream: '#F8F1E5',
-            sand: '#E8D9C5',
-            linen: '#FAF8F6',
-            ink: '#1F1D1A',
-            charcoal: '#0E0F0C',
-            wa: '#25D366'
-          },
-          fontFamily: {
-            display: ['Fraunces', 'Georgia', 'serif'],
-            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
-          },
-          boxShadow: {
-            soft: '0 10px 30px -12px rgba(31,29,26,.18)',
-            lift: '0 24px 48px -16px rgba(31,29,26,.28)'
-          }
-        }
-      }
-    }
+    tailwind.config = { theme: { extend: {
+      colors: { bark:'#6B4423', barkdeep:'#4A2E17', sage:'#8A9A5B', sagedeep:'#6F7A45', gold:'#C9A24B', cream:'#F8F1E5', sand:'#E8D9C5', linen:'#FAF8F6', ink:'#1F1D1A', charcoal:'#0E0F0C', wa:'#25D366' },
+      fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] },
+      boxShadow: { soft:'0 10px 30px -12px rgba(31,29,26,.18)', lift:'0 24px 48px -16px rgba(31,29,26,.28)' }
+    } } }
   </script>
-
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
   <style>
-    html { scroll-behavior: smooth; }
-    html, body { overflow-x: hidden; }
-    body { font-family: Inter, system-ui, sans-serif; color: #1F1D1A; background: #fff; -webkit-font-smoothing: antialiased; }
-    .font-display { font-family: Fraunces, Georgia, serif; font-variation-settings: "opsz" 144; letter-spacing: -0.015em; }
-    .eyebrow { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; }
-    .hero-bg { background-image: linear-gradient(90deg, rgba(14,15,12,.72) 0%, rgba(14,15,12,.45) 50%, rgba(14,15,12,.12) 100%), linear-gradient(180deg, rgba(14,15,12,.35) 0%, rgba(14,15,12,.15) 45%, rgba(14,15,12,.8) 100%), url('/images/web/hotdesks-4.jpg'); background-size: cover; background-position: center 40%; }
-    @media (max-width: 640px) { .hero-bg { background-image: linear-gradient(180deg, rgba(14,15,12,.62) 0%, rgba(14,15,12,.5) 45%, rgba(14,15,12,.85) 100%), url('/images/web/hotdesks-4.jpg'); background-position: 60% 40%; } }
-    .card-lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1); }
-    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -16px rgba(31,29,26,.28); }
-    .img-zoom img { transition: transform .8s cubic-bezier(.2,.8,.2,1); }
-    .img-zoom:hover img { transform: scale(1.05); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 600; border-radius: 9999px; padding: .9rem 1.6rem; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease; white-space: nowrap; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-sage { background: #8A9A5B; color: #fff; box-shadow: 0 10px 24px -10px rgba(138,154,91,.7); }
-    .btn-sage:hover { background: #7A8A4F; }
-    .btn-bark { background: #6B4423; color: #fff; box-shadow: 0 10px 24px -10px rgba(107,68,35,.6); }
-    .btn-bark:hover { background: #57361B; }
-    .btn-gold { background: #C9A24B; color: #0E0F0C; box-shadow: 0 10px 24px -10px rgba(201,162,75,.7); }
-    .btn-gold:hover { background: #D8B25E; }
-    .btn-ghost { border: 1.5px solid rgba(255,255,255,.7); color: #fff; backdrop-filter: blur(6px); }
-    .btn-ghost:hover { background: rgba(255,255,255,.12); }
-    .btn-outline { border: 1.5px solid #6B4423; color: #6B4423; }
-    .btn-outline:hover { background: #6B4423; color: #fff; }
-    .btn-outline-sage { border: 1.5px solid #8A9A5B; color: #6F7A45; }
-    .btn-outline-sage:hover { background: #8A9A5B; color: #fff; }
-    .btn-wa { background: #25D366; color: #fff; }
-    .btn-wa:hover { background: #1FB855; }
+    .hero-overlay { background: linear-gradient(90deg, rgba(14,15,12,.74) 0%, rgba(14,15,12,.42) 50%, rgba(14,15,12,.12) 100%), linear-gradient(180deg, rgba(14,15,12,.3) 0%, rgba(14,15,12,.1) 45%, rgba(14,15,12,.85) 100%); }
+    @media (max-width: 640px) { .hero-overlay { background: linear-gradient(180deg, rgba(14,15,12,.62) 0%, rgba(14,15,12,.5) 45%, rgba(14,15,12,.9) 100%); } }
     .tick { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; }
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
-    .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-    .no-js .reveal { opacity: 1; transform: none; }
-    details > summary { list-style: none; }
-    details > summary::-webkit-details-marker { display: none; }
-    details[open] .chev { transform: rotate(180deg); }
-    .chev { transition: transform .25s ease; }
-    .nav-link { position: relative; font-weight: 500; color: #4A2E17; padding: .25rem 0; }
-    .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #8A9A5B; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
-    .nav-link:hover::after { transform: scaleX(1); }
-    .ring-gold { box-shadow: 0 0 0 1px rgba(201,162,75,.6), 0 24px 48px -20px rgba(201,162,75,.35); }
-    .marquee-fade { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-    input, select, textarea { font-family: inherit; }
-    .field { width: 100%; border: 1px solid #DED3C2; background: #fff; border-radius: .75rem; padding: .8rem 1rem; font-size: .95rem; transition: border-color .2s, box-shadow .2s; }
-    .field:focus { outline: none; border-color: #8A9A5B; box-shadow: 0 0 0 3px rgba(138,154,91,.22); }
-    .label { display: block; font-size: .8rem; font-weight: 600; color: #4A2E17; margin-bottom: .35rem; letter-spacing: .01em; }
+    .ticker-item { font-family: Fraunces, Georgia, serif; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 500; font-style: italic; color: #6B4423; padding: 0 1.5rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 1.5rem; }
+    .ticker-item::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #C9A24B; }
+    .scroll-cue { position: absolute; left: 50%; bottom: 1.25rem; transform: translateX(-50%); width: 26px; height: 42px; border: 2px solid rgba(255,255,255,.5); border-radius: 14px; }
+    .scroll-cue::before { content: ""; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: #C9A24B; animation: cue 1.8s ease-in-out infinite; }
+    @keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
+    .stat-tile { background: rgba(14,15,12,.35); padding: 1.1rem 1.25rem; transition: background .3s; }
+    .stat-tile:hover { background: rgba(14,15,12,.5); }
+    .review-card { width: 24rem; max-width: 80vw; flex: none; border-radius: 1.5rem; background: #FAF8F6; padding: 1.6rem; margin-right: 1rem; }
+    .hover-line { background-image: linear-gradient(#C9A24B, #C9A24B); background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .4s cubic-bezier(.2,.8,.2,1); }
+    a:hover .hover-line, .hover-line:hover { background-size: 100% 2px; }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-sans" data-anchor-offset="96">
 
-  <!-- ===================== NAVIGATION ===================== -->
-  <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main">
-      <div class="flex h-20 items-center justify-between">
-        <a href="/" class="flex items-center gap-3 shrink-0" aria-label="The Village Hub home">
-          <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub logo - tree of life" width="48" height="48">
-          <span class="font-display text-[1.45rem] font-semibold text-bark leading-none">The Village Hub</span>
-        </a>
-
-        <div class="hidden lg:flex items-center gap-7 text-[0.92rem]">
-          <a href="#spaces" class="nav-link">Spaces</a>
-          <a href="/virtual-office-stellenbosch" class="nav-link">Virtual Office</a>
-          <a href="/student-study-space-stellenbosch" class="nav-link">Students</a>
-          <a href="/pricing" class="nav-link">Pricing</a>
-          <a href="#stay" class="nav-link">Stay</a>
-          <a href="#reviews" class="nav-link">Reviews</a>
-          <a href="#contact" class="nav-link">Contact</a>
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-sage !py-2.5 !px-5 text-sm">Book a Free Tour</a>
-        </div>
-
-        <button type="button" id="menu-btn" class="lg:hidden inline-flex items-center justify-center rounded-full p-2.5 text-bark hover:bg-cream" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
-          <svg id="icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
-          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-    </nav>
-
-    <div id="mobile-menu" class="lg:hidden hidden border-t border-sand bg-white/95 backdrop-blur">
-      <div class="px-4 py-4 space-y-1 text-[1.02rem]">
-        <a href="#spaces" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Spaces &amp; Pricing</a>
-        <a href="/virtual-office-stellenbosch" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Virtual Office <span class="ml-2 rounded-full bg-sage/15 px-2 py-0.5 text-xs font-semibold text-sagedeep">New</span></a>
-        <a href="/student-study-space-stellenbosch" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Students <span class="ml-2 rounded-full bg-gold/20 px-2 py-0.5 text-xs font-semibold text-bark">Exam Pass</span></a>
-        <a href="/pricing" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">All Pricing</a>
-        <a href="#stay" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Village Stay</a>
-        <a href="#reviews" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Reviews</a>
-        <a href="#faq" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">FAQ</a>
-        <a href="#contact" class="block rounded-lg px-3 py-3 font-medium text-barkdeep hover:bg-cream">Contact</a>
-        <div class="pt-3 grid grid-cols-2 gap-3">
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-wa text-sm">WhatsApp</a>
-          <a href="#interest" class="btn btn-bark text-sm">Enquire</a>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div data-vh-nav></div>
 
   <!-- ===================== HERO ===================== -->
-  <section id="top" class="hero-bg relative min-h-[92vh] flex items-end text-white">
-    <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-40 pb-16 sm:pb-20">
+  <section id="top" class="relative min-h-[100svh] flex items-end text-white overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <img class="kenburns absolute inset-0 h-full w-full object-cover" src="/images/web/hotdesks-4.jpg" alt="" width="1672" height="941" fetchpriority="high" style="object-position: 60% 40%">
+      <div class="hero-overlay absolute inset-0"></div>
+    </div>
+    <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-36 pb-16 sm:pb-20">
       <div class="max-w-3xl">
-        <p class="eyebrow text-gold mb-5">Nooitgedacht Village &middot; Stellenbosch Winelands</p>
-        <h1 class="font-display text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.6rem] font-medium">
-          Stellenbosch&rsquo;s premium<br class="hidden sm:block"> coworking space.
-        </h1>
-        <p class="mt-6 max-w-2xl text-lg sm:text-xl text-white/90 leading-relaxed" style="text-shadow:0 1px 12px rgba(0,0,0,.45)">
-          Hot desks, private offices, boardrooms and event space under the timber trusses of The Foundry &mdash; plus a virtual office for your business address and study passes for students. A community of 180+ members, ten minutes from town.
+        <p class="eyebrow text-gold mb-5 reveal in" data-open-status>Nooitgedacht Village &middot; Stellenbosch Winelands</p>
+        <h1 class="vh-words font-display text-[2.8rem] leading-[1.02] sm:text-6xl lg:text-[4.8rem] font-medium">Stellenbosch&rsquo;s premium coworking space.</h1>
+        <p class="mt-6 max-w-2xl text-lg sm:text-xl text-white/90 leading-relaxed reveal" style="text-shadow:0 1px 12px rgba(0,0,0,.45)">
+          Hot desks, private offices, boardrooms and event space under the timber trusses of The Foundry, plus a virtual office for your business address and study passes for students. A community of 180+ members, ten minutes from town.
         </p>
-        <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-sage text-base">Book a Free Tour</a>
-          <a href="#spaces" class="btn btn-ghost text-base">Explore the spaces</a>
+        <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4 reveal">
+          <a href="#finder" class="btn btn-gold">Find my plan in 20 seconds</a>
+          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-ghost">Book a free tour</a>
         </div>
-        <p class="mt-5 text-sm text-white/70">Day passes from R250 &middot; Virtual office from R595 &middot; No long-term lock-in</p>
+        <p class="mt-5 text-sm text-white/70 reveal">Day passes from R250 &middot; Virtual office from R595 &middot; Student passes from R350 &middot; No long-term lock-in</p>
       </div>
 
-      <!-- Trust strip -->
-      <div class="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md sm:grid-cols-4">
-        <a href="#reviews" class="bg-charcoal/30 px-5 py-4 hover:bg-charcoal/40 transition-colors">
-          <p class="font-display text-2xl font-semibold text-gold">5.0 <span class="text-base align-middle">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+      <div class="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md sm:grid-cols-4 reveal-stagger">
+        <a href="#reviews" class="stat-tile">
+          <p class="font-display text-3xl font-semibold text-gold"><span data-count="5" data-decimals="1">0.0</span> <span class="text-base align-middle">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
           <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">20 Google reviews</p>
         </a>
-        <div class="bg-charcoal/30 px-5 py-4">
-          <p class="font-display text-2xl font-semibold">180+</p>
+        <div class="stat-tile">
+          <p class="font-display text-3xl font-semibold"><span data-count="180">0</span>+</p>
           <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">Members in the community</p>
         </div>
-        <div class="bg-charcoal/30 px-5 py-4">
-          <p class="font-display text-2xl font-semibold">24/7</p>
-          <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">Secure tag access</p>
+        <div class="stat-tile">
+          <p class="font-display text-3xl font-semibold"><span data-count="36">0</span> desks</p>
+          <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">Plus 13 offices and 2 boardrooms</p>
         </div>
-        <div class="bg-charcoal/30 px-5 py-4">
-          <p class="font-display text-2xl font-semibold">10 min</p>
-          <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">From Stellenbosch CBD &middot; free parking</p>
+        <div class="stat-tile">
+          <p class="font-display text-3xl font-semibold">24/7</p>
+          <p class="mt-1 text-xs text-white/75 uppercase tracking-wider">Secure tag access &middot; free parking</p>
         </div>
       </div>
     </div>
+    <div class="scroll-cue hidden sm:block" aria-hidden="true"></div>
   </section>
+
+  <!-- ===================== TICKER ===================== -->
+  <div class="vh-ticker bg-cream py-5 border-y border-sand/60" aria-hidden="true">
+    <div class="vh-ticker__track" style="--dur:46s">
+      <span class="ticker-item">Hot desks from R60/hr</span><span class="ticker-item">Private offices from R6 950</span><span class="ticker-item">Virtual office from R595</span><span class="ticker-item">Exam Pass R795</span><span class="ticker-item">Boardrooms from R350/hr</span><span class="ticker-item">The Village Stay</span><span class="ticker-item">5.0 on Google</span><span class="ticker-item">Free parking</span>
+      <span class="ticker-item">Hot desks from R60/hr</span><span class="ticker-item">Private offices from R6 950</span><span class="ticker-item">Virtual office from R595</span><span class="ticker-item">Exam Pass R795</span><span class="ticker-item">Boardrooms from R350/hr</span><span class="ticker-item">The Village Stay</span><span class="ticker-item">5.0 on Google</span><span class="ticker-item">Free parking</span>
+    </div>
+  </div>
 
   <!-- ===================== SPACES GRID ===================== -->
   <section id="spaces" class="py-20 sm:py-28 bg-white">
@@ -404,138 +317,114 @@
         <p class="mt-5 text-lg text-ink/70 leading-relaxed">From a desk for the afternoon to a six-seater office, a boardroom for the pitch, or just an address your clients trust. Pick the plan that fits this season of your business and change it as you grow.</p>
       </div>
 
-      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Hot desks -->
-        <a href="/hot-desk-stellenbosch" class="group card-lift img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 reveal-stagger">
+        <a href="/hot-desk-stellenbosch" data-tilt="7" class="group img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/hotdesks-2.jpg" alt="Hot desk coworking in Stellenbosch at The Village Hub" class="h-full w-full object-cover" loading="lazy" width="1672" height="941"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Hot Desks</h3>
-              <span class="text-sm font-semibold text-sagedeep">from R60/hr</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Hot Desks</h3><span class="text-sm font-semibold text-sagedeep">from R60/hr</span></div>
             <p class="mt-2 text-ink/70">Drop in for an hour, a day or a month. Any seat, fast fibre, bottomless filter coffee and 36 desks of quiet, productive people.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">Hot desk plans &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">Hot desk plans &rarr;</span></p></div>
         </a>
-        <!-- Private offices -->
-        <a href="/private-offices-stellenbosch" class="group card-lift img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+        <a href="/private-offices-stellenbosch" data-tilt="7" class="group img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/office.jpg" alt="Furnished private office for teams in Stellenbosch" class="h-full w-full object-cover" loading="lazy" width="1800" height="1012"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Private Offices</h3>
-              <span class="text-sm font-semibold text-sagedeep">from R6,950/mo</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Private Offices</h3><span class="text-sm font-semibold text-sagedeep">from R6,950/mo</span></div>
             <p class="mt-2 text-ink/70">1&ndash;6 seater furnished suites with 24/7 access, dedicated Wi-Fi and printing. Move in Monday, no fit-out, scale when you need to.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">View offices &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">View offices &rarr;</span></p></div>
         </a>
-        <!-- Boardrooms -->
-        <a href="/boardroom-hire-stellenbosch" class="group card-lift img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+        <a href="/boardroom-hire-stellenbosch" data-tilt="7" class="group img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12-seat boardroom hire in Stellenbosch" class="h-full w-full object-cover" loading="lazy" width="1600" height="900"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Boardrooms &amp; Meetings</h3>
-              <span class="text-sm font-semibold text-sagedeep">from R350/hr</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Boardrooms &amp; Meetings</h3><span class="text-sm font-semibold text-sagedeep">from R350/hr</span></div>
             <p class="mt-2 text-ink/70">The 12-seat Village Boardroom and 10-seat Village Chamber, both with screens, whiteboards and video-call-ready setups. By the hour or the day.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">Book a room &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">Book a room &rarr;</span></p></div>
         </a>
-        <!-- Virtual office -->
-        <a href="/virtual-office-stellenbosch" class="group card-lift img-zoom relative block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+        <a href="/virtual-office-stellenbosch" data-tilt="7" class="group img-zoom relative block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <span class="absolute left-4 top-4 z-10 rounded-full bg-sage px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">New</span>
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/foundry-exterior.jpg" alt="The Foundry at Nooitgedacht Village, your virtual office business address in Stellenbosch" class="h-full w-full object-cover" loading="lazy" width="1600" height="899"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Virtual Office</h3>
-              <span class="text-sm font-semibold text-sagedeep">from R595/mo</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Virtual Office</h3><span class="text-sm font-semibold text-sagedeep">from R595/mo</span></div>
             <p class="mt-2 text-ink/70">A Nooitgedacht Village business address, mail photographed to your WhatsApp the day it lands, a local number and desk days when you come to town.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">See the 3 plans &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">See the 3 plans &rarr;</span></p></div>
         </a>
-        <!-- Students -->
-        <a href="/student-study-space-stellenbosch" class="group card-lift img-zoom relative block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+        <a href="/student-study-space-stellenbosch" data-tilt="7" class="group img-zoom relative block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <span class="absolute left-4 top-4 z-10 rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-wider text-charcoal">Exam Pass</span>
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/hotdesks-3.jpg" alt="Quiet student study space with natural light at The Village Hub Stellenbosch" class="h-full w-full object-cover" loading="lazy" width="1672" height="941"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Student Study Space</h3>
-              <span class="text-sm font-semibold text-sagedeep">from R350/mo</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Student Study Space</h3><span class="text-sm font-semibold text-sagedeep">from R350/mo</span></div>
             <p class="mt-2 text-ink/70">Study all day for less than the price of a coffee, coffee included. 24/7 desks for students living at Nooitgedacht and around Stellenbosch.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">Student plans &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">Student plans &rarr;</span></p></div>
         </a>
-        <!-- Events -->
-        <a href="/event-space-stellenbosch" class="group card-lift img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft reveal">
+        <a href="/event-space-stellenbosch" data-tilt="7" class="group img-zoom block overflow-hidden rounded-2xl bg-linen shadow-soft">
           <div class="aspect-[4/3] overflow-hidden"><img src="/images/web/hotdesks-5.jpg" alt="Event and workshop space at The Village Hub Nooitgedacht" class="h-full w-full object-cover" loading="lazy" width="1671" height="941"></div>
-          <div class="p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl font-semibold text-bark">Events &amp; Workshops</h3>
-              <span class="text-sm font-semibold text-sagedeep">on quote</span>
-            </div>
+          <div class="p-6"><div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Events &amp; Workshops</h3><span class="text-sm font-semibold text-sagedeep">on quote</span></div>
             <p class="mt-2 text-ink/70">Training days, evening events and conference packages with full A/V, catering from The Village Table and parking for everyone.</p>
-            <p class="mt-4 text-sm font-semibold text-bark group-hover:underline">Host an event &rarr;</p>
-          </div>
+            <p class="mt-4 text-sm font-semibold text-bark"><span class="hover-line">Host an event &rarr;</span></p></div>
         </a>
       </div>
+    </div>
+  </section>
 
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-cream px-6 py-5 reveal">
-        <p class="text-ink/80"><strong class="text-bark">Not sure what fits?</strong> Compare every plan side by side, or come and see the space.</p>
-        <div class="flex gap-3">
-          <a href="/pricing" class="btn btn-outline !py-2.5 text-sm">Full price list</a>
-          <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-bark !py-2.5 text-sm">Book a tour</a>
+  <!-- ===================== PLAN FINDER ===================== -->
+  <section id="finder" class="py-20 sm:py-28 bg-linen">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-start">
+        <div class="lg:col-span-4 reveal">
+          <p class="eyebrow text-sage">Plan finder</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Three taps. The right plan, with the maths.</h2>
+          <p class="mt-5 text-ink/70 leading-relaxed">Tell us who you are and how often you will be here. We work out the cheapest plan that fits and show you the one next to it, so you can see the trade-off instead of guessing.</p>
+          <ul class="ticks mt-6 space-y-2 text-sm text-ink/75" style="list-style:none;padding:0">
+            <li class="flex gap-2"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Desks, offices, virtual office, student plans, rooms and stays</li>
+            <li class="flex gap-2"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Honest comparison against day-pass stacking</li>
+            <li class="flex gap-2"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Book straight away, or send the result to Christel</li>
+          </ul>
         </div>
+        <div class="lg:col-span-8 reveal" data-plan-finder></div>
       </div>
     </div>
   </section>
 
   <!-- ===================== ABOUT ===================== -->
-  <section id="about" class="py-20 sm:py-28 bg-linen overflow-hidden">
+  <section id="about" class="py-20 sm:py-28 bg-white overflow-hidden">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-        <div class="lg:col-span-6 reveal">
+        <div class="lg:col-span-6">
           <div class="relative">
-            <img src="/images/web/foundry.jpg" alt="The Foundry coworking lounge at The Village Hub Stellenbosch" class="w-full rounded-3xl object-cover shadow-lift aspect-[4/3]" loading="lazy" width="1800" height="1012">
-            <img src="/images/web/foundry-exterior.jpg" alt="The Foundry lifestyle centre exterior at Nooitgedacht Village" class="absolute -bottom-8 -right-4 hidden w-48 rotate-2 rounded-2xl border-4 border-white object-cover shadow-lift sm:block lg:w-60 aspect-[4/3]" loading="lazy" width="1600" height="899">
+            <div class="mask-reveal rounded-3xl overflow-hidden shadow-lift"><img src="/images/web/foundry.jpg" alt="The Foundry coworking lounge at The Village Hub Stellenbosch" class="w-full object-cover aspect-[4/3]" loading="lazy" width="1800" height="1012" data-parallax="0.08"></div>
+            <img src="/images/web/foundry-exterior.jpg" alt="The Foundry lifestyle centre exterior at Nooitgedacht Village" class="absolute -bottom-8 -right-4 hidden w-48 rotate-2 rounded-2xl border-4 border-white object-cover shadow-lift sm:block lg:w-60 aspect-[4/3] reveal" loading="lazy" width="1600" height="899" data-parallax="-0.06">
           </div>
         </div>
         <div class="lg:col-span-6 reveal">
           <p class="eyebrow text-sage">Why The Village Hub</p>
           <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Your space. However you work.</h2>
-          <p class="mt-5 text-lg text-ink/70 leading-relaxed">
-            A thoughtfully designed workspace on the first floor of The Foundry at <strong class="text-ink">Nooitgedacht Village</strong>: natural materials, warm tones, abundant light and serious infrastructure. Built for founders, consultants, hybrid teams and remote workers who need more than a coffee shop and less than a lease.
-          </p>
-          <dl class="mt-10 grid gap-6 sm:grid-cols-2">
-            <div class="flex gap-4">
-              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-              <div><dt class="font-semibold text-ink">Ten minutes from town</dt><dd class="mt-1 text-sm text-ink/70">Just off the R304. 15 min from Somerset West, 35 from Cape Town CBD, with free parking at the door.</dd></div>
-            </div>
-            <div class="flex gap-4">
-              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold text-charcoal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.9M9 20H4v-2a4 4 0 014-4h2a4 4 0 014 4v2zM9 11a3 3 0 100-6 3 3 0 000 6zm8 0a3 3 0 100-6 3 3 0 000 6z"/></svg></div>
-              <div><dt class="font-semibold text-ink">A real community</dt><dd class="mt-1 text-sm text-ink/70">180+ members: founders, advisors, designers and hybrid execs. Monthly Branch Out networking and skill-sharing.</dd></div>
-            </div>
-            <div class="flex gap-4">
-              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-bark text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.1 15.9a5.5 5.5 0 017.8 0M5.3 13a9.5 9.5 0 0113.4 0M2.5 10.2a13.5 13.5 0 0119 0M12 19h.01"/></svg></div>
-              <div><dt class="font-semibold text-ink">Serious infrastructure</dt><dd class="mt-1 text-sm text-ink/70">Fibre Wi-Fi, power at every seat, ergonomic chairs, printing, lockers and secure electronic access.</dd></div>
-            </div>
-            <div class="flex gap-4">
-              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sagedeep text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
-              <div><dt class="font-semibold text-ink">The Village Table downstairs</dt><dd class="mt-1 text-sm text-ink/70">Breakfast meetings, lunch and member discounts at the restaurant on the ground floor. Gym and walking trails on the estate.</dd></div>
-            </div>
+          <p class="mt-5 text-lg text-ink/70 leading-relaxed">A thoughtfully designed workspace on the first floor of The Foundry at <strong class="text-ink">Nooitgedacht Village</strong>: natural materials, warm tones, abundant light and serious infrastructure. Built for founders, consultants, hybrid teams and remote workers who need more than a coffee shop and less than a lease.</p>
+          <dl class="mt-10 grid gap-6 sm:grid-cols-2 reveal-stagger">
+            <div class="flex gap-4"><div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><dt class="font-semibold text-ink">Ten minutes from town</dt><dd class="mt-1 text-sm text-ink/70">Just off the R304. 15 min from Somerset West, 35 from Cape Town CBD, with free parking at the door.</dd></div></div>
+            <div class="flex gap-4"><div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold text-charcoal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.9M9 20H4v-2a4 4 0 014-4h2a4 4 0 014 4v2zM9 11a3 3 0 100-6 3 3 0 000 6zm8 0a3 3 0 100-6 3 3 0 000 6z"/></svg></div><div><dt class="font-semibold text-ink">A real community</dt><dd class="mt-1 text-sm text-ink/70">180+ members: founders, advisors, designers and hybrid execs. Monthly Branch Out networking and skill-sharing.</dd></div></div>
+            <div class="flex gap-4"><div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-bark text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.1 15.9a5.5 5.5 0 017.8 0M5.3 13a9.5 9.5 0 0113.4 0M2.5 10.2a13.5 13.5 0 0119 0M12 19h.01"/></svg></div><div><dt class="font-semibold text-ink">Serious infrastructure</dt><dd class="mt-1 text-sm text-ink/70">Fibre Wi-Fi, power at every seat, ergonomic chairs, printing, lockers and secure electronic access.</dd></div></div>
+            <div class="flex gap-4"><div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sagedeep text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div><div><dt class="font-semibold text-ink">The Village Table downstairs</dt><dd class="mt-1 text-sm text-ink/70">Breakfast meetings, lunch and member discounts at the restaurant on the ground floor. Gym and walking trails on the estate.</dd></div></div>
           </dl>
           <div class="mt-10 flex flex-wrap gap-3">
-            <a href="/coworking-vs-traditional-2" class="btn btn-outline !py-2.5 text-sm">Coworking vs a traditional office: the maths</a>
-            <a href="/nooitgedacht-village-stellenbosch" class="btn btn-outline-sage !py-2.5 text-sm">About Nooitgedacht Village</a>
+            <a href="/coworking-vs-traditional-2" class="btn btn-outline btn-sm">Coworking vs a traditional office: the maths</a>
+            <a href="/nooitgedacht-village-stellenbosch" class="btn btn-outline-sage btn-sm">About Nooitgedacht Village</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===================== EXPLORE THE FLOOR ===================== -->
+  <section id="floor" class="py-20 sm:py-28 bg-cream">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between reveal">
+        <div class="max-w-2xl">
+          <p class="eyebrow text-sage">Explore the floor</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Walk the first floor before you visit.</h2>
+          <p class="mt-4 text-ink/70">Tap any room on the plan. Two boardrooms, thirteen private offices, thirty-six desks, the coffee bar and the lounges, all on one level above The Village Table.</p>
+        </div>
+        <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-outline btn-sm shrink-0">Then see it for real</a>
+      </div>
+      <div class="mt-10 reveal" data-floor></div>
+    </div>
+  </section>
+
   <!-- ===================== VIRTUAL OFFICE ===================== -->
-  <section id="virtual-office" class="py-20 sm:py-28 bg-cream">
+  <section id="virtual-office" class="py-20 sm:py-28 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-7 reveal">
@@ -544,18 +433,18 @@
           <p class="mt-5 text-lg text-ink/70 leading-relaxed">Work from home, from the road or from the other side of the country and still give clients a Stellenbosch address they can trust. Mail handled and photographed to you the same day. A local number forwarded to your phone. A desk or boardroom ready when you come to town.</p>
         </div>
         <div class="lg:col-span-5 lg:text-right reveal">
-          <p class="text-sm text-ink/60">Prices per month excl. VAT &middot; 3-month minimum, then month to month &middot; Live within 24 hours of sign-up</p>
-          <p class="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-bark shadow-soft"><span class="h-2 w-2 rounded-full bg-sage"></span> Founding pricing locked for 12 months for the first 20 clients</p>
+          <div class="vh-toggle" data-toggle-group="vo" role="group" aria-label="Billing period"><button type="button" class="on" data-mode="monthly">Monthly</button><button type="button" data-mode="annual">Annual upfront <span class="save">save 10%</span></button></div>
+          <p class="mt-3 text-sm text-ink/60">Per month excl. VAT &middot; 3-month minimum, then month to month &middot; Live within 24 hours</p>
+          <p class="mt-2 inline-flex items-center gap-2 rounded-full bg-cream px-4 py-2 text-sm font-semibold text-bark"><span class="h-2 w-2 rounded-full bg-sage"></span> Founding pricing locked for 12 months for the first 20 clients</p>
         </div>
       </div>
 
-      <div class="mt-14 grid gap-6 lg:grid-cols-3">
-        <!-- Address -->
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-8 shadow-soft reveal">
+      <div class="mt-14 grid gap-6 lg:grid-cols-3 reveal-stagger">
+        <article data-tilt="4" class="flex flex-col rounded-3xl bg-linen p-8 shadow-soft">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Address</h3>
           <p class="mt-1 text-sm text-ink/60">Your business address, sorted</p>
-          <p class="mt-6"><span class="font-display text-5xl font-semibold text-ink">R595</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
-          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80">
+          <p class="mt-6"><span class="price text-5xl text-ink" data-price="595" data-scope="vo">R595</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
+          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80 flex-1">
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Nooitgedacht Village, Stellenbosch business address for your website, invoices and Google profile</li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Mail and parcel receipt with same-day WhatsApp photo notification</li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 hot desk day a month</li>
@@ -564,13 +453,12 @@
           </ul>
           <a href="/virtual-office-stellenbosch#apply" class="btn btn-outline mt-8 w-full">Apply for Village Address</a>
         </article>
-        <!-- Virtual -->
-        <article class="card-lift relative flex flex-col rounded-3xl bg-white p-8 shadow-lift ring-2 ring-sage reveal">
+        <article data-tilt="4" class="relative flex flex-col rounded-3xl bg-white p-8 shadow-lift ring-2 ring-sage">
           <span class="absolute -top-3 left-8 rounded-full bg-sage px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">Most popular</span>
           <h3 class="font-display text-2xl font-semibold text-bark">Village Virtual</h3>
           <p class="mt-1 text-sm text-ink/60">Address, local number and a desk in town</p>
-          <p class="mt-6"><span class="font-display text-5xl font-semibold text-ink">R1 095</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
-          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80">
+          <p class="mt-6"><span class="price text-5xl text-ink" data-price="1095" data-scope="vo">R1&#8239;095</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
+          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80 flex-1">
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><strong>Everything in Village Address</strong></li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Dedicated local phone number forwarded to your mobile</li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>2 hot desk days a month</li>
@@ -579,12 +467,11 @@
           </ul>
           <a href="/virtual-office-stellenbosch#apply" class="btn btn-sage mt-8 w-full">Apply for Village Virtual</a>
         </article>
-        <!-- Pro -->
-        <article class="card-lift flex flex-col rounded-3xl bg-white p-8 shadow-soft reveal">
+        <article data-tilt="4" class="flex flex-col rounded-3xl bg-linen p-8 shadow-soft">
           <h3 class="font-display text-2xl font-semibold text-bark">Village Virtual Pro</h3>
           <p class="mt-1 text-sm text-ink/60">The full virtual presence</p>
-          <p class="mt-6"><span class="font-display text-5xl font-semibold text-ink">R1 695</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
-          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80">
+          <p class="mt-6"><span class="price text-5xl text-ink" data-price="1695" data-scope="vo">R1&#8239;695</span><span class="ml-1 text-sm text-ink/60">/month excl. VAT</span></p>
+          <ul class="mt-6 space-y-3 text-[0.95rem] text-ink/80 flex-1">
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><strong>Everything in Village Virtual</strong></li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>3 hot desk days and 2 boardroom hours a month</li>
             <li class="flex gap-3"><svg class="tick text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Registered CIPC / SARS address included</li>
@@ -596,14 +483,14 @@
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-12 lg:items-center reveal">
-        <ol class="lg:col-span-8 grid gap-4 sm:grid-cols-3">
-          <li class="flex gap-4 rounded-2xl bg-white/70 p-5"><span class="font-display text-3xl font-semibold text-gold">1</span><div><p class="font-semibold text-ink">Apply online</p><p class="mt-1 text-sm text-ink/70">Tell us about your business in two minutes.</p></div></li>
-          <li class="flex gap-4 rounded-2xl bg-white/70 p-5"><span class="font-display text-3xl font-semibold text-gold">2</span><div><p class="font-semibold text-ink">Quick compliance check</p><p class="mt-1 text-sm text-ink/70">CIPC, ID and proof of address. It protects every business at the Hub.</p></div></li>
-          <li class="flex gap-4 rounded-2xl bg-white/70 p-5"><span class="font-display text-3xl font-semibold text-gold">3</span><div><p class="font-semibold text-ink">Live in 24 hours</p><p class="mt-1 text-sm text-ink/70">Sign, pay the first month and your address goes live.</p></div></li>
+        <ol class="lg:col-span-8 grid gap-4 sm:grid-cols-3 reveal-stagger">
+          <li class="flex gap-4 rounded-2xl bg-cream p-5"><span class="font-display text-3xl font-semibold text-gold">1</span><div><p class="font-semibold text-ink">Apply online</p><p class="mt-1 text-sm text-ink/70">Tell us about your business in two minutes.</p></div></li>
+          <li class="flex gap-4 rounded-2xl bg-cream p-5"><span class="font-display text-3xl font-semibold text-gold">2</span><div><p class="font-semibold text-ink">Quick compliance check</p><p class="mt-1 text-sm text-ink/70">CIPC, ID and proof of address. It protects every business at the Hub.</p></div></li>
+          <li class="flex gap-4 rounded-2xl bg-cream p-5"><span class="font-display text-3xl font-semibold text-gold">3</span><div><p class="font-semibold text-ink">Live in 24 hours</p><p class="mt-1 text-sm text-ink/70">Sign, pay the first month and your address goes live.</p></div></li>
         </ol>
         <div class="lg:col-span-4 flex flex-col gap-3 sm:flex-row lg:flex-col">
           <a href="/virtual-office-stellenbosch" class="btn btn-bark w-full">Full virtual office details</a>
-          <a href="/registered-business-address-stellenbosch" class="btn btn-outline w-full !py-2.5 text-sm">Why a registered address matters</a>
+          <a href="/registered-business-address-stellenbosch" class="btn btn-outline btn-sm w-full">Why a registered address matters</a>
         </div>
       </div>
     </div>
@@ -614,15 +501,20 @@
     <div class="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-3xl"></div>
     <div class="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-sage/10 blur-3xl"></div>
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl reveal">
-        <p class="eyebrow text-gold">Students &middot; Nooitgedacht &amp; Stellenbosch</p>
-        <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium">Study all day for less than the price of a coffee. <span class="text-gold">Coffee included.</span></h2>
-        <p class="mt-5 text-lg text-cream/75 leading-relaxed">A proper desk, 24/7 access, fast fibre, power at every seat and a quiet zone, two minutes from your front door at Nooitgedacht. For undergrads, postgrads and thesis writers who need somewhere that is not their bedroom.</p>
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-end reveal">
+        <div class="lg:col-span-8">
+          <p class="eyebrow text-gold">Students &middot; Nooitgedacht &amp; Stellenbosch</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium">Study all day for less than the price of a coffee. <span class="vh-gold-text">Coffee included.</span></h2>
+          <p class="mt-5 text-lg text-cream/75 leading-relaxed">A proper desk, 24/7 access, fast fibre, power at every seat and a quiet zone, two minutes from your front door at Nooitgedacht. For undergrads, postgrads and thesis writers who need somewhere that is not their bedroom.</p>
+        </div>
+        <div class="lg:col-span-4 lg:text-right">
+          <p class="eyebrow text-cream/50 mb-3">Exam season starts in</p>
+          <div class="vh-count" data-countdown="2026-10-26T00:00:00+02:00"></div>
+        </div>
       </div>
 
       <div class="mt-14 grid gap-6 lg:grid-cols-12">
-        <!-- Exam pass -->
-        <article class="ring-gold relative overflow-hidden rounded-3xl bg-[#15170F] p-8 sm:p-10 lg:col-span-5 reveal">
+        <article data-tilt="3" class="ring-gold relative overflow-hidden rounded-3xl bg-[#15170F] p-8 sm:p-10 lg:col-span-5 reveal" style="box-shadow:0 0 0 1px rgba(201,162,75,.6), 0 24px 48px -20px rgba(201,162,75,.35)">
           <div class="absolute right-6 top-6 flex h-20 w-20 rotate-12 items-center justify-center rounded-full border-2 border-dashed border-gold text-center text-[0.62rem] font-bold uppercase leading-tight tracking-wider text-gold">Only 20<br>passes</div>
           <p class="eyebrow text-gold pr-24">Exam season 2026 &middot; 26 Oct to 5 Dec</p>
           <h3 class="mt-4 font-display text-4xl font-semibold pr-24 sm:pr-0">The Exam Pass.</h3>
@@ -643,8 +535,7 @@
           <p class="mt-5 text-xs text-cream/50">Valid student card and proof of 2026 registration. Personal study use only. Not transferable. Quiet-zone rules apply.</p>
         </article>
 
-        <!-- Monthly tiers -->
-        <div class="lg:col-span-7 grid gap-4 sm:grid-cols-3 reveal">
+        <div class="lg:col-span-7 grid gap-4 sm:grid-cols-3 reveal-stagger">
           <article class="flex flex-col rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
             <h3 class="font-display text-xl font-semibold">Night Owl</h3>
             <p class="mt-3"><span class="font-display text-4xl font-semibold text-gold">R495</span><span class="text-sm text-cream/60">/month</span></p>
@@ -654,7 +545,7 @@
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>All day weekends and public holidays</li>
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Wi-Fi, power, coffee, quiet zone</li>
             </ul>
-            <a href="/student-study-space-stellenbosch#plans" class="btn btn-ghost mt-6 w-full !py-2.5 text-sm">Apply for Night Owl</a>
+            <a href="/student-study-space-stellenbosch#plans" class="btn btn-ghost btn-sm mt-6 w-full">Apply for Night Owl</a>
           </article>
           <article class="flex flex-col rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
             <h3 class="font-display text-xl font-semibold">Student 5-Day</h3>
@@ -665,7 +556,7 @@
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>24 hours from check-in</li>
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Extra days at the day-pass rate</li>
             </ul>
-            <a href="/student-study-space-stellenbosch#plans" class="btn btn-ghost mt-6 w-full !py-2.5 text-sm">Apply for 5-Day</a>
+            <a href="/student-study-space-stellenbosch#plans" class="btn btn-ghost btn-sm mt-6 w-full">Apply for 5-Day</a>
           </article>
           <article class="flex flex-col rounded-3xl border border-gold/50 bg-gold/10 p-6 backdrop-blur">
             <p class="eyebrow text-gold !text-[0.6rem]">Postgrads &amp; thesis writers</p>
@@ -677,7 +568,7 @@
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Business directory and monthly Branch Out invite</li>
               <li class="flex gap-2"><svg class="tick text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Work next to 180+ businesses</li>
             </ul>
-            <a href="/student-study-space-stellenbosch#plans" class="btn btn-gold mt-6 w-full !py-2.5 text-sm">Apply for All-Access</a>
+            <a href="/student-study-space-stellenbosch#plans" class="btn btn-gold btn-sm mt-6 w-full">Apply for All-Access</a>
           </article>
           <p class="sm:col-span-3 text-sm text-cream/55">Student prices include VAT. Month to month, no minimum term. Student card and proof of registration required. Parents: an Academic Year Pass (All-Access, February to November) opens in January. <a href="/student-study-space-stellenbosch" class="text-gold underline underline-offset-4">All student details &rarr;</a></p>
         </div>
@@ -686,30 +577,37 @@
   </section>
 
   <!-- ===================== GALLERY ===================== -->
-  <section id="gallery" class="py-20 sm:py-28 bg-white">
+  <section id="gallery" class="py-20 sm:py-28 bg-white overflow-hidden">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between reveal">
         <div class="max-w-2xl">
           <p class="eyebrow text-sage">The space</p>
           <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Timber trusses, natural light and a lot of good coffee.</h2>
+          <p class="mt-3 text-ink/60 text-sm">Drag to browse. Tap a photo to open it.</p>
         </div>
-        <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-outline !py-2.5 text-sm shrink-0">See it in person</a>
+        <div class="flex gap-2 shrink-0">
+          <button type="button" class="btn btn-outline btn-sm !px-4" data-drag-prev="gal" aria-label="Previous">&larr;</button>
+          <button type="button" class="btn btn-outline btn-sm !px-4" data-drag-next="gal" aria-label="Next">&rarr;</button>
+        </div>
       </div>
-      <div class="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 md:grid-rows-2 md:auto-rows-[220px] lg:auto-rows-[260px]">
-        <button type="button" class="gal img-zoom col-span-2 row-span-2 overflow-hidden rounded-2xl reveal"><img src="/images/web/hotdesks-1.jpg" alt="Hot desk coworking area under timber trusses at The Village Hub" class="h-full w-full object-cover" loading="lazy" width="1672" height="941"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12 seats" class="h-full w-full object-cover" loading="lazy" width="1600" height="900"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/lobby-stair.jpg" alt="Lobby staircase up to The Village Hub on the first floor of The Foundry" class="h-full w-full object-cover" loading="lazy" width="1600" height="899"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/kitchen.jpg" alt="Coffee bar and kitchen at The Village Hub" class="h-full w-full object-cover" loading="lazy" width="1800" height="1012"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/village-chamber.jpg" alt="The Village Chamber meeting room, 10 seats" class="h-full w-full object-cover" loading="lazy" width="1600" height="901"></button>
-        <button type="button" class="gal img-zoom col-span-2 overflow-hidden rounded-2xl reveal md:col-span-2"><img src="/images/web/reception-hub.jpg" alt="Reception and living wall at The Village Hub" class="h-full w-full object-cover" loading="lazy" width="1600" height="899"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/office-2.jpg" alt="Private office with arched window at The Village Hub" class="h-full w-full object-cover" loading="lazy" width="1800" height="1012"></button>
-        <button type="button" class="gal img-zoom overflow-hidden rounded-2xl reveal"><img src="/images/web/foundry-front.jpg" alt="The Foundry lawn and restaurant terrace at Nooitgedacht Village" class="h-full w-full object-cover" loading="lazy" width="1600" height="900"></button>
+    </div>
+    <div class="mt-10 pl-4 sm:pl-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+      <div id="gal" class="vh-drag pr-6">
+        <figure class="img-zoom w-[82vw] sm:w-[34rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/hotdesks-1.jpg" alt="Hot desk coworking area under timber trusses at The Village Hub" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1672" height="941"></figure>
+        <figure class="img-zoom w-[60vw] sm:w-[22rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12 seats" class="aspect-[4/5] w-full object-cover" loading="lazy" width="1600" height="900"></figure>
+        <figure class="img-zoom w-[82vw] sm:w-[30rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/lobby-stair.jpg" alt="Lobby staircase up to The Village Hub on the first floor of The Foundry" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1600" height="899"></figure>
+        <figure class="img-zoom w-[60vw] sm:w-[22rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/kitchen.jpg" alt="Coffee bar and kitchen at The Village Hub" class="aspect-[4/5] w-full object-cover" loading="lazy" width="1800" height="1012"></figure>
+        <figure class="img-zoom w-[82vw] sm:w-[30rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/village-chamber.jpg" alt="The Village Chamber meeting room, 10 seats" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1600" height="901"></figure>
+        <figure class="img-zoom w-[82vw] sm:w-[34rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/reception-hub.jpg" alt="Reception and living wall at The Village Hub" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1600" height="899"></figure>
+        <figure class="img-zoom w-[60vw] sm:w-[22rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/office-2.jpg" alt="Private office with arched window at The Village Hub" class="aspect-[4/5] w-full object-cover" loading="lazy" width="1800" height="1012"></figure>
+        <figure class="img-zoom w-[82vw] sm:w-[30rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/foundry-front.jpg" alt="The Foundry lawn and restaurant terrace at Nooitgedacht Village" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1600" height="900"></figure>
+        <figure class="img-zoom w-[82vw] sm:w-[30rem] overflow-hidden rounded-3xl" data-lightbox><img src="/images/web/open-area.jpg" alt="Open plan coworking lounge at The Village Hub Nooitgedacht" class="aspect-[16/10] w-full object-cover" loading="lazy" width="1600" height="900"></figure>
       </div>
     </div>
   </section>
 
   <!-- ===================== VILLAGE STAY ===================== -->
-  <section id="stay" class="py-20 sm:py-28 bg-linen">
+  <section id="stay" class="py-20 sm:py-28 bg-linen overflow-hidden">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
         <div class="lg:col-span-5 reveal">
@@ -723,15 +621,15 @@
           </ul>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="/accommodation" class="btn btn-bark">View suites &amp; rates</a>
-            <a href="/work-and-stay-stellenbosch" class="btn btn-outline !py-2.5 text-sm">Work-and-stay guide</a>
+            <a href="/work-and-stay-stellenbosch" class="btn btn-outline btn-sm">Work-and-stay guide</a>
           </div>
         </div>
         <div class="lg:col-span-7 reveal">
           <div class="grid grid-cols-3 gap-3 sm:gap-4">
-            <a href="/accommodation" class="img-zoom col-span-2 overflow-hidden rounded-3xl"><img src="/images/web/village-stay-suite-1.jpg" alt="The Village Stay boutique suite with king bed and kitchenette" class="h-full w-full object-cover aspect-[4/3]" loading="lazy" width="1400" height="1050"></a>
+            <a href="/accommodation" class="img-zoom col-span-2 overflow-hidden rounded-3xl"><img src="/images/web/village-stay-suite-1.jpg" alt="The Village Stay boutique suite with king bed and kitchenette" class="h-full w-full object-cover aspect-[4/3]" loading="lazy" width="1400" height="1050" data-parallax="0.06"></a>
             <div class="grid gap-3 sm:gap-4">
-              <a href="/accommodation" class="img-zoom overflow-hidden rounded-3xl"><img src="/images/web/village-stay-suite-2.jpg" alt="Village Stay studio suite interior" class="h-full w-full object-cover aspect-square" loading="lazy" width="1400" height="1050"></a>
-              <a href="/accommodation" class="img-zoom overflow-hidden rounded-3xl"><img src="/images/web/village-stay-bathroom.jpg" alt="Walk-in shower bathroom at The Village Stay" class="h-full w-full object-cover aspect-square" loading="lazy" width="1400" height="1050"></a>
+              <a href="/accommodation" class="img-zoom overflow-hidden rounded-3xl"><img src="/images/web/village-stay-suite-2.jpg" alt="Village Stay studio suite interior" class="h-full w-full object-cover aspect-square" loading="lazy" width="1400" height="1050" data-parallax="-0.05"></a>
+              <a href="/accommodation" class="img-zoom overflow-hidden rounded-3xl"><img src="/images/web/village-stay-bathroom.jpg" alt="Walk-in shower bathroom at The Village Stay" class="h-full w-full object-cover aspect-square" loading="lazy" width="1400" height="1050" data-parallax="0.1"></a>
             </div>
           </div>
         </div>
@@ -740,46 +638,35 @@
   </section>
 
   <!-- ===================== REVIEWS ===================== -->
-  <section id="reviews" class="py-20 sm:py-28 bg-white">
+  <section id="reviews" class="py-20 sm:py-28 bg-white overflow-hidden">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-2xl mx-auto reveal">
         <p class="eyebrow text-sage">What members say</p>
-        <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">5.0 <span class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span> on Google.</h2>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">5.0 <span class="vh-gold-text">&#9733;&#9733;&#9733;&#9733;&#9733;</span> on Google.</h2>
         <p class="mt-4 text-lg text-ink/70">A perfect rating across <strong class="text-ink">20 verified reviews</strong> from members, visitors and overnight guests.</p>
         <a href="https://www.google.com/maps/place/The+Village+Hub+-+Co+Working+%26+Accommodation/@-33.8766828,18.8213637,17z/data=!3m1!4b1!4m6!3m5!1s0x1dcdad62300145eb:0x7d217a34b76b9d93!8m2!3d-33.8766828!4d18.8213637!9m1!1b1" target="_blank" rel="noopener" class="mt-3 inline-block text-sm font-semibold text-sagedeep underline underline-offset-4">Read all reviews on Google &rarr;</a>
       </div>
-      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Lovely co-working space! We hired a boardroom for 3 days for some training. The space was beautiful, great facilities, friendly staff and a restaurant downstairs which made getting some lunch super convenient.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">K</span><span><span class="block font-semibold text-bark">Kim Campbell</span><span class="text-xs text-ink/55">Google review &middot; Local Guide</span></span></figcaption>
-        </figure>
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Best of both worlds. You get the structure of an office, the freedom of remote work, and a room full of people who make you want to come back again and again. Truly makes you feel like part of a big family.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">L</span><span><span class="block font-semibold text-bark">Lydia Vollgraaff</span><span class="text-xs text-ink/55">Google review</span></span></figcaption>
-        </figure>
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;A great place to find community, a quiet spot to work or a peaceful overnight stay while travelling. Printing, fast wi-fi, coffee, desks, boardrooms, plus great food at The Village Table downstairs. A little piece of heaven in Nooitgedacht Village.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">D</span><span><span class="block font-semibold text-bark">Don Joel</span><span class="text-xs text-ink/55">Google review</span></span></figcaption>
-        </figure>
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Amazing co-working environment in the beautiful Nooitgedacht Village estate. Neat, clean and the ambience is amazing. The Village Stay accommodation is also really neat, clean, with great service and communication.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">C</span><span><span class="block font-semibold text-bark">Christel Burger</span><span class="text-xs text-ink/55">Google review</span></span></figcaption>
-        </figure>
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great place for a solo stay. The hosts were very responsive and kind. Safety, easy Uber access, and a great restaurant below the rooms for coffee and breakfast in the morning. 10/10 for me.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">M</span><span><span class="block font-semibold text-bark">Malehu Mphahlele</span><span class="text-xs text-ink/55">Google review</span></span></figcaption>
-        </figure>
-        <figure class="rounded-3xl bg-linen p-7 reveal">
-          <div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great offices and hot desk space. The Village Hub team is always so friendly and helpful. I really enjoy spending time here.&rdquo;</blockquote>
-          <figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">B</span><span><span class="block font-semibold text-bark">Blanche Franken</span><span class="text-xs text-ink/55">Google review</span></span></figcaption>
-        </figure>
+    </div>
+    <div class="vh-ticker mt-12">
+      <div class="vh-ticker__track" style="--dur:70s">
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Lovely co-working space! We hired a boardroom for 3 days for some training. The space was beautiful, great facilities, friendly staff and a restaurant downstairs.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">K</span><span><span class="block font-semibold text-bark">Kim Campbell</span><span class="text-xs text-ink/55">Google review &middot; Local Guide</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Best of both worlds. The structure of an office, the freedom of remote work, and a room full of people who make you want to come back again and again.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">L</span><span><span class="block font-semibold text-bark">Lydia Vollgraaff</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;A great place to find community, a quiet spot to work or a peaceful overnight stay. A little piece of heaven in Nooitgedacht Village.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">D</span><span><span class="block font-semibold text-bark">Don Joel</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Amazing co-working environment in the beautiful Nooitgedacht Village estate. Neat, clean and the ambience is amazing. The Village Stay is also really neat, with great service.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">C</span><span><span class="block font-semibold text-bark">Christel Burger</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great place for a solo stay. The hosts were very responsive and kind. Safety, easy Uber access, and a great restaurant below the rooms. 10/10 for me.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">M</span><span><span class="block font-semibold text-bark">Malehu Mphahlele</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great offices and hot desk space. The Village Hub team is always so friendly and helpful. I really enjoy spending time here.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">B</span><span><span class="block font-semibold text-bark">Blanche Franken</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;I had a great experience at The Village Hub. Friendly staff, amazing facility, and fast internet connection. Thanks guys!&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">O</span><span><span class="block font-semibold text-bark">Ockie Van Zyl</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Lovely co-working space! We hired a boardroom for 3 days for some training. The space was beautiful, great facilities, friendly staff and a restaurant downstairs.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">K</span><span><span class="block font-semibold text-bark">Kim Campbell</span><span class="text-xs text-ink/55">Google review &middot; Local Guide</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Best of both worlds. The structure of an office, the freedom of remote work, and a room full of people who make you want to come back again and again.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">L</span><span><span class="block font-semibold text-bark">Lydia Vollgraaff</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;A great place to find community, a quiet spot to work or a peaceful overnight stay. A little piece of heaven in Nooitgedacht Village.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">D</span><span><span class="block font-semibold text-bark">Don Joel</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Amazing co-working environment in the beautiful Nooitgedacht Village estate. Neat, clean and the ambience is amazing. The Village Stay is also really neat, with great service.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">C</span><span><span class="block font-semibold text-bark">Christel Burger</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great place for a solo stay. The hosts were very responsive and kind. Safety, easy Uber access, and a great restaurant below the rooms. 10/10 for me.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">M</span><span><span class="block font-semibold text-bark">Malehu Mphahlele</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;Great offices and hot desk space. The Village Hub team is always so friendly and helpful. I really enjoy spending time here.&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">B</span><span><span class="block font-semibold text-bark">Blanche Franken</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
+        <figure class="review-card"><div class="text-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote class="mt-3 text-ink/85 leading-relaxed">&ldquo;I had a great experience at The Village Hub. Friendly staff, amazing facility, and fast internet connection. Thanks guys!&rdquo;</blockquote><figcaption class="mt-5 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage font-semibold text-white">O</span><span><span class="block font-semibold text-bark">Ockie Van Zyl</span><span class="text-xs text-ink/55">Google review</span></span></figcaption></figure>
       </div>
+    </div>
+    <div class="mt-10 text-center reveal">
+      <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="btn btn-sage">Come see for yourself: book a free tour</a>
     </div>
   </section>
 
@@ -792,39 +679,15 @@
           <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Good questions.</h2>
           <p class="mt-4 text-ink/70">Anything else? WhatsApp Christel and the team on <a href="https://wa.me/27725310904" class="font-semibold text-bark underline underline-offset-4">072 531 0904</a>.</p>
         </div>
-        <div class="lg:col-span-8 space-y-3 reveal">
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Where is The Village Hub?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">First floor of The Foundry at Nooitgedacht Village, Stellenbosch, just off the R304. Ten minutes from central Stellenbosch, 15 from Somerset West and about 35 from Cape Town CBD, with free on-site parking.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">What do hot desks cost?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">From <strong>R60 an hour</strong>, R150 for a half day, R250 for a full day, R1,000 for 5 days, R1,600 for 10 days or R3,000 a month unlimited. A dedicated desk of your own is R3,500 a month. Hub prices exclude VAT. <a href="/hot-desk-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">All hot desk plans</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Do you offer a virtual office or business address?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. <strong>Village Address</strong> (R595), <strong>Village Virtual</strong> (R1,095) and <strong>Village Virtual Pro</strong> (R1,695), per month excluding VAT. All three give you a Nooitgedacht Village business address, mail and parcel handling with same-day WhatsApp notification, hot desk days and member boardroom rates. Virtual adds a local phone number and mail forwarding; Pro includes your registered CIPC and SARS address. Three-month minimum, live within 24 hours. <a href="/virtual-office-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Virtual office details</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Is there a student membership?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. The <strong>Exam Pass</strong> is R795 once-off for unlimited 24/7 study access over the whole November exam season (26 October to 5 December 2026, 20 passes only). Month-to-month student plans run from R350 (Student 5-Day) to R495 (Night Owl, evenings and weekends) and R895 (Student All-Access). Student prices include VAT; bring a valid student card and proof of registration. <a href="/student-study-space-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Student plans</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Can I hire a boardroom or meeting room?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. The <strong>Village Boardroom</strong> seats 12 at R390 an hour and the <strong>Village Chamber</strong> seats 10 at R350 an hour. Screens, whiteboards and fast Wi-Fi included; half-day, full-day and conference packages available. <a href="/boardroom-hire-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Book a room</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Do you have private offices for small teams?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. Furnished 1&ndash;2, 3, 4 and 6-seater offices from R6,950 a month, all move-in ready with 24/7 secure access, dedicated Wi-Fi and printing credits. <a href="/private-offices-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">See the offices</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Can I host an event or workshop here?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. Workshops, training days, evening events and conference packages with full A/V, catering from The Village Table and parking for everyone. <a href="/event-space-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Event space</a>.</p>
-          </details>
-          <details class="group rounded-2xl bg-white p-5 shadow-soft">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-bark">Can I try the space before I commit?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
-            <p class="mt-3 text-ink/75">Yes. Free tours run during business hours, just <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour" class="font-semibold text-sagedeep underline underline-offset-4">WhatsApp us</a>. Or buy a day pass from R250 and spend a full working day with us first.</p>
-          </details>
+        <div class="lg:col-span-8 space-y-3 reveal-stagger">
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Where is The Village Hub?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">First floor of The Foundry at Nooitgedacht Village, Stellenbosch, just off the R304. Ten minutes from central Stellenbosch, 15 from Somerset West and about 35 from Cape Town CBD, with free on-site parking.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">What do hot desks cost?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">From <strong>R60 an hour</strong>, R150 for a half day, R250 for a full day, R1,000 for 5 days, R1,600 for 10 days or R3,000 a month unlimited. A dedicated desk of your own is R3,500 a month. Hub prices exclude VAT. <a href="/hot-desk-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">All hot desk plans</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Do you offer a virtual office or business address?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. <strong>Village Address</strong> (R595), <strong>Village Virtual</strong> (R1,095) and <strong>Village Virtual Pro</strong> (R1,695), per month excluding VAT. All three give you a Nooitgedacht Village business address, mail and parcel handling with same-day WhatsApp notification, hot desk days and member boardroom rates. Virtual adds a local phone number and mail forwarding; Pro includes your registered CIPC and SARS address. Three-month minimum, live within 24 hours. <a href="/virtual-office-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Virtual office details</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Is there a student membership?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. The <strong>Exam Pass</strong> is R795 once-off for unlimited 24/7 study access over the whole November exam season (26 October to 5 December 2026, 20 passes only). Month-to-month student plans run from R350 (Student 5-Day) to R495 (Night Owl, evenings and weekends) and R895 (Student All-Access). Student prices include VAT; bring a valid student card and proof of registration. <a href="/student-study-space-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Student plans</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Can I hire a boardroom or meeting room?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. The <strong>Village Boardroom</strong> seats 12 at R390 an hour and the <strong>Village Chamber</strong> seats 10 at R350 an hour. Screens, whiteboards and fast Wi-Fi included; half-day, full-day and conference packages available. <a href="/boardroom-hire-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Book a room</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Do you have private offices for small teams?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. Furnished 1&ndash;2, 3, 4 and 6-seater offices from R6,950 a month, all move-in ready with 24/7 secure access, dedicated Wi-Fi and printing credits. <a href="/private-offices-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">See the offices</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Can I host an event or workshop here?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. Workshops, training days, evening events and conference packages with full A/V, catering from The Village Table and parking for everyone. <a href="/event-space-stellenbosch" class="font-semibold text-sagedeep underline underline-offset-4">Event space</a>.</p></details>
+          <details class="rounded-2xl bg-white p-5 shadow-soft"><summary class="flex items-center justify-between gap-4 font-semibold text-bark">Can I try the space before I commit?<svg class="chev h-5 w-5 shrink-0 text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary><p class="mt-3 text-ink/75">Yes. Free tours run during business hours, just <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour" class="font-semibold text-sagedeep underline underline-offset-4">WhatsApp us</a>. Or buy a day pass from R250 and spend a full working day with us first.</p></details>
         </div>
       </div>
     </div>
@@ -875,26 +738,15 @@
                 <option value="Not sure yet">Not sure yet</option>
               </select>
             </div>
-            <div id="office-type-container" class="hidden sm:col-span-2">
-              <label for="office-type" class="label">Office type</label>
-              <select id="office-type" name="office-type" class="field"><option value="Furnished">Furnished</option><option value="Unfurnished">Unfurnished</option></select>
-            </div>
-            <div id="event-details-container" class="hidden sm:col-span-2">
-              <label for="event-details" class="label">Event details (date, numbers, format)</label>
-              <textarea id="event-details" name="event-details" rows="3" class="field"></textarea>
-            </div>
+            <div id="office-type-container" class="hidden sm:col-span-2"><label for="office-type" class="label">Office type</label><select id="office-type" name="office-type" class="field"><option value="Furnished">Furnished</option><option value="Unfurnished">Unfurnished</option></select></div>
+            <div id="event-details-container" class="hidden sm:col-span-2"><label for="event-details" class="label">Event details (date, numbers, format)</label><textarea id="event-details" name="event-details" rows="3" class="field"></textarea></div>
             <div><label for="team-size" class="label">Team size</label><input type="number" id="team-size" name="team-size" min="1" value="1" class="field"></div>
             <div><label for="start-date" class="label">Ideal start date</label><input type="date" id="start-date" name="start-date" class="field"></div>
-            <div><label for="days-per-week" class="label">Days per week</label>
-              <select id="days-per-week" name="days-per-week" class="field"><option value="Flexible">Flexible</option><option value="1-2 days">1&ndash;2 days</option><option value="3 days">3 days</option><option value="4-5 days">4&ndash;5 days</option></select>
-            </div>
+            <div><label for="days-per-week" class="label">Days per week</label><select id="days-per-week" name="days-per-week" class="field"><option value="Flexible">Flexible</option><option value="1-2 days">1&ndash;2 days</option><option value="3 days">3 days</option><option value="4-5 days">4&ndash;5 days</option></select></div>
             <div><label for="hear-about" class="label">How did you hear about us?</label><input type="text" id="hear-about" name="hear-about" class="field"></div>
             <div class="sm:col-span-2"><label for="message" class="label">Anything else?</label><textarea id="message" name="message" rows="3" class="field"></textarea></div>
           </div>
-          <label for="consent" class="mt-5 flex items-start gap-3 text-sm text-ink/75">
-            <input id="consent" name="consent" type="checkbox" required class="mt-1 h-4 w-4 rounded border-sand text-sage focus:ring-sage">
-            <span>I agree to be contacted about The Village Hub. See our <a href="/privacy" class="underline underline-offset-2">privacy policy</a>.</span>
-          </label>
+          <label for="consent" class="mt-5 flex items-start gap-3 text-sm text-ink/75"><input id="consent" name="consent" type="checkbox" required class="mt-1 h-4 w-4 rounded border-sand text-sage focus:ring-sage"><span>I agree to be contacted about The Village Hub. See our <a href="/privacy" class="underline underline-offset-2">privacy policy</a>.</span></label>
           <button type="submit" id="submit-btn" class="btn btn-bark mt-6 w-full text-base">Send my enquiry</button>
           <p id="form-success" class="hidden mt-4 text-center font-semibold text-sagedeep">Thank you. We&rsquo;ll be in touch shortly.</p>
           <p id="form-error" class="hidden mt-4 text-center font-medium text-red-700">Something went wrong. Please <a href="https://wa.me/27725310904" class="underline">WhatsApp us</a> directly.</p>
@@ -916,183 +768,30 @@
         </div>
         <div class="lg:col-span-5 rounded-3xl bg-white p-8 shadow-soft reveal">
           <div class="space-y-6 text-ink/85">
-            <div class="flex gap-4">
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-              <div><p class="font-semibold text-ink">The Village Hub</p><p>1st Floor, The Foundry, Sauvignon Street<br>Nooitgedacht Village, Stellenbosch, 7600</p><a href="https://maps.app.goo.gl/dMFDQEY3btJv9zjW9" target="_blank" rel="noopener" class="mt-1 inline-block text-sm font-semibold text-sagedeep underline underline-offset-4">Open in Google Maps &rarr;</a></div>
-            </div>
-            <div class="flex gap-4">
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.3a1 1 0 01.95.68l1.2 3.6a1 1 0 01-.27 1.05L7.7 9.8a12 12 0 006.5 6.5l1.47-1.48a1 1 0 011.05-.27l3.6 1.2a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.7 21 3 14.3 3 6V5z"/></svg></span>
-              <div><p class="font-semibold text-ink">Phone &amp; WhatsApp</p><p><a href="tel:+27725310904" class="hover:text-bark">+27 72 531 0904</a></p><p class="text-sm text-ink/60">Village Stay bookings: <a href="tel:+27878220802" class="hover:text-bark">+27 87 822 0802</a></p></div>
-            </div>
-            <div class="flex gap-4">
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1z"/></svg></span>
-              <div><p class="font-semibold text-ink">Email</p><p><a href="mailto:info@villagehub.co.za" class="hover:text-bark">info@villagehub.co.za</a></p></div>
-            </div>
-            <div class="flex gap-4">
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span>
-              <div><p class="font-semibold text-ink">Front desk hours</p><p>Mon &ndash; Fri: 06:30 &ndash; 18:00<br>Saturday: 08:00 &ndash; 14:00</p><p class="text-sm text-ink/60">24/7 tag access for office members, All-Access and Night Owl plans.</p></div>
-            </div>
+            <div class="flex gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><p class="font-semibold text-ink">The Village Hub</p><p>1st Floor, The Foundry, Sauvignon Street<br>Nooitgedacht Village, Stellenbosch, 7600</p><a href="https://maps.app.goo.gl/dMFDQEY3btJv9zjW9" target="_blank" rel="noopener" class="mt-1 inline-block text-sm font-semibold text-sagedeep underline underline-offset-4">Open in Google Maps &rarr;</a></div></div>
+            <div class="flex gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.3a1 1 0 01.95.68l1.2 3.6a1 1 0 01-.27 1.05L7.7 9.8a12 12 0 006.5 6.5l1.47-1.48a1 1 0 011.05-.27l3.6 1.2a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.7 21 3 14.3 3 6V5z"/></svg></span><div><p class="font-semibold text-ink">Phone &amp; WhatsApp</p><p><a href="tel:+27725310904" class="hover:text-bark">+27 72 531 0904</a></p><p class="text-sm text-ink/60">Village Stay bookings: <a href="tel:+27878220802" class="hover:text-bark">+27 87 822 0802</a></p></div></div>
+            <div class="flex gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1z"/></svg></span><div><p class="font-semibold text-ink">Email</p><p><a href="mailto:info@villagehub.co.za" class="hover:text-bark">info@villagehub.co.za</a></p></div></div>
+            <div class="flex gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span><div><p class="font-semibold text-ink">Front desk hours</p><p>Mon &ndash; Fri: 06:30 &ndash; 18:00<br>Saturday: 08:00 &ndash; 14:00</p><p class="text-sm text-ink/60">24/7 tag access for office members, All-Access and Night Owl plans.</p></div></div>
           </div>
           <div class="mt-8 grid grid-cols-2 gap-3">
-            <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour" class="btn btn-wa !py-3 text-sm">WhatsApp us</a>
-            <a href="#interest" class="btn btn-bark !py-3 text-sm">Enquire online</a>
+            <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour" class="btn btn-wa btn-sm">WhatsApp us</a>
+            <a href="#interest" class="btn btn-bark btn-sm">Enquire online</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-charcoal text-cream/80">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-      <div class="grid gap-12 lg:grid-cols-12">
-        <div class="lg:col-span-4">
-          <a href="/" class="flex items-center gap-3"><img class="h-12 w-12 object-contain" src="/images/web/logo-white.png" alt="The Village Hub logo" width="48" height="48" onerror="this.src='/images/web/logo.png'"><span class="font-display text-2xl font-semibold text-cream">The Village Hub</span></a>
-          <p class="mt-5 text-sm leading-relaxed text-cream/70">Stellenbosch&rsquo;s premium coworking space at Nooitgedacht Village. Hot desks, private offices, boardrooms, virtual office, student study passes, event space and boutique stays. A Brickfield Spaces location.</p>
-          <address class="mt-5 not-italic text-sm text-cream/60 space-y-1">
-            <div>1st Floor, The Foundry, Sauvignon Street</div>
-            <div>Nooitgedacht Village, Stellenbosch 7600</div>
-            <div><a href="tel:+27725310904" class="hover:text-cream">+27 72 531 0904</a> &middot; <a href="https://wa.me/27725310904" class="hover:text-cream">WhatsApp</a></div>
-            <div><a href="mailto:info@villagehub.co.za" class="hover:text-cream">info@villagehub.co.za</a></div>
-          </address>
-          <div class="mt-6 flex gap-4">
-            <a href="https://www.facebook.com/profile.php?id=61559197625598" target="_blank" rel="noopener" aria-label="The Village Hub on Facebook" class="text-cream/60 hover:text-cream"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg></a>
-            <a href="https://www.instagram.com/thevillagehub_/" target="_blank" rel="noopener" aria-label="The Village Hub on Instagram" class="text-cream/60 hover:text-cream"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-            <a href="https://www.linkedin.com/company/villagehub-co-working" target="_blank" rel="noopener" aria-label="The Village Hub on LinkedIn" class="text-cream/60 hover:text-cream"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.4 2H3.6A1.6 1.6 0 002 3.6v16.8A1.6 1.6 0 003.6 22h16.8a1.6 1.6 0 001.6-1.6V3.6A1.6 1.6 0 0020.4 2zM8 19H5V9h3v10zM6.5 7.7a1.7 1.7 0 110-3.4 1.7 1.7 0 010 3.4zM19 19h-3v-4.9c0-1.2 0-2.7-1.6-2.7s-1.9 1.3-1.9 2.6V19h-3V9h2.9v1.4h.1a3.2 3.2 0 012.8-1.6c3 0 3.6 2 3.6 4.6V19z"/></svg></a>
-          </div>
-        </div>
-        <div class="lg:col-span-8 grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div>
-            <h3 class="eyebrow text-cream/50">Workspaces</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/hot-desk-stellenbosch" class="hover:text-cream">Hot desks</a></li>
-              <li><a href="/private-offices-stellenbosch" class="hover:text-cream">Private offices</a></li>
-              <li><a href="/boardroom-hire-stellenbosch" class="hover:text-cream">Boardroom hire</a></li>
-              <li><a href="/meeting-rooms-stellenbosch" class="hover:text-cream">Meeting rooms</a></li>
-              <li><a href="/event-space-stellenbosch" class="hover:text-cream">Event space</a></li>
-              <li><a href="/workshop-training-venue-stellenbosch" class="hover:text-cream">Workshop &amp; training venue</a></li>
-              <li><a href="/pricing" class="hover:text-cream">All pricing</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">New</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/virtual-office-stellenbosch" class="hover:text-cream">Virtual office</a></li>
-              <li><a href="/registered-business-address-stellenbosch" class="hover:text-cream">Registered business address</a></li>
-              <li><a href="/virtual-office-vs-home-address-stellenbosch" class="hover:text-cream">Virtual office vs home address</a></li>
-              <li><a href="/student-study-space-stellenbosch" class="hover:text-cream">Student study space</a></li>
-              <li><a href="/student-study-space-stellenbosch#exam-pass" class="hover:text-cream">Exam Pass 2026</a></li>
-              <li><a href="/accommodation" class="hover:text-cream">The Village Stay</a></li>
-              <li><a href="/work-and-stay-stellenbosch" class="hover:text-cream">Work and stay</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">Guides</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="/coworking-stellenbosch-guide" class="hover:text-cream">Coworking in Stellenbosch</a></li>
-              <li><a href="/stellenbosch-coworking-compared" class="hover:text-cream">Stellenbosch coworking compared</a></li>
-              <li><a href="/coworking-vs-traditional-2" class="hover:text-cream">Coworking vs traditional office</a></li>
-              <li><a href="/office-space-to-rent-stellenbosch" class="hover:text-cream">Office space to rent</a></li>
-              <li><a href="/boardroom-hire-stellenbosch-guide" class="hover:text-cream">Boardroom hire guide</a></li>
-              <li><a href="/coworking-with-parking-stellenbosch" class="hover:text-cream">Coworking with parking</a></li>
-              <li><a href="/nooitgedacht-village-stellenbosch" class="hover:text-cream">Nooitgedacht Village</a></li>
-              <li><a href="/stellenbosch-tech-hub-2026" class="hover:text-cream">Stellenbosch tech hub 2026</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="eyebrow text-cream/50">Visit</h3>
-            <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a href="#about" class="hover:text-cream">About</a></li>
-              <li><a href="#gallery" class="hover:text-cream">Gallery</a></li>
-              <li><a href="#reviews" class="hover:text-cream">Reviews (5.0 &#9733;)</a></li>
-              <li><a href="#faq" class="hover:text-cream">FAQ</a></li>
-              <li><a href="#contact" class="hover:text-cream">Contact</a></li>
-              <li><a href="/member-badge" class="hover:text-cream">Member badge</a></li>
-            </ul>
-            <h3 class="eyebrow text-cream/50 mt-8">Hours</h3>
-            <ul class="mt-4 space-y-1.5 text-sm text-cream/70">
-              <li>Mon &ndash; Fri 06:30 &ndash; 18:00</li>
-              <li>Sat 08:00 &ndash; 14:00</li>
-              <li>24/7 for tag-access plans</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
-        <p>&copy; <span id="footer-year">2026</span> The Village Hub &middot; Brickfield Spaces (Pty) Ltd &middot; Coworking in Stellenbosch. Hub prices exclude VAT; student prices include VAT.</p>
-        <p class="flex gap-4"><a href="/privacy" class="hover:text-cream">Privacy</a><a href="/terms" class="hover:text-cream">Terms</a></p>
-      </div>
-    </div>
-  </footer>
+  <div data-vh-footer></div>
 
-  <!-- Sticky WhatsApp -->
-  <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20tour%20of%20the%20coworking%20space" class="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-wa text-white shadow-lift transition hover:scale-110" aria-label="WhatsApp The Village Hub">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-  </a>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-charcoal/90 p-4" role="dialog" aria-modal="true" aria-label="Enlarged photo">
-    <button type="button" id="lightbox-close" class="absolute right-5 top-5 text-4xl leading-none text-white/80 hover:text-white" aria-label="Close">&times;</button>
-    <img id="lightbox-img" class="max-h-full max-w-full rounded-2xl shadow-lift" alt="">
-  </div>
-
+  <script src="/assets/vh.js?v=3" defer></script>
   <script>
     (function () {
-      // Header: solid, blurred white
-      var header = document.getElementById('site-header');
-      header.classList.add('bg-white/90','backdrop-blur','shadow-soft');
-
-      // Mobile menu
-      var btn = document.getElementById('menu-btn'), menu = document.getElementById('mobile-menu');
-      var io = document.getElementById('icon-open'), ic = document.getElementById('icon-close');
-      btn.addEventListener('click', function () {
-        var open = menu.classList.toggle('hidden') === false;
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        io.classList.toggle('hidden', open); ic.classList.toggle('hidden', !open);
-      });
-      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); io.classList.remove('hidden'); ic.classList.add('hidden'); }); });
-
-      // Offset anchor scrolling for the fixed header
-      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-        a.addEventListener('click', function (e) {
-          var id = a.getAttribute('href'); if (!id || id === '#') return;
-          var t = document.querySelector(id); if (!t) return;
-          e.preventDefault();
-          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 84, behavior: 'smooth' });
-        });
-      });
-
-      // Reveal on scroll
-      var els = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); } });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-        els.forEach(function (el) { obs.observe(el); });
-      } else { els.forEach(function (el) { el.classList.add('in'); }); }
-      setTimeout(function () { els.forEach(function (el) { el.classList.add('in'); }); }, 7000);
-
-      // Gallery lightbox
-      var lb = document.getElementById('lightbox'), lbi = document.getElementById('lightbox-img');
-      document.querySelectorAll('.gal').forEach(function (b) {
-        b.addEventListener('click', function () { var im = b.querySelector('img'); lbi.src = im.src; lbi.alt = im.alt; lb.classList.remove('hidden'); lb.classList.add('flex'); });
-      });
-      function closeLb() { lb.classList.add('hidden'); lb.classList.remove('flex'); }
-      document.getElementById('lightbox-close').addEventListener('click', closeLb);
-      lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
-
-      // Footer year
-      var fy = document.getElementById('footer-year'); if (fy) fy.textContent = new Date().getFullYear();
-
-      // Conditional form fields
       var sel = document.getElementById('interest-type');
       sel.addEventListener('change', function () {
         document.getElementById('office-type-container').classList.toggle('hidden', sel.value !== 'Private Office');
         document.getElementById('event-details-container').classList.toggle('hidden', sel.value !== 'Event Space');
       });
-
-      // Lead form -> Netlify function -> Zoho
       document.getElementById('interest-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         var form = e.target;
@@ -1104,15 +803,7 @@
         var data = new URLSearchParams({
           first_name: v('firstname'), last_name: v('lastname'), email: v('email'), phone: v('phone'), company: v('company'),
           plan_interest: sel.value,
-          description: [
-            v('role') ? 'Role: ' + v('role') : '',
-            'Team Size: ' + v('team-size'),
-            v('start-date') ? 'Start Date: ' + v('start-date') : '',
-            'Days/Week: ' + v('days-per-week'),
-            v('hear-about') ? 'How they heard: ' + v('hear-about') : '',
-            extra,
-            v('message')
-          ].filter(Boolean).join('\n')
+          description: [v('role') ? 'Role: ' + v('role') : '', 'Team Size: ' + v('team-size'), v('start-date') ? 'Start Date: ' + v('start-date') : '', 'Days/Week: ' + v('days-per-week'), v('hear-about') ? 'How they heard: ' + v('hear-about') : '', extra, v('message')].filter(Boolean).join('\n')
         });
         try {
           var res = await fetch('/.netlify/functions/submit-lead', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() });
@@ -1123,15 +814,6 @@
         finally { sbtn.disabled = false; sbtn.textContent = 'Send my enquiry'; }
       });
     })();
-  </script>
-
-  <!-- WhatsApp click conversion tracking -->
-  <script>
-  document.addEventListener('click', function(e){
-    var a = e.target && e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
-    if(!a) return;
-    try { gtag('event','conversion',{'send_to':'AW-18265049370/n8xeCNDIuNMcEJqSuoVE','value':1.0,'currency':'ZAR'}); } catch(err) {}
-  }, true);
   </script>
 </body>
 </html>
