@@ -16,9 +16,12 @@ exports.handler = async function (event) {
           const planInterest  = params.get('plan_interest') || '';
           const preferredDate = params.get('preferred_date') || '';
           const description   = params.get('description') || '';
+          const website       = params.get('website') || '';
           const leadSource    = params.get('lead_source') || 'Website - Interest Form';
 
-      // Build full description for Zoho
+      // Build full description for Zoho.
+      // Plan Interest is also posted as its own field below; it stays in the
+      // description as a fallback so nothing is lost if the field is renamed.
       const fullDescription = [
               planInterest  ? `Plan Interest: ${planInterest}` : '',
               preferredDate ? `Preferred Visit Date: ${preferredDate}` : '',
@@ -38,6 +41,14 @@ exports.handler = async function (event) {
               'Description': fullDescription,
               'Lead Source': leadSource,
       });
+
+      // Optional fields: only sent when present, so Zoho never gets empty params.
+      // 'Plan Interest' is the Leads picklist (API name Membership_Type, relabelled
+      // Oct 2026). Web-to-Lead matches on the field LABEL, so this key must stay
+      // identical to the label in Zoho, and the values must match its picklist
+      // options exactly: see claude/village-hub-virtual-office-build-doc.md.
+      if (planInterest) zohoPayload.set('Plan Interest', planInterest);
+      if (website)      zohoPayload.set('Website', website);
 
       const zohoRes = await fetch('https://crm.zoho.com/crm/WebToLeadForm', {
               method: 'POST',

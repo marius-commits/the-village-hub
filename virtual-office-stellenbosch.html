@@ -332,15 +332,22 @@
           <input class="vo-input" type="email" id="vo-email" placeholder="Email *" required>
           <input class="vo-input" type="tel" id="vo-phone" placeholder="Phone / WhatsApp *" required>
         </div>
-        <input class="vo-input" type="text" id="vo-company" placeholder="Company name (if registered)">
+        <div class="grid md:grid-cols-2 gap-4">
+          <input class="vo-input" type="text" id="vo-company" placeholder="Company name (if registered)">
+          <input class="vo-input" type="text" id="vo-website" placeholder="Website or social link">
+        </div>
         <select class="vo-input" id="vo-plan" required>
           <option value="" disabled selected>Which plan? *</option>
-          <option value="Village Address">Village Address, R595/month</option>
-          <option value="Village Virtual">Village Virtual, R1 095/month</option>
-          <option value="Village Virtual Pro">Village Virtual Pro, R1 695/month</option>
+          <option value="Address">Village Address, R595/month</option>
+          <option value="Virtual">Village Virtual, R1 095/month</option>
+          <option value="Pro">Village Virtual Pro, R1 695/month</option>
           <option value="Not sure">Not sure yet, advise me</option>
         </select>
         <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" id="vo-reg"> I need a registered CIPC / SARS address</label>
+        <div id="vo-reg-extra" class="hidden">
+          <input class="vo-input w-full" type="text" id="vo-cipc" placeholder="CIPC registration number (e.g. 2021/123456/07)">
+          <p class="text-xs text-gray-500 mt-1">We need this for the compliance check. Leave it blank if the company is not registered yet.</p>
+        </div>
         <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" id="vo-resident"> I live at Nooitgedacht Village</label>
         <textarea class="vo-input" id="vo-msg" rows="3" placeholder="What does your business do? (one line is fine)"></textarea>
         <button type="submit" id="vo-submit" class="btn-sage px-6 py-3 rounded-md font-medium w-full">Send my application</button>
@@ -426,6 +433,8 @@
         var extras = [];
         if (document.getElementById('vo-reg').checked) extras.push('Needs registered CIPC/SARS address');
         if (document.getElementById('vo-resident').checked) extras.push('Nooitgedacht Village resident');
+        var cipc = document.getElementById('vo-cipc').value.trim();
+        if (cipc) extras.push('CIPC number: ' + cipc);
         var utm = new URLSearchParams(location.search);
         var src = utm.get('utm_source') ? ' | utm: ' + utm.get('utm_source') + '/' + (utm.get('utm_medium')||'') + '/' + (utm.get('utm_campaign')||'') : '';
         var body = new URLSearchParams({
@@ -435,6 +444,7 @@
           phone: document.getElementById('vo-phone').value,
           company: document.getElementById('vo-company').value,
           plan_interest: 'Virtual Office - ' + sel.value,
+          website: document.getElementById('vo-website').value,
           description: [document.getElementById('vo-msg').value].concat(extras).filter(Boolean).join('\n') + src,
           lead_source: 'Website - Virtual Office'
         });
@@ -450,5 +460,11 @@
       });
     })();
   </script>
+<script>
+  (function () {
+    var reg = document.getElementById('vo-reg'), extra = document.getElementById('vo-reg-extra');
+    if (reg && extra) reg.addEventListener('change', function () { extra.classList.toggle('hidden', !reg.checked); });
+  })();
+</script>
 </body>
 </html>
