@@ -48,10 +48,18 @@
       <span class="ml-3 font-bold text-[#6B4423] font-display">The Village Hub</span>
     </div>
     <h1 class="text-xl font-extrabold text-gray-900 font-display">Applications</h1>
-    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a sign-in link.</p>
-    <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginEmail">Work email</label>
-    <input class="field" id="loginEmail" type="email" placeholder="you@villagehub.co.za" autocomplete="email">
-    <button class="btn btn-sage w-full mt-4" id="sendLink">Email me a sign-in link</button>
+    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a 6-digit sign-in code.</p>
+    <div id="step-email">
+      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginEmail">Work email</label>
+      <input class="field" id="loginEmail" type="email" placeholder="you@villagehub.co.za" autocomplete="email">
+      <button class="btn btn-sage w-full mt-4" id="sendLink">Email me a code</button>
+    </div>
+    <div id="step-code" hidden>
+      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginCode">Enter the 6-digit code</label>
+      <input class="field text-center text-lg" style="letter-spacing:.4em" id="loginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="------">
+      <button class="btn btn-sage w-full mt-4" id="verifyCode">Sign in</button>
+      <button class="text-xs text-[#6B4423] underline mt-3 mx-auto block" id="resend" type="button">Use a different email</button>
+    </div>
     <p class="text-sm mt-4" id="loginMsg"></p>
   </div>
 </div>
@@ -132,30 +140,78 @@
     return t;
   }
 
+  let pendingEmail = null;
+
+  // Shows the app once we hold a valid access token.
+  function bootApp(t){
+    token = t;
+    try{ sessionStorage.setItem('vh_admin_token', t); }catch(e){}
+    $('#login').hidden = true;
+    $('#app').hidden = false;
+    loadQueue().catch(() => {
+      try{ sessionStorage.removeItem('vh_admin_token'); }catch(e){}
+      $('#app').hidden = true; $('#login').hidden = false;
+      $('#step-code').hidden = true; $('#step-email').hidden = false;
+      $('#loginMsg').className = 'text-sm mt-4 text-red-700';
+      $('#loginMsg').textContent = 'That session is not valid. Sign in again.';
+    });
+  }
+
   $('#sendLink').addEventListener('click', async () => {
     const email = $('#loginEmail').value.trim();
     const msg = $('#loginMsg');
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='That email does not look right.'; return; }
     $('#sendLink').disabled = true;
     try{
+      // Email a one-time CODE, not a link. Corporate mail scanners (Outlook
+      // Safe Links) pre-fetch links and consume single-use magic links before
+      // the user clicks, so a typed code is the reliable path. create_user:true
+      // lets the account self-create; data access is still gated by staff_access.
       const res = await fetch(SUPABASE_URL + '/auth/v1/otp', {
         method:'POST',
         headers:{ apikey: SUPABASE_KEY, 'Content-Type':'application/json' },
-        // create_user:true lets the auth account self-create on first login.
-        // Data access is still gated server-side by the staff_access table, so
-        // a non-staff account that logs in sees nothing.
-        body: JSON.stringify({ email, create_user:true, options:{ email_redirect_to: location.origin + location.pathname } }),
+        body: JSON.stringify({ email, create_user:true }),
       });
-      if(!res.ok) throw new Error('Could not send the link');
+      if(!res.ok) throw new Error('send failed');
+      pendingEmail = email;
+      $('#step-email').hidden = true; $('#step-code').hidden = false;
       msg.className='text-sm mt-4 text-gray-700';
-      msg.textContent='Check your inbox. The link signs you in and expires shortly.';
+      msg.textContent='We emailed a 6-digit code to ' + email + '. It expires shortly.';
+      const c = $('#loginCode'); if(c) c.focus();
     }catch(e){
       msg.className='text-sm mt-4 text-red-700';
-      msg.textContent='Could not send that link. Check the address, or ask Marius to add you.';
+      msg.textContent='Could not send that code. Check the address, or ask Marius to add you.';
     }finally{
       $('#sendLink').disabled = false;
     }
   });
+
+  async function verifyCode(){
+    const code = ($('#loginCode').value||'').replace(/\s/g,'');
+    const msg = $('#loginMsg');
+    if(!/^\d{6}$/.test(code)){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='Enter the 6-digit code from the email.'; return; }
+    $('#verifyCode').disabled = true;
+    msg.className='text-sm mt-4 text-gray-600'; msg.textContent='Checking…';
+    try{
+      const res = await fetch(SUPABASE_URL + '/auth/v1/verify', {
+        method:'POST',
+        headers:{ apikey: SUPABASE_KEY, 'Content-Type':'application/json' },
+        body: JSON.stringify({ email: pendingEmail, token: code, type:'email' }),
+      });
+      const data = await res.json().catch(()=>({}));
+      if(!res.ok || !data.access_token) throw new Error(data.error_description || data.msg || 'That code did not work');
+      msg.textContent='';
+      bootApp(data.access_token);
+    }catch(e){
+      msg.className='text-sm mt-4 text-red-700';
+      msg.textContent = (e.message || 'That code did not work') + '. Check it, or resend.';
+    }finally{
+      $('#verifyCode').disabled = false;
+    }
+  }
+  $('#verifyCode').addEventListener('click', verifyCode);
+  $('#loginCode').addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); verifyCode(); } });
+  $('#resend').addEventListener('click', () => { $('#step-code').hidden=true; $('#step-email').hidden=false; $('#loginCode').value=''; $('#loginMsg').textContent=''; });
 
   $('#signout').addEventListener('click', () => {
     sessionStorage.removeItem('vh_admin_token');
@@ -357,18 +413,10 @@
   }
 
   // ---- boot ----
-  token = readHashToken() || sessionStorage.getItem('vh_admin_token');
-  if(token){
-    sessionStorage.setItem('vh_admin_token', token);
-    $('#login').hidden = true;
-    $('#app').hidden = false;
-    loadQueue().catch(() => {
-      sessionStorage.removeItem('vh_admin_token');
-      $('#login').hidden = false; $('#app').hidden = true;
-      $('#loginMsg').className = 'text-sm mt-4 text-red-700';
-      $('#loginMsg').textContent = 'That session is not valid. Sign in again.';
-    });
-  }
+  // A magic link (if one still arrives) drops a token in the hash; otherwise
+  // resume an existing tab session. Normal login is the 6-digit code above.
+  const existing = readHashToken() || sessionStorage.getItem('vh_admin_token');
+  if(existing){ bootApp(existing); }
 })();
 </script>
 </body>
