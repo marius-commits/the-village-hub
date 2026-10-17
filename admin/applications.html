@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applications | The Village Hub</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --brown:#6B4423; --sage:#8A9A5B; --sage-2:#7F9368; --cream:#FAF8F6; --sand:#E8D9C5; --gold:#C9A24B; }
+    body{ background:var(--cream); }
+    .btn{ border-radius:8px; font-weight:600; font-size:14px; padding:9px 16px; transition:opacity .15s; }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+    .btn-sage{ background:var(--sage); color:#fff; }
+    .btn-brown{ background:var(--brown); color:#fff; }
+    .btn-ghost{ background:#fff; color:var(--brown); border:1px solid var(--sand); }
+    .btn-danger{ background:#fff; color:#b03a2b; border:1px solid #e8c4bd; }
+    .card{ background:#fff; border:1px solid var(--sand); border-radius:12px; }
+    .fld{ width:100%; border:1px solid #d9d2c7; border-radius:8px; padding:9px 11px; font-size:14px; }
+    .fld:focus{ outline:none; border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,154,91,.18); }
+    .pill{ display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:99px; }
+    .s-submitted    { background:#eef3e4; color:#5c6b36; }
+    .s-under_review { background:#e7eefb; color:#2f5597; }
+    .s-info_requested{ background:#fdf3e0; color:#8a6116; }
+    .s-approved     { background:#e6f4ea; color:#1e7c3a; }
+    .s-activated    { background:#6B4423; color:#fff; }
+    .s-declined     { background:#fbeae7; color:#b03a2b; }
+    .s-withdrawn    { background:#eee; color:#777; }
+    .row{ cursor:pointer; border-left:3px solid transparent; }
+    .row:hover{ background:#fbf9f6; }
+    .row.sel{ background:#f6f2ec; border-left-color:var(--brown); }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+<!-- ===== LOGIN ===== -->
+<div id="login" class="min-h-screen flex items-center justify-center px-4">
+  <div class="card p-8 w-full max-w-sm">
+    <div class="flex items-center mb-6">
+      <img class="h-10 w-10 object-contain" src="/images/web/logo.png" alt="">
+      <span class="ml-3 font-bold text-[#6B4423]">The Village Hub</span>
+    </div>
+    <h1 class="text-xl font-extrabold text-gray-900">Applications</h1>
+    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a sign-in link.</p>
+    <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginEmail">Work email</label>
+    <input class="fld" id="loginEmail" type="email" placeholder="you@villagehub.co.za" autocomplete="email">
+    <button class="btn btn-sage w-full mt-4" id="sendLink">Email me a sign-in link</button>
+    <p class="text-sm mt-4" id="loginMsg"></p>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app" hidden>
+  <header class="bg-white border-b border-[#E8D9C5] sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center">
+        <img class="h-8 w-8 object-contain" src="/images/web/logo.png" alt="">
+        <span class="ml-2 font-bold text-[#6B4423] text-sm">Applications</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <select class="fld text-xs py-1.5 w-auto" id="statusFilter">
+          <option value="">Open queue</option>
+          <option value="submitted">Submitted</option>
+          <option value="under_review">Under review</option>
+          <option value="info_requested">Waiting on applicant</option>
+          <option value="approved">Approved</option>
+          <option value="activated">Activated</option>
+          <option value="declined">Declined</option>
+        </select>
+        <span class="text-xs text-gray-500 hidden sm:inline" id="whoami"></span>
+        <button class="text-xs text-[#6B4423] underline" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 grid lg:grid-cols-[380px_1fr] gap-5 items-start">
+
+    <!-- queue -->
+    <section class="card overflow-hidden">
+      <div class="px-4 py-3 border-b border-[#E8D9C5] flex items-center justify-between">
+        <span class="text-sm font-bold text-gray-900">Queue</span>
+        <span class="text-xs text-gray-500" id="count"></span>
+      </div>
+      <div id="list" class="divide-y divide-[#F0EAE1] max-h-[72vh] overflow-y-auto"></div>
+    </section>
+
+    <!-- detail -->
+    <section id="detail" class="card p-8 text-center text-gray-500 text-sm">
+      Choose an application from the queue.
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const SUPABASE_URL = 'https://lcrjcdlydlfrohtppmky.supabase.co';
+  // Publishable key. Safe in client code: it grants no data access on its
+  // own. Every table is behind RLS and every document behind a signed URL.
+  const SUPABASE_KEY = 'sb_publishable_o99egQoMPiyVoqxYGwhLEw_vzzX1fVo';
+
+  const $ = s => document.querySelector(s);
+  let token = null, currentId = null, cache = {};
+
+  const DOC_LABELS = {
+    cipc_certificate:'CIPC certificate', director_id:'Director ID',
+    proof_of_address:'Proof of address', registered_address_mandate:'Registered address mandate',
+    student_card:'Student card', proof_of_registration:'Proof of registration', other:'Other document'
+  };
+  const STATUS_LABELS = {
+    submitted:'Submitted', under_review:'Under review', info_requested:'Waiting on applicant',
+    approved:'Approved', activated:'Activated', declined:'Declined', withdrawn:'Withdrawn'
+  };
+  const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt = d => d ? new Date(d).toLocaleString('en-ZA',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+
+  // ---- auth: magic link, no SDK ----
+  // Tokens live in sessionStorage, not localStorage: this tool shows ID
+  // documents, so the session should die with the tab.
+  function readHashToken(){
+    if(!location.hash.includes('access_token')) return null;
+    const p = new URLSearchParams(location.hash.slice(1));
+    const t = p.get('access_token');
+    if(t) history.replaceState(null,'',location.pathname + location.search);
+    return t;
+  }
+
+  $('#sendLink').addEventListener('click', async () => {
+    const email = $('#loginEmail').value.trim();
+    const msg = $('#loginMsg');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='That email does not look right.'; return; }
+    $('#sendLink').disabled = true;
+    try{
+      const res = await fetch(SUPABASE_URL + '/auth/v1/otp', {
+        method:'POST',
+        headers:{ apikey: SUPABASE_KEY, 'Content-Type':'application/json' },
+        // create_user:false means only invited staff can request a link.
+        body: JSON.stringify({ email, create_user:false, options:{ email_redirect_to: location.origin + location.pathname } }),
+      });
+      if(!res.ok) throw new Error('Could not send the link');
+      msg.className='text-sm mt-4 text-gray-700';
+      msg.textContent='Check your inbox. The link signs you in and expires shortly.';
+    }catch(e){
+      msg.className='text-sm mt-4 text-red-700';
+      msg.textContent='Could not send that link. Check the address, or ask Marius to add you.';
+    }finally{
+      $('#sendLink').disabled = false;
+    }
+  });
+
+  $('#signout').addEventListener('click', () => {
+    sessionStorage.removeItem('vh_admin_token');
+    location.reload();
+  });
+
+  async function api(path, options){
+    const res = await fetch('/.netlify/functions/' + path, {
+      ...options,
+      headers: { 'Content-Type':'application/json', Authorization:'Bearer ' + token, ...((options&&options.headers)||{}) },
+    });
+    const data = await res.json().catch(() => ({}));
+    if(res.status === 401){ sessionStorage.removeItem('vh_admin_token'); location.reload(); return null; }
+    if(!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  // ---- queue ----
+  async function loadQueue(){
+    const status = $('#statusFilter').value;
+    const data = await api('staff-applications' + (status ? '?status='+status : ''));
+    if(!data) return;
+    if(data.staff) $('#whoami').textContent = data.staff.email;
+
+    const apps = data.applications;
+    $('#count').textContent = apps.length + (apps.length === 1 ? ' application' : ' applications');
+    $('#list').innerHTML = apps.length ? apps.map(a => `
+      <div class="row px-4 py-3" data-id="${a.id}">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-semibold text-sm text-gray-900">${esc(a.first_name)} ${esc(a.last_name)}</span>
+          <span class="pill s-${a.status}">${STATUS_LABELS[a.status]||a.status}</span>
+        </div>
+        <div class="text-xs text-gray-600 mt-1">${esc(a.plan)}</div>
+        <div class="text-xs text-gray-400 mt-0.5">
+          ${esc(a.reference)} &middot; ${fmt(a.created_at)}
+          ${a.wants_registered_address ? ' &middot; <span class="text-[#8a6116] font-semibold">registered address</span>' : ''}
+        </div>
+      </div>`).join('')
+      : '<div class="px-4 py-10 text-center text-sm text-gray-500">Nothing in this queue.</div>';
+
+    Array.from(document.querySelectorAll('.row')).forEach(r => {
+      r.addEventListener('click', () => openDetail(r.dataset.id));
+    });
+    if(currentId) {
+      const sel = document.querySelector('.row[data-id="'+currentId+'"]');
+      if(sel) sel.classList.add('sel');
+    }
+  }
+  $('#statusFilter').addEventListener('change', loadQueue);
+
+  // ---- detail ----
+  function field(label, value){
+    if(!value && value !== false) return '';
+    const v = value === true ? 'Yes' : value === false ? 'No' : value;
+    return `<div><dt class="text-xs font-semibold text-gray-500 uppercase tracking-wide">${label}</dt>
+            <dd class="text-sm text-gray-900 mt-0.5">${esc(v)}</dd></div>`;
+  }
+
+  async function openDetail(id){
+    currentId = id;
+    Array.from(document.querySelectorAll('.row')).forEach(r => r.classList.toggle('sel', r.dataset.id === id));
+    $('#detail').innerHTML = '<div class="p-8 text-center text-sm text-gray-500">Loading…</div>';
+
+    const data = await api('staff-applications?id=' + encodeURIComponent(id));
+    if(!data) return;
+    cache[id] = data;
+    const a = data.application;
+    const isVO = a.type === 'virtual_office';
+
+    const docs = data.documents.map(d => `
+      <a href="${d.view_url||'#'}" target="_blank" rel="noopener"
+         class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6] ${d.view_url?'':'pointer-events-none opacity-50'}">
+        <span class="text-sm font-medium text-[#6B4423]">${DOC_LABELS[d.doc_type]||d.doc_type}</span>
+        <span class="text-xs text-gray-400">${esc(d.original_filename||'')} &middot; open &rarr;</span>
+      </a>`).join('') || '<p class="text-sm text-gray-500">No documents.</p>';
+
+    const events = data.events.map(e => `
+      <li class="flex gap-3 text-xs">
+        <span class="text-gray-400 shrink-0 w-28">${fmt(e.created_at)}</span>
+        <span class="text-gray-700"><strong>${esc(e.event_type)}</strong>
+        ${e.actor ? ' &middot; ' + esc(e.actor) : ''}
+        ${e.detail && e.detail.message ? '<br><span class="text-gray-500">'+esc(e.detail.message)+'</span>' : ''}</span>
+      </li>`).join('');
+
+    $('#detail').innerHTML = `
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <div class="flex items-center gap-3">
+            <h2 class="text-xl font-extrabold text-gray-900">${esc(a.first_name)} ${esc(a.last_name)}</h2>
+            <span class="pill s-${a.status}">${STATUS_LABELS[a.status]||a.status}</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">${esc(a.plan)} &middot; ${esc(a.reference)}</p>
+        </div>
+        <div class="text-right text-xs text-gray-500">
+          Applied ${fmt(a.created_at)}${a.reviewed_at ? '<br>Last action '+fmt(a.reviewed_at) : ''}
+        </div>
+      </div>
+
+      ${a.wants_registered_address ? `
+        <div class="mt-4 p-3 rounded-lg text-sm" style="background:#fdf6e7;border-left:3px solid var(--gold)">
+          <strong class="text-gray-900">Registered CIPC / SARS address requested.</strong>
+          Confirm the head lease permits third-party registered-address use before approving.
+        </div>` : ''}
+
+      <dl class="grid sm:grid-cols-2 gap-4 mt-5">
+        ${field('Email', a.email)}
+        ${field('Phone', a.phone)}
+        ${field('Preferred start', a.preferred_start_date)}
+        ${isVO ? field('Company', a.company_name) : field('Institution', a.institution)}
+        ${isVO ? field('Trading name', a.company_trading_name) : field('Student number', a.student_number)}
+        ${isVO ? field('Structure', a.company_type) : field('Studying', a.course_of_study)}
+        ${isVO ? field('CIPC number', a.cipc_registration_number) : field('Year', a.year_of_study)}
+        ${isVO ? field('VAT number', a.vat_number) : field('Lives at Nooitgedacht', a.is_nooitgedacht_resident)}
+        ${isVO ? field('Director / owner', a.director_full_name) : field('Area', a.residence_area)}
+        ${isVO ? field('Role', a.director_role) : ''}
+        ${isVO ? field('Website', a.website) : ''}
+        ${isVO ? field('Expected post', a.expected_mail_volume) : ''}
+      </dl>
+      ${isVO && a.business_activity ? `<div class="mt-4">${field('What the business does', a.business_activity)}</div>` : ''}
+
+      <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Documents</h3>
+      <div class="space-y-2">${docs}</div>
+      <p class="text-xs text-gray-400 mt-2">Links expire after 15 minutes. Reload to get fresh ones.</p>
+
+      ${a.internal_notes ? `<h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Internal notes</h3>
+        <pre class="text-xs text-gray-700 whitespace-pre-wrap bg-[#FAF8F6] p-3 rounded-lg border border-[#E8D9C5]">${esc(a.internal_notes)}</pre>` : ''}
+
+      <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Actions</h3>
+      <textarea class="fld" id="msg" rows="3" placeholder="Message to the applicant (required to request information or decline). This text goes into the email."></textarea>
+
+      <div class="flex flex-wrap gap-2 mt-3">
+        ${a.status === 'submitted' ? '<button class="btn btn-ghost" data-act="take">Take this one</button>' : ''}
+        <button class="btn btn-ghost"  data-act="request_info">Request information</button>
+        <button class="btn btn-sage"   data-act="approve">Approve</button>
+        <button class="btn btn-danger" data-act="decline">Decline</button>
+        <button class="btn btn-ghost"  data-act="note">Add note only</button>
+      </div>
+
+      ${a.status === 'approved' ? `
+        <div class="mt-5 p-4 rounded-lg" style="background:#FAF8F6;border:1px solid var(--sand)">
+          <p class="text-sm font-bold text-gray-900">Now create the subscription in Spacebring</p>
+          <p class="text-xs text-gray-600 mt-1 mb-3">Create the customer and the <strong>${esc(a.plan)}</strong> subscription in Spacebring, let it raise the invoice, then record the references here so the loop is closed.</p>
+          <div class="grid sm:grid-cols-2 gap-2">
+            <input class="fld" id="sbCustomer" placeholder="Spacebring customer ref">
+            <input class="fld" id="sbSub" placeholder="Spacebring subscription ref">
+          </div>
+          <button class="btn btn-brown mt-3" data-act="activate">Mark as activated</button>
+        </div>` : ''}
+
+      ${a.spacebring_subscription_ref ? `<p class="text-xs text-gray-500 mt-4">Spacebring subscription: ${esc(a.spacebring_subscription_ref)}</p>` : ''}
+
+      <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">History</h3>
+      <ul class="space-y-1.5">${events}</ul>
+      <p id="actionMsg" class="text-sm mt-4"></p>
+    `;
+
+    Array.from(document.querySelectorAll('[data-act]')).forEach(b => {
+      b.addEventListener('click', () => doAction(b.dataset.act, b));
+    });
+  }
+
+  async function doAction(action, btn){
+    const msgEl = $('#actionMsg');
+    const message = ($('#msg') && $('#msg').value.trim()) || '';
+
+    if((action === 'decline' || action === 'request_info' || action === 'note') && !message){
+      msgEl.className = 'text-sm mt-4 text-red-700';
+      msgEl.textContent = action === 'decline'
+        ? 'Give the applicant a reason. A decline with no reason is worse than no reply.'
+        : 'Write the message first.';
+      return;
+    }
+    if(action === 'decline' && !confirm('Decline this application and email the applicant?')) return;
+
+    Array.from(document.querySelectorAll('[data-act]')).forEach(b => b.disabled = true);
+    msgEl.className = 'text-sm mt-4 text-gray-600';
+    msgEl.textContent = 'Working…';
+
+    try{
+      const body = { application_id: currentId, action, message };
+      if(action === 'activate'){
+        body.spacebring_customer_ref = ($('#sbCustomer')||{}).value || '';
+        body.spacebring_subscription_ref = ($('#sbSub')||{}).value || '';
+      }
+      const res = await api('application-action', { method:'POST', body: JSON.stringify(body) });
+      if(!res) return;
+      await loadQueue();
+      await openDetail(currentId);
+      const after = $('#actionMsg');
+      after.className = 'text-sm mt-4 ' + (res.emailed === false && action !== 'take' && action !== 'note' && action !== 'activate' ? 'text-amber-700' : 'text-green-700');
+      after.textContent = (res.emailed === false && ['approve','decline','request_info'].includes(action))
+        ? 'Saved, but the email did NOT go out. Contact the applicant yourself.'
+        : 'Done.';
+    }catch(e){
+      msgEl.className = 'text-sm mt-4 text-red-700';
+      msgEl.textContent = e.message || 'That did not work.';
+      Array.from(document.querySelectorAll('[data-act]')).forEach(b => b.disabled = false);
+    }
+  }
+
+  // ---- boot ----
+  token = readHashToken() || sessionStorage.getItem('vh_admin_token');
+  if(token){
+    sessionStorage.setItem('vh_admin_token', token);
+    $('#login').hidden = true;
+    $('#app').hidden = false;
+    loadQueue().catch(() => {
+      sessionStorage.removeItem('vh_admin_token');
+      $('#login').hidden = false; $('#app').hidden = true;
+      $('#loginMsg').className = 'text-sm mt-4 text-red-700';
+      $('#loginMsg').textContent = 'That session is not valid. Sign in again.';
+    });
+  }
+})();
+</script>
+</body>
+</html>

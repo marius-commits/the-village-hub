@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Student Study Space | The Village Hub, Stellenbosch</title>
+  <meta name="description" content="Apply for a student study membership at The Village Hub, Nooitgedacht, Stellenbosch. Choose your package, upload your student card and proof of registration, and we verify within one business day." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.villagehub.co.za/apply-student" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --brown:#6B4423; --sage:#8A9A5B; --sage-2:#7F9368; --cream:#FAF8F6; --sand:#E8D9C5; --gold:#C9A24B; }
+    body{ background:var(--cream); }
+    .btn-sage{ background:var(--sage); color:#fff; transition:background .15s ease; }
+    .btn-sage:hover{ background:var(--sage-2); }
+    .btn-sage:disabled{ background:#c3c9b8; cursor:not-allowed; }
+    .card{ background:#fff; border:1px solid var(--sand); border-radius:14px; }
+    .fld{ width:100%; border:1px solid #d9d2c7; border-radius:9px; padding:11px 13px; font-size:15px; background:#fff; }
+    .fld:focus{ outline:none; border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,154,91,.18); }
+    .fld.err{ border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12); }
+    .lbl{ display:block; font-size:13px; font-weight:600; color:#4a3f33; margin-bottom:5px; }
+    .hint{ font-size:12px; color:#7a6f62; margin-top:5px; line-height:1.5; }
+    .err-msg{ font-size:12px; color:#c0392b; margin-top:5px; display:none; }
+    .plan{ cursor:pointer; border:2px solid var(--sand); border-radius:14px; background:#fff; transition:border-color .15s, box-shadow .15s; }
+    .plan:hover{ border-color:var(--sage); }
+    .plan.sel{ border-color:var(--brown); box-shadow:0 0 0 3px rgba(107,68,35,.12); }
+    .plan input{ position:absolute; opacity:0; pointer-events:none; }
+    .step-dot{ height:4px; border-radius:99px; background:var(--sand); flex:1; transition:background .3s; }
+    .step-dot.on{ background:var(--sage); }
+    .step-dot.done{ background:var(--brown); }
+    .drop{ border:2px dashed #cfc6b8; border-radius:12px; background:#fff; transition:border-color .15s, background .15s; }
+    .drop.over{ border-color:var(--sage); background:#f7f9f3; }
+    .drop.has{ border-style:solid; border-color:var(--sage); background:#f7f9f3; }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+<nav class="bg-white shadow-sm fixed w-full z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+    <a href="/" class="flex items-center">
+      <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub Logo">
+      <span class="ml-3 text-xl font-bold text-[#6B4423]">The Village Hub</span>
+    </a>
+    <a href="/student-study-space-stellenbosch" class="text-sm text-[#6B4423] hover:text-[#8B5A2B]">&larr; Back to student space</a>
+  </div>
+</nav>
+
+<main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+<div class="max-w-3xl mx-auto">
+
+  <div id="formWrap">
+    <header class="text-center mb-7">
+      <p class="text-xs font-semibold text-[#8A9A5B] uppercase tracking-wider">Student Application</p>
+      <h1 class="mt-2 text-3xl md:text-4xl font-extrabold text-gray-900">Get your desk at the Hub</h1>
+      <p class="mt-3 text-gray-600">Three minutes. Have your student card and proof of registration ready, a phone photo is fine.</p>
+    </header>
+
+    <div class="flex gap-1.5 mb-2" id="progress">
+      <div class="step-dot on"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <p class="text-xs text-gray-500 mb-5" id="stepLabel">Step 1 of 3 &middot; Choose your package</p>
+
+    <form id="app" novalidate>
+
+      <!-- STEP 1 -->
+      <section data-step="1">
+        <div class="space-y-3">
+
+          <label class="plan block p-5 relative" data-plan="Exam Pass 2026 (Student)">
+            <input type="radio" name="plan" value="Exam Pass 2026 (Student)">
+            <span class="absolute -top-2.5 left-5 bg-[#C9A24B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Only 20 passes</span>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Exam Pass 2026</div>
+                <p class="text-sm text-gray-600 mt-1">Unlimited 24/7 study access for the whole November exam season, 26 October to 5 December. Coffee included. Every pass holder goes into the results-week draw for a night at Village Stay.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R795</div>
+                <div class="text-xs text-gray-500">once-off incl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+          <label class="plan block p-5 relative" data-plan="Student 5-Day">
+            <input type="radio" name="plan" value="Student 5-Day">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Student 5-Day</div>
+                <p class="text-sm text-gray-600 mt-1">Five hot desk days a month, any day, 24 hours from check-in. Wi-Fi, power at every seat, filter coffee and the quiet zone. Days do not roll over.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R350</div>
+                <div class="text-xs text-gray-500">/month incl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+          <label class="plan block p-5 relative" data-plan="Night Owl (Student)">
+            <input type="radio" name="plan" value="Night Owl (Student)">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Night Owl</div>
+                <p class="text-sm text-gray-600 mt-1">In lectures by day, working at night. Unlimited access 17:00 to 08:00 on weekdays, and all day on weekends and public holidays.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R495</div>
+                <div class="text-xs text-gray-500">/month incl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+          <label class="plan block p-5 relative" data-plan="Student All-Access">
+            <input type="radio" name="plan" value="Student All-Access">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Student All-Access</div>
+                <p class="text-sm text-gray-600 mt-1">Unlimited 24/7 access for students, postgrads and thesis writers. A proper desk two minutes from home, business directory access and a monthly Branch Out invite.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R895</div>
+                <div class="text-xs text-gray-500">/month incl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+        </div>
+        <p class="err-msg" id="err-plan">Choose a package to continue.</p>
+
+        <div class="card p-4 mt-5 text-sm text-gray-600" style="border-left:3px solid var(--gold)">
+          <strong class="text-gray-800">Nothing is payable now.</strong> We check your student card and proof of registration first. Once you are verified we send the invoice, and your access starts when it is paid. Student rates are for personal study use and are not transferable.
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section data-step="2" hidden>
+        <div class="card p-6 space-y-4">
+          <h2 class="font-bold text-lg text-gray-900">About you</h2>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="first_name">First name</label>
+              <input class="fld" id="first_name" autocomplete="given-name" required>
+              <p class="err-msg">We need your first name.</p>
+            </div>
+            <div>
+              <label class="lbl" for="last_name">Last name</label>
+              <input class="fld" id="last_name" autocomplete="family-name" required>
+              <p class="err-msg">We need your last name.</p>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="email">Email</label>
+              <input class="fld" type="email" id="email" autocomplete="email" required>
+              <p class="hint">Use your university address if you have one, it speeds up the check.</p>
+              <p class="err-msg">That email does not look right.</p>
+            </div>
+            <div>
+              <label class="lbl" for="phone">Mobile number</label>
+              <input class="fld" type="tel" id="phone" autocomplete="tel" placeholder="082 123 4567" required>
+              <p class="err-msg">We need a number we can reach you on.</p>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="institution">Where do you study?</label>
+              <select class="fld" id="institution" required>
+                <option value="">Choose one</option>
+                <option>Stellenbosch University</option>
+                <option>Cape Peninsula University of Technology</option>
+                <option>University of Cape Town</option>
+                <option>University of the Western Cape</option>
+                <option>Boland College</option>
+                <option>Other</option>
+              </select>
+              <p class="err-msg">Tell us where you study.</p>
+            </div>
+            <div>
+              <label class="lbl" for="student_number">Student number</label>
+              <input class="fld" id="student_number" required>
+              <p class="err-msg">We need your student number.</p>
+            </div>
+          </div>
+
+          <div id="otherWrap" hidden>
+            <label class="lbl" for="institution_other">Which institution?</label>
+            <input class="fld" id="institution_other">
+            <p class="err-msg">Tell us which one.</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="course_of_study">What are you studying?</label>
+              <input class="fld" id="course_of_study" placeholder="BCom Accounting, MA History…">
+            </div>
+            <div>
+              <label class="lbl" for="year_of_study">Year of study</label>
+              <select class="fld" id="year_of_study">
+                <option>1st year</option><option>2nd year</option><option>3rd year</option>
+                <option>4th year</option><option>Honours</option><option>Masters</option><option>PhD</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="lbl" for="preferred_start_date">When would you like to start?</label>
+            <input class="fld" type="date" id="preferred_start_date">
+          </div>
+
+          <div class="pt-2 border-t border-[#E8D9C5]">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="is_nooitgedacht_resident" class="mt-1 h-4 w-4 accent-[#8A9A5B]">
+              <span class="text-sm text-gray-700">
+                <span class="font-semibold">I live at Nooitgedacht Village.</span>
+                <span class="block text-gray-500 mt-0.5">Two minutes from the Hub. Helps us plan evening capacity.</span>
+              </span>
+            </label>
+            <div class="mt-3" id="areaWrap">
+              <label class="lbl" for="residence_area">If not, where do you stay?</label>
+              <input class="fld" id="residence_area" placeholder="Die Boord, Stellenbosch Central, Welgevonden…">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section data-step="3" hidden>
+        <div class="card p-6 space-y-5">
+          <div>
+            <h2 class="font-bold text-lg text-gray-900">Prove you are a student</h2>
+            <p class="text-sm text-gray-600 mt-1">A clear phone photo is fine. PDF, JPG, PNG or HEIC, up to 10MB each.</p>
+          </div>
+
+          <div data-doc="student_card">
+            <label class="lbl">Student card</label>
+            <div class="drop p-4 text-center" tabindex="0" role="button">
+              <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.heic,.webp,image/*,application/pdf">
+              <p class="text-sm text-gray-600 pick">Tap to choose a file, or drag one here</p>
+              <p class="text-sm font-medium text-[#6B4423] chosen" hidden></p>
+            </div>
+            <p class="hint">Both sides in one photo is fine, as long as your name and number are readable.</p>
+            <p class="err-msg">This document is required.</p>
+          </div>
+
+          <div data-doc="proof_of_registration">
+            <label class="lbl">Proof of registration</label>
+            <div class="drop p-4 text-center" tabindex="0" role="button">
+              <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.heic,.webp,image/*,application/pdf">
+              <p class="text-sm text-gray-600 pick">Tap to choose a file, or drag one here</p>
+              <p class="text-sm font-medium text-[#6B4423] chosen" hidden></p>
+            </div>
+            <p class="hint">Your registration confirmation or proof of registration for the current year. A screenshot of your student portal works.</p>
+            <p class="err-msg">This document is required.</p>
+          </div>
+
+          <div class="pt-2 border-t border-[#E8D9C5]">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="popia_consent" class="mt-1 h-4 w-4 accent-[#8A9A5B]" required>
+              <span class="text-sm text-gray-700">
+                <span class="font-semibold">I agree to The Village Hub holding these documents.</span>
+                <span class="block text-gray-500 mt-1 leading-relaxed">
+                  We use them only to confirm you are a registered student, because the student rate is well below our normal price. They are stored encrypted, seen only by Village Hub staff who process applications, and never shared or sold. We re-check registration once a year and delete your documents within 90 days if you do not join. You can ask us to show or delete what we hold at
+                  <a href="mailto:hello@villagehub.co.za" class="text-[#6B4423] underline">hello@villagehub.co.za</a>.
+                  Our <a href="/privacy" class="text-[#6B4423] underline" target="_blank">privacy notice</a> has the full detail.
+                </span>
+              </span>
+            </label>
+            <p class="err-msg" id="err-consent">We cannot process the application without this.</p>
+          </div>
+
+          <div id="submitError" hidden class="card p-4 text-sm" style="background:#fdeeec;border-left:3px solid #c0392b"></div>
+
+          <div id="uploadProgress" hidden>
+            <div class="flex justify-between text-xs text-gray-600 mb-1">
+              <span id="upLabel">Uploading…</span><span id="upPct">0%</span>
+            </div>
+            <div class="h-1.5 bg-[#E8D9C5] rounded-full overflow-hidden">
+              <div id="upBar" class="h-full bg-[#8A9A5B]" style="width:0%;transition:width .25s"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between mt-6 gap-3">
+        <button type="button" id="back" class="px-5 py-3 rounded-md text-sm font-medium text-[#6B4423] bg-white border border-[#E8D9C5]" hidden>&larr; Back</button>
+        <div class="flex-1"></div>
+        <button type="button" id="next" class="btn-sage px-7 py-3 rounded-md font-medium">Continue</button>
+        <button type="submit" id="send" class="btn-sage px-7 py-3 rounded-md font-medium" hidden>Submit application</button>
+      </div>
+    </form>
+
+    <p class="text-center text-xs text-gray-500 mt-6">
+      Questions? <a href="https://wa.me/27725310904" class="text-[#6B4423] underline">WhatsApp us</a>
+      or call <a href="tel:+27725310904" class="text-[#6B4423] underline">072 531 0904</a>.
+    </p>
+  </div>
+
+  <div id="done" hidden>
+    <div class="card p-8 text-center">
+      <div class="mx-auto w-14 h-14 rounded-full flex items-center justify-center" style="background:#f0f4e8">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A9A5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 class="mt-5 text-2xl font-extrabold text-gray-900">Application received</h1>
+      <p class="mt-3 text-gray-600">We check your student card and proof of registration, and come back <strong>within one business day</strong>.</p>
+      <div class="mt-6 inline-block text-left px-6 py-4 rounded-lg" style="background:var(--cream);border-left:3px solid var(--gold)">
+        <div class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Your reference</div>
+        <div class="text-xl font-bold text-[#6B4423] mt-0.5" id="refOut">—</div>
+      </div>
+      <p class="mt-6 text-sm text-gray-600">We have emailed a copy to <span class="font-semibold" id="emailOut"></span>. Nothing is payable until you are verified.</p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-sage px-6 py-3 rounded-md font-medium">Back to the Hub</a>
+        <a href="https://wa.me/27725310904" class="bg-white border border-[#8A9A5B] text-[#6B4423] px-6 py-3 rounded-md font-medium">WhatsApp us</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  const $  = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const form = $('#app');
+  const DRAFT_KEY = 'vh_student_application_draft';
+  let step = 1; const LAST = 3;
+  const files = {};
+
+  const planCards = $$('.plan');
+  function selectPlan(card){
+    planCards.forEach(c => c.classList.remove('sel'));
+    card.classList.add('sel');
+    card.querySelector('input').checked = true;
+    $('#err-plan').style.display = 'none';
+    saveDraft();
+  }
+  planCards.forEach(c => {
+    c.addEventListener('click', () => selectPlan(c));
+    c.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){ e.preventDefault(); selectPlan(c); } });
+  });
+  function chosenPlan(){ const el = form.querySelector('input[name="plan"]:checked'); return el ? el.value : null; }
+
+  const qp = new URLSearchParams(location.search);
+  const map = { exam:'Exam Pass 2026 (Student)', '5day':'Student 5-Day', 'five-day':'Student 5-Day', nightowl:'Night Owl (Student)', 'night-owl':'Night Owl (Student)', allaccess:'Student All-Access', 'all-access':'Student All-Access' };
+  const want = map[(qp.get('plan')||'').toLowerCase()];
+  if(want){ const c = planCards.find(x => x.dataset.plan === want); if(c) selectPlan(c); }
+
+  $('#institution').addEventListener('change', e => {
+    $('#otherWrap').hidden = e.target.value !== 'Other';
+    saveDraft();
+  });
+  $('#is_nooitgedacht_resident').addEventListener('change', e => {
+    $('#areaWrap').hidden = e.target.checked;
+  });
+
+  const MAX = 10*1024*1024;
+  const OK_MIME = ['image/jpeg','image/png','image/heic','image/webp','application/pdf'];
+
+  $$('[data-doc]').forEach(wrap => {
+    const docType = wrap.dataset.doc;
+    const drop = wrap.querySelector('.drop');
+    const input = wrap.querySelector('input[type=file]');
+    const pick = wrap.querySelector('.pick');
+    const shown = wrap.querySelector('.chosen');
+    const err = wrap.querySelector('.err-msg');
+
+    function take(file){
+      if(!file) return;
+      let mime = file.type;
+      if(!mime && /\.heic$/i.test(file.name)) mime = 'image/heic';
+      if(!OK_MIME.includes(mime)){ err.textContent='That file type will not work. Use a PDF or a photo.'; err.style.display='block'; return; }
+      if(file.size > MAX){ err.textContent='That file is over 10MB. Try a smaller photo.'; err.style.display='block'; return; }
+      files[docType] = file;
+      shown.textContent = file.name + '  (' + Math.round(file.size/1024) + ' KB)';
+      shown.hidden = false; pick.hidden = true; drop.classList.add('has'); err.style.display='none';
+    }
+    drop.addEventListener('click', () => input.click());
+    drop.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); input.click(); } });
+    input.addEventListener('change', () => take(input.files[0]));
+    ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', e => take(e.dataTransfer.files[0]));
+  });
+
+  function showErr(el){ el.classList.add('err'); const p = el.parentElement.querySelector('.err-msg'); if(p) p.style.display='block'; }
+  function clearErr(el){ el.classList.remove('err'); const p = el.parentElement.querySelector('.err-msg'); if(p) p.style.display='none'; }
+  form.addEventListener('input', e => { if(e.target.classList.contains('fld')) clearErr(e.target); });
+
+  function validateStep(n){
+    let good = true, firstBad = null;
+    if(n === 1 && !chosenPlan()){ $('#err-plan').style.display='block'; good=false; }
+    if(n === 2){
+      ['#first_name','#last_name','#phone','#institution','#student_number'].forEach(sel => {
+        const el = $(sel);
+        if(!el.value.trim()){ showErr(el); good=false; firstBad = firstBad||el; }
+      });
+      const em = $('#email');
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())){ showErr(em); good=false; firstBad = firstBad||em; }
+      if($('#institution').value === 'Other' && !$('#institution_other').value.trim()){
+        showErr($('#institution_other')); good=false; firstBad = firstBad||$('#institution_other');
+      }
+    }
+    if(n === 3){
+      ['student_card','proof_of_registration'].forEach(dt => {
+        if(!files[dt]){
+          const w = document.querySelector('[data-doc="'+dt+'"]');
+          const e2 = w.querySelector('.err-msg');
+          e2.textContent='This document is required.'; e2.style.display='block'; good=false;
+        }
+      });
+      if(!$('#popia_consent').checked){ $('#err-consent').style.display='block'; good=false; }
+    }
+    if(firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+    return good;
+  }
+
+  function render(){
+    $$('[data-step]').forEach(s => { s.hidden = Number(s.dataset.step) !== step; });
+    $$('#progress .step-dot').forEach((d,i) => {
+      d.classList.toggle('done', i+1 < step);
+      d.classList.toggle('on', i+1 === step);
+    });
+    const labels = ['Choose your package','About you','Verification and consent'];
+    $('#stepLabel').textContent = 'Step ' + step + ' of ' + LAST + ' · ' + labels[step-1];
+    $('#back').hidden = step === 1;
+    $('#next').hidden = step === LAST;
+    $('#send').hidden = step !== LAST;
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+  $('#next').addEventListener('click', () => { if(!validateStep(step)) return; saveDraft(); step=Math.min(LAST,step+1); render(); });
+  $('#back').addEventListener('click', () => { step=Math.max(1,step-1); render(); });
+
+  function saveDraft(){
+    try{
+      const d = {};
+      $$('#app .fld').forEach(el => { if(el.id) d[el.id] = el.value; });
+      d.plan = chosenPlan();
+      d.is_nooitgedacht_resident = $('#is_nooitgedacht_resident').checked;
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    }catch(e){}
+  }
+  function loadDraft(){
+    try{
+      const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return;
+      const d = JSON.parse(raw);
+      Object.keys(d).forEach(k => { const el = document.getElementById(k); if(el && typeof d[k]==='string') el.value = d[k]; });
+      if(d.plan && !chosenPlan()){ const c = planCards.find(x => x.dataset.plan === d.plan); if(c) selectPlan(c); }
+      if(d.is_nooitgedacht_resident){ $('#is_nooitgedacht_resident').checked = true; $('#areaWrap').hidden = true; }
+      $('#otherWrap').hidden = $('#institution').value !== 'Other';
+    }catch(e){}
+  }
+  form.addEventListener('change', saveDraft);
+  loadDraft();
+
+  function setProgress(pct, label){
+    $('#uploadProgress').hidden = false;
+    $('#upBar').style.width = pct + '%';
+    $('#upPct').textContent = Math.round(pct) + '%';
+    if(label) $('#upLabel').textContent = label;
+  }
+  function putFile(url, file){
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', url, true);
+      xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+      xhr.onload  = () => (xhr.status>=200 && xhr.status<300) ? resolve() : reject(new Error('Upload failed ('+xhr.status+')'));
+      xhr.onerror = () => reject(new Error('Upload failed. Check your connection.'));
+      xhr.send(file);
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if(!validateStep(LAST)) return;
+    const btn = $('#send'), errBox = $('#submitError');
+    errBox.hidden = true; btn.disabled = true; btn.textContent = 'Submitting…';
+
+    const institution = $('#institution').value === 'Other'
+      ? $('#institution_other').value.trim()
+      : $('#institution').value;
+
+    const docTypes = Object.keys(files);
+    const payload = {
+      type: 'student',
+      plan: chosenPlan(),
+      first_name: $('#first_name').value.trim(),
+      last_name:  $('#last_name').value.trim(),
+      email:      $('#email').value.trim(),
+      phone:      $('#phone').value.trim(),
+      preferred_start_date: $('#preferred_start_date').value || null,
+      institution,
+      student_number:   $('#student_number').value.trim(),
+      course_of_study:  $('#course_of_study').value.trim(),
+      year_of_study:    $('#year_of_study').value,
+      is_nooitgedacht_resident: $('#is_nooitgedacht_resident').checked,
+      residence_area:   $('#residence_area').value.trim(),
+      popia_consent: true,
+      source_page: location.pathname + location.search,
+      documents: docTypes.map(dt => ({
+        doc_type: dt, filename: files[dt].name,
+        mime_type: files[dt].type || 'application/octet-stream',
+        size_bytes: files[dt].size,
+      })),
+    };
+
+    try{
+      setProgress(5, 'Saving your application…');
+      const res = await fetch('/.netlify/functions/submit-application', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'We could not save your application.');
+
+      const total = data.uploads.length;
+      for(let i=0;i<total;i++){
+        const u = data.uploads[i];
+        setProgress(10 + (i/total)*80, 'Uploading document ' + (i+1) + ' of ' + total + '…');
+        await putFile(u.url, files[u.doc_type]);
+      }
+
+      setProgress(95, 'Finishing up…');
+      const fin = await fetch('/.netlify/functions/complete-application', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ application_id: data.application_id }),
+      });
+      const finData = await fin.json();
+      if(!fin.ok) throw new Error(finData.error || 'Your documents uploaded but we could not finish.');
+
+      setProgress(100, 'Done');
+      try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+      $('#refOut').textContent = data.reference;
+      $('#emailOut').textContent = payload.email;
+      $('#formWrap').hidden = true; $('#done').hidden = false;
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }catch(err){
+      $('#uploadProgress').hidden = true;
+      errBox.innerHTML = '<strong class="text-gray-900">We could not submit that.</strong><br>' +
+        (err.message || 'Something went wrong.') +
+        '<br><span class="text-gray-600">Nothing is lost. Try again, or email <a href="mailto:hello@villagehub.co.za" class="underline">hello@villagehub.co.za</a>.</span>';
+      errBox.hidden = false;
+      btn.disabled = false; btn.textContent = 'Submit application';
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

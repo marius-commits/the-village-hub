@@ -7,20 +7,32 @@ Allow: /
 Disallow: /Netlify/
 Disallow: /.netlify/
 Disallow: /ads-dashboard.html
+Disallow: /admin/
+Disallow: /apply-virtual-office
+Disallow: /apply-student
 
 # OpenAI search discovery
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /admin/
+Disallow: /apply-virtual-office
+Disallow: /apply-student
 
 # User-requested ChatGPT page retrieval
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /admin/
+Disallow: /apply-virtual-office
+Disallow: /apply-student
 
 # Perplexity search discovery
 User-agent: PerplexityBot
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /admin/
+Disallow: /apply-virtual-office
+Disallow: /apply-student
 
 Sitemap: https://www.villagehub.co.za/sitemap.xml

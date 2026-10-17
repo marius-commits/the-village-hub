@@ -57,6 +57,22 @@
   to = "/virtual-office-stellenbosch.html"
   status = 200
 
+# Membership application forms
+[[redirects]]
+  from = "/apply-virtual-office"
+  to = "/apply-virtual-office.html"
+  status = 200
+
+[[redirects]]
+  from = "/apply-student"
+  to = "/apply-student.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/applications"
+  to = "/admin/applications.html"
+  status = 200
+
 [[redirects]]
   from = "/virtual-office"
   to = "/virtual-office-stellenbosch"
@@ -79,3 +95,21 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# The application forms and the staff review tool handle identity documents.
+# Keep them out of search indexes and out of caches, and do not leak the
+# referrer to third parties.
+[[headers]]
+  for = "/apply-*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Referrer-Policy = "same-origin"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Referrer-Policy = "same-origin"
+    Cache-Control = "no-store"
+    X-Frame-Options = "DENY"

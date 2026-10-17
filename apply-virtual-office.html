@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for a Virtual Office | The Village Hub, Stellenbosch</title>
+  <meta name="description" content="Apply for a virtual office at The Village Hub, Nooitgedacht Village, Stellenbosch. Choose your package, upload your CIPC, ID and proof of address, and we come back within one business day." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.villagehub.co.za/apply-virtual-office" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --brown:#6B4423; --brown-2:#8B5A2B; --sage:#8A9A5B; --sage-2:#7F9368; --cream:#FAF8F6; --sand:#E8D9C5; --gold:#C9A24B; }
+    body{ background:var(--cream); }
+    .btn-sage{ background:var(--sage); color:#fff; transition:background .15s ease; }
+    .btn-sage:hover{ background:var(--sage-2); }
+    .btn-sage:disabled{ background:#c3c9b8; cursor:not-allowed; }
+    .card{ background:#fff; border:1px solid var(--sand); border-radius:14px; }
+    .fld{ width:100%; border:1px solid #d9d2c7; border-radius:9px; padding:11px 13px; font-size:15px; background:#fff; }
+    .fld:focus{ outline:none; border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,154,91,.18); }
+    .fld.err{ border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12); }
+    .lbl{ display:block; font-size:13px; font-weight:600; color:#4a3f33; margin-bottom:5px; }
+    .hint{ font-size:12px; color:#7a6f62; margin-top:5px; line-height:1.5; }
+    .err-msg{ font-size:12px; color:#c0392b; margin-top:5px; display:none; }
+    .plan{ cursor:pointer; border:2px solid var(--sand); border-radius:14px; background:#fff; transition:border-color .15s, box-shadow .15s; }
+    .plan:hover{ border-color:var(--sage); }
+    .plan.sel{ border-color:var(--brown); box-shadow:0 0 0 3px rgba(107,68,35,.12); }
+    .plan input{ position:absolute; opacity:0; pointer-events:none; }
+    .step-dot{ height:4px; border-radius:99px; background:var(--sand); flex:1; transition:background .3s; }
+    .step-dot.on{ background:var(--sage); }
+    .step-dot.done{ background:var(--brown); }
+    .drop{ border:2px dashed #cfc6b8; border-radius:12px; background:#fff; transition:border-color .15s, background .15s; }
+    .drop.over{ border-color:var(--sage); background:#f7f9f3; }
+    .drop.has{ border-style:solid; border-color:var(--sage); background:#f7f9f3; }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+<nav class="bg-white shadow-sm fixed w-full z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+    <a href="/" class="flex items-center">
+      <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub Logo">
+      <span class="ml-3 text-xl font-bold text-[#6B4423]">The Village Hub</span>
+    </a>
+    <a href="/virtual-office-stellenbosch" class="text-sm text-[#6B4423] hover:text-[#8B5A2B]">&larr; Back to virtual office</a>
+  </div>
+</nav>
+
+<main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+<div class="max-w-3xl mx-auto">
+
+  <!-- ===== FORM ===== -->
+  <div id="formWrap">
+    <header class="text-center mb-7">
+      <p class="text-xs font-semibold text-[#8A9A5B] uppercase tracking-wider">Virtual Office Application</p>
+      <h1 class="mt-2 text-3xl md:text-4xl font-extrabold text-gray-900">Set up your Stellenbosch business address</h1>
+      <p class="mt-3 text-gray-600">Takes about five minutes. Have your CIPC certificate, ID and a recent proof of address ready.</p>
+    </header>
+
+    <div class="flex gap-1.5 mb-2" id="progress">
+      <div class="step-dot on"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <p class="text-xs text-gray-500 mb-5" id="stepLabel">Step 1 of 4 &middot; Choose your package</p>
+
+    <form id="app" novalidate>
+
+      <!-- STEP 1: package -->
+      <section data-step="1">
+        <div class="space-y-3">
+
+          <label class="plan block p-5 relative" data-plan="Village Address">
+            <input type="radio" name="plan" value="Village Address">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Village Address</div>
+                <p class="text-sm text-gray-600 mt-1">A Stellenbosch business address for your website, invoices and Google profile. Mail and parcels received, photographed to you on WhatsApp the same day. One hot desk day a month.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R595</div>
+                <div class="text-xs text-gray-500">/month excl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+          <label class="plan block p-5 relative" data-plan="Village Virtual">
+            <input type="radio" name="plan" value="Village Virtual">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Village Virtual</div>
+                <p class="text-sm text-gray-600 mt-1">Everything in Village Address, plus a dedicated local number forwarded to your mobile, two hot desk days, one boardroom hour a month and monthly mail forwarding anywhere in South Africa.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R1,095</div>
+                <div class="text-xs text-gray-500">/month excl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+          <label class="plan block p-5 relative" data-plan="Village Virtual Pro">
+            <input type="radio" name="plan" value="Village Virtual Pro">
+            <span class="absolute -top-2.5 left-5 bg-[#C9A24B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Registered address</span>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-bold text-lg text-gray-900">Village Virtual Pro</div>
+                <p class="text-sm text-gray-600 mt-1">The full presence. Everything in Village Virtual, plus three hot desk days, two boardroom hours, and your registered CIPC and SARS address included. 10% off private office and event space hire.</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#6B4423]">R1,695</div>
+                <div class="text-xs text-gray-500">/month excl. VAT</div>
+              </div>
+            </div>
+          </label>
+
+        </div>
+        <p class="err-msg" id="err-plan">Choose a package to continue.</p>
+
+        <div class="card p-4 mt-5 text-sm text-gray-600" style="background:#fff;border-left:3px solid var(--gold)">
+          <strong class="text-gray-800">All three have a three-month minimum</strong>, then month to month. Nothing is payable now. We check your documents, approve you, and only then send the invoice.
+        </div>
+      </section>
+
+      <!-- STEP 2: you -->
+      <section data-step="2" hidden>
+        <div class="card p-6 space-y-4">
+          <h2 class="font-bold text-lg text-gray-900">Who are we dealing with?</h2>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="first_name">First name</label>
+              <input class="fld" id="first_name" name="first_name" autocomplete="given-name" required>
+              <p class="err-msg">We need your first name.</p>
+            </div>
+            <div>
+              <label class="lbl" for="last_name">Last name</label>
+              <input class="fld" id="last_name" name="last_name" autocomplete="family-name" required>
+              <p class="err-msg">We need your last name.</p>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="email">Email</label>
+              <input class="fld" type="email" id="email" name="email" autocomplete="email" required>
+              <p class="err-msg">That email does not look right.</p>
+            </div>
+            <div>
+              <label class="lbl" for="phone">Mobile number</label>
+              <input class="fld" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="082 123 4567" required>
+              <p class="err-msg">We need a number we can reach you on.</p>
+            </div>
+          </div>
+          <div>
+            <label class="lbl" for="director_role">Your role in the business</label>
+            <select class="fld" id="director_role" name="director_role">
+              <option value="Director">Director</option>
+              <option value="Owner">Owner / sole proprietor</option>
+              <option value="Member">Member</option>
+              <option value="Trustee">Trustee</option>
+              <option value="Authorised representative">Authorised representative</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl" for="preferred_start_date">When would you like to start?</label>
+            <input class="fld" type="date" id="preferred_start_date" name="preferred_start_date">
+            <p class="hint">Leave blank and we will start you as soon as you are approved and the invoice is paid.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3: business -->
+      <section data-step="3" hidden>
+        <div class="card p-6 space-y-4">
+          <h2 class="font-bold text-lg text-gray-900">About the business</h2>
+
+          <div>
+            <label class="lbl" for="company_type">Business structure</label>
+            <select class="fld" id="company_type" name="company_type">
+              <option value="pty_ltd">Private company (Pty) Ltd</option>
+              <option value="cc">Close corporation (CC)</option>
+              <option value="sole_prop">Sole proprietor</option>
+              <option value="npc">Non-profit company (NPC)</option>
+              <option value="trust">Trust</option>
+              <option value="not_registered">Not registered yet</option>
+            </select>
+          </div>
+
+          <div id="proWarning" hidden class="card p-4 text-sm" style="background:#fdf6e7;border-left:3px solid var(--gold)">
+            <strong class="text-gray-900">Village Virtual Pro needs a registered entity.</strong>
+            The registered CIPC and SARS address can only be given to a registered company. Choose Village Address or Village Virtual for now, and move up once your registration comes through.
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="company_name">Registered or intended company name</label>
+              <input class="fld" id="company_name" name="company_name" autocomplete="organization" required>
+              <p class="err-msg">We need the company name.</p>
+            </div>
+            <div>
+              <label class="lbl" for="company_trading_name">Trading name <span class="font-normal text-gray-400">(if different)</span></label>
+              <input class="fld" id="company_trading_name" name="company_trading_name">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4" id="regFields">
+            <div>
+              <label class="lbl" for="cipc_registration_number">CIPC registration number</label>
+              <input class="fld" id="cipc_registration_number" name="cipc_registration_number" placeholder="2021/123456/07">
+              <p class="err-msg">We need the registration number for the compliance check.</p>
+            </div>
+            <div>
+              <label class="lbl" for="vat_number">VAT number <span class="font-normal text-gray-400">(if registered)</span></label>
+              <input class="fld" id="vat_number" name="vat_number">
+            </div>
+          </div>
+
+          <div>
+            <label class="lbl" for="director_full_name">Full name of the director or owner</label>
+            <input class="fld" id="director_full_name" name="director_full_name" required>
+            <p class="hint">As it appears on the ID document you are about to upload.</p>
+            <p class="err-msg">We need the name on the ID.</p>
+          </div>
+
+          <div>
+            <label class="lbl" for="business_activity">What does the business do?</label>
+            <textarea class="fld" id="business_activity" name="business_activity" rows="3" required placeholder="A sentence or two is plenty."></textarea>
+            <p class="hint">We are asked this by our own compliance checks. Short and plain is fine.</p>
+            <p class="err-msg">Tell us briefly what the business does.</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="website">Website <span class="font-normal text-gray-400">(optional)</span></label>
+              <input class="fld" id="website" name="website" placeholder="www.example.co.za">
+            </div>
+            <div>
+              <label class="lbl" for="expected_mail_volume">How much post do you expect?</label>
+              <select class="fld" id="expected_mail_volume" name="expected_mail_volume">
+                <option value="Very little">Very little, a few items a year</option>
+                <option value="A few items a month" selected>A few items a month</option>
+                <option value="Weekly">Something most weeks</option>
+                <option value="High volume">High volume, several items a week</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="flex items-start gap-3 pt-1 cursor-pointer" id="regAddrWrap">
+            <input type="checkbox" id="wants_registered_address" name="wants_registered_address" class="mt-1 h-4 w-4 accent-[#8A9A5B]">
+            <span class="text-sm text-gray-700">
+              <span class="font-semibold">I want to use this as my registered CIPC and SARS address.</span>
+              <span class="block text-gray-500 mt-0.5">Included with Village Virtual Pro. You will sign a short mandate before we lodge anything.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 4: documents + consent -->
+      <section data-step="4" hidden>
+        <div class="card p-6 space-y-5">
+          <div>
+            <h2 class="font-bold text-lg text-gray-900">Your documents</h2>
+            <p class="text-sm text-gray-600 mt-1">A clear photo from your phone is fine. PDF, JPG, PNG or HEIC, up to 10MB each.</p>
+          </div>
+
+          <div data-doc="cipc_certificate" id="doc-cipc">
+            <label class="lbl">CIPC registration certificate</label>
+            <div class="drop p-4 text-center" tabindex="0" role="button">
+              <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.heic,.webp,image/*,application/pdf">
+              <p class="text-sm text-gray-600 pick">Tap to choose a file, or drag one here</p>
+              <p class="text-sm font-medium text-[#6B4423] chosen" hidden></p>
+            </div>
+            <p class="err-msg">This document is required.</p>
+          </div>
+
+          <div data-doc="director_id">
+            <label class="lbl">ID document of the director or owner</label>
+            <div class="drop p-4 text-center" tabindex="0" role="button">
+              <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.heic,.webp,image/*,application/pdf">
+              <p class="text-sm text-gray-600 pick">Tap to choose a file, or drag one here</p>
+              <p class="text-sm font-medium text-[#6B4423] chosen" hidden></p>
+            </div>
+            <p class="hint">Green ID book, smart card (both sides in one file is fine) or passport.</p>
+            <p class="err-msg">This document is required.</p>
+          </div>
+
+          <div data-doc="proof_of_address">
+            <label class="lbl">Proof of address</label>
+            <div class="drop p-4 text-center" tabindex="0" role="button">
+              <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.heic,.webp,image/*,application/pdf">
+              <p class="text-sm text-gray-600 pick">Tap to choose a file, or drag one here</p>
+              <p class="text-sm font-medium text-[#6B4423] chosen" hidden></p>
+            </div>
+            <p class="hint">A municipal bill, bank statement or lease in the director's name, not older than three months.</p>
+            <p class="err-msg">This document is required.</p>
+          </div>
+
+          <div class="pt-2 border-t border-[#E8D9C5]">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="popia_consent" class="mt-1 h-4 w-4 accent-[#8A9A5B]" required>
+              <span class="text-sm text-gray-700">
+                <span class="font-semibold">I agree to The Village Hub holding these documents.</span>
+                <span class="block text-gray-500 mt-1 leading-relaxed">
+                  We use them only to verify who you are before giving you a business address, as we are required to. They are stored encrypted, seen only by Village Hub staff who process applications, and never shared or sold. Approved applications are kept for five years to meet record-keeping rules; declined ones are deleted within 90 days. You can ask us to show or delete what we hold at
+                  <a href="mailto:hello@villagehub.co.za" class="text-[#6B4423] underline">hello@villagehub.co.za</a>.
+                  Our <a href="/privacy" class="text-[#6B4423] underline" target="_blank">privacy notice</a> has the full detail.
+                </span>
+              </span>
+            </label>
+            <p class="err-msg" id="err-consent">We cannot process the application without this.</p>
+          </div>
+
+          <div id="submitError" hidden class="card p-4 text-sm" style="background:#fdeeec;border-left:3px solid #c0392b"></div>
+
+          <div id="uploadProgress" hidden>
+            <div class="flex justify-between text-xs text-gray-600 mb-1">
+              <span id="upLabel">Uploading…</span><span id="upPct">0%</span>
+            </div>
+            <div class="h-1.5 bg-[#E8D9C5] rounded-full overflow-hidden">
+              <div id="upBar" class="h-full bg-[#8A9A5B]" style="width:0%;transition:width .25s"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- nav -->
+      <div class="flex items-center justify-between mt-6 gap-3">
+        <button type="button" id="back" class="px-5 py-3 rounded-md text-sm font-medium text-[#6B4423] bg-white border border-[#E8D9C5] hover:bg-white" hidden>&larr; Back</button>
+        <div class="flex-1"></div>
+        <button type="button" id="next" class="btn-sage px-7 py-3 rounded-md font-medium">Continue</button>
+        <button type="submit" id="send" class="btn-sage px-7 py-3 rounded-md font-medium" hidden>Submit application</button>
+      </div>
+    </form>
+
+    <p class="text-center text-xs text-gray-500 mt-6">
+      Questions before you apply? <a href="https://wa.me/27725310904" class="text-[#6B4423] underline">WhatsApp us</a>
+      or call <a href="tel:+27725310904" class="text-[#6B4423] underline">072 531 0904</a>.
+    </p>
+  </div>
+
+  <!-- ===== SUCCESS ===== -->
+  <div id="done" hidden>
+    <div class="card p-8 text-center">
+      <div class="mx-auto w-14 h-14 rounded-full flex items-center justify-center" style="background:#f0f4e8">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A9A5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 class="mt-5 text-2xl font-extrabold text-gray-900">Application received</h1>
+      <p class="mt-3 text-gray-600">Your documents came through. We check them and come back to you <strong>within one business day</strong>.</p>
+
+      <div class="mt-6 inline-block text-left px-6 py-4 rounded-lg" style="background:var(--cream);border-left:3px solid var(--gold)">
+        <div class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Your reference</div>
+        <div class="text-xl font-bold text-[#6B4423] mt-0.5" id="refOut">—</div>
+      </div>
+
+      <p class="mt-6 text-sm text-gray-600">We have emailed a copy to <span class="font-semibold" id="emailOut"></span>. Nothing is payable until you are approved.</p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-sage px-6 py-3 rounded-md font-medium">Back to the Hub</a>
+        <a href="https://wa.me/27725310904" class="bg-white border border-[#8A9A5B] text-[#6B4423] px-6 py-3 rounded-md font-medium">WhatsApp us</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  const $  = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+
+  const form = $('#app');
+  const DRAFT_KEY = 'vh_vo_application_draft';
+  let step = 1;
+  const LAST = 4;
+  const files = {};               // doc_type -> File
+
+  // ---- package selection ----
+  const planCards = $$('.plan');
+  function selectPlan(card){
+    planCards.forEach(c => c.classList.remove('sel'));
+    card.classList.add('sel');
+    card.querySelector('input').checked = true;
+    $('#err-plan').style.display = 'none';
+    syncProRules();
+    saveDraft();
+  }
+  planCards.forEach(c => {
+    c.addEventListener('click', () => selectPlan(c));
+    c.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){ e.preventDefault(); selectPlan(c); } });
+  });
+
+  function chosenPlan(){
+    const el = form.querySelector('input[name="plan"]:checked');
+    return el ? el.value : null;
+  }
+
+  // Deep link: /apply-virtual-office?plan=Pro
+  const qp = new URLSearchParams(location.search);
+  const planParam = (qp.get('plan')||'').toLowerCase();
+  if(planParam){
+    const map = { address:'Village Address', virtual:'Village Virtual', pro:'Village Virtual Pro' };
+    const want = map[planParam] || null;
+    if(want){ const c = planCards.find(x => x.dataset.plan === want); if(c) selectPlan(c); }
+  }
+
+  // ---- Pro + registration interplay ----
+  // The registered CIPC/SARS address is only lawful for a registered entity,
+  // and only included with Pro. Keep the form honest about both.
+  const typeSel = $('#company_type');
+  function syncProRules(){
+    const notReg = typeSel.value === 'not_registered';
+    const isPro  = chosenPlan() === 'Village Virtual Pro';
+
+    $('#regFields').hidden  = notReg;
+    $('#doc-cipc').hidden   = notReg;
+    $('#proWarning').hidden = !(notReg && isPro);
+
+    const wants = $('#wants_registered_address');
+    $('#regAddrWrap').style.opacity = notReg ? '.45' : '1';
+    wants.disabled = notReg;
+    if(notReg) wants.checked = false;
+    if(isPro && !notReg && !wants.dataset.touched) wants.checked = true;
+  }
+  typeSel.addEventListener('change', () => { syncProRules(); saveDraft(); });
+  $('#wants_registered_address').addEventListener('change', e => { e.target.dataset.touched='1'; });
+  syncProRules();
+
+  // ---- file pickers ----
+  const MAX = 10*1024*1024;
+  const OK_MIME = ['image/jpeg','image/png','image/heic','image/webp','application/pdf'];
+
+  $$('[data-doc]').forEach(wrap => {
+    const docType = wrap.dataset.doc;
+    const drop  = wrap.querySelector('.drop');
+    const input = wrap.querySelector('input[type=file]');
+    const pick  = wrap.querySelector('.pick');
+    const shown = wrap.querySelector('.chosen');
+    const err   = wrap.querySelector('.err-msg');
+
+    function take(file){
+      if(!file) return;
+      let mime = file.type;
+      if(!mime && /\.heic$/i.test(file.name)) mime = 'image/heic';
+      if(!OK_MIME.includes(mime)){
+        err.textContent = 'That file type will not work. Use a PDF or a photo.';
+        err.style.display = 'block';
+        return;
+      }
+      if(file.size > MAX){
+        err.textContent = 'That file is over 10MB. Try a smaller photo.';
+        err.style.display = 'block';
+        return;
+      }
+      files[docType] = file;
+      shown.textContent = file.name + '  (' + Math.round(file.size/1024) + ' KB)';
+      shown.hidden = false; pick.hidden = true;
+      drop.classList.add('has');
+      err.style.display = 'none';
+    }
+
+    drop.addEventListener('click', () => input.click());
+    drop.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); input.click(); } });
+    input.addEventListener('change', () => take(input.files[0]));
+    ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', e => take(e.dataTransfer.files[0]));
+  });
+
+  // ---- validation ----
+  function showErr(el, msg){
+    el.classList.add('err');
+    const p = el.parentElement.querySelector('.err-msg');
+    if(p){ if(msg) p.textContent = msg; p.style.display = 'block'; }
+  }
+  function clearErr(el){
+    el.classList.remove('err');
+    const p = el.parentElement.querySelector('.err-msg');
+    if(p) p.style.display = 'none';
+  }
+  form.addEventListener('input', e => { if(e.target.classList.contains('fld')) clearErr(e.target); });
+
+  function validateStep(n){
+    let good = true;
+    const first = { el:null };
+
+    if(n === 1){
+      if(!chosenPlan()){ $('#err-plan').style.display='block'; good = false; }
+    }
+
+    if(n === 2){
+      [['#first_name'],['#last_name'],['#phone']].forEach(([sel]) => {
+        const el = $(sel);
+        if(!el.value.trim()){ showErr(el); good=false; first.el = first.el||el; }
+      });
+      const em = $('#email');
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())){ showErr(em); good=false; first.el = first.el||em; }
+    }
+
+    if(n === 3){
+      ['#company_name','#director_full_name','#business_activity'].forEach(sel => {
+        const el = $(sel);
+        if(!el.value.trim()){ showErr(el); good=false; first.el = first.el||el; }
+      });
+      if(typeSel.value !== 'not_registered'){
+        const c = $('#cipc_registration_number');
+        if(!c.value.trim()){ showErr(c); good=false; first.el = first.el||c; }
+      }
+      if(typeSel.value === 'not_registered' && chosenPlan() === 'Village Virtual Pro'){
+        $('#proWarning').hidden = false;
+        good = false;
+        first.el = first.el || typeSel;
+      }
+    }
+
+    if(n === 4){
+      const needed = typeSel.value === 'not_registered'
+        ? ['director_id','proof_of_address']
+        : ['cipc_certificate','director_id','proof_of_address'];
+      needed.forEach(dt => {
+        if(!files[dt]){
+          const wrap = document.querySelector('[data-doc="'+dt+'"]');
+          const err = wrap.querySelector('.err-msg');
+          err.textContent = 'This document is required.';
+          err.style.display = 'block';
+          good = false;
+        }
+      });
+      if(!$('#popia_consent').checked){ $('#err-consent').style.display='block'; good=false; }
+    }
+
+    if(first.el) first.el.scrollIntoView({behavior:'smooth', block:'center'});
+    return good;
+  }
+
+  // ---- step navigation ----
+  function render(){
+    $$('[data-step]').forEach(s => { s.hidden = Number(s.dataset.step) !== step; });
+    $$('#progress .step-dot').forEach((d,i) => {
+      d.classList.toggle('done', i+1 < step);
+      d.classList.toggle('on',   i+1 === step);
+    });
+    const labels = ['Choose your package','Your details','About the business','Documents and consent'];
+    $('#stepLabel').textContent = 'Step ' + step + ' of ' + LAST + ' · ' + labels[step-1];
+    $('#back').hidden = step === 1;
+    $('#next').hidden = step === LAST;
+    $('#send').hidden = step !== LAST;
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  $('#next').addEventListener('click', () => {
+    if(!validateStep(step)) return;
+    saveDraft();
+    step = Math.min(LAST, step+1);
+    render();
+  });
+  $('#back').addEventListener('click', () => { step = Math.max(1, step-1); render(); });
+
+  // ---- draft persistence (text only, never the documents) ----
+  function saveDraft(){
+    try{
+      const d = {};
+      $$('#app .fld').forEach(el => { if(el.id) d[el.id] = el.value; });
+      d.plan = chosenPlan();
+      d.wants_registered_address = $('#wants_registered_address').checked;
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    }catch(e){ /* private mode, blocked storage: ignore */ }
+  }
+  function loadDraft(){
+    try{
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if(!raw) return;
+      const d = JSON.parse(raw);
+      Object.keys(d).forEach(k => { const el = document.getElementById(k); if(el && typeof d[k] === 'string') el.value = d[k]; });
+      if(d.plan && !chosenPlan()){ const c = planCards.find(x => x.dataset.plan === d.plan); if(c) selectPlan(c); }
+      if(d.wants_registered_address) $('#wants_registered_address').checked = true;
+      syncProRules();
+    }catch(e){ /* ignore */ }
+  }
+  form.addEventListener('change', saveDraft);
+  loadDraft();
+
+  // ---- submit ----
+  function setProgress(pct, label){
+    $('#uploadProgress').hidden = false;
+    $('#upBar').style.width = pct + '%';
+    $('#upPct').textContent = Math.round(pct) + '%';
+    if(label) $('#upLabel').textContent = label;
+  }
+
+  // XHR rather than fetch, because fetch gives no upload progress and these
+  // are phone photos on South African mobile data.
+  function putFile(url, file){
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', url, true);
+      xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+      xhr.onload  = () => (xhr.status >= 200 && xhr.status < 300) ? resolve() : reject(new Error('Upload failed (' + xhr.status + ')'));
+      xhr.onerror = () => reject(new Error('Upload failed. Check your connection.'));
+      xhr.send(file);
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if(!validateStep(LAST)) return;
+
+    const btn = $('#send');
+    const errBox = $('#submitError');
+    errBox.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const docTypes = Object.keys(files);
+    const payload = {
+      type: 'virtual_office',
+      plan: chosenPlan(),
+      first_name: $('#first_name').value.trim(),
+      last_name:  $('#last_name').value.trim(),
+      email:      $('#email').value.trim(),
+      phone:      $('#phone').value.trim(),
+      preferred_start_date: $('#preferred_start_date').value || null,
+      company_name:         $('#company_name').value.trim(),
+      company_trading_name: $('#company_trading_name').value.trim(),
+      company_type:         typeSel.value,
+      cipc_registration_number: $('#cipc_registration_number').value.trim(),
+      vat_number:           $('#vat_number').value.trim(),
+      business_activity:    $('#business_activity').value.trim(),
+      website:              $('#website').value.trim(),
+      wants_registered_address: $('#wants_registered_address').checked,
+      expected_mail_volume: $('#expected_mail_volume').value,
+      director_full_name:   $('#director_full_name').value.trim(),
+      director_role:        $('#director_role').value,
+      popia_consent: true,
+      source_page: location.pathname + location.search,
+      documents: docTypes.map(dt => ({
+        doc_type: dt,
+        filename: files[dt].name,
+        mime_type: files[dt].type || 'application/octet-stream',
+        size_bytes: files[dt].size,
+      })),
+    };
+
+    try{
+      setProgress(5, 'Saving your application…');
+      const res = await fetch('/.netlify/functions/submit-application', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'We could not save your application.');
+
+      const total = data.uploads.length;
+      for(let i=0;i<total;i++){
+        const u = data.uploads[i];
+        setProgress(10 + (i/total)*80, 'Uploading document ' + (i+1) + ' of ' + total + '…');
+        await putFile(u.url, files[u.doc_type]);
+      }
+
+      setProgress(95, 'Finishing up…');
+      const fin = await fetch('/.netlify/functions/complete-application', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ application_id: data.application_id }),
+      });
+      const finData = await fin.json();
+      if(!fin.ok) throw new Error(finData.error || 'Your documents uploaded but we could not finish.');
+
+      setProgress(100, 'Done');
+      try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+
+      $('#refOut').textContent   = data.reference;
+      $('#emailOut').textContent = payload.email;
+      $('#formWrap').hidden = true;
+      $('#done').hidden = false;
+      window.scrollTo({ top:0, behavior:'smooth' });
+
+    }catch(err){
+      $('#uploadProgress').hidden = true;
+      errBox.innerHTML = '<strong class="text-gray-900">We could not submit that.</strong><br>' +
+        (err.message || 'Something went wrong.') +
+        '<br><span class="text-gray-600">Nothing is lost. Try again, or email <a href="mailto:hello@villagehub.co.za" class="underline">hello@villagehub.co.za</a> and we will take it from there.</span>';
+      errBox.hidden = false;
+      btn.disabled = false;
+      btn.textContent = 'Submit application';
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
