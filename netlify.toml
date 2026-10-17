@@ -74,6 +74,16 @@
   status = 200
 
 [[redirects]]
+  from = "/admin/dashboard"
+  to = "/admin/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/dashboard.html"
+  status = 200
+
+[[redirects]]
   from = "/virtual-office"
   to = "/virtual-office-stellenbosch"
   status = 301

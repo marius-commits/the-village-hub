@@ -35,6 +35,8 @@
     .row{ cursor:pointer; border-left:3px solid transparent; }
     .row:hover{ background:#fbf9f6; }
     .row.sel{ background:#f6f2ec; border-left-color:var(--vh-bark); }
+    .tab{ padding:.5rem .9rem; border-radius:999px; font-size:14px; font-weight:600; color:var(--vh-bark); text-decoration:none; }
+    .tab.on{ background:var(--vh-bark); color:#fff; }
     [hidden]{ display:none !important; }
   </style>
 </head>
@@ -70,10 +72,14 @@
     <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
       <div class="flex items-center">
         <img class="h-8 w-8 object-contain" src="/images/web/logo.png" alt="">
-        <span class="ml-2 font-bold text-[#6B4423] text-sm">Applications</span>
+        <span class="ml-2 font-bold text-[#6B4423] text-sm font-display">Admin</span>
       </div>
+      <nav class="flex items-center gap-1">
+        <a class="tab" href="/admin/dashboard">Dashboard</a>
+        <span class="tab on">Applications</span>
+      </nav>
       <div class="flex items-center gap-3">
-        <select class="fld text-xs py-1.5 w-auto" id="statusFilter">
+        <select class="field text-xs py-1.5 w-auto" id="statusFilter">
           <option value="">Open queue</option>
           <option value="submitted">Submitted</option>
           <option value="under_review">Under review</option>

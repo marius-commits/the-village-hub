@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | The Village Hub</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
+  <style>
+    body{ background:var(--vh-linen); font-family:var(--vh-sans); }
+    .btn{ border-radius:999px; font-weight:600; font-size:14px; padding:.6rem 1.2rem; }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+    .btn-sage{ background:var(--vh-sage); color:#fff; }
+    .card{ background:#fff; border:1px solid var(--vh-sand); border-radius:14px; }
+    .field{ width:100%; border:1px solid #d9d2c7; border-radius:.6rem; padding:.6rem .85rem; font-size:14px; }
+    .field:focus{ outline:none; border-color:var(--vh-sage); box-shadow:0 0 0 3px rgba(138,154,91,.18); }
+    .tile{ background:#fff; border:1px solid var(--vh-sand); border-radius:14px; padding:18px 20px; }
+    .tile .n{ font-family:var(--vh-display); font-variation-settings:"opsz" 144; font-weight:600; font-size:2rem; line-height:1; color:var(--vh-bark); }
+    .tile .l{ font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:#8a7d6c; margin-top:6px; }
+    .tab{ padding:.55rem 1rem; border-radius:999px; font-size:14px; font-weight:600; color:var(--vh-bark); }
+    .tab.on{ background:var(--vh-bark); color:#fff; }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body class="antialiased text-gray-800">
+
+<!-- ===== LOGIN (same 6-digit flow as the applications tool) ===== -->
+<div id="login" class="min-h-screen flex items-center justify-center px-4">
+  <div class="card p-8 w-full max-w-sm">
+    <div class="flex items-center mb-6">
+      <img class="h-10 w-10 object-contain" src="/images/web/logo.png" alt="">
+      <span class="ml-3 font-bold text-[#6B4423] font-display">The Village Hub</span>
+    </div>
+    <h1 class="text-xl font-extrabold text-gray-900 font-display">Admin</h1>
+    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a 6-digit sign-in code.</p>
+    <div id="step-email">
+      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginEmail">Work email</label>
+      <input class="field" id="loginEmail" type="email" placeholder="you@villagehub.co.za" autocomplete="email">
+      <button class="btn btn-sage w-full mt-4" id="sendLink">Email me a code</button>
+    </div>
+    <div id="step-code" hidden>
+      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginCode">Enter the 6-digit code</label>
+      <input class="field text-center text-lg" style="letter-spacing:.4em" id="loginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="------">
+      <button class="btn btn-sage w-full mt-4" id="verifyCode">Sign in</button>
+      <button class="text-xs text-[#6B4423] underline mt-3 mx-auto block" id="resend" type="button">Use a different email</button>
+    </div>
+    <p class="text-sm mt-4" id="loginMsg"></p>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app" hidden>
+  <header class="bg-white border-b border-[#E8D9C5] sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center">
+        <img class="h-8 w-8 object-contain" src="/images/web/logo.png" alt="">
+        <span class="ml-2 font-bold text-[#6B4423] text-sm font-display">Admin</span>
+      </div>
+      <nav class="flex items-center gap-1">
+        <span class="tab on">Dashboard</span>
+        <a class="tab" href="/admin/applications">Applications</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-500 hidden sm:inline" id="whoami"></span>
+        <button class="text-xs text-[#6B4423] underline" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- headline tiles -->
+    <section>
+      <div class="flex items-end justify-between mb-3">
+        <h2 class="font-display text-2xl font-semibold text-gray-900">Applications</h2>
+        <a href="/admin/applications" class="text-sm text-[#6B4423] underline">Open the queue &rarr;</a>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="tiles"></div>
+    </section>
+
+    <!-- funnel + chart -->
+    <section class="grid lg:grid-cols-2 gap-5">
+      <div class="card p-5">
+        <h3 class="text-sm font-bold text-gray-900 mb-4">Pipeline</h3>
+        <div id="funnel" class="space-y-2.5"></div>
+      </div>
+      <div class="card p-5">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Submissions, last 30 days</h3>
+        <p class="text-xs text-gray-500 mb-4" id="chartTotal"></p>
+        <div id="chart" class="flex items-end gap-[3px] h-32"></div>
+      </div>
+    </section>
+
+    <!-- recent -->
+    <section class="card p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-gray-900">Recent applications</h3>
+        <a href="/admin/applications" class="text-xs text-[#6B4423] underline">All</a>
+      </div>
+      <div id="recent" class="divide-y divide-[#F0EAE1]"></div>
+    </section>
+
+    <!-- business & marketing links -->
+    <section>
+      <h2 class="font-display text-2xl font-semibold text-gray-900 mb-1">Business &amp; marketing</h2>
+      <p class="text-sm text-gray-500 mb-3">Live detail lives in the dedicated dashboards. Deeper inline integration is the next step.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <a href="https://villagehub-growth-report.netlify.app" target="_blank" rel="noopener" class="tile hover:border-[#8A9A5B] transition">
+          <div class="text-sm font-bold text-gray-900">Growth Report</div>
+          <div class="text-xs text-gray-500 mt-1">Spacebring MRR, members, occupancy &rarr;</div>
+        </a>
+        <a href="/ads-dashboard" target="_blank" rel="noopener" class="tile hover:border-[#8A9A5B] transition">
+          <div class="text-sm font-bold text-gray-900">Google Ads</div>
+          <div class="text-xs text-gray-500 mt-1">Campaign spend &amp; performance &rarr;</div>
+        </a>
+        <a href="https://search.google.com/search-console?resource_id=sc-domain:villagehub.co.za" target="_blank" rel="noopener" class="tile hover:border-[#8A9A5B] transition">
+          <div class="text-sm font-bold text-gray-900">Search Console</div>
+          <div class="text-xs text-gray-500 mt-1">Website search traffic &rarr;</div>
+        </a>
+        <a href="https://business.google.com/" target="_blank" rel="noopener" class="tile hover:border-[#8A9A5B] transition">
+          <div class="text-sm font-bold text-gray-900">Business Profile</div>
+          <div class="text-xs text-gray-500 mt-1">Google Business Profile &rarr;</div>
+        </a>
+      </div>
+      <p class="text-xs text-gray-400 mt-3" id="freshness"></p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const SUPABASE_URL = 'https://lcrjcdlydlfrohtppmky.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_o99egQoMPiyVoqxYGwhLEw_vzzX1fVo';
+  const $ = s => document.querySelector(s);
+  let token=null, pendingEmail=null;
+  const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt = d => d ? new Date(d).toLocaleString('en-ZA',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+
+  const STATUS_LABELS={submitted:'Submitted',under_review:'Under review',info_requested:'Waiting on applicant',approved:'Approved',activated:'Activated',declined:'Declined',withdrawn:'Withdrawn'};
+
+  function readHashToken(){
+    if(!location.hash.includes('access_token')) return null;
+    const p=new URLSearchParams(location.hash.slice(1));
+    const t=p.get('access_token');
+    if(t) history.replaceState(null,'',location.pathname+location.search);
+    return t;
+  }
+
+  function bootApp(t){
+    token=t; try{sessionStorage.setItem('vh_admin_token',t);}catch(e){}
+    $('#login').hidden=true; $('#app').hidden=false;
+    load().catch(()=>{ try{sessionStorage.removeItem('vh_admin_token');}catch(e){}
+      $('#app').hidden=true; $('#login').hidden=false; $('#step-code').hidden=true; $('#step-email').hidden=false;
+      $('#loginMsg').className='text-sm mt-4 text-red-700'; $('#loginMsg').textContent='That session is not valid. Sign in again.'; });
+  }
+
+  $('#sendLink').addEventListener('click', async () => {
+    const email=$('#loginEmail').value.trim(); const msg=$('#loginMsg');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.className='text-sm mt-4 text-red-700';msg.textContent='That email does not look right.';return;}
+    $('#sendLink').disabled=true;
+    try{
+      const res=await fetch(SUPABASE_URL+'/auth/v1/otp',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,create_user:true})});
+      if(!res.ok) throw new Error('send failed');
+      pendingEmail=email; $('#step-email').hidden=true; $('#step-code').hidden=false;
+      msg.className='text-sm mt-4 text-gray-700'; msg.textContent='We emailed a 6-digit code to '+email+'. It expires shortly.';
+      const c=$('#loginCode'); if(c) c.focus();
+    }catch(e){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='Could not send that code. Check the address, or ask Marius to add you.'; }
+    finally{ $('#sendLink').disabled=false; }
+  });
+  async function verifyCode(){
+    const code=($('#loginCode').value||'').replace(/\s/g,''); const msg=$('#loginMsg');
+    if(!/^\d{6}$/.test(code)){msg.className='text-sm mt-4 text-red-700';msg.textContent='Enter the 6-digit code from the email.';return;}
+    $('#verifyCode').disabled=true; msg.className='text-sm mt-4 text-gray-600'; msg.textContent='Checking…';
+    try{
+      const res=await fetch(SUPABASE_URL+'/auth/v1/verify',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:pendingEmail,token:code,type:'email'})});
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok||!data.access_token) throw new Error(data.error_description||data.msg||'That code did not work');
+      msg.textContent=''; bootApp(data.access_token);
+    }catch(e){ msg.className='text-sm mt-4 text-red-700'; msg.textContent=(e.message||'That code did not work')+'. Check it, or resend.'; }
+    finally{ $('#verifyCode').disabled=false; }
+  }
+  $('#verifyCode').addEventListener('click', verifyCode);
+  $('#loginCode').addEventListener('keydown', e=>{ if(e.key==='Enter'){e.preventDefault();verifyCode();} });
+  $('#resend').addEventListener('click', ()=>{ $('#step-code').hidden=true; $('#step-email').hidden=false; $('#loginCode').value=''; $('#loginMsg').textContent=''; });
+  $('#signout').addEventListener('click', ()=>{ try{sessionStorage.removeItem('vh_admin_token');}catch(e){} location.reload(); });
+
+  async function api(path){
+    const res=await fetch('/.netlify/functions/'+path,{headers:{Authorization:'Bearer '+token}});
+    const data=await res.json().catch(()=>({}));
+    if(res.status===401){ try{sessionStorage.removeItem('vh_admin_token');}catch(e){} location.reload(); return null; }
+    if(!res.ok) throw new Error(data.error||'Request failed');
+    return data;
+  }
+
+  function tile(n,l){ return `<div class="tile"><div class="n">${n}</div><div class="l">${l}</div></div>`; }
+
+  async function load(){
+    const d=await api('staff-dashboard'); if(!d) return;
+    if(d.staff) $('#whoami').textContent=d.staff.email;
+    const a=d.applications||{};
+    const bs=a.by_status||{};
+
+    $('#tiles').innerHTML =
+      tile(a.pending_review||0,'Pending review') +
+      tile(a.activated||0,'Activated members') +
+      tile(a.last_7_days||0,'New this week') +
+      tile(a.wants_registered||0,'Registered-address asks');
+
+    // funnel
+    const steps=[['Submitted', (bs.submitted||0)],['Under review',(bs.under_review||0)],['Info requested',(bs.info_requested||0)],['Approved',(bs.approved||0)],['Activated',(bs.activated||0)],['Declined',(bs.declined||0)]];
+    const maxF=Math.max(1,...steps.map(s=>s[1]));
+    $('#funnel').innerHTML = steps.map(([label,n])=>`
+      <div class="flex items-center gap-3">
+        <div class="w-28 text-xs text-gray-600 shrink-0">${label}</div>
+        <div class="flex-1 bg-[#F3EEE6] rounded-full h-5 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.max(n?8:0,Math.round(n/maxF*100))}%;background:${label==='Declined'?'#c98b7a':'var(--vh-sage)'}"></div></div>
+        <div class="w-7 text-right text-sm font-semibold text-gray-800">${n}</div>
+      </div>`).join('');
+
+    // 30-day chart
+    const daily=a.daily_30||[];
+    const byDay={}; daily.forEach(x=>byDay[x.d]=x.n);
+    const days=[]; for(let i=29;i>=0;i--){ const dt=new Date(Date.now()-i*86400000); const key=dt.toISOString().slice(0,10); days.push({key,n:byDay[key]||0}); }
+    const maxC=Math.max(1,...days.map(x=>x.n));
+    $('#chartTotal').textContent = (a.last_30_days||0)+' total';
+    $('#chart').innerHTML = days.map(x=>`<div class="flex-1 rounded-t" title="${x.key}: ${x.n}" style="height:${x.n?Math.max(6,Math.round(x.n/maxC*100)):2}%;background:${x.n?'var(--vh-sage)':'#E8D9C5'}"></div>`).join('');
+
+    // recent
+    const recent=(a.recent||[]).filter(r=>r.status!=='withdrawn').slice(0,6);
+    $('#recent').innerHTML = recent.length ? recent.map(r=>`
+      <a href="/admin/applications?ref=${encodeURIComponent(r.reference)}" class="flex items-center justify-between gap-3 py-2.5 hover:bg-[#FAF8F6] -mx-2 px-2 rounded">
+        <div><div class="text-sm font-semibold text-gray-900">${esc(r.name)}</div><div class="text-xs text-gray-500">${esc(r.plan)} &middot; ${esc(r.reference)}</div></div>
+        <div class="text-right"><span class="text-xs font-semibold" style="color:var(--vh-sage-deep)">${STATUS_LABELS[r.status]||r.status}</span><div class="text-xs text-gray-400">${fmt(r.created_at)}</div></div>
+      </a>`).join('') : '<p class="text-sm text-gray-500 py-2">No open applications yet.</p>';
+
+    if(d.spacebring && d.spacebring.captured_at){ $('#freshness').textContent='Spacebring figures as at '+fmt(d.spacebring.captured_at); }
+  }
+
+  // boot
+  const existing=readHashToken()||sessionStorage.getItem('vh_admin_token');
+  if(existing){ bootApp(existing); }
+})();
+</script>
+</body>
+</html>
