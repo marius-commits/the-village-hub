@@ -388,6 +388,10 @@
 
   // ---- package selection ----
   const planCards = $$('.plan');
+  // Declared up here because the deep-link auto-select below calls selectPlan()
+  // -> syncProRules(), which reads typeSel. Declaring it later put it in the
+  // temporal dead zone and threw on ?plan= links, breaking form init.
+  const typeSel = $('#company_type');
   function selectPlan(card){
     planCards.forEach(c => c.classList.remove('sel'));
     card.classList.add('sel');
@@ -418,7 +422,7 @@
   // ---- Pro + registration interplay ----
   // The registered CIPC/SARS address is only lawful for a registered entity,
   // and only included with Pro. Keep the form honest about both.
-  const typeSel = $('#company_type');
+  // (typeSel is declared above, before the deep-link auto-select that uses it.)
   function syncProRules(){
     const notReg = typeSel.value === 'not_registered';
     const isPro  = chosenPlan() === 'Village Virtual Pro';
