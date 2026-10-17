@@ -80,6 +80,46 @@
       if (!dismissed) setTimeout(function () { box.classList.add('is-nudging'); }, 14000);
       $('.vh-wa__close', box).addEventListener('click', function () { box.classList.remove('is-nudging'); try { sessionStorage.setItem('vh-nudge', '1'); } catch (e) {} });
     }
+    mountPromo();
+  }
+
+  /* ---------- founding rate promo banner ----------
+     Runs until the sign-up window closes. Remove this block, the CSS in
+     vh.css and the PROMO_* constants once the campaign is over. */
+  function mountPromo() {
+    var PROMO_END  = '2026-12-31T23:59:59+02:00';
+    var PROMO_PATH = '/founding-rate';
+    var PROMO_KEY  = 'vh-promo-founding';
+
+    if (new Date() > new Date(PROMO_END)) return;
+    if (location.pathname.indexOf(PROMO_PATH) === 0) return;
+    if (d.body.hasAttribute('data-no-promo')) return;
+    if ($('.vh-promo')) return;
+    try { if (localStorage.getItem(PROMO_KEY) === '1') return; } catch (e) {}
+
+    var bar = el('div', 'vh-promo');
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Founding Rate offer');
+    bar.innerHTML =
+      '<div class="vh-promo__in">' +
+        '<span class="vh-promo__tag">Founding Rate</span>' +
+        '<span class="vh-promo__txt"><b>Half price for six months.</b> Your own desk from <i>R1&nbsp;750</i> a month. Fifteen memberships, closing 31 December.</span>' +
+        '<a class="vh-promo__cta" href="' + PROMO_PATH + '">See the rates</a>' +
+      '</div>' +
+      '<button class="vh-promo__x" aria-label="Dismiss this offer">&times;</button>';
+    d.body.appendChild(bar);
+    d.body.classList.add('vh-promo-on');
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { bar.classList.add('is-in'); });
+    });
+
+    $('.vh-promo__x', bar).addEventListener('click', function () {
+      bar.classList.remove('is-in');
+      d.body.classList.remove('vh-promo-on');
+      try { localStorage.setItem(PROMO_KEY, '1'); } catch (e) {}
+      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 500);
+    });
   }
 
   /* ---------- page transitions ---------- */

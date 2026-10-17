@@ -297,3 +297,48 @@ details[open] .chev { transform: rotate(180deg); }
 @media (min-width: 640px) { .vh-container { padding: 0 1.5rem; } }
 @media (min-width: 1024px) { .vh-container { padding: 0 2rem; } }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ---------- founding rate promo banner ---------- */
+.vh-promo {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 950;
+  background: linear-gradient(100deg, #4A2E17 0%, #6B4423 58%, #5A3A1D 100%);
+  color: #F8F1E5;
+  box-shadow: 0 -8px 28px rgba(31,29,26,.26);
+  transform: translateY(110%);
+  transition: transform .5s var(--vh-ease);
+}
+.vh-promo.is-in { transform: none; }
+.vh-promo__in {
+  max-width: 80rem; margin: 0 auto; padding: .85rem 3rem .85rem 1.25rem;
+  display: flex; align-items: center; justify-content: center; gap: 1.1rem; flex-wrap: wrap;
+}
+.vh-promo__tag {
+  font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  background: var(--vh-gold); color: #3A2412; padding: .3rem .6rem; border-radius: 999px; flex: none;
+}
+.vh-promo__txt { font-size: .95rem; line-height: 1.35; }
+.vh-promo__txt b { font-weight: 700; color: #F8F1E5; }
+.vh-promo__txt i { font-style: normal; color: var(--vh-gold-light); font-weight: 600; }
+.vh-promo__cta {
+  flex: none; background: linear-gradient(135deg, #E3C878 0%, #C9A24B 100%); color: #3A2412;
+  font-weight: 700; font-size: .9rem; padding: .6rem 1.15rem; border-radius: 8px; text-decoration: none;
+  transition: transform .2s var(--vh-ease);
+}
+.vh-promo__cta:hover { transform: translateY(-2px); }
+.vh-promo__x {
+  position: absolute; top: 50%; right: .6rem; transform: translateY(-50%);
+  width: 30px; height: 30px; border-radius: 999px; border: 0; cursor: pointer;
+  background: rgba(248,241,229,.12); color: #F8F1E5; font-size: 17px; line-height: 1;
+}
+.vh-promo__x:hover { background: rgba(248,241,229,.22); }
+body.vh-promo-on .vh-wa { bottom: 5.5rem; }
+@media (max-width: 640px) {
+  .vh-promo__in { padding: .75rem 2.6rem .75rem 1rem; gap: .6rem; justify-content: flex-start; }
+  .vh-promo__txt { font-size: .85rem; flex: 1 1 100%; order: 2; }
+  .vh-promo__cta { order: 3; font-size: .82rem; padding: .5rem .9rem; }
+  .vh-promo__tag { order: 1; }
+  body.vh-promo-on .vh-wa { bottom: 7.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vh-promo { transition: none; }
+}
