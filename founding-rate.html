@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The Founding Rate | Half Price for Six Months | The Village Hub Stellenbosch</title>
-  <meta name="description" content="Half price for six months on monthly desk memberships at The Village Hub, Nooitgedacht Village, Stellenbosch. Your own permanent desk from R1 750 a month. Fifteen founding memberships, closing 31 December 2026." />
+  <meta name="description" content="Half price for six months on desk memberships at The Village Hub, Nooitgedacht Village, Stellenbosch. Your own permanent desk from R1 750 a month. Fifteen founding memberships, closing 31 December 2026. Book online or try a free day first." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://www.villagehub.co.za/founding-rate" />
 
@@ -34,7 +34,7 @@
     "@context": "https://schema.org",
     "@type": "Offer",
     "name": "The Founding Rate",
-    "description": "Half price for six months on monthly desk memberships at The Village Hub, Stellenbosch.",
+    "description": "Half price for six months on desk memberships at The Village Hub, Stellenbosch.",
     "url": "https://www.villagehub.co.za/founding-rate",
     "priceCurrency": "ZAR",
     "price": "1750",
@@ -57,8 +57,6 @@
   }
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18265049370"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -69,392 +67,514 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/vh.css?v=3">
 
   <style>
+    /* ============================================================
+       Founding Rate — page-scoped styles. All selectors prefixed
+       .fr- to avoid colliding with vh.css utility classes.
+       ============================================================ */
     html, body { overflow-x: hidden; max-width: 100vw; }
-    body { font-family: var(--vh-sans); color: var(--vh-ink); background: #fff; }
-    h1, h2, h3 { font-family: var(--vh-display); font-weight: 600; letter-spacing: -.02em; }
-
-    /* ---------- hero ---------- */
-    .fr-hero {
-      background:
-        radial-gradient(1100px 520px at 78% 12%, rgba(201,162,75,.22), transparent 62%),
-        linear-gradient(160deg, #4A2E17 0%, #6B4423 48%, #3A2412 100%);
-      color: #F8F1E5;
-      position: relative;
-      overflow: hidden;
+    body.fr-body {
+      margin: 0;
+      font-family: var(--vh-sans);
+      color: var(--vh-ink);
+      background: #FFFCF7;
+      -webkit-font-smoothing: antialiased;
     }
-    .fr-hero::after {
-      content: "";
-      position: absolute; inset: 0;
-      background-image: radial-gradient(rgba(248,241,229,.055) 1px, transparent 1px);
-      background-size: 22px 22px;
-      pointer-events: none;
-    }
-    .fr-hero > * { position: relative; z-index: 1; }
-    .fr-rule { width: 56px; height: 2px; background: var(--vh-gold); border: 0; }
-
-    .fr-figure {
+    .fr-body h1, .fr-body h2, .fr-body h3 {
       font-family: var(--vh-display);
       font-variation-settings: "opsz" 144;
-      font-weight: 600;
-      letter-spacing: -.04em;
-      line-height: .92;
+      font-weight: 500;
+      letter-spacing: -.025em;
+      line-height: 1.05;
+      margin: 0;
     }
-    .fr-strike {
-      position: relative;
-      color: rgba(248,241,229,.5);
-      font-weight: 400;
-    }
-    .fr-strike::after {
-      content: ""; position: absolute; left: -2%; right: -2%; top: 52%;
-      height: 2px; background: var(--vh-gold); transform: rotate(-6deg);
+    .fr-body p { margin: 0; }
+    .fr-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+    @media (min-width: 900px) { .fr-wrap { padding: 0 40px; } }
+
+    .fr-num {
+      font-family: var(--vh-display);
+      font-variation-settings: "opsz" 144;
+      font-weight: 500;
+      letter-spacing: -.045em;
+      font-feature-settings: "tnum" 1;
     }
 
-    /* ---------- tier cards ---------- */
-    .fr-card {
-      background: #fff;
-      border: 1px solid var(--vh-sand);
-      border-radius: 18px;
-      padding: 28px;
-      display: flex; flex-direction: column;
-      transition: transform .25s var(--vh-ease), box-shadow .25s var(--vh-ease);
+    /* ---------- hero: asymmetric split, card overlapping image ---------- */
+    .fr-hero { background: #FFFCF7; padding: 108px 0 0; }
+    .fr-hero__grid { display: grid; gap: 28px; }
+    @media (min-width: 980px) {
+      .fr-hero__grid { grid-template-columns: 1.15fr .85fr; gap: 0; align-items: stretch; }
     }
-    .fr-card:hover { transform: translateY(-4px); box-shadow: var(--vh-shadow-lift); }
-    .fr-card--hero {
-      border: 2px solid var(--vh-gold);
-      box-shadow: 0 20px 44px rgba(107,68,35,.14);
+    .fr-hero__frame {
       position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 380px;
+      background: var(--vh-sand);
     }
-    .fr-flag {
-      position: absolute; top: -13px; left: 28px;
-      background: var(--vh-gold); color: #3A2412;
-      font-size: .66rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 999px;
+    @media (min-width: 980px) { .fr-hero__frame { min-height: 560px; border-radius: 24px 0 0 24px; } }
+    .fr-hero__frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fr-hero__frame::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(185deg, rgba(58,36,18,.42) 0%, rgba(58,36,18,.10) 38%, rgba(42,26,12,.72) 78%, rgba(32,20,9,.88) 100%);
     }
-    .fr-was { color: #8C8275; text-decoration: line-through; text-decoration-color: #C9A24B; text-decoration-thickness: 2px; }
-    .fr-list li { padding-left: 1.6rem; position: relative; margin: .5rem 0; color: #514A41; }
-    .fr-list li::before {
-      content: ""; position: absolute; left: 0; top: .5rem;
-      width: .7rem; height: .4rem;
-      border-left: 2px solid var(--vh-sage); border-bottom: 2px solid var(--vh-sage);
-      transform: rotate(-45deg);
+    .fr-hero__over {
+      position: absolute; inset: auto 0 0 0; padding: 28px;
+      color: #F8F1E5; z-index: 2;
+    }
+    .fr-hero__over h1 { font-size: clamp(2.4rem, 6.2vw, 4.3rem); font-weight: 400; }
+    .fr-hero__over p { margin-top: 14px; font-size: 1.05rem; max-width: 34ch; color: #EFE3D2; line-height: 1.5; }
+
+    .fr-offer {
+      background: linear-gradient(168deg, #4A2E17 0%, #6B4423 62%, #53351B 100%);
+      color: #F8F1E5;
+      border-radius: 20px;
+      padding: 34px 28px 30px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    @media (min-width: 980px) { .fr-offer { border-radius: 0 24px 24px 0; padding: 48px 40px; } }
+    .fr-offer__kicker { font-size: .9rem; color: var(--vh-gold-light); margin-bottom: 20px; }
+    .fr-offer__price { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+    .fr-offer__price .now { font-size: clamp(3.2rem, 8vw, 4.6rem); color: #fff; }
+    .fr-offer__price .per { font-size: 1rem; color: #D9C7B0; }
+    .fr-offer__was {
+      margin-top: 8px; font-size: 1.2rem; color: #BBA48A;
+      text-decoration: line-through; text-decoration-color: var(--vh-gold); text-decoration-thickness: 2px;
+    }
+    .fr-offer__note { margin-top: 20px; font-size: .95rem; color: #E3D4BF; line-height: 1.6; }
+    .fr-offer__note strong { color: #fff; font-weight: 600; }
+
+    /* ---------- the one bold element: founding tally ---------- */
+    .fr-tally { margin-top: 26px; }
+    .fr-tally__row { display: flex; gap: 6px; }
+    .fr-tally__mark {
+      flex: 1 1 0; height: 30px; border-radius: 4px;
+      background: linear-gradient(180deg, #E3C878, #C9A24B);
+      opacity: 0;
+      transform: translateY(6px);
+      animation: frMark .5s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes frMark { to { opacity: 1; transform: none; } }
+    .fr-tally__cap { margin-top: 12px; font-size: .9rem; color: #E3D4BF; }
+    .fr-tally__cap b { color: var(--vh-gold-light); font-weight: 600; }
+    @media (prefers-reduced-motion: reduce) {
+      .fr-tally__mark { animation: none; opacity: 1; transform: none; }
     }
 
     /* ---------- buttons ---------- */
-    .fr-btn { display:inline-block; border-radius: 10px; font-weight: 600; text-align:center; transition: transform .18s var(--vh-ease), box-shadow .18s var(--vh-ease); }
-    .fr-btn:hover { transform: translateY(-2px); }
-    .fr-btn--gold { background: linear-gradient(135deg, #E3C878 0%, #C9A24B 100%); color: #3A2412; box-shadow: 0 10px 22px rgba(201,162,75,.3); }
-    .fr-btn--sage { background: linear-gradient(135deg, #9FB78E 0%, #7F9368 100%); color: #fff; box-shadow: 0 10px 22px rgba(138,154,91,.26); }
-    .fr-btn--ghost { background: #fff; color: var(--vh-bark); border: 1px solid var(--vh-sand); }
-    .fr-btn--ghost:hover { background: var(--vh-linen); }
-
-    /* ---------- counter strip ---------- */
-    .fr-strip { background: var(--vh-cream); border-top: 1px solid var(--vh-sand); border-bottom: 1px solid var(--vh-sand); }
-    .fr-stat b { font-family: var(--vh-display); font-size: 2rem; color: var(--vh-bark); display:block; line-height:1; }
-    .fr-stat span { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: #8C8275; }
-
-    .fr-faq summary { cursor: pointer; list-style: none; }
-    .fr-faq summary::-webkit-details-marker { display: none; }
-    .fr-faq details { border-bottom: 1px solid var(--vh-sand); }
-    .fr-faq details[open] summary .fr-chev { transform: rotate(45deg); }
-    .fr-chev { transition: transform .2s ease; display:inline-block; }
-
-    .fr-input { width:100%; padding:12px 14px; border:1px solid #D9C8A6; border-radius:10px; font-size:1rem; background:#fff; }
-    .fr-input:focus { outline: 2px solid var(--vh-sage); outline-offset: 1px; border-color: transparent; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .fr-card, .fr-btn { transition: none; }
-      .fr-card:hover, .fr-btn:hover { transform: none; }
+    .fr-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--vh-sans); font-weight: 600; font-size: .97rem;
+      border-radius: 10px; padding: 14px 24px; text-decoration: none;
+      border: 1px solid transparent; cursor: pointer;
+      transition: transform .16s var(--vh-ease), box-shadow .16s var(--vh-ease), background .16s;
     }
+    .fr-btn:hover { transform: translateY(-2px); }
+    .fr-btn:focus-visible { outline: 3px solid var(--vh-gold); outline-offset: 3px; }
+    .fr-btn--gold { background: linear-gradient(170deg, #E3C878, #C9A24B); color: #3A2412; box-shadow: 0 12px 26px rgba(201,162,75,.32); }
+    .fr-btn--bark { background: var(--vh-bark); color: #F8F1E5; }
+    .fr-btn--bark:hover { background: var(--vh-bark-deep); }
+    .fr-btn--line { background: transparent; color: #F8F1E5; border-color: rgba(248,241,229,.45); }
+    .fr-btn--line:hover { background: rgba(248,241,229,.1); }
+    .fr-btn--quiet { background: #fff; color: var(--vh-bark); border-color: var(--vh-sand); }
+    .fr-btn--quiet:hover { background: var(--vh-linen); }
+    .fr-hero__acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+    /* ---------- codes band ---------- */
+    .fr-codes { background: var(--vh-cream); border-block: 1px solid var(--vh-sand); margin-top: 72px; padding: 40px 0; }
+    .fr-codes__in { display: grid; gap: 22px; align-items: center; }
+    @media (min-width: 820px) { .fr-codes__in { grid-template-columns: 1fr auto; gap: 40px; } }
+    .fr-codes h2 { font-size: 1.6rem; color: var(--vh-bark-deep); }
+    .fr-codes p { margin-top: 8px; color: #6A5C4C; max-width: 58ch; line-height: 1.6; }
+    .fr-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+    .fr-chip {
+      display: flex; align-items: center; gap: 12px;
+      background: #fff; border: 1.5px dashed var(--vh-gold);
+      border-radius: 12px; padding: 12px 16px; cursor: pointer;
+      font-family: var(--vh-sans); text-align: left;
+    }
+    .fr-chip:hover { background: #FFFBF2; }
+    .fr-chip:focus-visible { outline: 3px solid var(--vh-gold); outline-offset: 2px; }
+    .fr-chip__code { font-size: 1.1rem; font-weight: 700; letter-spacing: .06em; color: var(--vh-bark-deep); }
+    .fr-chip__for { display: block; font-size: .76rem; color: #8C7B66; font-weight: 500; margin-top: 2px; letter-spacing: 0; }
+    .fr-chip__act { font-size: .78rem; color: var(--vh-sage-deep); font-weight: 600; white-space: nowrap; }
+
+    /* ---------- tiers ---------- */
+    .fr-sec { padding: 76px 0; }
+    .fr-sec--tint { background: var(--vh-linen); }
+    .fr-head { max-width: 46ch; }
+    .fr-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); color: var(--vh-ink); }
+    .fr-head p { margin-top: 14px; color: #5B5044; font-size: 1.06rem; line-height: 1.65; }
+
+    .fr-tiers { margin-top: 44px; display: grid; gap: 22px; }
+    @media (min-width: 680px) { .fr-tiers { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1080px) { .fr-tiers { grid-template-columns: repeat(4, 1fr); } }
+
+    .fr-tier {
+      background: #fff; border: 1px solid var(--vh-sand); border-radius: 16px;
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .fr-tier--lead { border: 2px solid var(--vh-gold); box-shadow: 0 22px 50px rgba(107,68,35,.15); }
+    .fr-tier__pic { position: relative; aspect-ratio: 4 / 3; background: var(--vh-sand); }
+    .fr-tier__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fr-tier__seats {
+      position: absolute; left: 12px; bottom: 12px;
+      background: rgba(31,29,26,.82); color: #F8F1E5;
+      font-size: .76rem; font-weight: 600; padding: 5px 10px; border-radius: 999px;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .fr-tier__body { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+    .fr-tier__name { font-size: 1.22rem; color: var(--vh-bark); }
+    .fr-tier__what { margin-top: 4px; font-size: .9rem; color: #8C7B66; }
+    .fr-tier__cost { margin-top: 18px; display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+    .fr-tier__cost .now { font-size: 2.1rem; color: var(--vh-ink); }
+    .fr-tier__cost .per { font-size: .85rem; color: #8C7B66; }
+    .fr-tier__was { margin-top: 3px; font-size: .88rem; color: #9B8A75; }
+    .fr-tier__was s { text-decoration-color: var(--vh-gold); text-decoration-thickness: 2px; }
+    .fr-tier__was em { font-style: normal; color: var(--vh-sage-deep); font-weight: 600; }
+    .fr-tier__list { list-style: none; margin: 18px 0 0; padding: 0; flex: 1; }
+    .fr-tier__list li { position: relative; padding-left: 20px; margin: 7px 0; font-size: .91rem; color: #574C40; line-height: 1.5; }
+    .fr-tier__list li::before {
+      content: ""; position: absolute; left: 0; top: .42em;
+      width: 9px; height: 5px; border-left: 2px solid var(--vh-sage); border-bottom: 2px solid var(--vh-sage);
+      transform: rotate(-45deg);
+    }
+    .fr-tier__code { margin-top: 18px; font-size: .8rem; color: #8C7B66; }
+    .fr-tier__code b { color: var(--vh-bark-deep); letter-spacing: .05em; }
+    .fr-tier .fr-btn { margin-top: 10px; width: 100%; }
+
+    /* ---------- try first ---------- */
+    .fr-try { display: grid; gap: 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--vh-sand); background: #fff; }
+    @media (min-width: 880px) { .fr-try { grid-template-columns: .9fr 1.1fr; } }
+    .fr-try__pic { min-height: 260px; background: var(--vh-sand); }
+    .fr-try__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fr-try__body { padding: 34px 28px; }
+    @media (min-width: 880px) { .fr-try__body { padding: 48px 44px; } }
+    .fr-try__body h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--vh-ink); }
+    .fr-try__body p { margin-top: 14px; color: #5B5044; line-height: 1.65; max-width: 52ch; }
+    .fr-try__acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+    .fr-try__fine { margin-top: 16px; font-size: .84rem; color: #8C7B66; }
+
+    /* ---------- included ---------- */
+    .fr-inc { margin-top: 40px; display: grid; gap: 14px 36px; }
+    @media (min-width: 720px) { .fr-inc { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1020px) { .fr-inc { grid-template-columns: repeat(3, 1fr); } }
+    .fr-inc div { border-top: 1px solid var(--vh-sand); padding-top: 13px; }
+    .fr-inc h3 { font-size: 1.02rem; color: var(--vh-bark); font-family: var(--vh-sans); font-weight: 600; letter-spacing: 0; }
+    .fr-inc p { margin-top: 5px; font-size: .9rem; color: #6A5C4C; line-height: 1.55; }
+
+    /* ---------- faq ---------- */
+    .fr-faq { max-width: 760px; margin-top: 36px; }
+    .fr-faq details { border-bottom: 1px solid var(--vh-sand); }
+    .fr-faq summary {
+      cursor: pointer; list-style: none; padding: 20px 0;
+      display: flex; justify-content: space-between; gap: 20px; align-items: baseline;
+      font-size: 1.08rem; font-weight: 600; color: var(--vh-bark-deep);
+    }
+    .fr-faq summary::-webkit-details-marker { display: none; }
+    .fr-faq summary:focus-visible { outline: 3px solid var(--vh-gold); outline-offset: 2px; }
+    .fr-faq span.sign { color: var(--vh-gold); font-size: 1.3rem; line-height: 1; flex: none; }
+    .fr-faq p { padding: 0 0 20px; color: #5B5044; line-height: 1.7; max-width: 66ch; }
+
+    /* ---------- close ---------- */
+    .fr-close {
+      background: linear-gradient(168deg, #4A2E17 0%, #6B4423 60%, #3A2412 100%);
+      color: #F8F1E5; padding: 78px 0; text-align: center;
+    }
+    .fr-close h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); color: #fff; }
+    .fr-close p { margin-top: 16px; color: #E3D4BF; font-size: 1.05rem; max-width: 50ch; margin-inline: auto; line-height: 1.6; }
+    .fr-close__acts { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+    .fr-close__contact { margin-top: 26px; font-size: .92rem; color: var(--vh-gold-light); }
+    .fr-close__contact a { color: inherit; }
+
+    .fr-toast {
+      position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 14px);
+      background: var(--vh-ink); color: #F8F1E5; padding: 11px 20px; border-radius: 999px;
+      font-size: .9rem; font-weight: 500; opacity: 0; pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease; z-index: 1200;
+    }
+    .fr-toast.on { opacity: 1; transform: translate(-50%, 0); }
   </style>
 </head>
-<body class="antialiased">
+<body class="fr-body">
 
   <div data-vh-nav></div>
 
   <!-- ============ HERO ============ -->
-  <section class="fr-hero pt-28 pb-16 md:pt-32 md:pb-20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <p class="text-[#C9A24B] text-xs font-semibold uppercase tracking-[.18em]">The Founding Rate &middot; Nooitgedacht Village, Stellenbosch</p>
-      <hr class="fr-rule my-5">
+  <header class="fr-hero">
+    <div class="fr-wrap">
+      <div class="fr-hero__grid">
 
-      <h1 class="text-4xl md:text-6xl leading-[1.04]">Half price for six months.</h1>
-
-      <p class="mt-6 text-lg md:text-xl text-[#E8D9C5] max-w-2xl">
-        Twelve permanent desks have been standing empty since we opened. Until 31 December, the first fifteen members pay half.
-      </p>
-
-      <div class="mt-10 flex flex-wrap items-end gap-x-10 gap-y-6">
-        <div>
-          <p class="text-xs uppercase tracking-[.14em] text-[#C9A24B] mb-2">Your own desk, from</p>
-          <p class="fr-figure text-6xl md:text-7xl text-[#F8F1E5]">R1&nbsp;750<span class="text-2xl md:text-3xl font-normal text-[#E8D9C5]">/mo</span></p>
+        <div class="fr-hero__frame">
+          <img src="/images/web/hero-overview.jpg"
+               alt="Dedicated desks under the timber trusses at The Village Hub, Stellenbosch"
+               width="1600" height="1067" fetchpriority="high" decoding="async">
+          <div class="fr-hero__over">
+            <h1>Half price<br>for six months</h1>
+            <p>A desk of your own at Nooitgedacht Village, two minutes from home.</p>
+          </div>
         </div>
-        <div class="pb-2">
-          <p class="text-xs uppercase tracking-[.14em] text-[#C9A24B] mb-2">Normally</p>
-          <p class="fr-figure fr-strike text-4xl md:text-5xl">R3&nbsp;500</p>
+
+        <div class="fr-offer">
+          <p class="fr-offer__kicker">Village Resident, your own permanent desk</p>
+
+          <div class="fr-offer__price">
+            <span class="fr-num now">R1&thinsp;750</span>
+            <span class="per">per month, excl VAT</span>
+          </div>
+          <p class="fr-offer__was fr-num">R3&thinsp;500</p>
+
+          <p class="fr-offer__note">
+            Your rate holds for <strong>six months</strong> from the day you start, then returns to the normal price. Sign up by <strong>31 December 2026</strong>.
+          </p>
+
+          <div class="fr-tally">
+            <div class="fr-tally__row" id="tally" aria-hidden="true"></div>
+            <p class="fr-tally__cap"><b id="tallyCount">15</b> founding memberships, none claimed yet</p>
+          </div>
+
+          <div class="fr-hero__acts">
+            <a class="fr-btn fr-btn--gold" href="#rates">See the four rates</a>
+            <a class="fr-btn fr-btn--line" href="#try" id="tourTop">Try a free day first</a>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-10 flex flex-wrap gap-3">
-        <a href="#rates" class="fr-btn fr-btn--gold px-7 py-3.5">See all four rates</a>
-        <a id="heroWa" href="#" class="fr-btn fr-btn--ghost px-7 py-3.5">Talk to Christel</a>
       </div>
-
-      <p class="mt-5 text-sm text-[#C9A24B]/90">
-        Prices exclude VAT &middot; Fifteen memberships only &middot; Sign up by 31 December 2026
-      </p>
     </div>
-  </section>
+  </header>
 
-  <!-- ============ STRIP ============ -->
-  <section class="fr-strip py-7">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="fr-stat"><b>15</b><span>Memberships</span></div>
-      <div class="fr-stat"><b>6</b><span>Months half price</span></div>
-      <div class="fr-stat"><b id="daysLeft">&mdash;</b><span>Days to sign up</span></div>
-      <div class="fr-stat"><b>5.0</b><span>Google rating</span></div>
+  <!-- ============ CODES ============ -->
+  <section class="fr-codes">
+    <div class="fr-wrap fr-codes__in">
+      <div>
+        <h2>Two codes, and where each one works</h2>
+        <p>Enter the code at checkout in the member portal. The discount then runs for six billing months and falls away on its own. New members only.</p>
+      </div>
+      <div class="fr-chips">
+        <button class="fr-chip" data-code="VILLAGE50" type="button">
+          <span class="fr-chip__code">VILLAGE50<span class="fr-chip__for">Resident and Local</span></span>
+          <span class="fr-chip__act">Copy</span>
+        </button>
+        <button class="fr-chip" data-code="VILLAGE30" type="button">
+          <span class="fr-chip__code">VILLAGE30<span class="fr-chip__for">Visitor and Wanderer</span></span>
+          <span class="fr-chip__act">Copy</span>
+        </button>
+      </div>
     </div>
   </section>
 
   <!-- ============ RATES ============ -->
-  <section id="rates" class="py-16 md:py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-2xl">
-        <p class="text-xs font-semibold uppercase tracking-[.16em] text-[#8A9A5B]">The rates</p>
-        <h2 class="mt-3 text-3xl md:text-4xl text-[#1F1D1A]">Four ways in. All of them cheaper until June.</h2>
-        <p class="mt-4 text-[#514A41] text-lg">
-          The monthly memberships are half price. The flexible day memberships are 30% off. Your rate holds for six months from the day you start, then returns to the normal price.
-        </p>
+  <section class="fr-sec" id="rates">
+    <div class="fr-wrap">
+      <div class="fr-head">
+        <h2>Four ways in, all of them cheaper until June</h2>
+        <p>The two monthly memberships are half price. The day memberships are 30% off. Book any of them online and the desk is yours the same day.</p>
       </div>
 
-      <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div class="fr-tiers">
 
-        <!-- Resident -->
-        <article class="fr-card fr-card--hero">
-          <span class="fr-flag">Only 12 exist</span>
-          <h3 class="text-xl text-[#6B4423]">Village Resident</h3>
-          <p class="mt-1.5 text-sm text-[#8C8275]">Your own permanent desk</p>
-          <p class="mt-6">
-            <span class="fr-figure text-4xl text-[#1F1D1A]">R1&nbsp;750</span>
-            <span class="text-[#8C8275] text-sm">/month</span>
-          </p>
-          <p class="mt-1 text-sm"><span class="fr-was">R3 500</span> <span class="text-[#8A9A5B] font-semibold">save 50%</span></p>
-          <ul class="fr-list mt-6 text-sm flex-1">
-            <li>A desk that stays yours, set up overnight</li>
-            <li>Unlimited access, every day</li>
-            <li>Lockable storage at your desk</li>
-            <li>Member rates on both boardrooms</li>
-            <li>Fibre, parking, filter coffee, kitchen</li>
-          </ul>
-          <a data-tier="Village Resident" data-code="VILLAGE50" class="tierWa fr-btn fr-btn--gold px-5 py-3 mt-7" href="#">Claim a desk</a>
-          <a data-signup class="fr-btn fr-btn--ghost px-5 py-2.5 mt-2 text-sm hidden" href="#">Sign up online</a>
+        <article class="fr-tier fr-tier--lead">
+          <div class="fr-tier__pic">
+            <img src="/images/web/hotdesks-4.jpg"
+                 alt="A dedicated desk at The Village Hub" width="800" height="600" loading="lazy" decoding="async">
+            <span class="fr-tier__seats">12 of 12 open</span>
+          </div>
+          <div class="fr-tier__body">
+            <h3 class="fr-tier__name">Village Resident</h3>
+            <p class="fr-tier__what">Your own permanent desk</p>
+            <p class="fr-tier__cost"><span class="fr-num now">R1&thinsp;750</span><span class="per">/month</span></p>
+            <p class="fr-tier__was"><s class="fr-num">R3 500</s> <em>save 50%</em></p>
+            <ul class="fr-tier__list">
+              <li>A desk that stays yours, set up overnight</li>
+              <li>Unlimited access, every day</li>
+              <li>Two credits a month towards boardroom time</li>
+              <li>Fibre, parking, filter coffee, kitchen</li>
+            </ul>
+            <p class="fr-tier__code">Use code <b>VILLAGE50</b></p>
+            <a class="fr-btn fr-btn--gold" data-book="Village Resident"
+               href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks/fdf3d571-53ed-4a97-a728-0ea37a89315b"
+               target="_blank" rel="noopener">Book this desk</a>
+          </div>
         </article>
 
-        <!-- Local -->
-        <article class="fr-card">
-          <h3 class="text-xl text-[#6B4423]">Village Local</h3>
-          <p class="mt-1.5 text-sm text-[#8C8275]">Any desk, unlimited</p>
-          <p class="mt-6">
-            <span class="fr-figure text-4xl text-[#1F1D1A]">R1&nbsp;500</span>
-            <span class="text-[#8C8275] text-sm">/month</span>
-          </p>
-          <p class="mt-1 text-sm"><span class="fr-was">R3 000</span> <span class="text-[#8A9A5B] font-semibold">save 50%</span></p>
-          <ul class="fr-list mt-6 text-sm flex-1">
-            <li>Unlimited access, sit where you like</li>
-            <li>Every day the Hub is open</li>
-            <li>Member rates on both boardrooms</li>
-            <li>Fibre, parking, filter coffee, kitchen</li>
-          </ul>
-          <a data-tier="Village Local" data-code="VILLAGE50" class="tierWa fr-btn fr-btn--sage px-5 py-3 mt-7" href="#">Claim this rate</a>
-          <a data-signup class="fr-btn fr-btn--ghost px-5 py-2.5 mt-2 text-sm hidden" href="#">Sign up online</a>
+        <article class="fr-tier">
+          <div class="fr-tier__pic">
+            <img src="/images/web/hotdesks-2.jpg"
+                 alt="Open desk area at The Village Hub" width="800" height="600" loading="lazy" decoding="async">
+            <span class="fr-tier__seats">6 of 8 open</span>
+          </div>
+          <div class="fr-tier__body">
+            <h3 class="fr-tier__name">Village Local</h3>
+            <p class="fr-tier__what">Any desk, unlimited</p>
+            <p class="fr-tier__cost"><span class="fr-num now">R1&thinsp;500</span><span class="per">/month</span></p>
+            <p class="fr-tier__was"><s class="fr-num">R3 000</s> <em>save 50%</em></p>
+            <ul class="fr-tier__list">
+              <li>Come and go, sit wherever you like</li>
+              <li>Every day the Hub is open</li>
+              <li>Member rates on both boardrooms</li>
+              <li>Fibre, parking, filter coffee, kitchen</li>
+            </ul>
+            <p class="fr-tier__code">Use code <b>VILLAGE50</b></p>
+            <a class="fr-btn fr-btn--bark" data-book="Village Local"
+               href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks/62006d9a-9f27-44ac-9bdf-440656496788"
+               target="_blank" rel="noopener">Book a month pass</a>
+          </div>
         </article>
 
-        <!-- Visitor -->
-        <article class="fr-card">
-          <h3 class="text-xl text-[#6B4423]">Village Visitor</h3>
-          <p class="mt-1.5 text-sm text-[#8C8275]">10 days a month</p>
-          <p class="mt-6">
-            <span class="fr-figure text-4xl text-[#1F1D1A]">R1&nbsp;120</span>
-            <span class="text-[#8C8275] text-sm">/month</span>
-          </p>
-          <p class="mt-1 text-sm"><span class="fr-was">R1 600</span> <span class="text-[#8A9A5B] font-semibold">save 30%</span></p>
-          <ul class="fr-list mt-6 text-sm flex-1">
-            <li>Ten days a month, any days you like</li>
-            <li>R112 a day, less than two coffees</li>
-            <li>Member rates on both boardrooms</li>
-            <li>Fibre, parking, filter coffee, kitchen</li>
-          </ul>
-          <a data-tier="Village Visitor" data-code="VILLAGE30" class="tierWa fr-btn fr-btn--sage px-5 py-3 mt-7" href="#">Claim this rate</a>
-          <a data-signup class="fr-btn fr-btn--ghost px-5 py-2.5 mt-2 text-sm hidden" href="#">Sign up online</a>
+        <article class="fr-tier">
+          <div class="fr-tier__pic">
+            <img src="/images/web/hotdesks-3.jpg"
+                 alt="Members working at The Village Hub" width="800" height="600" loading="lazy" decoding="async">
+            <span class="fr-tier__seats">6 of 8 open</span>
+          </div>
+          <div class="fr-tier__body">
+            <h3 class="fr-tier__name">Village Visitor</h3>
+            <p class="fr-tier__what">Ten days a month</p>
+            <p class="fr-tier__cost"><span class="fr-num now">R1&thinsp;120</span><span class="per">/month</span></p>
+            <p class="fr-tier__was"><s class="fr-num">R1 600</s> <em>save 30%</em></p>
+            <ul class="fr-tier__list">
+              <li>Ten days a month, whichever days suit</li>
+              <li>R112 a day, less than two flat whites</li>
+              <li>Member rates on both boardrooms</li>
+              <li>Fibre, parking, filter coffee, kitchen</li>
+            </ul>
+            <p class="fr-tier__code">Use code <b>VILLAGE30</b></p>
+            <a class="fr-btn fr-btn--bark" data-book="Village Visitor"
+               href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks/add342f3-dabb-4aac-ae70-a315536fac31"
+               target="_blank" rel="noopener">Book ten days</a>
+          </div>
         </article>
 
-        <!-- Wanderer -->
-        <article class="fr-card">
-          <h3 class="text-xl text-[#6B4423]">Village Wanderer</h3>
-          <p class="mt-1.5 text-sm text-[#8C8275]">5 days a month</p>
-          <p class="mt-6">
-            <span class="fr-figure text-4xl text-[#1F1D1A]">R700</span>
-            <span class="text-[#8C8275] text-sm">/month</span>
-          </p>
-          <p class="mt-1 text-sm"><span class="fr-was">R1 000</span> <span class="text-[#8A9A5B] font-semibold">save 30%</span></p>
-          <ul class="fr-list mt-6 text-sm flex-1">
-            <li>Five days a month, whenever suits</li>
-            <li>R140 a day</li>
-            <li>Member rates on both boardrooms</li>
-            <li>Fibre, parking, filter coffee, kitchen</li>
-          </ul>
-          <a data-tier="Village Wanderer" data-code="VILLAGE30" class="tierWa fr-btn fr-btn--sage px-5 py-3 mt-7" href="#">Claim this rate</a>
-          <a data-signup class="fr-btn fr-btn--ghost px-5 py-2.5 mt-2 text-sm hidden" href="#">Sign up online</a>
+        <article class="fr-tier">
+          <div class="fr-tier__pic">
+            <img src="/images/web/hotdesks-5.jpg"
+                 alt="A quiet desk at The Village Hub" width="800" height="600" loading="lazy" decoding="async">
+            <span class="fr-tier__seats">7 of 8 open</span>
+          </div>
+          <div class="fr-tier__body">
+            <h3 class="fr-tier__name">Village Wanderer</h3>
+            <p class="fr-tier__what">Five days a month</p>
+            <p class="fr-tier__cost"><span class="fr-num now">R700</span><span class="per">/month</span></p>
+            <p class="fr-tier__was"><s class="fr-num">R1 000</s> <em>save 30%</em></p>
+            <ul class="fr-tier__list">
+              <li>Five days a month, no fixed pattern</li>
+              <li>R140 a day</li>
+              <li>Member rates on both boardrooms</li>
+              <li>Fibre, parking, filter coffee, kitchen</li>
+            </ul>
+            <p class="fr-tier__code">Use code <b>VILLAGE30</b></p>
+            <a class="fr-btn fr-btn--bark" data-book="Village Wanderer"
+               href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks/101d41b5-9ca9-4eed-85f0-f7e3c3f189ab"
+               target="_blank" rel="noopener">Book five days</a>
+          </div>
         </article>
 
       </div>
 
-      <p class="mt-8 text-sm text-[#8C8275]">
-        All prices exclude VAT. The founding rate applies for six billing months from the day you start, then the normal rate applies. New members only. Fifteen memberships available.
+      <p style="margin-top:28px;font-size:.88rem;color:#8C7B66;max-width:72ch;line-height:1.6">
+        All prices exclude VAT. The founding rate applies for six billing months from the day you start, then the normal rate applies. Available to new members only, and limited to fifteen memberships in total.
       </p>
     </div>
   </section>
 
-  <!-- ============ WHY ============ -->
-  <section class="py-16 md:py-20" style="background: var(--vh-linen);">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-[.16em] text-[#8A9A5B]">Who this is for</p>
-        <h2 class="mt-3 text-3xl md:text-4xl text-[#1F1D1A]">If you live in the village, your office is a two minute walk away.</h2>
-        <p class="mt-5 text-[#514A41] text-lg">
-          Forty new apartments at Nooitgedacht fill from November, and another eighty across the road after that. Most of the people moving in will work from home at least part of the week.
-        </p>
-        <p class="mt-4 text-[#514A41] text-lg">
-          The kitchen table works until it does not. A desk of your own, upstairs at The Foundry, means you can close the door on work at the end of the day and still be home in two minutes.
-        </p>
-        <ul class="fr-list mt-7 text-[#514A41]">
-          <li>Fibre that holds a video call</li>
-          <li>Power at every seat and a quiet zone</li>
-          <li>Two boardrooms for when a client comes to you</li>
-          <li>Parking on site, and no commute at all</li>
-        </ul>
-      </div>
-      <figure class="rounded-2xl overflow-hidden" style="box-shadow: var(--vh-shadow-lift);">
-        <img src="/images/web/hotdesks-4.jpg" alt="Members working at desks under the timber trusses at The Village Hub, Stellenbosch" width="1672" height="941" loading="lazy" decoding="async" class="w-full h-full object-cover">
-      </figure>
-    </div>
-  </section>
-
-  <!-- ============ HOW ============ -->
-  <section class="py-16 md:py-20 bg-white">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl md:text-4xl text-[#1F1D1A]">How it works</h2>
-      <div class="mt-10 grid gap-8 md:grid-cols-3">
-        <div>
-          <p class="fr-figure text-5xl text-[#C9A24B]">01</p>
-          <h3 class="mt-3 text-lg text-[#6B4423]">Come and look</h3>
-          <p class="mt-2 text-[#514A41]">Message Christel and walk the floor. Pick the desk you want. No appointment needed if we are open.</p>
+  <!-- ============ TRY FIRST ============ -->
+  <section class="fr-sec fr-sec--tint" id="try">
+    <div class="fr-wrap">
+      <div class="fr-try">
+        <div class="fr-try__pic">
+          <img src="/images/web/hotdesks-1.jpg"
+               alt="A day pass desk at The Village Hub" width="900" height="700" loading="lazy" decoding="async">
         </div>
-        <div>
-          <p class="fr-figure text-5xl text-[#C9A24B]">02</p>
-          <h3 class="mt-3 text-lg text-[#6B4423]">Claim the rate</h3>
-          <p class="mt-2 text-[#514A41]">Quote the founding code and we set your membership up on the spot. Your first invoice comes through at the half price rate.</p>
-        </div>
-        <div>
-          <p class="fr-figure text-5xl text-[#C9A24B]">03</p>
-          <h3 class="mt-3 text-lg text-[#6B4423]">Move in</h3>
-          <p class="mt-2 text-[#514A41]">Access, Wi-Fi and the member app on day one. Leave your screen on the desk overnight if you are a Resident.</p>
+        <div class="fr-try__body">
+          <h2>Rather try it before you commit?</h2>
+          <p>Book a tour and Christel will walk you through the floor, show you which desks are free, and answer whatever you want to ask. No pressure to sign anything.</p>
+          <p style="margin-top:12px">If you like what you see, <strong>stay and work the rest of the day on us.</strong> A full day at a desk, free, so you can judge it on a real working day rather than a ten minute look around.</p>
+          <div class="fr-try__acts">
+            <a class="fr-btn fr-btn--bark" href="#" id="tourWa">Book a tour on WhatsApp</a>
+            <a class="fr-btn fr-btn--quiet"
+               href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/desks/47b9f33c-9545-41bf-a9f1-dd7b25c71232"
+               target="_blank" rel="noopener" data-book="Village Nomad day pass">Book a day pass instead</a>
+          </div>
+          <p class="fr-try__fine">One free day per person, on the day of your tour. Weekdays, while the founding rate is open.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ FORM ============ -->
-  <section id="enquire" class="py-16 md:py-20" style="background: var(--vh-cream);">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <p class="text-xs font-semibold uppercase tracking-[.16em] text-[#8A9A5B]">Hold a place</p>
-      <h2 class="mt-3 text-3xl md:text-4xl text-[#1F1D1A]">Fifteen memberships. Put your name on one.</h2>
-      <p class="mt-4 text-[#514A41]">Leave your details and Christel will come back to you, usually within the hour on a weekday.</p>
-
-      <form id="frForm" class="mt-8 grid gap-4 sm:grid-cols-2">
-        <div><label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-first">First name</label><input class="fr-input" id="fr-first" name="first_name" required autocomplete="given-name"></div>
-        <div><label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-last">Last name</label><input class="fr-input" id="fr-last" name="last_name" required autocomplete="family-name"></div>
-        <div><label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-email">Email</label><input class="fr-input" id="fr-email" name="email" type="email" required autocomplete="email"></div>
-        <div><label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-phone">Mobile</label><input class="fr-input" id="fr-phone" name="phone" type="tel" required autocomplete="tel"></div>
-        <div class="sm:col-span-2">
-          <label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-plan">Which rate</label>
-          <select class="fr-input" id="fr-plan" name="plan_interest">
-            <option value="Village Resident (R1 750)">Village Resident, your own desk, R1 750</option>
-            <option value="Village Local (R1 500)">Village Local, any desk, R1 500</option>
-            <option value="Village Visitor (R1 120)">Village Visitor, 10 days, R1 120</option>
-            <option value="Village Wanderer (R700)">Village Wanderer, 5 days, R700</option>
-            <option value="Not sure yet">Not sure yet, I would like to look first</option>
-          </select>
+  <!-- ============ INCLUDED ============ -->
+  <section class="fr-sec">
+    <div class="fr-wrap">
+      <div class="fr-head">
+        <h2>What the rate covers</h2>
+        <p>No setup fee, no deposit on a desk membership, and nothing billed for the things you use every day.</p>
+      </div>
+      <div class="fr-inc">
+        <div>
+          <h3>Fibre that holds a call</h3>
+          <p>Uncapped business fibre with a backup line. Video calls do not drop halfway through.</p>
         </div>
-        <div class="sm:col-span-2">
-          <label class="inline-flex items-start gap-2.5 text-sm text-[#514A41]">
-            <input type="checkbox" id="fr-resident" class="mt-1" style="accent-color:#8A9A5B">
-            <span>I live at Nooitgedacht Village</span>
-          </label>
+        <div>
+          <h3>Power at every seat</h3>
+          <p>Plug points and USB at each desk, and the building stays on through loadshedding.</p>
         </div>
-        <div class="sm:col-span-2">
-          <label class="block text-sm font-medium text-[#514A41] mb-1.5" for="fr-msg">Anything else</label>
-          <textarea class="fr-input" id="fr-msg" name="message" rows="3" placeholder="When you would like to start, or anything you want to ask"></textarea>
+        <div>
+          <h3>Two boardrooms</h3>
+          <p>The Village Chamber seats 10 and the Village Boardroom seats 12, both at member rates.</p>
         </div>
-        <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
-          <button type="submit" id="frBtn" class="fr-btn fr-btn--gold px-7 py-3.5">Hold my place</button>
-          <a id="formWa" href="#" class="text-[#6B4423] font-semibold underline underline-offset-4">or message Christel on WhatsApp</a>
+        <div>
+          <h3>Filter coffee and a kitchen</h3>
+          <p>Coffee through the day, a proper kitchen, and The Village Table downstairs when you want lunch.</p>
         </div>
-        <p id="frOk" class="sm:col-span-2 hidden text-[#6F7A45] font-semibold">Thank you. Christel will be in touch shortly.</p>
-        <p id="frErr" class="sm:col-span-2 hidden text-[#B4472E] font-semibold">Something went wrong. Please WhatsApp us on 072 531 0904.</p>
-      </form>
+        <div>
+          <h3>Parking at the door</h3>
+          <p>Free on-site parking at The Foundry. No permit, no hunting for a bay in town.</p>
+        </div>
+        <div>
+          <h3>A community of 180</h3>
+          <p>The member app, the business directory, and an invite to the monthly Hub evening.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ FAQ ============ -->
-  <section class="py-16 md:py-20 bg-white fr-faq">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl md:text-4xl text-[#1F1D1A]">Questions</h2>
-      <div class="mt-8">
+  <section class="fr-sec fr-sec--tint">
+    <div class="fr-wrap">
+      <div class="fr-head"><h2>Questions</h2></div>
+      <div class="fr-faq">
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            What happens after six months?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">Your membership carries on at the normal rate. We will talk to you before that happens, not surprise you with an invoice. If the Hub is not working for you by then, you can stop.</p>
+          <summary>What happens after six months?<span class="sign">+</span></summary>
+          <p>Your membership carries on at the normal rate. We will talk to you before that happens rather than surprise you with an invoice, and if the Hub is not working for you by then you can stop.</p>
         </details>
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            Do I have to commit to six months?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">The Village Resident and Village Local rates carry a six month commitment, because you are getting half price for exactly that period. Visitor and Wanderer stay month to month.</p>
+          <summary>How do I use the code?<span class="sign">+</span></summary>
+          <p>Choose your membership above, which opens the member portal. Enter VILLAGE50 or VILLAGE30 at checkout, depending on which membership you picked. The discount shows on the invoice before you pay anything.</p>
         </details>
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            Is this only for Nooitgedacht residents?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">No. Anyone can take the founding rate. We are telling the village first because they are closest, and because a two minute walk is hard to beat.</p>
+          <summary>Is this only for Nooitgedacht residents?<span class="sign">+</span></summary>
+          <p>No, anyone can take it. We are telling the village first because they are closest, and a two minute walk is hard to argue with.</p>
         </details>
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            What is included in the price?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">Fibre, power at every seat, filter coffee, the kitchen, parking on site, the member app, and member rates on both boardrooms. Printing is charged separately.</p>
+          <summary>Am I locked in?<span class="sign">+</span></summary>
+          <p>Village Resident is month to month. Village Local, Visitor and Wanderer carry a one month commitment, which is how they were already set up. Nothing here adds a longer term.</p>
         </details>
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            I am already a member. Can I move onto this?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">The founding rate is for new members. If you are already with us, speak to Christel. We would rather find you something that works than have you read about a rate you cannot have.</p>
+          <summary>I am already a member. Can I move onto this?<span class="sign">+</span></summary>
+          <p>The founding rate is for new members. If you are already with us, speak to Christel rather than sitting on it. We would far rather find you something that works than have you read about a rate you cannot have.</p>
         </details>
 
         <details>
-          <summary class="flex justify-between items-center gap-4 py-5 text-lg text-[#6B4423] font-semibold">
-            Where exactly are you?<span class="fr-chev text-[#C9A24B] text-xl">+</span>
-          </summary>
-          <p class="pb-5 text-[#514A41]">First floor of The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch. Above The Village Table. Parking at the door.</p>
+          <summary>Where exactly are you?<span class="sign">+</span></summary>
+          <p>First floor of The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch. Above The Village Table, with parking at the door. <a class="fr-link" href="https://maps.app.goo.gl/dMFDQEY3btJv9zjW9" target="_blank" rel="noopener">Open in Google Maps</a></p>
         </details>
 
       </div>
@@ -462,124 +582,101 @@
   </section>
 
   <!-- ============ CLOSE ============ -->
-  <section class="fr-hero py-16 md:py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-5xl text-[#F8F1E5]">Half price until June.</h2>
-      <p class="mt-5 text-lg text-[#E8D9C5]">Fifteen memberships, closing 31 December 2026. Come and see the space first if you would rather.</p>
-      <div class="mt-9 flex flex-wrap justify-center gap-3">
-        <a href="#enquire" class="fr-btn fr-btn--gold px-7 py-3.5">Hold my place</a>
-        <a id="closeWa" href="#" class="fr-btn fr-btn--ghost px-7 py-3.5">Book a walk-through</a>
+  <section class="fr-close">
+    <div class="fr-wrap">
+      <h2>Fifteen memberships, then it closes</h2>
+      <p>The founding rate ends on 31 December 2026 or when the fifteen are taken, whichever comes first.</p>
+      <div class="fr-close__acts">
+        <a class="fr-btn fr-btn--gold" href="#rates">Pick a membership</a>
+        <a class="fr-btn fr-btn--line" href="#" id="tourBottom">Book a tour and a free day</a>
       </div>
-      <p class="mt-6 text-sm text-[#C9A24B]/90">Christel &middot; 072 531 0904 &middot; hello@villagehub.co.za</p>
+      <p class="fr-close__contact">
+        Christel on <a href="tel:+27725310904">072 531 0904</a> or <a href="mailto:hello@villagehub.co.za">hello@villagehub.co.za</a>
+      </p>
     </div>
   </section>
 
   <div data-vh-footer></div>
+  <div class="fr-toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
   (function () {
     'use strict';
+    var WA = '27725310904';
+    var TOTAL = 15;
 
-    // Spacebring member portal. Leave blank to hide the "Sign up online" buttons.
-    var SPACEBRING_SIGNUP_URL = 'https://members.villagehub.co.za/';
-    var WA_NUMBER = '27725310904';
-    var DEADLINE  = '2026-12-31T23:59:59+02:00';
+    function wa(t) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); }
 
-    function wa(text) {
-      return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+    // Tour CTAs
+    [['tourWa', 'Hi Christel, I would like to book a tour of the Hub and take the free day to try it'],
+     ['tourBottom', 'Hi Christel, I would like to book a tour of the Hub and take the free day to try it'],
+     ['tourTop', null]].forEach(function (p) {
+      var n = document.getElementById(p[0]);
+      if (n && p[1]) n.href = wa(p[1]);
+    });
+
+    // Founding tally: 15 marks, staggered in once
+    var row = document.getElementById('tally');
+    if (row) {
+      for (var i = 0; i < TOTAL; i++) {
+        var m = document.createElement('span');
+        m.className = 'fr-tally__mark';
+        m.style.animationDelay = (120 + i * 45) + 'ms';
+        row.appendChild(m);
+      }
+      var c = document.getElementById('tallyCount');
+      if (c) c.textContent = String(TOTAL);
     }
 
-    // Tier CTAs
-    Array.prototype.forEach.call(document.querySelectorAll('.tierWa'), function (a) {
-      var tier = a.getAttribute('data-tier');
-      var code = a.getAttribute('data-code');
-      a.href = wa('Hi Christel, I would like the ' + tier + ' membership at the Founding Rate (' + code + ')');
+    // Copy code chips
+    var toast = document.getElementById('toast');
+    var timer;
+    function say(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('on');
+      clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove('on'); }, 2200);
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.fr-chip'), function (btn) {
+      btn.addEventListener('click', function () {
+        var code = btn.getAttribute('data-code');
+        var done = function () { say(code + ' copied'); };
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(done, function () { say('Code is ' + code); });
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = code; ta.setAttribute('readonly', '');
+            ta.style.position = 'absolute'; ta.style.left = '-9999px';
+            document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+            done();
+          }
+        } catch (e) { say('Code is ' + code); }
+      });
+    });
+
+    // Conversion tracking on booking clicks
+    Array.prototype.forEach.call(document.querySelectorAll('[data-book]'), function (a) {
       a.addEventListener('click', function () {
-        try { gtag('event', 'generate_lead', { lead_type: 'founding_rate', plan: tier, currency: 'ZAR', value: 1750 }); } catch (e) {}
+        try {
+          gtag('event', 'generate_lead', {
+            lead_type: 'founding_rate_booking',
+            plan: a.getAttribute('data-book'),
+            currency: 'ZAR', value: 1750
+          });
+        } catch (e) {}
       });
     });
 
-    // Generic CTAs
-    [['heroWa', 'Hi Christel, I saw the Founding Rate and would like to know more'],
-     ['formWa', 'Hi Christel, I would like to hold a place on the Founding Rate'],
-     ['closeWa', 'Hi Christel, I would like to walk through the Hub and see the desks']
-    ].forEach(function (pair) {
-      var n = document.getElementById(pair[0]);
-      if (n) n.href = wa(pair[1]);
-    });
-
-    // Online sign-up buttons, only if a URL is configured
-    if (SPACEBRING_SIGNUP_URL) {
-      Array.prototype.forEach.call(document.querySelectorAll('[data-signup]'), function (a) {
-        a.href = SPACEBRING_SIGNUP_URL;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.classList.remove('hidden');
-      });
-    }
-
-    // Days remaining
-    var el = document.getElementById('daysLeft');
-    if (el) {
-      var ms = new Date(DEADLINE) - new Date();
-      var days = Math.max(0, Math.ceil(ms / 86400000));
-      el.textContent = days > 0 ? days : '0';
-    }
-
-    // FAQ chevrons
+    // FAQ sign
     Array.prototype.forEach.call(document.querySelectorAll('.fr-faq details'), function (d) {
       d.addEventListener('toggle', function () {
-        var c = d.querySelector('.fr-chev');
-        if (c) c.textContent = d.open ? '−' : '+';
+        var s = d.querySelector('.sign');
+        if (s) s.textContent = d.open ? '–' : '+';
       });
     });
-
-    // Lead form
-    var form = document.getElementById('frForm');
-    if (form) {
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        var btn = document.getElementById('frBtn');
-        var ok  = document.getElementById('frOk');
-        var err = document.getElementById('frErr');
-        ok.classList.add('hidden'); err.classList.add('hidden');
-        btn.disabled = true; btn.textContent = 'Sending...';
-
-        var resident = document.getElementById('fr-resident').checked ? 'Nooitgedacht resident: yes' : '';
-        var notes = [document.getElementById('fr-msg').value, resident].filter(Boolean).join('\n');
-
-        var body = new URLSearchParams({
-          first_name: document.getElementById('fr-first').value,
-          last_name:  document.getElementById('fr-last').value,
-          email:      document.getElementById('fr-email').value,
-          phone:      document.getElementById('fr-phone').value,
-          plan_interest: document.getElementById('fr-plan').value,
-          description: notes,
-          lead_source: 'Website - Founding Rate'
-        });
-
-        try {
-          var res = await fetch('/.netlify/functions/submit-lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: body.toString()
-          });
-          var j = await res.json();
-          if (j.success) {
-            ok.classList.remove('hidden');
-            form.reset();
-            try { gtag('event', 'generate_lead', { lead_type: 'founding_rate', currency: 'ZAR', value: 1750 }); } catch (_) {}
-          } else {
-            err.classList.remove('hidden');
-          }
-        } catch (_) {
-          err.classList.remove('hidden');
-        } finally {
-          btn.disabled = false;
-          btn.textContent = 'Hold my place';
-        }
-      });
-    }
   })();
   </script>
 
