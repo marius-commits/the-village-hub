@@ -50,15 +50,15 @@
       <span class="ml-3 font-bold text-[#6B4423] font-display">The Village Hub</span>
     </div>
     <h1 class="text-xl font-extrabold text-gray-900 font-display">Applications</h1>
-    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a 6-digit sign-in code.</p>
+    <p class="text-sm text-gray-600 mt-1 mb-5">Staff only. We email you a one-time sign-in code.</p>
     <div id="step-email">
       <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginEmail">Work email</label>
       <input class="field" id="loginEmail" type="email" placeholder="you@villagehub.co.za" autocomplete="email">
       <button class="btn btn-sage w-full mt-4" id="sendLink">Email me a code</button>
     </div>
     <div id="step-code" hidden>
-      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginCode">Enter the 6-digit code</label>
-      <input class="field text-center text-lg" style="letter-spacing:.4em" id="loginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="------">
+      <label class="block text-xs font-semibold text-gray-700 mb-1" for="loginCode">Enter the code</label>
+      <input class="field text-center text-lg" style="letter-spacing:.4em" id="loginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="--------">
       <button class="btn btn-sage w-full mt-4" id="verifyCode">Sign in</button>
       <button class="text-xs text-[#6B4423] underline mt-3 mx-auto block" id="resend" type="button">Use a different email</button>
     </div>
@@ -182,7 +182,7 @@
       pendingEmail = email;
       $('#step-email').hidden = true; $('#step-code').hidden = false;
       msg.className='text-sm mt-4 text-gray-700';
-      msg.textContent='We emailed a 6-digit code to ' + email + '. It expires shortly.';
+      msg.textContent='We emailed a sign-in code to ' + email + '. It expires shortly.';
       const c = $('#loginCode'); if(c) c.focus();
     }catch(e){
       msg.className='text-sm mt-4 text-red-700';
@@ -195,7 +195,7 @@
   async function verifyCode(){
     const code = ($('#loginCode').value||'').replace(/\s/g,'');
     const msg = $('#loginMsg');
-    if(!/^\d{6}$/.test(code)){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='Enter the 6-digit code from the email.'; return; }
+    if(!/^\d{6,8}$/.test(code)){ msg.className='text-sm mt-4 text-red-700'; msg.textContent='Enter the code from the email.'; return; }
     $('#verifyCode').disabled = true;
     msg.className='text-sm mt-4 text-gray-600'; msg.textContent='Checking…';
     try{
