@@ -133,9 +133,15 @@ async function requireStaff(event) {
   const user = await res.json();
   if (!user || !user.id) return null;
 
-  const rows = await selectRows('staff', `user_id=eq.${user.id}&active=is.true&select=*`);
+  // Authorization is by login email, held in staff_access. The auth user is
+  // created on first login; access requires the email to be pre-seeded by an
+  // admin, so a self-created account with no staff_access row sees nothing.
+  const email = (user.email || '').toLowerCase();
+  if (!email) return null;
+  const rows = await selectRows('staff_access', `email=eq.${encodeURIComponent(email)}&active=is.true&select=*`);
   if (!rows || rows.length === 0) return null;
-  return rows[0];
+  // user_id is the authenticated user's id, used for reviewed_by / verified_by.
+  return { email: user.email, role: rows[0].role, full_name: rows[0].full_name, user_id: user.id };
 }
 
 // --- Email ---------------------------------------------------------------

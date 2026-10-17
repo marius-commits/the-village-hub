@@ -141,8 +141,10 @@
       const res = await fetch(SUPABASE_URL + '/auth/v1/otp', {
         method:'POST',
         headers:{ apikey: SUPABASE_KEY, 'Content-Type':'application/json' },
-        // create_user:false means only invited staff can request a link.
-        body: JSON.stringify({ email, create_user:false, options:{ email_redirect_to: location.origin + location.pathname } }),
+        // create_user:true lets the auth account self-create on first login.
+        // Data access is still gated server-side by the staff_access table, so
+        // a non-staff account that logs in sees nothing.
+        body: JSON.stringify({ email, create_user:true, options:{ email_redirect_to: location.origin + location.pathname } }),
       });
       if(!res.ok) throw new Error('Could not send the link');
       msg.className='text-sm mt-4 text-gray-700';
