@@ -104,7 +104,9 @@ async function logEvent(applicationId, eventType, actor, detail) {
 
 // Returns a one-time signed URL the browser can PUT a single file to.
 async function createSignedUploadUrl(path) {
-  const data = await sb(`/storage/v1/object/upload/sign/${BUCKET}/${path}`, { method: 'POST' });
+  // Body must be valid JSON ("{}"), not empty: the storage server sets
+  // Content-Type application/json and rejects an empty body with 400.
+  const data = await sb(`/storage/v1/object/upload/sign/${BUCKET}/${path}`, { method: 'POST', body: '{}' });
   return { path, token: data.token, url: `${SUPABASE_URL}/storage/v1${data.url}` };
 }
 
