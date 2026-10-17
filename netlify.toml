@@ -3,6 +3,11 @@
 
 # Pretty URLs for landing pages
 [[redirects]]
+  from = "/founding-rate"
+  to = "/founding-rate.html"
+  status = 200
+
+[[redirects]]
   from = "/hotdesks"
   to = "/hotdesks.html"
   status = 200
