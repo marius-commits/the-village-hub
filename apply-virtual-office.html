@@ -9,52 +9,44 @@
   <link rel="canonical" href="https://www.villagehub.co.za/apply-virtual-office" />
   <link rel="icon" href="/favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
   <style>
-    :root{ --brown:#6B4423; --brown-2:#8B5A2B; --sage:#8A9A5B; --sage-2:#7F9368; --cream:#FAF8F6; --sand:#E8D9C5; --gold:#C9A24B; }
-    body{ background:var(--cream); }
-    .btn-sage{ background:var(--sage); color:#fff; transition:background .15s ease; }
-    .btn-sage:hover{ background:var(--sage-2); }
-    .btn-sage:disabled{ background:#c3c9b8; cursor:not-allowed; }
-    .card{ background:#fff; border:1px solid var(--sand); border-radius:14px; }
-    .fld{ width:100%; border:1px solid #d9d2c7; border-radius:9px; padding:11px 13px; font-size:15px; background:#fff; }
-    .fld:focus{ outline:none; border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,154,91,.18); }
-    .fld.err{ border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12); }
+    body{ background:var(--vh-linen); }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+    .card{ background:#fff; border:1px solid var(--vh-sand); border-radius:16px; box-shadow:var(--vh-shadow-soft); }
+    .field.err{ border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12); }
     .lbl{ display:block; font-size:13px; font-weight:600; color:#4a3f33; margin-bottom:5px; }
     .hint{ font-size:12px; color:#7a6f62; margin-top:5px; line-height:1.5; }
     .err-msg{ font-size:12px; color:#c0392b; margin-top:5px; display:none; }
-    .plan{ cursor:pointer; border:2px solid var(--sand); border-radius:14px; background:#fff; transition:border-color .15s, box-shadow .15s; }
-    .plan:hover{ border-color:var(--sage); }
-    .plan.sel{ border-color:var(--brown); box-shadow:0 0 0 3px rgba(107,68,35,.12); }
+    .plan{ cursor:pointer; border:2px solid var(--vh-sand); border-radius:14px; background:#fff; transition:border-color .15s, box-shadow .15s; }
+    .plan:hover{ border-color:var(--vh-sage); }
+    .plan.sel{ border-color:var(--vh-bark); box-shadow:0 0 0 3px rgba(107,68,35,.12); }
     .plan input{ position:absolute; opacity:0; pointer-events:none; }
-    .step-dot{ height:4px; border-radius:99px; background:var(--sand); flex:1; transition:background .3s; }
-    .step-dot.on{ background:var(--sage); }
-    .step-dot.done{ background:var(--brown); }
+    .step-dot{ height:4px; border-radius:99px; background:var(--vh-sand); flex:1; transition:background .3s; }
+    .step-dot.on{ background:var(--vh-sage); }
+    .step-dot.done{ background:var(--vh-bark); }
     .drop{ border:2px dashed #cfc6b8; border-radius:12px; background:#fff; transition:border-color .15s, background .15s; }
-    .drop.over{ border-color:var(--sage); background:#f7f9f3; }
-    .drop.has{ border-style:solid; border-color:var(--sage); background:#f7f9f3; }
+    .drop.over{ border-color:var(--vh-sage); background:#f7f9f3; }
+    .drop.has{ border-style:solid; border-color:var(--vh-sage); background:#f7f9f3; }
     [hidden]{ display:none !important; }
   </style>
 </head>
-<body class="font-sans antialiased text-gray-800">
+<body class="vh-page font-sans antialiased">
 
-<nav class="bg-white shadow-sm fixed w-full z-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-    <a href="/" class="flex items-center">
-      <img class="h-12 w-12 object-contain" src="/images/web/logo.png" alt="The Village Hub Logo">
-      <span class="ml-3 text-xl font-bold text-[#6B4423]">The Village Hub</span>
-    </a>
-    <a href="/virtual-office-stellenbosch" class="text-sm text-[#6B4423] hover:text-[#8B5A2B]">&larr; Back to virtual office</a>
-  </div>
-</nav>
+<div data-vh-nav></div>
 
-<main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+<main class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
 <div class="max-w-3xl mx-auto">
 
   <!-- ===== FORM ===== -->
   <div id="formWrap">
+    <p class="mb-4"><a href="/virtual-office-stellenbosch" class="text-sm text-[#6B4423] hover:underline">&larr; Back to virtual office</a></p>
     <header class="text-center mb-7">
       <p class="text-xs font-semibold text-[#8A9A5B] uppercase tracking-wider">Virtual Office Application</p>
-      <h1 class="mt-2 text-3xl md:text-4xl font-extrabold text-gray-900">Set up your Stellenbosch business address</h1>
+      <h1 class="mt-2 text-3xl md:text-4xl font-extrabold font-display text-gray-900">Set up your Stellenbosch business address</h1>
       <p class="mt-3 text-gray-600">Takes about five minutes. Have your CIPC certificate, ID and a recent proof of address ready.</p>
     </header>
 
@@ -115,7 +107,7 @@
         </div>
         <p class="err-msg" id="err-plan">Choose a package to continue.</p>
 
-        <div class="card p-4 mt-5 text-sm text-gray-600" style="background:#fff;border-left:3px solid var(--gold)">
+        <div class="card p-4 mt-5 text-sm text-gray-600" style="background:#fff;border-left:3px solid var(--vh-gold)">
           <strong class="text-gray-800">All three have a three-month minimum</strong>, then month to month. Nothing is payable now. We check your documents, approve you, and only then send the invoice.
         </div>
       </section>
@@ -127,30 +119,30 @@
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="lbl" for="first_name">First name</label>
-              <input class="fld" id="first_name" name="first_name" autocomplete="given-name" required>
+              <input class="field" id="first_name" name="first_name" autocomplete="given-name" required>
               <p class="err-msg">We need your first name.</p>
             </div>
             <div>
               <label class="lbl" for="last_name">Last name</label>
-              <input class="fld" id="last_name" name="last_name" autocomplete="family-name" required>
+              <input class="field" id="last_name" name="last_name" autocomplete="family-name" required>
               <p class="err-msg">We need your last name.</p>
             </div>
           </div>
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="lbl" for="email">Email</label>
-              <input class="fld" type="email" id="email" name="email" autocomplete="email" required>
+              <input class="field" type="email" id="email" name="email" autocomplete="email" required>
               <p class="err-msg">That email does not look right.</p>
             </div>
             <div>
               <label class="lbl" for="phone">Mobile number</label>
-              <input class="fld" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="082 123 4567" required>
+              <input class="field" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="082 123 4567" required>
               <p class="err-msg">We need a number we can reach you on.</p>
             </div>
           </div>
           <div>
             <label class="lbl" for="director_role">Your role in the business</label>
-            <select class="fld" id="director_role" name="director_role">
+            <select class="field" id="director_role" name="director_role">
               <option value="Director">Director</option>
               <option value="Owner">Owner / sole proprietor</option>
               <option value="Member">Member</option>
@@ -160,7 +152,7 @@
           </div>
           <div>
             <label class="lbl" for="preferred_start_date">When would you like to start?</label>
-            <input class="fld" type="date" id="preferred_start_date" name="preferred_start_date">
+            <input class="field" type="date" id="preferred_start_date" name="preferred_start_date">
             <p class="hint">Leave blank and we will start you as soon as you are approved and the invoice is paid.</p>
           </div>
         </div>
@@ -173,7 +165,7 @@
 
           <div>
             <label class="lbl" for="company_type">Business structure</label>
-            <select class="fld" id="company_type" name="company_type">
+            <select class="field" id="company_type" name="company_type">
               <option value="pty_ltd">Private company (Pty) Ltd</option>
               <option value="cc">Close corporation (CC)</option>
               <option value="sole_prop">Sole proprietor</option>
@@ -183,7 +175,7 @@
             </select>
           </div>
 
-          <div id="proWarning" hidden class="card p-4 text-sm" style="background:#fdf6e7;border-left:3px solid var(--gold)">
+          <div id="proWarning" hidden class="card p-4 text-sm" style="background:#fdf6e7;border-left:3px solid var(--vh-gold)">
             <strong class="text-gray-900">Village Virtual Pro needs a registered entity.</strong>
             The registered CIPC and SARS address can only be given to a registered company. Choose Village Address or Village Virtual for now, and move up once your registration comes through.
           </div>
@@ -191,37 +183,37 @@
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="lbl" for="company_name">Registered or intended company name</label>
-              <input class="fld" id="company_name" name="company_name" autocomplete="organization" required>
+              <input class="field" id="company_name" name="company_name" autocomplete="organization" required>
               <p class="err-msg">We need the company name.</p>
             </div>
             <div>
               <label class="lbl" for="company_trading_name">Trading name <span class="font-normal text-gray-400">(if different)</span></label>
-              <input class="fld" id="company_trading_name" name="company_trading_name">
+              <input class="field" id="company_trading_name" name="company_trading_name">
             </div>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-4" id="regFields">
             <div>
               <label class="lbl" for="cipc_registration_number">CIPC registration number</label>
-              <input class="fld" id="cipc_registration_number" name="cipc_registration_number" placeholder="2021/123456/07">
+              <input class="field" id="cipc_registration_number" name="cipc_registration_number" placeholder="2021/123456/07">
               <p class="err-msg">We need the registration number for the compliance check.</p>
             </div>
             <div>
               <label class="lbl" for="vat_number">VAT number <span class="font-normal text-gray-400">(if registered)</span></label>
-              <input class="fld" id="vat_number" name="vat_number">
+              <input class="field" id="vat_number" name="vat_number">
             </div>
           </div>
 
           <div>
             <label class="lbl" for="director_full_name">Full name of the director or owner</label>
-            <input class="fld" id="director_full_name" name="director_full_name" required>
+            <input class="field" id="director_full_name" name="director_full_name" required>
             <p class="hint">As it appears on the ID document you are about to upload.</p>
             <p class="err-msg">We need the name on the ID.</p>
           </div>
 
           <div>
             <label class="lbl" for="business_activity">What does the business do?</label>
-            <textarea class="fld" id="business_activity" name="business_activity" rows="3" required placeholder="A sentence or two is plenty."></textarea>
+            <textarea class="field" id="business_activity" name="business_activity" rows="3" required placeholder="A sentence or two is plenty."></textarea>
             <p class="hint">We are asked this by our own compliance checks. Short and plain is fine.</p>
             <p class="err-msg">Tell us briefly what the business does.</p>
           </div>
@@ -229,11 +221,11 @@
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="lbl" for="website">Website <span class="font-normal text-gray-400">(optional)</span></label>
-              <input class="fld" id="website" name="website" placeholder="www.example.co.za">
+              <input class="field" id="website" name="website" placeholder="www.example.co.za">
             </div>
             <div>
               <label class="lbl" for="expected_mail_volume">How much post do you expect?</label>
-              <select class="fld" id="expected_mail_volume" name="expected_mail_volume">
+              <select class="field" id="expected_mail_volume" name="expected_mail_volume">
                 <option value="Very little">Very little, a few items a year</option>
                 <option value="A few items a month" selected>A few items a month</option>
                 <option value="Weekly">Something most weeks</option>
@@ -322,10 +314,10 @@
 
       <!-- nav -->
       <div class="flex items-center justify-between mt-6 gap-3">
-        <button type="button" id="back" class="px-5 py-3 rounded-md text-sm font-medium text-[#6B4423] bg-white border border-[#E8D9C5] hover:bg-white" hidden>&larr; Back</button>
+        <button type="button" id="back" class="btn btn-outline btn-sm" hidden>&larr; Back</button>
         <div class="flex-1"></div>
-        <button type="button" id="next" class="btn-sage px-7 py-3 rounded-md font-medium">Continue</button>
-        <button type="submit" id="send" class="btn-sage px-7 py-3 rounded-md font-medium" hidden>Submit application</button>
+        <button type="button" id="next" class="btn btn-sage">Continue</button>
+        <button type="submit" id="send" class="btn btn-sage" hidden>Submit application</button>
       </div>
     </form>
 
@@ -341,24 +333,26 @@
       <div class="mx-auto w-14 h-14 rounded-full flex items-center justify-center" style="background:#f0f4e8">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A9A5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
-      <h1 class="mt-5 text-2xl font-extrabold text-gray-900">Application received</h1>
+      <h1 class="mt-5 text-2xl font-extrabold font-display text-gray-900">Application received</h1>
       <p class="mt-3 text-gray-600">Your documents came through. We check them and come back to you <strong>within one business day</strong>.</p>
 
-      <div class="mt-6 inline-block text-left px-6 py-4 rounded-lg" style="background:var(--cream);border-left:3px solid var(--gold)">
+      <div class="mt-6 inline-block text-left px-6 py-4 rounded-lg" style="background:var(--vh-linen);border-left:3px solid var(--vh-gold)">
         <div class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Your reference</div>
         <div class="text-xl font-bold text-[#6B4423] mt-0.5" id="refOut">—</div>
       </div>
 
       <p class="mt-6 text-sm text-gray-600">We have emailed a copy to <span class="font-semibold" id="emailOut"></span>. Nothing is payable until you are approved.</p>
       <div class="mt-7 flex flex-wrap justify-center gap-3">
-        <a href="/" class="btn-sage px-6 py-3 rounded-md font-medium">Back to the Hub</a>
-        <a href="https://wa.me/27725310904" class="bg-white border border-[#8A9A5B] text-[#6B4423] px-6 py-3 rounded-md font-medium">WhatsApp us</a>
+        <a href="/" class="btn btn-sage">Back to the Hub</a>
+        <a href="https://wa.me/27725310904" class="btn btn-outline-sage">WhatsApp us</a>
       </div>
     </div>
   </div>
 
 </div>
 </main>
+
+<div data-vh-footer></div>
 
 <script>
 (function(){
@@ -475,7 +469,7 @@
     const p = el.parentElement.querySelector('.err-msg');
     if(p) p.style.display = 'none';
   }
-  form.addEventListener('input', e => { if(e.target.classList.contains('fld')) clearErr(e.target); });
+  form.addEventListener('input', e => { if(e.target.classList.contains('field')) clearErr(e.target); });
 
   function validateStep(n){
     let good = true;
@@ -557,7 +551,7 @@
   function saveDraft(){
     try{
       const d = {};
-      $$('#app .fld').forEach(el => { if(el.id) d[el.id] = el.value; });
+      $$('#app .field').forEach(el => { if(el.id) d[el.id] = el.value; });
       d.plan = chosenPlan();
       d.wants_registered_address = $('#wants_registered_address').checked;
       localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
@@ -684,5 +678,6 @@
   render();
 })();
 </script>
+<script src="/assets/vh.js?v=3" defer></script>
 </body>
 </html>
