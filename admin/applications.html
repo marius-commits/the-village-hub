@@ -398,24 +398,37 @@
     }
   }
 
-  // Saves the file under the name the applicant uploaded. Storage answers
-  // with Content-Disposition: attachment, so the browser takes the download
-  // and this page never moves — no tab needed at all.
+  // Saves the file under the name the applicant uploaded.
+  //
+  // The file is pulled down and handed to the browser as a blob rather than
+  // pointing a link at storage. Deliberate: a cross-origin link relies on the
+  // server sending Content-Disposition: attachment, and if it ever did not,
+  // the click would navigate this page to the document — the very thing we
+  // just stopped happening. A blob URL is same-origin, so the download
+  // attribute is honoured, the filename is exact, and this page cannot move.
   async function downloadDoc(docId, btn){
     const original = btn.textContent;
     btn.disabled = true; btn.textContent = 'Saving…';
+    let objectUrl = null;
     try{
       const data = await api('staff-applications?download=1&doc=' + encodeURIComponent(docId));
       if(!data || !data.view_url) throw new Error('No link came back');
+
+      const res = await fetch(data.view_url);
+      if(!res.ok) throw new Error('Storage would not release that file');
+      const blob = await res.blob();
+
+      objectUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = data.view_url;
-      if(data.filename) a.download = data.filename;
+      a.href = objectUrl;
+      a.download = data.filename || 'document';
       document.body.appendChild(a);
       a.click();
       a.remove();
     }catch(e){
       docError(e.message || 'That document would not download.');
     }finally{
+      if(objectUrl) setTimeout(() => URL.revokeObjectURL(objectUrl), 20000);
       btn.disabled = false; btn.textContent = original;
     }
   }
