@@ -11,6 +11,12 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_KEY   = process.env.RESEND_API_KEY;
 
+// Publishable key, the same one the admin pages carry. Used only for the
+// /auth/v1/otp call, so that request is made with exactly the privileges a
+// browser would have. It grants no data access: every table is behind RLS.
+const PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY
+  || 'sb_publishable_o99egQoMPiyVoqxYGwhLEw_vzzX1fVo';
+
 const FROM_EMAIL   = process.env.APPLICATIONS_FROM_EMAIL   || 'The Village Hub <hello@villagehub.co.za>';
 const NOTIFY_EMAIL = process.env.APPLICATIONS_NOTIFY_EMAIL || 'hello@villagehub.co.za';
 const SITE_URL     = process.env.SITE_URL                  || 'https://www.villagehub.co.za';
@@ -146,6 +152,51 @@ async function requireStaff(event) {
   return { email: user.email, role: rows[0].role, full_name: rows[0].full_name, user_id: user.id };
 }
 
+// --- Staff sign-in -------------------------------------------------------
+
+// Makes sure an auth account exists for this email BEFORE a one-time code is
+// requested. This is the difference between a code and a link:
+//
+//   no auth user yet  -> Supabase treats /auth/v1/otp as a sign-up and sends
+//                        the "Confirm signup" template, which carries only a
+//                        confirmation LINK. That is what new staff were
+//                        getting, and the link is useless on the login page.
+//   auth user exists  -> Supabase sends the "Magic link or OTP" template,
+//                        which this project has edited to render {{ .Token }}.
+//
+// Creating the user first therefore guarantees the code path every time.
+// email_confirm:true is correct here: the address is on the staff list, and
+// the one-time code is itself the proof that they control the inbox.
+async function ensureAuthUser(email) {
+  try {
+    await sb('/auth/v1/admin/users', {
+      method: 'POST',
+      body: JSON.stringify({ email, email_confirm: true }),
+    });
+    return 'created';
+  } catch (err) {
+    // Already registered is the normal case for everyone after the first login.
+    if (/already (been )?registered|already exists|email_exists/i.test(err.message)) return 'existing';
+    throw err;
+  }
+}
+
+// Asks Supabase to email a one-time sign-in code. create_user is false: by
+// this point the account is guaranteed to exist, and leaving it false means a
+// bug here can never silently create an account.
+async function sendStaffOtp(email) {
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
+    method: 'POST',
+    headers: { apikey: PUBLISHABLE_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, create_user: false, should_create_user: false }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`otp ${res.status}: ${body.slice(0, 300)}`);
+  }
+  return true;
+}
+
 // --- Email ---------------------------------------------------------------
 
 async function sendEmail({ to, subject, html, replyTo }) {
@@ -204,6 +255,6 @@ module.exports = {
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
   createSignedUploadUrl, createSignedViewUrl,
-  requireStaff, sendEmail,
+  requireStaff, ensureAuthUser, sendStaffOtp, sendEmail,
   clean, validEmail, safeExtension,
 };
