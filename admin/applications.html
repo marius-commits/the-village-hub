@@ -261,11 +261,14 @@
     // Each document is signed when it is clicked, not now, so a link can
     // never have expired by the time it is used.
     const docs = data.documents.map(d => `
-      <button type="button" data-doc="${esc(d.id)}"
-         class="w-full text-left flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]">
-        <span class="text-sm font-medium text-[#6B4423]">${DOC_LABELS[d.doc_type]||d.doc_type}</span>
-        <span class="text-xs text-gray-400">${esc(d.original_filename||'')} &middot; open &rarr;</span>
-      </button>`).join('') || '<p class="text-sm text-gray-500">No documents.</p>';
+      <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]">
+        <button type="button" data-doc="${esc(d.id)}" class="flex-1 min-w-0 text-left">
+          <span class="block text-sm font-medium text-[#6B4423]">${DOC_LABELS[d.doc_type]||d.doc_type}</span>
+          <span class="block text-xs text-gray-400 truncate">${esc(d.original_filename||'')}</span>
+        </button>
+        <button type="button" data-doc="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Open</button>
+        <button type="button" data-dl="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Download</button>
+      </div>`).join('') || '<p class="text-sm text-gray-500">No documents.</p>';
 
     const events = data.events.map(e => `
       <li class="flex gap-3 text-xs">
@@ -313,7 +316,7 @@
 
       <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Documents</h3>
       <div class="space-y-2">${docs}</div>
-      <p class="text-xs text-gray-400 mt-2">Opens in a new tab. Each view is logged against the application.</p>
+      <p class="text-xs text-gray-400 mt-2">Open reads it in a new tab, Download saves it. Both are logged against the application.</p>
 
       ${a.internal_notes ? `<h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Internal notes</h3>
         <pre class="text-xs text-gray-700 whitespace-pre-wrap bg-[#FAF8F6] p-3 rounded-lg border border-[#E8D9C5]">${esc(a.internal_notes)}</pre>` : ''}
@@ -353,29 +356,67 @@
     Array.from(document.querySelectorAll('[data-doc]')).forEach(b => {
       b.addEventListener('click', () => openDoc(b.dataset.doc, b));
     });
+    Array.from(document.querySelectorAll('[data-dl]')).forEach(b => {
+      b.addEventListener('click', () => downloadDoc(b.dataset.dl, b));
+    });
   }
 
-  // Fetches a fresh signed URL and opens it. The blank tab is opened
-  // synchronously inside the click, before the await: open it afterwards and
-  // the browser treats it as an unrequested pop-up and blocks it.
+  function docError(message){
+    const m = $('#actionMsg');
+    if(m){ m.className = 'text-sm mt-4 text-red-700'; m.textContent = message; }
+  }
+
+  // Opens the document in its own tab, leaving this page exactly as it was.
+  //
+  // The blank tab must be opened synchronously inside the click — open it
+  // after the await and the browser calls it an unrequested pop-up and blocks
+  // it. It must also be opened WITHOUT 'noopener': that feature makes
+  // window.open return null, which left an orphaned blank tab sitting there
+  // while the fallback navigated this page to the document instead.
   async function openDoc(docId, btn){
-    const tab = window.open('', '_blank', 'noopener');
-    const label = btn.querySelector('span:last-child');
-    const original = label ? label.innerHTML : '';
-    if(label) label.textContent = 'opening…';
+    const tab = window.open('about:blank', '_blank');
+    if(tab){
+      // Something to look at for the second the signature takes.
+      try{
+        tab.document.write('<!doctype html><title>Opening…</title>' +
+          '<body style="margin:0;display:grid;place-items:center;height:100vh;' +
+          'font:500 14px/1.5 system-ui,sans-serif;color:#6B4423;background:#FAF8F6">Opening the document…</body>');
+        tab.document.close();
+      }catch(e){}
+    }
     btn.disabled = true;
     try{
       const data = await api('staff-applications?doc=' + encodeURIComponent(docId));
       if(!data || !data.view_url) throw new Error('No link came back');
-      if(tab) { tab.location = data.view_url; }
-      else { window.location.href = data.view_url; }  // pop-up blocked: same tab
+      if(tab){ tab.location.href = data.view_url; }
+      else { docError('Allow pop-ups for this site, or use Download instead.'); }
     }catch(e){
       if(tab) tab.close();
-      const m = $('#actionMsg');
-      if(m){ m.className = 'text-sm mt-4 text-red-700'; m.textContent = e.message || 'That document would not open.'; }
+      docError(e.message || 'That document would not open.');
     }finally{
-      if(label) label.innerHTML = original;
       btn.disabled = false;
+    }
+  }
+
+  // Saves the file under the name the applicant uploaded. Storage answers
+  // with Content-Disposition: attachment, so the browser takes the download
+  // and this page never moves — no tab needed at all.
+  async function downloadDoc(docId, btn){
+    const original = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try{
+      const data = await api('staff-applications?download=1&doc=' + encodeURIComponent(docId));
+      if(!data || !data.view_url) throw new Error('No link came back');
+      const a = document.createElement('a');
+      a.href = data.view_url;
+      if(data.filename) a.download = data.filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }catch(e){
+      docError(e.message || 'That document would not download.');
+    }finally{
+      btn.disabled = false; btn.textContent = original;
     }
   }
 

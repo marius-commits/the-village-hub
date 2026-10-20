@@ -28,9 +28,10 @@ exports.handler = async function (event) {
   }
   if (!staff) return L.bad('Not authorised', 401);
 
-  const id     = L.clean((event.queryStringParameters || {}).id, 60);
-  const docId  = L.clean((event.queryStringParameters || {}).doc, 60);
-  const status = L.clean((event.queryStringParameters || {}).status, 30);
+  const id       = L.clean((event.queryStringParameters || {}).id, 60);
+  const docId    = L.clean((event.queryStringParameters || {}).doc, 60);
+  const download = (event.queryStringParameters || {}).download === '1';
+  const status   = L.clean((event.queryStringParameters || {}).status, 30);
 
   try {
     // One document, signed right now. Thirty minutes is plenty to open and
@@ -51,7 +52,15 @@ exports.handler = async function (event) {
         return L.bad('That document could not be opened. It may not have uploaded.', 502);
       }
 
-      await L.logEvent(doc.application_id, 'document_viewed', staff.email, {
+      // ?download=1 adds Supabase's download parameter, which makes storage
+      // answer with Content-Disposition: attachment under the name the
+      // applicant uploaded, rather than rendering it in the tab.
+      if (download) {
+        const name = doc.original_filename || `${doc.doc_type}`;
+        url += (url.includes('?') ? '&' : '?') + 'download=' + encodeURIComponent(name);
+      }
+
+      await L.logEvent(doc.application_id, download ? 'document_downloaded' : 'document_viewed', staff.email, {
         doc_type: doc.doc_type,
         filename: doc.original_filename || null,
       });
