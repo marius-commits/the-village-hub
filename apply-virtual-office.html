@@ -45,6 +45,14 @@
     #formWrap{ padding-bottom:84px; }
     [hidden]{ display:none !important; }
   </style>
+  <!-- Google Ads conversion tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18265049370"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18265049370');
+  </script>
 </head>
 <body class="vh-page font-sans antialiased">
 
@@ -681,6 +689,10 @@
 
       setProgress(100, 'Done');
       try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+      try {
+        gtag('event', 'conversion', { 'send_to': 'AW-18265049370/n8xeCNDIuNMcEJqSuoVE', 'value': 1695.0, 'currency': 'ZAR' });
+        gtag('event', 'generate_lead', { value: 1695, currency: 'ZAR', lead_type: 'virtual_office_application' });
+      } catch (e) {}
 
       $('#refOut').textContent   = data.reference;
       $('#emailOut').textContent = payload.email;
