@@ -1,6 +1,50 @@
 // Netlify serverless function: submit-lead
 // Receives form data from the Village Hub interest form
 // and submits it to Zoho CRM via the Web-to-Lead endpoint.
+const L = require('./_lib');
+
+// Map the form's plan interest onto the leads.product enum.
+function productFor(plan, source) {
+  const t = `${plan} ${source}`.toLowerCase();
+  if (/boardroom/.test(t)) return 'boardroom';
+  if (/meeting/.test(t)) return 'meeting_room';
+  if (/event/.test(t)) return 'event';
+  if (/student/.test(t)) return 'student';
+  if (/virtual|address/.test(t)) return 'virtual_office';
+  if (/private|office/.test(t)) return 'private_office';
+  if (/desk|cowork|flex|day pass|member/.test(t)) return 'hot_desk';
+  if (/stay|accommodation/.test(t)) return 'village_stay';
+  return 'other';
+}
+
+// Copies the enquiry into Supabase public.leads (lead tracker). Never blocks
+// or fails the visitor's submission: Zoho stays the system of record for now.
+async function saveLead(params, event, fields) {
+  if (!L.configured()) { console.warn('submit-lead: Supabase not configured, lead not tracked'); return; }
+  const g = k => L.clean(params.get(k), 300);
+  const gclid = g('gclid');
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(fields.preferredDate) ? fields.preferredDate : null;
+  const referer = event.headers.referer || event.headers.Referer || '';
+  let landing = g('landing_page');
+  if (!landing && referer) { try { landing = new URL(referer).pathname; } catch (e) {} }
+  const row = {
+    source: gclid || /cpc|paid|google_ads/i.test(g('utm_medium') || '') ? 'google_ads' : 'website',
+    source_detail: L.clean(fields.leadSource, 200),
+    landing_page: landing,
+    product: productFor(fields.planInterest, fields.leadSource),
+    first_name: L.clean(fields.firstName, 100), last_name: L.clean(fields.lastName, 100),
+    company: L.clean(fields.company, 200),
+    email: L.clean(fields.email, 200), phone: L.clean(fields.phone, 50),
+    preferred_date: date,
+    message: L.clean(fields.description, 4000),
+    utm_source: g('utm_source'), utm_medium: g('utm_medium'), utm_campaign: g('utm_campaign'),
+    utm_term: g('utm_term'), utm_content: g('utm_content'), gclid,
+  };
+  if (!row.email && !row.phone) return;
+  try { await L.insertRow('leads', row); }
+  catch (err) { console.error('submit-lead: leads insert failed:', err.message); }
+}
+
 exports.handler = async function (event) {
     if (event.httpMethod !== 'POST') {
           return { statusCode: 405, body: 'Method Not Allowed' };
@@ -27,6 +71,8 @@ exports.handler = async function (event) {
               preferredDate ? `Preferred Visit Date: ${preferredDate}` : '',
               description
             ].filter(Boolean).join('\n\n');
+
+      await saveLead(params, event, { firstName, lastName, email, phone, company, planInterest, preferredDate, description: fullDescription, leadSource });
 
       const zohoPayload = new URLSearchParams({
               xnQsjsdp: '3bab74f7e8aba6be99b9d1863cff751310a973b2c6f80cb471b7a4eede332658',

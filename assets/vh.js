@@ -14,6 +14,45 @@
   window.gtag('js', new Date());
   window.gtag('config', 'AW-18265049370');
 })();
+/* Lead attribution: remember utm_* / gclid (first touch, 90 days) and the landing page,
+   add them as hidden fields to every form, and append them to submit-lead posts
+   (the lead forms build their own request bodies, so hidden inputs alone are not sent). */
+(function () {
+  if (/^\/admin(\/|$)/.test(location.pathname)) return;
+  var KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'];
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem('vh_attr') || '{}') || {}; } catch (e) { store = {}; }
+  if (store.t && Date.now() - store.t > 90 * 864e5) store = {};
+  var q = new URLSearchParams(location.search), fresh = {};
+  KEYS.forEach(function (k) { var v = q.get(k); if (v) fresh[k] = v.slice(0, 200); });
+  if (Object.keys(fresh).length) { store = fresh; store.landing_page = location.pathname; store.t = Date.now(); }
+  if (!store.landing_page) { store.landing_page = location.pathname; store.t = Date.now(); }
+  try { localStorage.setItem('vh_attr', JSON.stringify(store)); } catch (e) {}
+  var fields = KEYS.concat(['landing_page']);
+  window.VHAttribution = function () { var o = {}; fields.forEach(function (k) { if (store[k]) o[k] = store[k]; }); return o; };
+  function addHidden() {
+    Array.prototype.forEach.call(document.querySelectorAll('form'), function (f) {
+      fields.forEach(function (k) {
+        if (!store[k] || f.querySelector('input[name="' + k + '"]')) return;
+        var i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = store[k]; f.appendChild(i);
+      });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addHidden); else addHidden();
+  if (typeof window.fetch === 'function') {
+    var orig = window.fetch;
+    window.fetch = function (url, opts) {
+      try {
+        if (String(url).indexOf('/.netlify/functions/submit-lead') !== -1 && opts && typeof opts.body === 'string') {
+          var b = new URLSearchParams(opts.body), a = window.VHAttribution();
+          Object.keys(a).forEach(function (k) { if (!b.get(k)) b.set(k, a[k]); });
+          opts = Object.assign({}, opts, { body: b.toString() });
+        }
+      } catch (e) {}
+      return orig.apply(this, [url, opts]);
+    };
+  }
+})();
 (function () {
   'use strict';
   var d = document, w = window;
