@@ -2,6 +2,18 @@
    The Village Hub - shared interaction layer
    Loads after the DOM. Progressive: every feature is optional and no-JS safe.
    ========================================================================== */
+/* Google tag (AW-18265049370): load once on pages that don't already include it inline. */
+(function () {
+  if (typeof window.gtag === 'function' || document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) return;
+  if (/^\/admin(\/|$)/.test(location.pathname)) return;
+  var s = document.createElement('script');
+  s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18265049370';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', 'AW-18265049370');
+})();
 (function () {
   'use strict';
   var d = document, w = window;
