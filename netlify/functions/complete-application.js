@@ -109,12 +109,12 @@ exports.handler = async function (event) {
 
     await Promise.all([
       L.sendEmail({ to: app.email,     subject: toApplicant.subject, html: toApplicant.html, replyTo: L.NOTIFY_EMAIL }),
-      L.sendEmail({ to: L.NOTIFY_EMAIL, subject: toStaff.subject,     html: toStaff.html,     replyTo: app.email }),
+      L.sendEmail({ to: L.STAFF_EMAILS, subject: toStaff.subject,     html: toStaff.html,     replyTo: app.email }),
     ]);
 
     await L.updateRows('applications', `id=eq.${app.id}`, { notified_at: new Date().toISOString() });
     await L.logEvent(app.id, 'documents_received', 'system', { documents: landed.map(d => d.doc_type) });
-    await L.logEvent(app.id, 'emails_sent', 'system', { applicant: app.email, staff: L.NOTIFY_EMAIL });
+    await L.logEvent(app.id, 'emails_sent', 'system', { applicant: app.email, staff: L.STAFF_EMAILS });
 
     await mirrorToZoho(app);
 

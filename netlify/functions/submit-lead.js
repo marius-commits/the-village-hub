@@ -1,11 +1,12 @@
 // Netlify serverless function: submit-lead
-// Receives form data from the Village Hub interest form
-// and submits it to Zoho CRM via the Web-to-Lead endpoint.
+// Receives every website enquiry: validates it, saves it to Supabase leads,
+// emails the team (L.STAFF_EMAILS) and mirrors it to Zoho CRM via Web-to-Lead.
 const L = require('./_lib');
 
 // Map the form's plan interest onto the leads.product enum.
 function productFor(plan, source) {
   const t = `${plan} ${source}`.toLowerCase();
+  if (/corporate event|saturday/.test(t)) return 'event';
   if (/boardroom/.test(t)) return 'boardroom';
   if (/meeting/.test(t)) return 'meeting_room';
   if (/event/.test(t)) return 'event';
@@ -17,8 +18,8 @@ function productFor(plan, source) {
   return 'other';
 }
 
-// Copies the enquiry into Supabase public.leads (lead tracker). Never blocks
-// or fails the visitor's submission: Zoho stays the system of record for now.
+// Copies the enquiry into Supabase public.leads, the lead system of record
+// (/admin/leads). Never blocks or fails the visitor's submission.
 async function saveLead(params, event, fields) {
   if (!L.configured()) { console.warn('submit-lead: Supabase not configured, lead not tracked'); return; }
   const g = k => L.clean(params.get(k), 300);
@@ -40,9 +41,31 @@ async function saveLead(params, event, fields) {
     utm_source: g('utm_source'), utm_medium: g('utm_medium'), utm_campaign: g('utm_campaign'),
     utm_term: g('utm_term'), utm_content: g('utm_content'), gclid,
   };
-  if (!row.email && !row.phone) return;
   try { await L.insertRow('leads', row); }
   catch (err) { console.error('submit-lead: leads insert failed:', err.message); }
+}
+
+// Emails Marius, Christel and Francois (L.STAFF_EMAILS) about every real lead.
+// Never fails the visitor's submission.
+async function notifyStaff(params, event, f) {
+  const T = require('./_emails');
+  const g = k => L.clean(params.get(k), 300);
+  const referer = event.headers.referer || event.headers.Referer || '';
+  let landing = g('landing_page');
+  if (!landing && referer) { try { landing = new URL(referer).pathname; } catch (e) {} }
+  const isCorporate = /corporate event|saturday/i.test(`${f.planInterest} ${f.leadSource}`);
+  const mail = T.leadAlert({
+    kind: isCorporate ? 'corporate_event' : productFor(f.planInterest, f.leadSource),
+    first_name: f.firstName, last_name: f.lastName, company: f.company,
+    email: f.email, phone: f.phone, plan_interest: f.planInterest,
+    preferred_date: f.preferredDate, message: f.description,
+    source_label: f.leadSource, landing_page: landing,
+    paid: !!(g('gclid') || /cpc|paid|google_ads/i.test(g('utm_medium') || '')),
+    site_url: L.SITE_URL,
+  });
+  try {
+    await L.sendEmail({ to: L.STAFF_EMAILS, subject: mail.subject, html: mail.html, replyTo: L.validEmail(f.email) ? f.email : undefined });
+  } catch (err) { console.error('submit-lead: staff notification failed:', err.message); }
 }
 
 exports.handler = async function (event) {
@@ -72,7 +95,23 @@ exports.handler = async function (event) {
               description
             ].filter(Boolean).join('\n\n');
 
-      await saveLead(params, event, { firstName, lastName, email, phone, company, planInterest, preferredDate, description: fullDescription, leadSource });
+      // Reject empty and bot submissions before anything is saved or emailed.
+      const honeypot = params.get('aG9uZXlwb3Q') || params.get('bot_field') || '';
+      if (honeypot) return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ success: true }) };
+      const hasName = (firstName + lastName).trim().length > 0;
+      const hasContact = L.validEmail(email) || phone.replace(/\D/g, '').length >= 9;
+      if (!hasName || !hasContact) {
+        return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ success: false, error: 'Please give your name and a valid email or phone number.' }) };
+      }
+
+      const fields = { firstName, lastName, email, phone, company, planInterest, preferredDate, description: fullDescription, leadSource };
+      await Promise.all([saveLead(params, event, fields), notifyStaff(params, event, fields)]);
+
+      // Forms that already post to Zoho themselves (e.g. the boardroom form) send
+      // skip_zoho=1 so the lead is tracked and notified without a duplicate in Zoho.
+      if (params.get('skip_zoho') === '1') {
+        return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ success: true }) };
+      }
 
       const zohoPayload = new URLSearchParams({
               xnQsjsdp: '3bab74f7e8aba6be99b9d1863cff751310a973b2c6f80cb471b7a4eede332658',

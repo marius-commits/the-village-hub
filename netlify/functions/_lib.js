@@ -20,6 +20,11 @@ const PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY
 const FROM_EMAIL   = process.env.APPLICATIONS_FROM_EMAIL   || 'The Village Hub <hello@villagehub.co.za>';
 const NOTIFY_EMAIL = process.env.APPLICATIONS_NOTIFY_EMAIL || 'hello@villagehub.co.za';
 const SITE_URL     = process.env.SITE_URL                  || 'https://www.villagehub.co.za';
+// Everyone who must hear about every new lead and every completed application.
+// Override with LEAD_NOTIFY_EMAILS (comma-separated) in Netlify env if the team changes.
+const STAFF_EMAILS = (process.env.LEAD_NOTIFY_EMAILS ||
+  'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za')
+  .split(',').map(e => e.trim()).filter(Boolean);
 
 const BUCKET = 'kyc-documents';
 
@@ -251,7 +256,7 @@ function safeExtension(filename, mime) {
 
 module.exports = {
   SUPABASE_URL, BUCKET, PLANS, REQUIRED_DOCS, ALLOWED_MIME, MAX_FILE_BYTES,
-  NOTIFY_EMAIL, SITE_URL,
+  NOTIFY_EMAIL, STAFF_EMAILS, SITE_URL,
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
   createSignedUploadUrl, createSignedViewUrl,
