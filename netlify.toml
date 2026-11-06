@@ -17,6 +17,19 @@
   to = "/meeting-rooms-stellenbosch.html"
   status = 200
 
+# Saturday corporate events merged into the boardroom page (6 Nov 2026)
+[[redirects]]
+  from = "/corporate-events-stellenbosch"
+  to = "/boardroom-hire-stellenbosch#saturday-events"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/corporate-events-stellenbosch.html"
+  to = "/boardroom-hire-stellenbosch#saturday-events"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/boardroom-hire-stellenbosch"
   to = "/boardroom-hire-stellenbosch.html"

@@ -554,7 +554,6 @@
       setProgress(100, 'Done');
       try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
       try {
-        gtag('event', 'conversion', { 'send_to': 'AW-18265049370/n8xeCNDIuNMcEJqSuoVE', 'value': 795.0, 'currency': 'ZAR' });
         gtag('event', 'generate_lead', { value: 795, currency: 'ZAR', lead_type: 'student_application' });
       } catch (e) {}
       $('#refOut').textContent = data.reference;

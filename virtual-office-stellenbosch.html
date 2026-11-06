@@ -405,9 +405,10 @@
         ok.classList.add('hidden'); err.classList.add('hidden');
         btn.disabled = true; btn.textContent = 'Sending...';
         var extras = [];
-        if (document.getElementById('vo-reg').checked) extras.push('Needs registered CIPC/SARS address');
-        if (document.getElementById('vo-resident').checked) extras.push('Nooitgedacht Village resident');
-        
+        var reg = document.getElementById('vo-reg'), resi = document.getElementById('vo-resident');
+        if (reg && reg.checked) extras.push('Needs registered CIPC/SARS address');
+        if (resi && resi.checked) extras.push('Nooitgedacht Village resident');
+
         var v = function(id){ var el=document.getElementById(id); return el ? el.value : ''; };
         var utm = new URLSearchParams(location.search);
         var src = utm.get('utm_source') ? ' | utm: ' + utm.get('utm_source') + '/' + (utm.get('utm_medium')||'') + '/' + (utm.get('utm_campaign')||'') : '';
@@ -427,7 +428,7 @@
           var j = await res.json();
           if (j.success) {
             ok.classList.remove('hidden'); form.reset();
-            try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/n8xeCNDIuNMcEJqSuoVE', 'value': 1095.0, 'currency': 'ZAR' }); gtag('event', 'generate_lead', { value: 1095, currency: 'ZAR', lead_type: 'virtual_office' }); } catch(_) {}
+            /* conversion fired centrally by vh.js on submit-lead success */
           } else { err.classList.remove('hidden'); }
         } catch(_) { err.classList.remove('hidden'); }
         finally { btn.disabled = false; btn.textContent = 'Request a call back'; }

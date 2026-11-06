@@ -920,6 +920,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     });
     const json = await res.json();
     if (json.success) {
+      try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/nZtxCMHin7MdEJqSuoVE', 'value': 1750, 'currency': 'ZAR' }); } catch (e) {}
       this.style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
     } else {
