@@ -144,6 +144,8 @@
 
     if (new Date() > new Date(PROMO_END)) return;
     if (location.pathname.indexOf(PROMO_PATH) === 0) return;
+    // Never on application flows: the bar sits over their fixed Continue/Submit buttons.
+    if (/^\/(apply-|admin)/.test(location.pathname)) return;
     if (d.body.hasAttribute('data-no-promo')) return;
     if ($('.vh-promo')) return;
     try { if (localStorage.getItem(PROMO_KEY) === '1') return; } catch (e) {}
