@@ -158,10 +158,11 @@
       <h1 class="mt-3 text-3xl md:text-5xl font-extrabold text-gray-900">Virtual Office in Stellenbosch from R595 a month</h1>
       <p class="mt-5 text-lg text-gray-700 max-w-3xl mx-auto">A real Stellenbosch business address at Nooitgedacht Village. Your mail handled and photographed to you the same day, a local number forwarded to your phone, and a desk or boardroom ready when you come to town.</p>
       <div class="mt-7 flex flex-wrap justify-center gap-3">
-        <a href="#plans" class="btn-sage px-6 py-3 rounded-md font-medium">See the 3 plans</a>
+        <a href="#enquire" class="btn-sage px-6 py-3 rounded-md font-medium">Get the price list &amp; a call back</a>
         <a href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20set%20up%20a%20virtual%20office" class="bg-white border border-[#8A9A5B] text-[#6B4423] px-6 py-3 rounded-md font-medium hover:bg-[#FAF8F6]">WhatsApp Us</a>
       </div>
       <p class="mt-4 text-sm text-gray-500">Prices excl. VAT &middot; 3-month minimum, then month to month &middot; Live within 24 hours of sign-up</p>
+        <p class="mt-2 text-sm"><a href="#plans" class="underline text-[#6B4423]">Or see the 3 plans first &darr;</a></p>
     </div>
   </section>
 
@@ -210,6 +211,35 @@
   </section>
 
   <!-- Plans -->
+  <!-- Apply form -->
+  <section id="enquire" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" style="scroll-margin-top:80px;">
+    <div class="bg-[#FAF8F6] p-8 rounded-2xl border border-[#D9C8A6] shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-900">Get the price list and a call back</h2>
+      <p class="text-gray-600 mt-2 mb-6">Four details. We phone you within one working day with the right plan and the price. No documents needed yet &mdash; the compliance paperwork only happens once you say yes.</p>
+      <form id="vo-lead" class="grid gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <input class="vo-input" type="text" id="vo-first" placeholder="First name *" required>
+          <input class="vo-input" type="text" id="vo-last" placeholder="Last name *" required>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <input class="vo-input" type="email" id="vo-email" placeholder="Email *" required>
+          <input class="vo-input" type="tel" id="vo-phone" placeholder="Phone / WhatsApp *" required>
+        </div>
+          <input class="vo-input" type="text" id="vo-company" placeholder="Company name (optional)">
+        <select class="vo-input" id="vo-plan" required>
+          <option value="" disabled selected>Which plan? *</option>
+          <option value="Address">Village Address, R595/month</option>
+          <option value="Virtual">Village Virtual, R1 095/month</option>
+          <option value="Pro">Village Virtual Pro, R1 695/month</option>
+          <option value="Not sure">Not sure yet, advise me</option>
+        </select>
+        <button type="submit" id="vo-submit" class="btn-sage px-6 py-3 rounded-md font-medium w-full">Request a call back</button>
+        <p id="vo-ok" class="hidden text-center font-semibold text-[#7F9368]">Thank you. We will phone you within one working day.</p>
+        <p id="vo-err" class="hidden text-center text-red-700">Something went wrong. Please <a class="underline" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20set%20up%20a%20virtual%20office">WhatsApp us</a> instead.</p>
+      </form>
+    </div>
+  </section>
+
   <section id="plans" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <h2 class="text-3xl font-bold text-gray-900 text-center">Choose your virtual office</h2>
     <p class="text-center text-gray-600 mt-2">All plans include a signed membership, so your address is genuine business premises, not a mailbox.</p>
@@ -305,44 +335,6 @@
 
   </article>
 
-  <!-- Apply form -->
-  <section id="apply" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" style="scroll-margin-top:80px;">
-    <div class="bg-[#FAF8F6] p-8 rounded-2xl border border-[#D9C8A6] shadow-lg">
-      <h2 class="text-2xl font-bold text-gray-900">Not ready to apply yet?</h2>
-      <p class="text-gray-600 mt-2 mb-6">Tell us who you are and which plan suits you. We will come back to you within one working day with the agreement and the short compliance checklist.</p>
-      <form id="vo-lead" class="grid gap-4">
-        <div class="grid md:grid-cols-2 gap-4">
-          <input class="vo-input" type="text" id="vo-first" placeholder="First name *" required>
-          <input class="vo-input" type="text" id="vo-last" placeholder="Last name *" required>
-        </div>
-        <div class="grid md:grid-cols-2 gap-4">
-          <input class="vo-input" type="email" id="vo-email" placeholder="Email *" required>
-          <input class="vo-input" type="tel" id="vo-phone" placeholder="Phone / WhatsApp *" required>
-        </div>
-        <div class="grid md:grid-cols-2 gap-4">
-          <input class="vo-input" type="text" id="vo-company" placeholder="Company name (if registered)">
-          <input class="vo-input" type="text" id="vo-website" placeholder="Website or social link">
-        </div>
-        <select class="vo-input" id="vo-plan" required>
-          <option value="" disabled selected>Which plan? *</option>
-          <option value="Address">Village Address, R595/month</option>
-          <option value="Virtual">Village Virtual, R1 095/month</option>
-          <option value="Pro">Village Virtual Pro, R1 695/month</option>
-          <option value="Not sure">Not sure yet, advise me</option>
-        </select>
-        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" id="vo-reg"> I need a registered CIPC / SARS address</label>
-        <div id="vo-reg-extra" class="hidden">
-          <input class="vo-input w-full" type="text" id="vo-cipc" placeholder="CIPC registration number (e.g. 2021/123456/07)">
-          <p class="text-xs text-gray-500 mt-1">We need this for the compliance check. Leave it blank if the company is not registered yet.</p>
-        </div>
-        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" id="vo-resident"> I live at Nooitgedacht Village</label>
-        <textarea class="vo-input" id="vo-msg" rows="3" placeholder="What does your business do? (one line is fine)"></textarea>
-        <button type="submit" id="vo-submit" class="btn-sage px-6 py-3 rounded-md font-medium w-full">Send my application</button>
-        <p id="vo-ok" class="hidden text-center font-semibold text-[#7F9368]">Thank you. We will be in touch within one working day.</p>
-        <p id="vo-err" class="hidden text-center text-red-700">Something went wrong. Please <a class="underline" href="https://wa.me/27725310904?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20set%20up%20a%20virtual%20office">WhatsApp us</a> instead.</p>
-      </form>
-    </div>
-  </section>
 
   <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
     <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-4">Frequently asked questions</h2>
@@ -415,19 +407,19 @@
         var extras = [];
         if (document.getElementById('vo-reg').checked) extras.push('Needs registered CIPC/SARS address');
         if (document.getElementById('vo-resident').checked) extras.push('Nooitgedacht Village resident');
-        var cipc = document.getElementById('vo-cipc').value.trim();
-        if (cipc) extras.push('CIPC number: ' + cipc);
+        
+        var v = function(id){ var el=document.getElementById(id); return el ? el.value : ''; };
         var utm = new URLSearchParams(location.search);
         var src = utm.get('utm_source') ? ' | utm: ' + utm.get('utm_source') + '/' + (utm.get('utm_medium')||'') + '/' + (utm.get('utm_campaign')||'') : '';
         var body = new URLSearchParams({
-          first_name: document.getElementById('vo-first').value,
-          last_name: document.getElementById('vo-last').value,
-          email: document.getElementById('vo-email').value,
-          phone: document.getElementById('vo-phone').value,
-          company: document.getElementById('vo-company').value,
+          first_name: v('vo-first'),
+          last_name: v('vo-last'),
+          email: v('vo-email'),
+          phone: v('vo-phone'),
+          company: v('vo-company'),
           plan_interest: 'Virtual Office - ' + sel.value,
-          website: document.getElementById('vo-website').value,
-          description: [document.getElementById('vo-msg').value].concat(extras).filter(Boolean).join('\n') + src,
+          website: v('vo-website'),
+          description: [v('vo-msg')].concat(extras).filter(Boolean).join('\n') + src,
           lead_source: 'Website - Virtual Office'
         });
         try {
@@ -435,10 +427,10 @@
           var j = await res.json();
           if (j.success) {
             ok.classList.remove('hidden'); form.reset();
-            try { gtag('event', 'generate_lead', { value: 1095, currency: 'ZAR', lead_type: 'virtual_office' }); } catch(_) {}
+            try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/n8xeCNDIuNMcEJqSuoVE', 'value': 1095.0, 'currency': 'ZAR' }); gtag('event', 'generate_lead', { value: 1095, currency: 'ZAR', lead_type: 'virtual_office' }); } catch(_) {}
           } else { err.classList.remove('hidden'); }
         } catch(_) { err.classList.remove('hidden'); }
-        finally { btn.disabled = false; btn.textContent = 'Send my application'; }
+        finally { btn.disabled = false; btn.textContent = 'Request a call back'; }
       });
     })();
   </script>
