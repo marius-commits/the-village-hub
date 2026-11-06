@@ -194,11 +194,11 @@ function leadAlert(lead) {
   const table = rows.map(([k, v, raw]) => `<tr><td style="padding:6px 12px 6px 0;color:${BRAND.muted};white-space:nowrap;vertical-align:top;">${k}</td><td style="padding:6px 0;">${raw ? v : esc(v)}</td></tr>`).join('');
   const msg = lead.message ? `<p style="margin:18px 0 6px 0;font-weight:600;">Message</p><div style="background:${BRAND.cream};border-left:3px solid ${BRAND.gold};padding:12px 14px;white-space:pre-wrap;">${esc(lead.message)}</div>` : '';
   const paid = lead.paid ? `<p style="margin:0 0 14px 0;"><span style="background:${BRAND.gold};color:#fff;font:600 11px Arial,sans-serif;padding:3px 8px;border-radius:4px;">GOOGLE ADS</span></p>` : '';
-  const body = `${paid}<p style="margin:0 0 14px 0;font:600 18px/1.3 Georgia,serif;color:${BRAND.brown};">New ${esc(label.toLowerCase())} lead</p>
+  const body = `${paid}<p style="margin:0 0 14px 0;font:600 18px/1.3 Georgia,serif;color:${BRAND.brown};">New lead &middot; ${esc(label)}</p>
     <table role="presentation" cellpadding="0" cellspacing="0" style="font:400 14px/1.5 Arial,sans-serif;color:${BRAND.ink};">${table}</table>${msg}
     ${button(`${lead.site_url}/admin/leads`, 'Open the lead tracker')}
     <p style="margin:0;font-size:13px;color:${BRAND.muted};">Reply to this email to answer ${esc(lead.first_name || 'the lead')} directly. Saved in the lead tracker and Zoho.</p>`;
-  return { subject: `New ${label.toLowerCase()} lead: ${name}${lead.company ? ` (${lead.company})` : ''}`, html: shell(body, `${label} enquiry from ${name}`) };
+  return { subject: `New lead – ${label}: ${name}${lead.company ? ` (${lead.company})` : ''}`, html: shell(body, `${label} enquiry from ${name}`) };
 }
 
 module.exports = { applicantReceived, staffAlert, infoRequested, approved, declined, leadAlert, DOC_LABELS };
