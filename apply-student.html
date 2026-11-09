@@ -36,13 +36,10 @@
     .drop.has{ border-style:solid; border-color:var(--vh-sage); background:#f7f9f3; }
     /* No floating WhatsApp nudge on the form — it competes with Continue. */
     .vh-wa{ display:none !important; }
-    /* Fixed bottom bar so Back/Continue is always on screen, whatever the step
-       height. position:fixed is used, not sticky, because the shared layer sets
-       overflow-x:hidden on <html>/<body>, which breaks position:sticky. */
-    .form-nav{ position:fixed; left:0; right:0; bottom:0; z-index:60; padding:12px 16px;
-      background:rgba(250,248,246,.98); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-      border-top:1px solid var(--vh-sand); box-shadow:0 -6px 20px -14px rgba(31,29,26,.3); }
-    #formWrap{ padding-bottom:84px; }
+    /* Back/Continue sit inline, directly under the step content.
+       Never write a literal body tag in this file's comments: Netlify snippet
+       injection matches the first one it finds and splits the style block. */
+    .form-nav{ margin-top:20px; padding-top:16px; border-top:1px solid var(--vh-sand); }
     [hidden]{ display:none !important; }
   </style>
   <!-- Google Ads conversion tracking -->
@@ -83,6 +80,9 @@
 
       <!-- STEP 1 -->
       <section data-step="1">
+        <div class="card p-4 mb-4 text-sm text-gray-600" style="border-left:3px solid var(--vh-gold)">
+          <strong class="text-gray-800">Nothing is payable now.</strong> We check your student card and proof of registration first. Once you are verified we send the invoice, and your access starts when it is paid. Student rates are for personal study use and are not transferable.
+        </div>
         <div class="space-y-3">
 
           <label class="plan block p-5 relative" data-plan="Exam Pass 2026 (Student)">
@@ -145,9 +145,6 @@
         </div>
         <p class="err-msg" id="err-plan">Choose a package to continue.</p>
 
-        <div class="card p-4 mt-5 text-sm text-gray-600" style="border-left:3px solid var(--vh-gold)">
-          <strong class="text-gray-800">Nothing is payable now.</strong> We check your student card and proof of registration first. Once you are verified we send the invoice, and your access starts when it is paid. Student rates are for personal study use and are not transferable.
-        </div>
       </section>
 
       <!-- STEP 2 -->
@@ -300,15 +297,14 @@
         </div>
       </section>
 
-      <div class="form-nav" style="position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px;background:#FAF8F6;border-top:1px solid #E8D9C5;box-shadow:0 -6px 20px -14px rgba(31,29,26,.3)">
-        <div class="max-w-3xl mx-auto flex items-center justify-between gap-3">
+      <div class="form-nav" id="formNav">
+        <div class="flex items-center justify-between gap-3">
           <button type="button" id="back" class="btn btn-outline btn-sm" hidden>&larr; Back</button>
           <div class="flex-1"></div>
           <button type="button" id="next" class="btn btn-sage">Continue</button>
           <button type="submit" id="send" class="btn btn-sage" hidden>Submit application</button>
         </div>
       </div>
-      <div aria-hidden="true" style="height:92px"></div>
     </form>
 
     <p class="text-center text-xs text-gray-500 mt-6">
@@ -358,6 +354,14 @@
     card.querySelector('input').checked = true;
     $('#err-plan').style.display = 'none';
     saveDraft();
+    syncNextLabel();
+    const nav = document.getElementById('formNav');
+    const r = nav.getBoundingClientRect();
+    if(r.bottom > window.innerHeight - 8) nav.scrollIntoView({behavior:'smooth', block:'end'});
+  }
+  function syncNextLabel(){
+    const p = chosenPlan();
+    $('#next').textContent = (step === 1 && p) ? 'Continue with ' + p.replace(/\s*\(.*?\)/, '') + ' \u2192' : 'Continue \u2192';
   }
   planCards.forEach(c => {
     c.addEventListener('click', () => selectPlan(c));
@@ -450,6 +454,7 @@
     $('#back').hidden = step === 1;
     $('#next').hidden = step === LAST;
     $('#send').hidden = step !== LAST;
+    if(typeof syncNextLabel === 'function') syncNextLabel();
     window.scrollTo({ top:0, behavior:'smooth' });
   }
   $('#next').addEventListener('click', () => { if(!validateStep(step)) return; saveDraft(); step=Math.min(LAST,step+1); render(); });
