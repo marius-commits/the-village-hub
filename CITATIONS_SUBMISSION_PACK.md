@@ -18,11 +18,11 @@
 - **Province:** Western Cape
 - **Postal Code:** 7600
 - **Country:** South Africa
-- **Phone:** +27 72 531 0904
-- **Phone (alt format):** 072 531 0904
+- **Phone:** +27 63 260 3513
+- **Phone (alt format):** +27 63 260 3513
 - **Email:** info@villagehub.co.za
 - **Website:** https://www.villagehub.co.za
-- **WhatsApp:** https://wa.me/27725310904
+- **WhatsApp:** https://wa.me/27632603513
 - **Hours:** Mon–Fri 07:00–19:00, Sat 08:00–13:00, Sun closed
 - **Year established:** 2024 (Brickfield Spaces / The Village Hub at Nooitgedacht — adjust if directory asks)
 
@@ -38,7 +38,7 @@
 
 ### Medium (≤ 150 words / standard directory)
 
-> The Village Hub is a premium coworking and meeting venue at Nooitgedacht Village in Stellenbosch, Western Cape. We offer hot desks from R60/hour, dedicated desks from R3,500/month, furnished private offices for teams of 2 to 6, hourly-bookable boardrooms (10 and 12 seater), full event venue hire, and a virtual office service from R450/month. All packages include fast fibre Wi-Fi, free secure parking, coffee service, and access to The Foundry lounge. The Village Hub is upstairs from The Village Table coffee shop, 5 minutes from the R44, and serves founders, consultants, remote teams and visiting professionals from Stellenbosch, Somerset West, Cape Town and beyond. Book a tour or a day pass at villagehub.co.za, or WhatsApp 072 531 0904.
+> The Village Hub is a premium coworking and meeting venue at Nooitgedacht Village in Stellenbosch, Western Cape. We offer hot desks from R60/hour, dedicated desks from R3,500/month, furnished private offices for teams of 2 to 6, hourly-bookable boardrooms (10 and 12 seater), full event venue hire, and a virtual office service from R450/month. All packages include fast fibre Wi-Fi, free secure parking, coffee service, and access to The Foundry lounge. The Village Hub is upstairs from The Village Table coffee shop, 5 minutes from the R44, and serves founders, consultants, remote teams and visiting professionals from Stellenbosch, Somerset West, Cape Town and beyond. Book a tour or a day pass at villagehub.co.za, or WhatsApp +27 63 260 3513.
 
 ### Long (300–400 words / for directories with rich-text descriptions)
 
@@ -58,7 +58,7 @@
 >
 > The Village Hub serves a community of agritech, fintech, biotech, design and consulting founders who have either relocated to Stellenbosch or chosen it as their preferred working environment over Cape Town CBD. The space is calm, professional, and built for deep work — not loud, not transient, and not a hot-desk cattle barn.
 >
-> Open Monday to Friday from 07:00 to 19:00, and Saturday from 08:00 to 13:00. Free 15-minute tours available most weekday afternoons. Book at villagehub.co.za, call +27 72 531 0904, or WhatsApp the same number for the fastest response.
+> Open Monday to Friday from 07:00 to 19:00, and Saturday from 08:00 to 13:00. Free 15-minute tours available most weekday afternoons. Book at villagehub.co.za, call +27 63 260 3513, or WhatsApp the same number for the fastest response.
 
 ---
 
@@ -162,7 +162,7 @@ For directories that don't have a self-serve form (Stellenbosch.com, Stellenbosc
 > [Insert the medium description above]
 >
 > Website: https://www.villagehub.co.za
-> Phone: +27 72 531 0904
+> Phone: +27 63 260 3513
 > Address: 1st Floor, The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch, 7600
 >
 > Happy to send photos, additional details, or fill in a specific form if you have one.
@@ -170,7 +170,7 @@ For directories that don't have a self-serve form (Stellenbosch.com, Stellenbosc
 > Thanks,
 > Marius van Jaarsveld
 > Founder, The Village Hub
-> +27 72 531 0904
+> +27 63 260 3513
 
 ---
 

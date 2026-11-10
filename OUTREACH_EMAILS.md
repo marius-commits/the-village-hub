@@ -46,7 +46,7 @@
 >
 > Marius
 > The Village Hub
-> +27 72 531 0904
+> +27 63 260 3513
 
 ---
 
@@ -70,7 +70,7 @@
 > Coffee on me anytime.
 >
 > Marius
-> +27 72 531 0904
+> +27 63 260 3513
 
 ---
 
@@ -100,7 +100,7 @@
 >
 > Marius van Jaarsveld
 > Founder, The Village Hub
-> +27 72 531 0904
+> +27 63 260 3513
 > villagehub.co.za
 
 ---
@@ -124,7 +124,7 @@
 >
 > **Why your readers care:** A meaningful chunk of MyBroadband's audience is exactly the kind of remote-working tech professional this story is about. It's also a useful data point in the "where should I work from?" question that's increasingly relevant.
 >
-> Available for a phone call this week if useful — +27 72 531 0904.
+> Available for a phone call this week if useful — +27 63 260 3513.
 >
 > Marius van Jaarsveld
 > The Village Hub, Stellenbosch
