@@ -71,7 +71,7 @@
     var t = decodeURIComponent(String(hint || '')).toLowerCase(), v = 500;
     if (/apply-virtual-office|virtual pro/.test(t)) v = 1695; else if (/virtual|address/.test(t)) v = 1095;
     else if (/corporate|saturday/.test(t)) v = 5000; else if (/boardroom|meeting/.test(t)) v = 2500;
-    else if (/student/.test(t)) v = 795; else if (/office/.test(t)) v = 6950; else if (/desk|cowork|founding/.test(t)) v = 1750;
+    else if (/student/.test(t)) v = 795; else if (/office/.test(t)) v = 7500; else if (/desk|cowork|founding/.test(t)) v = 1750;
     try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/nZtxCMHin7MdEJqSuoVE', 'value': v, 'currency': 'ZAR' }); } catch (e) {}
     try { gtag('event', 'generate_lead', { 'value': v, 'currency': 'ZAR' }); } catch (e) {}
   };
@@ -398,7 +398,7 @@
     visitor: { n: 'Village Visitor', p: 'R1 600', u: '/ month · 10 days', f: ['10 day-pass credits a month (R160 a day)', 'Pick your favourite seat', 'Member rates on boardrooms'], cta: ['Activate Visitor', SB + '/desks'] },
     local: { n: 'Village Local', p: 'R3 000', u: '/ month · unlimited', f: ['Unlimited weekdays, any hot desk', 'Printing credits, community perks', 'Member rates on boardrooms'], cta: ['Join as a Local', SB + '/desks'] },
     resident: { n: 'Village Resident', p: 'R3 500', u: '/ month · dedicated desk', f: ['A desk that is yours, leave your setup', '24/7 tag access', 'Printing credits, member rates on boardrooms'], cta: ['Reserve a desk', SB + '/desks'] },
-    o12: { n: 'Village Personal Office', p: 'R7 500', u: '/ month · 2 seats', f: ['Furnished, move-in ready', '24/7 secure access, dedicated Wi-Fi', 'Cleaning, printing credits, reception'], cta: ['Enquire about this office', wa("I'm interested in the Village Personal Office (1-2 seater)")] },
+    o12: { n: 'Village Personal Office', p: 'R7 500', u: '/ month · 2 seats', f: ['Furnished, move-in ready', '24/7 secure access, dedicated Wi-Fi', 'Cleaning, printing credits, reception'], cta: ['Enquire about this office', wa("I'm interested in the Village Personal Office (2 seater)")] },
     o3: { n: 'Village Private Office', p: 'R10 450', u: '/ month · 3 seats', f: ['Furnished, move-in ready', '24/7 secure access, business address', 'Daily cleaning, community networking'], cta: ['Enquire about this office', wa("I'm interested in the Village Private Office (3 seater)")] },
     o4: { n: 'Village Team Office', p: 'R13 950', u: '/ month · 4 seats', f: ['Dedicated high-speed Wi-Fi', 'Lounge access, meeting room credits', 'Premium coffee service'], cta: ['Enquire about this office', wa("I'm interested in the Village Team Office (4 seater)")] },
     o6: { n: 'Village Executive Office', p: 'R20 950', u: '/ month · 6 seats', f: ['Spacious private suite', 'All utilities and amenities included', 'Dedicated team concierge'], cta: ['Enquire about this office', wa("I'm interested in the Village Executive Office (6 seater)")] },
