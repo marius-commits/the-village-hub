@@ -71,7 +71,7 @@
     var t = decodeURIComponent(String(hint || '')).toLowerCase(), v = 500;
     if (/apply-virtual-office|virtual pro/.test(t)) v = 1695; else if (/virtual|address/.test(t)) v = 1095;
     else if (/corporate|saturday/.test(t)) v = 5000; else if (/boardroom|meeting/.test(t)) v = 2500;
-    else if (/student/.test(t)) v = 795; else if (/office/.test(t)) v = 6950; else if (/desk|cowork|founding/.test(t)) v = 1750;
+    else if (/student/.test(t)) v = 795; else if (/office/.test(t)) v = 7500; else if (/desk|cowork|founding/.test(t)) v = 1750;
     try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/nZtxCMHin7MdEJqSuoVE', 'value': v, 'currency': 'ZAR' }); } catch (e) {}
     try { gtag('event', 'generate_lead', { 'value': v, 'currency': 'ZAR' }); } catch (e) {}
   };
@@ -398,7 +398,7 @@
     visitor: { n: 'Village Visitor', p: 'R1 600', u: '/ month · 10 days', f: ['10 day-pass credits a month (R160 a day)', 'Pick your favourite seat', 'Member rates on boardrooms'], cta: ['Activate Visitor', SB + '/desks'] },
     local: { n: 'Village Local', p: 'R3 000', u: '/ month · unlimited', f: ['Unlimited weekdays, any hot desk', 'Printing credits, community perks', 'Member rates on boardrooms'], cta: ['Join as a Local', SB + '/desks'] },
     resident: { n: 'Village Resident', p: 'R3 500', u: '/ month · dedicated desk', f: ['A desk that is yours, leave your setup', '24/7 tag access', 'Printing credits, member rates on boardrooms'], cta: ['Reserve a desk', SB + '/desks'] },
-    o12: { n: 'Village Personal Office', p: 'R6 950', u: '/ month · 1–2 seats', f: ['Furnished, move-in ready', '24/7 secure access, dedicated Wi-Fi', 'Cleaning, printing credits, reception'], cta: ['Enquire about this office', wa("I'm interested in the Village Personal Office (1-2 seater)")] },
+    o12: { n: 'Village Personal Office', p: 'R7 500', u: '/ month · 2 seats', f: ['Furnished, move-in ready', '24/7 secure access, dedicated Wi-Fi', 'Cleaning, printing credits, reception'], cta: ['Enquire about this office', wa("I'm interested in the Village Personal Office (2 seater)")] },
     o3: { n: 'Village Private Office', p: 'R10 450', u: '/ month · 3 seats', f: ['Furnished, move-in ready', '24/7 secure access, business address', 'Daily cleaning, community networking'], cta: ['Enquire about this office', wa("I'm interested in the Village Private Office (3 seater)")] },
     o4: { n: 'Village Team Office', p: 'R13 950', u: '/ month · 4 seats', f: ['Dedicated high-speed Wi-Fi', 'Lounge access, meeting room credits', 'Premium coffee service'], cta: ['Enquire about this office', wa("I'm interested in the Village Team Office (4 seater)")] },
     o6: { n: 'Village Executive Office', p: 'R20 950', u: '/ month · 6 seats', f: ['Spacious private suite', 'All utilities and amenities included', 'Dedicated team concierge'], cta: ['Enquire about this office', wa("I'm interested in the Village Executive Office (6 seater)")] },
@@ -465,7 +465,7 @@
         }
         if (state.who === 'team') {
           var t = state.team;
-          if (t <= 2) return ['o12', 'resident', 'A 1–2 seater at R6 950 gives you a door, 24/7 access and a business address. Two dedicated desks would be R7 000 without the door.'];
+          if (t <= 2) return ['o12', 'resident', 'A 2 seater at R7 500 gives you a door, 24/7 access and a business address. Two dedicated desks would be R7 000 without the door.'];
           if (t === 3) return ['o3', 'o4', 'Three people fit the Village Private Office exactly. Take the 4-seater if you expect a hire this year.'];
           if (t === 4) return ['o4', 'o6', 'Four seats, dedicated Wi-Fi and meeting room credits. The 6-seater buys growing room.'];
           if (t <= 6) return ['o6', 'o4', 'The Village Executive Office seats six comfortably with a team concierge.'];
@@ -499,7 +499,7 @@
     { id: 'hot', t: 'Hot desk hall', x: 15.9, y: 26.6, w: 18.1, h: 40.5, img: '/images/web/hotdesks-1.jpg', meta: ['24 desks', 'From R60 / hour', 'Power at every seat'], d: 'The main hall under the timber trusses: twenty-four desks in pods of four, natural light from the arches, and the quiet hum of people getting things done.', link: ['Hot desk plans', '/hot-desk-stellenbosch'] },
     { id: 'focus', t: 'Focus desks', x: 40.9, y: 26.6, w: 8.4, h: 40.5, img: '/images/web/hotdesks-3.jpg', meta: ['12 desks', 'Quiet zone', 'Dedicated desks'], d: 'A quieter run of desks beside the atrium. Village Residents keep their setups here; it is also where students on the Exam Pass settle in for the day.', link: ['Dedicated desk R3 500', '/pricing#desks'] },
     { id: 'bar', t: 'Atrium bar seating', x: 61.6, y: 21.3, w: 5.6, h: 51.1, img: '/images/web/hotdesks-4.jpg', meta: ['10 seats', 'Day passes', 'Overlooks the atrium'], d: 'Bar-height seating along the atrium void, looking down into The Foundry. The favourite spot for a half-day pass and a laptop.', link: ['Day pass R250', SB + '/desks'] },
-    { id: 'pods', t: 'Private office pods', x: 70, y: 18.6, w: 15.3, h: 49.8, img: '/images/web/office-2.jpg', meta: ['Six offices', '2 to 4 seats', '24/7 access'], d: 'Six glass-fronted offices in the centre of the floor, two to four seats each, with the arched windows behind them. Furnished, cleaned and connected.', link: ['Private offices from R6 950', '/private-offices-stellenbosch'] },
+    { id: 'pods', t: 'Private office pods', x: 70, y: 18.6, w: 15.3, h: 49.8, img: '/images/web/office-2.jpg', meta: ['Six offices', '2 to 4 seats', '24/7 access'], d: 'Six glass-fronted offices in the centre of the floor, two to four seats each, with the arched windows behind them. Furnished, cleaned and connected.', link: ['Private offices from R7 500', '/private-offices-stellenbosch'] },
     { id: 'offices', t: 'Private offices, east wing', x: 88.1, y: 2, w: 10.9, h: 96.3, img: '/images/web/offices.jpg', meta: ['Six offices', '2 to 6 seats', 'Business address'], d: 'The east wing: a run of private offices from a quiet two-seater to the six-seat Village Executive Office, each with its own door and tag access.', link: ['See the offices', '/private-offices-stellenbosch'] },
     { id: 'office1', t: 'Village Private Office', x: 25.6, y: 2, w: 14.4, h: 17.9, img: '/images/web/office.jpg', meta: ['3 seats', 'R10 450 / month', 'Corner office'], d: 'The corner office by the main stair: three desks, a door, and first pick of the morning light.', link: ['Enquire', wa("I'm interested in the Village Private Office (3 seater)")] },
     { id: 'lounge1', t: 'Members’ lounge', x: 1.27, y: 25.9, w: 14.04, h: 19.9, img: '/images/web/foundry.jpg', meta: ['Soft seating', 'Calls welcome', 'Coffee'], d: 'Sofas, a couple of desks and a round table for the conversations that do not need a boardroom.', link: ['Book a tour', wa("Hi Village Hub, I'd like to book a tour of the coworking space")] },

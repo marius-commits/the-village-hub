@@ -19,7 +19,7 @@
 - Hybrid bundles: 5 days R1,000/month; 10 days R1,600/month
 - Unlimited weekday coworking: R3,000/month
 - Dedicated desk: from R3,500/month
-- Private office: from R6,950/month
+- Private office: from R7,500/month
 
 Every public surface must agree with these facts: website, structured data, Google Business Profile, Bing, directories, social profiles, ads and AI-readable files.
 

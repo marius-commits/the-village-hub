@@ -38,7 +38,7 @@
 
 ### Medium (≤ 150 words / standard directory)
 
-> The Village Hub is a premium coworking and meeting venue at Nooitgedacht Village in Stellenbosch, Western Cape. We offer hot desks from R60/hour, dedicated desks from R3,500/month, furnished private offices for teams of 1 to 6, hourly-bookable boardrooms (10 and 12 seater), full event venue hire, and a virtual office service from R450/month. All packages include fast fibre Wi-Fi, free secure parking, coffee service, and access to The Foundry lounge. The Village Hub is upstairs from The Village Table coffee shop, 5 minutes from the R44, and serves founders, consultants, remote teams and visiting professionals from Stellenbosch, Somerset West, Cape Town and beyond. Book a tour or a day pass at villagehub.co.za, or WhatsApp 072 531 0904.
+> The Village Hub is a premium coworking and meeting venue at Nooitgedacht Village in Stellenbosch, Western Cape. We offer hot desks from R60/hour, dedicated desks from R3,500/month, furnished private offices for teams of 2 to 6, hourly-bookable boardrooms (10 and 12 seater), full event venue hire, and a virtual office service from R450/month. All packages include fast fibre Wi-Fi, free secure parking, coffee service, and access to The Foundry lounge. The Village Hub is upstairs from The Village Table coffee shop, 5 minutes from the R44, and serves founders, consultants, remote teams and visiting professionals from Stellenbosch, Somerset West, Cape Town and beyond. Book a tour or a day pass at villagehub.co.za, or WhatsApp 072 531 0904.
 
 ### Long (300–400 words / for directories with rich-text descriptions)
 
@@ -47,7 +47,7 @@
 > Our membership and visitor options include:
 > • Hot desks at R60/hour or R200/day — walk-ins welcome
 > • Dedicated desks from R3,500/month
-> • Furnished private offices for 1, 2, 3–4, or 4–6 people, from R6,950/month
+> • Furnished private offices for 2, 3–4, or 4–6 people, from R7,500/month
 > • The Village Boardroom (12-seater) at R390/hour with full A/V
 > • The Village Chamber (10-seater) at R350/hour
 > • Event venue hire from R3,500 per evening with optional catering
