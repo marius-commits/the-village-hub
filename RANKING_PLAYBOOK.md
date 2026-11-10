@@ -8,7 +8,7 @@
 
 - Name: The Village Hub — Co-Working & Accommodation
 - Address: 1st Floor, The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch 7600
-- Phone / WhatsApp: +27 72 531 0904
+- Phone / WhatsApp: +27 63 260 3513
 - Website: https://www.villagehub.co.za/
 - Public weekday hours: Mon–Fri 07:00–18:00
 - Meeting rooms: exactly TWO bookable rooms
