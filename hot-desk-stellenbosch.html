@@ -249,5 +249,34 @@
 
   <script>(function(){var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();})();</script>
   <script src="/assets/vh.js?v=4" defer></script>
+  <script>
+  /* Hot Desk Lead, this page only. Once per page view, on a member-app desk booking click. */
+  (function () {
+    var sent = false;
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href*="members.villagehub.co.za"]') : null;
+      if (!a || sent) return;
+      if ((a.getAttribute('href') || '').indexOf('/desks') === -1) return;
+      var newTab = a.getAttribute('target') === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
+      sent = true;
+      if (newTab) {
+        try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/1nLXCKW678UcEJqSuoVE', 'value': 1.0, 'currency': 'ZAR' }); } catch (err) {}
+        return;
+      }
+      e.preventDefault();
+      var dest = a.href, gone = false;
+      function go() { if (gone) return; gone = true; window.location.href = dest; }
+      try {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-18265049370/1nLXCKW678UcEJqSuoVE',
+          'value': 1.0,
+          'currency': 'ZAR',
+          'event_callback': go
+        });
+      } catch (err) { go(); return; }
+      setTimeout(go, 1000);
+    }, true);
+  })();
+  </script>
 </body>
 </html>
