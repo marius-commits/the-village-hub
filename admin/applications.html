@@ -14,7 +14,7 @@
        the public nav, footer, page transitions and WhatsApp nudge do not belong
        on a staff tool that displays identity documents. -->
   <link rel="stylesheet" href="/assets/vh.css?v=3">
-  <script src="/assets/vh-admin-auth.js?v=2"></script>
+  <script src="/assets/vh-admin-auth.js?v=3"></script>
   <style>
     body{ background:var(--vh-linen); font-family:var(--vh-sans); }
     .btn{ border-radius:999px; font-weight:600; font-size:14px; padding:.6rem 1.2rem; }
@@ -76,7 +76,7 @@
         <span class="ml-2 font-bold text-[#6B4423] text-sm font-display">Admin</span>
       </div>
       <nav class="flex items-center gap-1">
-        <a class="tab" href="/admin/dashboard">Dashboard</a>
+        <a class="tab" href="/admin">Today</a>
         <span class="tab on">Applications</span>
         <a class="tab" href="/admin/leads">Leads</a>
       </nav>
@@ -149,7 +149,9 @@
   function bootApp(){
     $('#login').hidden = true;
     $('#app').hidden = false;
-    loadQueue().catch(err => showLogin(err && err.authRequired
+    loadQueue().catch(err => showLogin(err && err.code === 'pending'
+      ? err.message
+      : err && err.authRequired
       ? 'That session has ended. Sign in again.'
       : 'Could not load the queue. Reload the page.'));
   }
@@ -202,6 +204,7 @@
     try{
       return await Auth.api(path, options);
     }catch(e){
+      if(e && e.code === 'pending'){ showLogin(e.message); return null; }
       if(e && e.authRequired){ showLogin('Your session has ended. Sign in again.'); return null; }
       throw e;
     }

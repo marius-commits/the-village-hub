@@ -19,14 +19,9 @@ exports.handler = async function (event) {
   if (event.httpMethod !== 'GET') return L.bad('Method Not Allowed', 405);
   if (!L.configured()) return L.bad('Not configured', 503);
 
-  let staff;
-  try {
-    staff = await L.requireStaff(event);
-  } catch (err) {
-    console.error('staff check failed:', err.message);
-    return L.bad('Could not verify your access', 500);
-  }
-  if (!staff) return L.bad('Not authorised', 401);
+  const gate = await L.guard(event);
+  if (gate.response) return gate.response;
+  const staff = gate.staff;
 
   const id       = L.clean((event.queryStringParameters || {}).id, 60);
   const docId    = L.clean((event.queryStringParameters || {}).doc, 60);

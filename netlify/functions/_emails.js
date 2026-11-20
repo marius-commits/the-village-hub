@@ -201,4 +201,52 @@ function leadAlert(lead) {
   return { subject: `New lead – ${label}: ${name}${lead.company ? ` (${lead.company})` : ''}`, html: shell(body, `${label} enquiry from ${name}`) };
 }
 
-module.exports = { applicantReceived, staffAlert, infoRequested, approved, declined, leadAlert, DOC_LABELS };
+function accessRequested(email) {
+  return {
+    subject: 'New Village Hub admin request',
+    html: shell(`
+      <p style="margin:0 0 14px;">Someone has asked to use the Village Hub command centre.</p>
+      <p style="margin:0 0 14px;"><strong>${esc(email)}</strong> can already sign in, but they only see a waiting screen until you approve them.</p>
+      ${button('https://www.villagehub.co.za/admin/access', 'Open the access queue')}
+      <p style="margin:0;">You are the only person who can approve this.</p>
+    `, `New admin request from ${email}`),
+  };
+}
+
+function accessApproved() {
+  return {
+    subject: 'You can sign in to the Village Hub command centre',
+    html: shell(`
+      <p style="margin:0 0 14px;">Marius has approved your access.</p>
+      <p style="margin:0 0 14px;">Sign in with this same email. We will send a one-time code. Nothing else is required.</p>
+      ${button('https://www.villagehub.co.za/admin', 'Open the command centre')}
+    `, 'Your Village Hub admin access is approved.'),
+  };
+}
+
+function leadsDigest(d) {
+  const oldest = d.oldest
+    ? `${esc(d.oldest.company || d.oldest.name || 'Unknown')} · ${esc(d.oldest.product || 'enquiry')} · ${esc(d.oldest.age)}`
+    : 'None';
+  const actions = (d.actions || []).length
+    ? `<ul style="margin:8px 0 16px;padding-left:18px;">${d.actions.map(a => `<li style="margin:4px 0;">${esc(a)}</li>`).join('')}</ul>`
+    : '<p style="margin:8px 0 16px;">None due today.</p>';
+  return {
+    subject: `Open leads today: ${d.openCount}`,
+    html: shell(`
+      <p style="margin:0 0 14px;">Weekday check, 16:00 SAST.</p>
+      <p style="margin:0 0 8px;"><strong>${d.openCount}</strong> open lead${d.openCount === 1 ? '' : 's'}.</p>
+      <p style="margin:0 0 8px;"><strong>${d.noResponseCount}</strong> with no first response.</p>
+      <p style="margin:0 0 8px;"><strong>Oldest unanswered:</strong> ${oldest}</p>
+      <p style="margin:14px 0 0;"><strong>Next actions due today</strong></p>
+      ${actions}
+      ${button(d.link, 'Open the leads')}
+      <p style="margin:0;font-size:13px;color:${BRAND.muted};">Sent because there is at least one open lead. Days with none are skipped. WhatsApp auto-send is still off, so this email is the copy that arrives.</p>
+    `, `${d.openCount} open leads, ${d.noResponseCount} with no first response.`),
+  };
+}
+
+module.exports = {
+  applicantReceived, staffAlert, infoRequested, approved, declined, leadAlert, DOC_LABELS,
+  accessRequested, accessApproved, leadsDigest,
+};

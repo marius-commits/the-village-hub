@@ -1,6 +1,11 @@
 [build]
   functions = "netlify/functions"
 
+# Weekdays 16:00 SAST = 14:00 UTC. The function no-ops unless
+# LEADS_DIGEST_ENABLED=true, so this schedule is safe to deploy dark.
+[functions."leads-digest"]
+  schedule = "0 14 * * 1-5"
+
 # Pretty URLs for landing pages
 [[redirects]]
   from = "/founding-rate"
@@ -92,18 +97,59 @@
   status = 200
 
 [[redirects]]
+  from = "/admin/leads.html"
+  to = "/admin/leads"
+  status = 301
+
+[[redirects]]
+  from = "/admin/dashboard.html"
+  to = "/admin"
+  status = 301
+
+[[redirects]]
+  from = "/admin/command.html"
+  to = "/admin"
+  status = 301
+
+# One command centre. The path picks the tab; the file is the same.
+[[redirects]]
   from = "/admin/leads"
-  to = "/admin/leads.html"
+  to = "/admin/command.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/today"
+  to = "/admin/command.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/whatsapp"
+  to = "/admin/command.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/marketing"
+  to = "/admin/command.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/numbers"
+  to = "/admin/command.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/access"
+  to = "/admin/command.html"
   status = 200
 
 [[redirects]]
   from = "/admin/dashboard"
-  to = "/admin/dashboard.html"
+  to = "/admin/command.html"
   status = 200
 
 [[redirects]]
   from = "/admin"
-  to = "/admin/dashboard.html"
+  to = "/admin/command.html"
   status = 200
 
 [[redirects]]
