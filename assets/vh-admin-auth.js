@@ -159,17 +159,31 @@ window.VHAdminAuth = (function () {
       });
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
-        if (res.status === 401 || res.status === 403) {
+        if (res.status === 401) {
           clear();
-          var e = new Error(data.error || 'Your session has ended. Sign in again.');
-          e.authRequired = true;
-          throw e;
+          var expired = new Error(data.error || 'Your session has ended. Sign in again.');
+          expired.authRequired = true;
+          expired.code = data.code || 'auth';
+          throw expired;
+        }
+        if (res.status === 403) {
+          var denied = new Error(data.error || 'Not allowed');
+          denied.code = data.code || 'forbidden';
+          // A pending person keeps their session so the waiting screen can stay up.
+          // A revoked address is signed out. Other 403s (for example a WhatsApp
+          // check) leave the session alone.
+          denied.authRequired = denied.code === 'revoked';
+          if (denied.authRequired) clear();
+          throw denied;
         }
         if (!res.ok) throw new Error(data.error || 'Request failed');
         return data;
       });
     }, function (err) {
-      if (!err.authRequired) { err = err || new Error('Request failed'); err.authRequired = true; }
+      if (!err || err.authRequired === undefined) {
+        err = err || new Error('Request failed');
+        err.authRequired = true;
+      }
       throw err;
     });
   }

@@ -26,6 +26,9 @@ const STAFF_EMAILS = (process.env.LEAD_NOTIFY_EMAILS ||
   'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za')
   .split(',').map(e => e.trim()).filter(Boolean);
 
+// Marius is the gate. New access requests are emailed here.
+const OWNER_EMAIL = (process.env.ADMIN_OWNER_EMAIL || 'marius@brick-field.co.za').toLowerCase();
+
 const BUCKET = 'kyc-documents';
 
 // Plan titles must match Spacebring exactly. If a plan is renamed there, it
@@ -48,7 +51,11 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
 function ok(body)            { return { statusCode: 200, headers: JSON_HEADERS, body: JSON.stringify(body) }; }
-function bad(msg, code = 400){ return { statusCode: code, headers: JSON_HEADERS, body: JSON.stringify({ error: msg }) }; }
+function bad(msg, code = 400, errorCode) {
+  const body = { error: msg };
+  if (errorCode) body.code = errorCode;
+  return { statusCode: code, headers: JSON_HEADERS, body: JSON.stringify(body) };
+}
 
 function configured() {
   return Boolean(SUPABASE_URL && SERVICE_KEY);
@@ -132,29 +139,93 @@ async function createSignedViewUrl(path, expiresIn = 900) {
 
 // --- Staff authentication ------------------------------------------------
 
-// Verifies the caller's Supabase session JWT and confirms they are active
-// staff. Returns the staff record, or null if they are neither.
-async function requireStaff(event) {
-  const auth = event.headers.authorization || event.headers.Authorization || '';
-  const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
-  if (!token) return null;
+function bearerToken(event) {
+  const auth = (event.headers && (event.headers.authorization || event.headers.Authorization)) || '';
+  return auth.startsWith('Bearer ') ? auth.slice(7) : null;
+}
 
+// pending | approved | revoked | none
+// Before the status column exists, active=true is treated as approved so a
+// deploy ahead of the migration does not lock the current team out.
+function accessStatus(row) {
+  if (!row) return 'none';
+  if (row.status === 'pending' || row.status === 'approved' || row.status === 'revoked') return row.status;
+  return row.active ? 'approved' : 'revoked';
+}
+
+function staffView(row, userId) {
+  return {
+    email: row.email,
+    role: row.role || 'reviewer',
+    full_name: row.full_name || null,
+    user_id: userId || null,
+    status: accessStatus(row),
+    active: row.active === true,
+  };
+}
+
+// Verifies the caller's Supabase session JWT. Returns the auth user or null.
+async function readUser(event) {
+  const token = bearerToken(event);
+  if (!token || !SUPABASE_URL || !SERVICE_KEY) return null;
   const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
     headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${token}` },
   });
   if (!res.ok) return null;
   const user = await res.json();
-  if (!user || !user.id) return null;
+  if (!user || !user.id || !user.email) return null;
+  return user;
+}
 
-  // Authorization is by login email, held in staff_access. The auth user is
-  // created on first login; access requires the email to be pre-seeded by an
-  // admin, so a self-created account with no staff_access row sees nothing.
-  const email = (user.email || '').toLowerCase();
-  if (!email) return null;
-  const rows = await selectRows('staff_access', `email=eq.${encodeURIComponent(email)}&active=is.true&select=*`);
-  if (!rows || rows.length === 0) return null;
-  // user_id is the authenticated user's id, used for reviewed_by / verified_by.
-  return { email: user.email, role: rows[0].role, full_name: rows[0].full_name, user_id: user.id };
+async function staffByEmail(email) {
+  const rows = await selectRows('staff_access', `email=eq.${encodeURIComponent(email)}&select=*`);
+  return rows && rows[0] ? rows[0] : null;
+}
+
+// Approved staff only. Same shape as before, so existing callers keep working.
+// Pending and revoked callers get null here; use gate() when the page needs
+// to tell those two apart.
+async function requireStaff(event) {
+  const user = await readUser(event);
+  if (!user) return null;
+  const email = user.email.toLowerCase();
+  const row = await staffByEmail(email);
+  if (!row || accessStatus(row) !== 'approved' || row.active === false) return null;
+  return staffView(row, user.id);
+}
+
+// { ok:true, staff } or { ok:false, status, error, code }
+async function gate(event) {
+  const user = await readUser(event);
+  if (!user) return { ok: false, status: 401, error: 'Not authorised', code: 'auth' };
+  const email = user.email.toLowerCase();
+  const row = await staffByEmail(email);
+  const status = accessStatus(row);
+  if (status === 'pending') {
+    return {
+      ok: false,
+      status: 403,
+      error: "Your access is waiting for Marius's approval.",
+      code: 'pending',
+      staff: staffView(row, user.id),
+    };
+  }
+  if (status !== 'approved' || !row.active) {
+    return { ok: false, status: 403, error: 'This address does not have access.', code: 'revoked' };
+  }
+  return { ok: true, staff: staffView(row, user.id) };
+}
+
+// For handlers: returns { staff } or { response } ready to return.
+async function guard(event) {
+  try {
+    const result = await gate(event);
+    if (!result.ok) return { response: bad(result.error, result.status, result.code), staff: result.staff || null };
+    return { staff: result.staff };
+  } catch (err) {
+    console.error('staff check failed:', err.message);
+    return { response: bad('Could not verify your access', 500) };
+  }
 }
 
 // --- Staff sign-in -------------------------------------------------------
@@ -256,10 +327,13 @@ function safeExtension(filename, mime) {
 
 module.exports = {
   SUPABASE_URL, BUCKET, PLANS, REQUIRED_DOCS, ALLOWED_MIME, MAX_FILE_BYTES,
-  NOTIFY_EMAIL, STAFF_EMAILS, SITE_URL,
+  SUPABASE_URL, BUCKET, PLANS, REQUIRED_DOCS, ALLOWED_MIME, MAX_FILE_BYTES,
+  NOTIFY_EMAIL, STAFF_EMAILS, OWNER_EMAIL, SITE_URL, PUBLISHABLE_KEY,
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
   createSignedUploadUrl, createSignedViewUrl,
-  requireStaff, ensureAuthUser, sendStaffOtp, sendEmail,
+  bearerToken, accessStatus, staffView, staffByEmail,
+  requireStaff, gate, guard, readUser,
+  ensureAuthUser, sendStaffOtp, sendEmail,
   clean, validEmail, safeExtension,
 };
