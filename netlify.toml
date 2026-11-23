@@ -13,10 +13,65 @@
 [functions."onboarding-sync"]
   schedule = "*/15 * * * *"
 
-# Pretty URLs for landing pages
+# Pretty URLs for landing pages.
+# The founding rate is closed. Old URLs go to Your Desk 2027.
 [[redirects]]
   from = "/founding-rate"
-  to = "/founding-rate.html"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/founding-rate/"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/founding-rate.html"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/founding-rate/index.html"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Founding-Rate"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Founding-Rate.html"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/the-founding-rate"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/foundingrate"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/founding_rate"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/your-desk-2027"
+  to = "/your-desk-2027.html"
   status = 200
 
 [[redirects]]
@@ -199,3 +254,13 @@
     Referrer-Policy = "same-origin"
     Cache-Control = "no-store"
     X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/images/campaign/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/uploads/web-trailer-720.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
