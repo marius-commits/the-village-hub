@@ -263,3 +263,13 @@ test('vetting: the registered name, not the typed one, goes to Spacebring', asyn
   await O.provision(app, 's@x', f.deps);
   assert.equal(f.calls[0][1].legalName, 'Example Trading (Pty) Ltd (Reg. No. 2020/000000/07)');
 });
+
+test('progress bar: test-mode steps never show as done', async () => {
+  const f = fakes({ mode: 'dry' });
+  const app = voApp({ vetting: { cipc_name: 'X', company_active: true, director_listed: true } });
+  await O.provision(app, 's@x', f.deps);
+  const p = O.stages(app, [{ verified: true }]);
+  assert.equal(p.stages.find(x => x.key === 'account').done, false);
+  assert.equal(p.stages.find(x => x.key === 'contract_issued').done, false);
+  assert.equal(p.stages.find(x => x.current).key, 'account');
+});

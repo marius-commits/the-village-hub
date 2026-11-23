@@ -63,7 +63,8 @@ function steps(app) {
 
 // The bar on the staff page. One list, in order, each with done / when.
 function stages(app, documents) {
-  const s = steps(app);
+  // Steps recorded in test mode created nothing, so they never count as done.
+  const s = (app.onboarding && app.onboarding.mode === 'dry') ? {} : steps(app);
   const docs = documents || [];
   const allVerified = docs.length > 0 && docs.every(d => d.verified === true);
   const approved = ['approved', 'activated'].includes(app.status);

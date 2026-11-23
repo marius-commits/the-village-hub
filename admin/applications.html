@@ -653,7 +653,10 @@
         <button class="btn btn-brown mt-3" data-act="retry_onboarding">Retry set-up</button>`);
     }
     if(p.state === 'dry_run'){
-      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Test mode.</strong> The set-up steps were worked out and recorded, but nothing was sent to Spacebring. Set this client up by hand below.`);
+      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Not set up yet: this was approved in test mode.</strong> The steps were worked out but nothing was sent to Spacebring and the client has no account, agreement or invoice.
+        ${data.automation === 'live'
+          ? '<button class="btn btn-brown mt-3 block" data-act="retry_onboarding">Run the automatic set-up now</button>'
+          : ' Set this client up by hand below, or switch the automation to live.'}`);
     }
     if(p.state === 'in_progress'){
       const next = (p.stages.find(x => x.current) || {}).label || '';
