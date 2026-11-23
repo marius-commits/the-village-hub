@@ -234,3 +234,16 @@ test('emails: applicant text cannot inject markup into staff mail', () => {
   assert.doesNotMatch(T.mailDesk(app, {}).html, /<img src=x/);
   assert.doesNotMatch(T.activated(app, {}).html, /<img src=x/);
 });
+
+test('a live run after a test-mode run starts clean and really creates everything', async () => {
+  const dry = fakes({ mode: 'dry' });
+  const app = voApp();
+  await O.provision(app, 's@x', dry.deps);
+  assert.equal(app.spacebring_customer_ref, 'dry-run');
+
+  const live = fakes();
+  await O.provision(app, 's@x', live.deps);
+  assert.deepEqual(live.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue']);
+  assert.equal(app.spacebring_customer_ref, 'co-1');
+  assert.equal(app.onboarding.steps.contract.ref, 'con-1');
+});

@@ -136,6 +136,15 @@ async function provision(app, staffEmail, deps) {
   const dry = mode === 'dry';
   if (!dry && !sb.credentialsSet()) return fail(app, deps, 'credentials', 'Spacebring API credentials are not set in Netlify.');
 
+  // Steps recorded in test mode created nothing in Spacebring. A live run
+  // must not mistake them for finished work, so it starts from a clean slate.
+  if (!dry && app.onboarding && app.onboarding.mode === 'dry') {
+    app.onboarding = { approved_by: app.onboarding.approved_by };
+    app.spacebring_customer_ref = null;
+    app.spacebring_subscription_ref = null;
+    await deps.store.save(app.id, { onboarding: app.onboarding, spacebring_customer_ref: null, spacebring_subscription_ref: null });
+  }
+
   {
     const onboarding = { ...(app.onboarding || {}), steps: steps(app), mode, approved_by: staffEmail,
       start_date: (app.onboarding && app.onboarding.start_date) || startDate(app, deps.now()) };
