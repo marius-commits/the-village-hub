@@ -6,6 +6,13 @@
 [functions."leads-digest"]
   schedule = "0 14 * * 1-5"
 
+# Every 15 minutes. Follows approved applications through Spacebring
+# (agreement signed, invoice issued, paid) and activates on payment. The
+# function no-ops unless SPACEBRING_PROVISIONING=live, so it is safe to
+# deploy dark.
+[functions."onboarding-sync"]
+  schedule = "*/15 * * * *"
+
 # Pretty URLs for landing pages
 [[redirects]]
   from = "/founding-rate"

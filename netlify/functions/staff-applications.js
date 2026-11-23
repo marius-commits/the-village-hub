@@ -14,6 +14,8 @@
 // moment of the click cannot be stale.
 
 const L = require('./_lib');
+const O = require('./_onboarding');
+const SB = require('./_spacebring');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'GET') return L.bad('Method Not Allowed', 405);
@@ -82,7 +84,11 @@ exports.handler = async function (event) {
         `application_id=eq.${id}&select=*&order=created_at.desc&limit=50`
       );
 
-      return L.ok({ application: app, documents: withUrls, events: events || [] });
+      return L.ok({
+        application: app, documents: withUrls, events: events || [],
+        progress: O.stages(app, docs || []),
+        automation: SB.mode(),
+      });
     }
 
     // Queue view. Open work first, newest within that.
@@ -90,12 +96,25 @@ exports.handler = async function (event) {
       ? `status=eq.${status}`
       : `status=in.(submitted,under_review,info_requested,approved)`;
 
-    const list = await L.selectRows(
-      'applications',
-      `${filter}&select=id,reference,type,plan,status,first_name,last_name,email,phone,company_name,institution,wants_registered_address,preferred_start_date,created_at,reviewed_at&order=created_at.desc&limit=200`
-    );
+    const cols = 'id,reference,type,plan,status,first_name,last_name,email,phone,company_name,institution,wants_registered_address,preferred_start_date,created_at,reviewed_at';
+    let list;
+    try {
+      list = await L.selectRows('applications', `${filter}&select=${cols},onboarding,onboarding_state&order=created_at.desc&limit=200`);
+    } catch (err) {
+      // Deployed ahead of the onboarding migration: the queue must still load.
+      if (!/onboarding/.test(err.message)) throw err;
+      list = await L.selectRows('applications', `${filter}&select=${cols}&order=created_at.desc&limit=200`);
+    }
 
-    return L.ok({ applications: list || [], staff: { email: staff.email, role: staff.role } });
+    // The queue shows how far along each one is. Documents are not loaded
+    // for the list, so "documents checked" there follows the approval.
+    const withProgress = (list || []).map(a => {
+      const p = O.stages(a, []);
+      const { onboarding, ...rest } = a;
+      return { ...rest, progress: { done: p.done, total: p.total, state: p.state, next: (p.stages.find(x => x.current) || {}).label || null } };
+    });
+
+    return L.ok({ applications: withProgress, staff: { email: staff.email, role: staff.role } });
   } catch (err) {
     console.error('staff-applications failed:', err.message);
     return L.bad('Could not load applications', 500);
