@@ -88,6 +88,7 @@ exports.handler = async function (event) {
         application: app, documents: withUrls, events: events || [],
         progress: O.stages(app, docs || []),
         automation: SB.mode(),
+        vetting_required: O.vettingRequired(),
       });
     }
 

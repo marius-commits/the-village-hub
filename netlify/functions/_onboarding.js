@@ -26,6 +26,24 @@ function needsRegisteredAddress(app) {
   return isVO(app) && (app.wants_registered_address === true || app.plan === 'Village Virtual Pro');
 }
 
+// The registry check (Lexis WinDeed company search) recorded by staff.
+// Passed means: the company is in business and the applicant is a director.
+function vettingPassed(app) {
+  const v = app.vetting;
+  return Boolean(v && v.cipc_name && v.company_active === true && v.director_listed === true);
+}
+
+// Off by default: the registry check is recorded when staff choose to do it.
+// Set VETTING_REQUIRED=true to make it compulsory before approval and set-up.
+function vettingRequired() {
+  return String(process.env.VETTING_REQUIRED || '').toLowerCase() === 'true';
+}
+
+// The name the registry holds wins over what the applicant typed.
+function legalCompanyName(app) {
+  return (app.vetting && app.vetting.cipc_name) || app.company_name;
+}
+
 function sastDate(d) {
   return new Date(d.getTime() + SAST_OFFSET_MS).toISOString().slice(0, 10);
 }
@@ -51,7 +69,8 @@ function steps(app) {
 
 // The bar on the staff page. One list, in order, each with done / when.
 function stages(app, documents) {
-  const s = steps(app);
+  // Steps recorded in test mode created nothing, so they never count as done.
+  const s = (app.onboarding && app.onboarding.mode === 'dry') ? {} : steps(app);
   const docs = documents || [];
   const allVerified = docs.length > 0 && docs.every(d => d.verified === true);
   const approved = ['approved', 'activated'].includes(app.status);
@@ -61,6 +80,7 @@ function stages(app, documents) {
   const list = [
     { key: 'received', label: 'Application received', done: true, at: app.created_at || null },
     { key: 'verified', label: 'Documents checked', done: allVerified || approved, at: null },
+    ...(isVO(app) && (app.vetting || vettingRequired()) ? [{ key: 'vetted', label: 'Company vetted', done: vettingPassed(app), at: (app.vetting && app.vetting.checked_at) || null }] : []),
     { key: 'approved', label: 'Approved', done: approved, at: approved ? app.reviewed_at || null : null },
     { key: 'account', label: 'Set up in Spacebring', done: Boolean(s.company || s.membership) || live, at: at('company') || at('membership') },
   ];
@@ -136,6 +156,15 @@ async function provision(app, staffEmail, deps) {
   const dry = mode === 'dry';
   if (!dry && !sb.credentialsSet()) return fail(app, deps, 'credentials', 'Spacebring API credentials are not set in Netlify.');
 
+  // Steps recorded in test mode created nothing in Spacebring. A live run
+  // must not mistake them for finished work, so it starts from a clean slate.
+  if (!dry && app.onboarding && app.onboarding.mode === 'dry') {
+    app.onboarding = { approved_by: app.onboarding.approved_by };
+    app.spacebring_customer_ref = null;
+    app.spacebring_subscription_ref = null;
+    await deps.store.save(app.id, { onboarding: app.onboarding, spacebring_customer_ref: null, spacebring_subscription_ref: null });
+  }
+
   {
     const onboarding = { ...(app.onboarding || {}), steps: steps(app), mode, approved_by: staffEmail,
       start_date: (app.onboarding && app.onboarding.start_date) || startDate(app, deps.now()) };
@@ -155,7 +184,7 @@ async function provision(app, staffEmail, deps) {
         title,
         // The registration number rides on the legal name because that is the
         // only company field Spacebring prints on agreements and invoices.
-        legalName: app.cipc_registration_number ? `${app.company_name} (Reg. No. ${app.cipc_registration_number})` : app.company_name,
+        legalName: app.cipc_registration_number ? `${legalCompanyName(app)} (Reg. No. ${app.cipc_registration_number})` : legalCompanyName(app),
         taxId: app.vat_number || undefined,
         notes: companyNotes(app, staffEmail, deps.now()),
         metadata: { application_reference: app.reference, cipc_registration_number: app.cipc_registration_number || '' },
@@ -309,4 +338,4 @@ async function activate(app, deps) {
   }
 }
 
-module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO };
+module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO, vettingPassed, vettingRequired, legalCompanyName };

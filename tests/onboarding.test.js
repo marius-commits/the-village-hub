@@ -208,6 +208,12 @@ test('progress bar: counts and marks the next stage', () => {
 
   const checked = O.stages(voApp({ status: 'submitted' }), [{ verified: true }, { verified: true }]);
   assert.equal(checked.stages.find(s => s.current).key, 'approved');
+  const vetted = O.stages(voApp({ status: 'submitted', vetting: { cipc_name: 'X', company_active: true, director_listed: true } }), [{ verified: true }]);
+  assert.equal(vetted.stages.find(s => s.current).key, 'approved');
+  assert.equal(vetted.total, 10);
+  process.env.VETTING_REQUIRED = 'true';
+  assert.equal(O.stages(voApp({ status: 'submitted' }), [{ verified: true }]).stages.find(s => s.current).key, 'vetted');
+  delete process.env.VETTING_REQUIRED;
 
   const student = O.stages(voApp({ type: 'student', status: 'activated' }), []);
   assert.equal(student.total, 6);
@@ -233,4 +239,41 @@ test('emails: applicant text cannot inject markup into staff mail', () => {
   const app = voApp({ company_name: '<img src=x onerror=1>' });
   assert.doesNotMatch(T.mailDesk(app, {}).html, /<img src=x/);
   assert.doesNotMatch(T.activated(app, {}).html, /<img src=x/);
+});
+
+test('a live run after a test-mode run starts clean and really creates everything', async () => {
+  const dry = fakes({ mode: 'dry' });
+  const app = voApp();
+  await O.provision(app, 's@x', dry.deps);
+  assert.equal(app.spacebring_customer_ref, 'dry-run');
+
+  const live = fakes();
+  await O.provision(app, 's@x', live.deps);
+  assert.deepEqual(live.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue']);
+  assert.equal(app.spacebring_customer_ref, 'co-1');
+  assert.equal(app.onboarding.steps.contract.ref, 'con-1');
+});
+
+test('vetting: passes only when in business and the applicant is a director', () => {
+  assert.equal(O.vettingPassed({}), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: true, director_listed: false } }), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: false, director_listed: true } }), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: true, director_listed: true } }), true);
+});
+
+test('vetting: the registered name, not the typed one, goes to Spacebring', async () => {
+  const f = fakes();
+  const app = voApp({ company_name: 'Exmaple Tradng', vetting: { cipc_name: 'Example Trading (Pty) Ltd', company_active: true, director_listed: true } });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls[0][1].legalName, 'Example Trading (Pty) Ltd (Reg. No. 2020/000000/07)');
+});
+
+test('progress bar: test-mode steps never show as done', async () => {
+  const f = fakes({ mode: 'dry' });
+  const app = voApp({ vetting: { cipc_name: 'X', company_active: true, director_listed: true } });
+  await O.provision(app, 's@x', f.deps);
+  const p = O.stages(app, [{ verified: true }]);
+  assert.equal(p.stages.find(x => x.key === 'account').done, false);
+  assert.equal(p.stages.find(x => x.key === 'contract_issued').done, false);
+  assert.equal(p.stages.find(x => x.current).key, 'account');
 });

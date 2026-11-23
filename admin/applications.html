@@ -490,6 +490,7 @@
       <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Documents</h3>
       <div class="space-y-2">${docs}</div>
       <p class="text-xs text-gray-400 mt-2">Open reads it in a new tab, Download saves it. Both are logged against the application. Tick <strong>Checked</strong> on each one after reading it: Approve stays locked until all are ticked.</p>
+      ${a.type === 'virtual_office' ? renderVetting(a) : ''}
 
       ${a.internal_notes ? `<h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Internal notes</h3>
         <pre class="text-xs text-gray-700 whitespace-pre-wrap bg-[#FAF8F6] p-3 rounded-lg border border-[#E8D9C5]">${esc(a.internal_notes)}</pre>` : ''}
@@ -500,7 +501,7 @@
       <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mt-3">
         ${a.status === 'submitted' ? '<button class="btn btn-ghost" data-act="take">Take this one</button>' : ''}
         <button class="btn btn-ghost"  data-act="request_info">Request information</button>
-        ${locked ? '' : `<button class="btn btn-sage col-span-2 order-first sm:order-none" data-act="approve" ${allTicked ? '' : 'disabled title="Tick every document as checked first"'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
+        ${locked ? '' : `<button class="btn btn-sage col-span-2 order-first sm:order-none" data-act="approve" ${allTicked && (a.type !== 'virtual_office' || vetOk(a) || (!a.vetting && !data.vetting_required)) ? '' : 'disabled title="Tick every document first. A failed or required company check also blocks approval."'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
         <button class="btn btn-danger" data-act="decline">Decline</button>
         <button class="btn btn-ghost"  data-act="note">Add note only</button>
       </div>
@@ -545,6 +546,77 @@
     Array.from(document.querySelectorAll('[data-verify]')).forEach(c => {
       c.addEventListener('change', () => verifyDoc(c.dataset.verify, c));
     });
+    const vs = document.getElementById('vet-save');
+    if(vs) vs.addEventListener('click', saveVetting);
+    const vc = document.getElementById('vet-copy');
+    if(vc) vc.addEventListener('click', () => {
+      navigator.clipboard.writeText(vc.dataset.reg).then(() => { vc.textContent = 'Copied'; });
+    });
+  }
+
+  function vetOk(a){
+    const v = a.vetting;
+    return !!(v && v.cipc_name && v.company_active === true && v.director_listed === true);
+  }
+
+  // The registry check. Staff run a Company search in Lexis WinDeed by
+  // registration number and record what the register says.
+  function renderVetting(a){
+    const v = a.vetting || {};
+    const done = !!a.vetting;
+    const ok = vetOk(a);
+    const live = a.status === 'activated';
+    const mismatch = done && v.cipc_name.trim().toLowerCase() !== String(a.company_name || '').trim().toLowerCase();
+    const yn = (name, val) => `
+      <label class="tick"><input type="radio" name="${name}" value="yes" ${val === true ? 'checked' : ''} ${live ? 'disabled' : ''}> Yes</label>
+      <label class="tick"><input type="radio" name="${name}" value="no" ${val === false ? 'checked' : ''} ${live ? 'disabled' : ''}> No</label>`;
+    return `
+      <div class="mt-5 p-4 rounded-lg" style="background:#FAF8F6;border:1px solid var(--vh-sand);border-left:3px solid ${done ? (ok ? '#8A9A5B' : '#B4472E') : '#C9A24B'}">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-gray-900 uppercase tracking-wide">Company vetting (Lexis WinDeed)${(cache[currentId]||{}).vetting_required ? '' : ', optional'}</span>
+          <span class="text-xs font-semibold ${done ? (ok ? 'text-green-700' : 'text-red-700') : 'text-amber-700'}">${done ? (ok ? 'Passed' : 'Failed') : 'Not recorded'}</span>
+        </div>
+        <ol class="text-sm text-gray-700 mt-2 ml-5 list-decimal space-y-1">
+          <li>Open <a class="underline text-[#6B4423]" href="https://search.windeed.co.za" target="_blank" rel="noopener">WinDeed</a>, choose Person, then Company.</li>
+          <li>Search by registration number: <strong>${esc(a.cipc_registration_number || 'not given')}</strong>
+            ${a.cipc_registration_number ? `<button type="button" id="vet-copy" data-reg="${esc(a.cipc_registration_number)}" class="btn btn-ghost" style="padding:.15rem .6rem;font-size:11px">Copy</button>` : ''}</li>
+          <li>Record what the report shows. Applicant: <strong>${esc(a.director_full_name || (a.first_name + ' ' + a.last_name))}</strong>.</li>
+        </ol>
+        <div class="mt-3">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Company name exactly as on the register</label>
+          <input id="vet-name" class="field w-full border border-[#E8D9C5]" value="${esc(v.cipc_name || '')}" placeholder="${esc(a.company_name || '')}" ${live ? 'disabled' : ''}>
+          ${mismatch ? `<p class="text-xs text-amber-700 mt-1">Differs from the form ("${esc(a.company_name)}"). The registered name will be used on the agreement and invoice.</p>` : ''}
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <span class="flex items-center gap-3">Company status is in business? ${yn('vet-active', v.company_active)}</span>
+          <span class="flex items-center gap-3">Applicant is an active director? ${yn('vet-director', v.director_listed)}</span>
+        </div>
+        <div class="mt-3">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Notes (optional): other directors, anything unusual</label>
+          <input id="vet-notes" class="field w-full border border-[#E8D9C5]" value="${esc(v.notes || '')}" ${live ? 'disabled' : ''}>
+        </div>
+        ${live ? '' : `<button type="button" id="vet-save" class="btn btn-brown mt-3">${done ? 'Update the check' : 'Save the check'}</button>`}
+        <p id="vet-msg" class="text-xs mt-2 ${done ? 'text-gray-500' : 'hidden'}">${done ? 'Recorded by ' + esc(v.checked_by) + ' on ' + fmt(v.checked_at) + '. Save the WinDeed report to the client folder.' : ''}</p>
+      </div>`;
+  }
+
+  async function saveVetting(){
+    const pick = n => { const r = document.querySelector('input[name="'+n+'"]:checked'); return r ? r.value === 'yes' : null; };
+    const msg = document.getElementById('vet-msg');
+    const body = {
+      application_id: currentId, action: 'save_vetting',
+      cipc_name: document.getElementById('vet-name').value.trim(),
+      company_active: pick('vet-active'), director_listed: pick('vet-director'),
+      notes: document.getElementById('vet-notes').value.trim(),
+    };
+    msg.className = 'text-xs mt-2 text-gray-500'; msg.textContent = 'Saving...';
+    try{
+      const res = await api('application-action', { method:'POST', body: JSON.stringify(body) });
+      if(!res) return;
+      await openDetail(currentId);
+    }catch(e){
+      msg.className = 'text-xs mt-2 text-red-700'; msg.textContent = e.message || 'That did not save.';
+    }
   }
 
   // The bar across the top of an application: every stage from application
@@ -581,7 +653,10 @@
         <button class="btn btn-brown mt-3" data-act="retry_onboarding">Retry set-up</button>`);
     }
     if(p.state === 'dry_run'){
-      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Test mode.</strong> The set-up steps were worked out and recorded, but nothing was sent to Spacebring. Set this client up by hand below.`);
+      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Not set up yet: this was approved in test mode.</strong> The steps were worked out but nothing was sent to Spacebring and the client has no account, agreement or invoice.
+        ${data.automation === 'live'
+          ? '<button class="btn btn-brown mt-3 block" data-act="retry_onboarding">Run the automatic set-up now</button>'
+          : ' Set this client up by hand below, or switch the automation to live.'}`);
     }
     if(p.state === 'in_progress'){
       const next = (p.stages.find(x => x.current) || {}).label || '';
