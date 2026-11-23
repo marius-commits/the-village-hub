@@ -298,7 +298,7 @@ details[open] .chev { transform: rotate(180deg); }
 @media (min-width: 1024px) { .vh-container { padding: 0 2rem; } }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-/* ---------- founding rate promo banner ---------- */
+/* ---------- campaign promo banner (Your Desk 2027) ---------- */
 .vh-promo {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 950;
   background: linear-gradient(100deg, #4A2E17 0%, #6B4423 58%, #5A3A1D 100%);
@@ -325,6 +325,7 @@ details[open] .chev { transform: rotate(180deg); }
   transition: transform .2s var(--vh-ease);
 }
 .vh-promo__cta:hover { transform: translateY(-2px); }
+.vh-promo__cta:focus-visible, .vh-promo__x:focus-visible { outline: 3px solid #F8F1E5; outline-offset: 2px; }
 .vh-promo__x {
   position: absolute; top: 50%; right: .6rem; transform: translateY(-50%);
   width: 30px; height: 30px; border-radius: 999px; border: 0; cursor: pointer;
@@ -332,12 +333,14 @@ details[open] .chev { transform: rotate(180deg); }
 }
 .vh-promo__x:hover { background: rgba(248,241,229,.22); }
 body.vh-promo-on .vh-wa { bottom: 5.5rem; }
+body.vh-promo-on #top { padding-bottom: 5.25rem; }
 @media (max-width: 640px) {
   .vh-promo__in { padding: .75rem 2.6rem .75rem 1rem; gap: .6rem; justify-content: flex-start; }
   .vh-promo__txt { font-size: .85rem; flex: 1 1 100%; order: 2; }
   .vh-promo__cta { order: 3; font-size: .82rem; padding: .5rem .9rem; }
   .vh-promo__tag { order: 1; }
-  body.vh-promo-on .vh-wa { bottom: 7.5rem; }
+  body.vh-promo-on .vh-wa { bottom: 7.5rem; visibility: hidden; pointer-events: none; }
+  body.vh-promo-on #top { padding-bottom: 8.75rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .vh-promo { transition: none; }
