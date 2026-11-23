@@ -31,6 +31,22 @@
     .s-info_requested{ background:#fdf3e0; color:#8a6116; }
     .s-approved     { background:#e6f4ea; color:#1e7c3a; }
     .s-activated    { background:#6B4423; color:#fff; }
+    /* Onboarding progress */
+    .prog-track { height:6px; border-radius:99px; background:#E8D9C5; overflow:hidden; }
+    .prog-fill  { height:100%; border-radius:99px; background:#8A9A5B; transition:width .3s; }
+    .prog-fill.warn { background:#B4472E; }
+    .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:6px; }
+    .step { position:relative; padding-top:14px; font-size:11px; line-height:1.3; color:#8b8176; }
+    .step::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; border-radius:99px; background:#E8D9C5; }
+    .step.done { color:#2A2118; font-weight:600; }
+    .step.done::before { background:#8A9A5B; }
+    .step.current { color:#6B4423; font-weight:700; }
+    .step.current::before { background:#C9A24B; }
+    .step.stuck::before { background:#B4472E; }
+    .step small { display:block; font-weight:400; color:#8b8176; margin-top:1px; }
+    .tick { display:flex; align-items:center; gap:.35rem; font-size:12px; font-weight:600; color:#6F6355; white-space:nowrap; }
+    .tick input { width:16px; height:16px; accent-color:#8A9A5B; }
+    .tick.on { color:#1e7c3a; }
     .s-declined     { background:#fbeae7; color:#b03a2b; }
     .s-withdrawn    { background:#eee; color:#777; }
     .row{ cursor:pointer; border-left:3px solid transparent; }
@@ -226,6 +242,14 @@
           <span class="pill s-${a.status}">${STATUS_LABELS[a.status]||a.status}</span>
         </div>
         <div class="text-xs text-gray-600 mt-1">${esc(a.plan)}</div>
+        ${a.progress ? `
+        <div class="mt-2">
+          <div class="prog-track"><div class="prog-fill ${a.progress.state === 'needs_attention' ? 'warn' : ''}" style="width:${Math.round(100*a.progress.done/a.progress.total)}%"></div></div>
+          <div class="text-[11px] mt-1 ${a.progress.state === 'needs_attention' ? 'text-red-700 font-semibold' : 'text-gray-500'}">
+            ${a.progress.state === 'needs_attention' ? 'Needs attention' : (a.progress.next ? 'Next: ' + esc(a.progress.next) : 'Complete')}
+            &middot; ${a.progress.done}/${a.progress.total}
+          </div>
+        </div>` : ''}
         <div class="text-xs text-gray-400 mt-0.5">
           ${esc(a.reference)} &middot; ${fmt(a.created_at)}
           ${a.wants_registered_address ? ' &middot; <span class="text-[#8a6116] font-semibold">registered address</span>' : ''}
@@ -264,14 +288,26 @@
 
     // Each document is signed when it is clicked, not now, so a link can
     // never have expired by the time it is used.
+    // A document can only be ticked once somebody has opened or downloaded
+    // it: the history shows that, and so does this session.
+    const seen = new Set(data.events
+      .filter(e => e.event_type === 'document_viewed' || e.event_type === 'document_downloaded')
+      .map(e => e.detail && e.detail.doc_type));
+    const locked = a.status === 'approved' || a.status === 'activated';
+    const allTicked = data.documents.length > 0 && data.documents.every(d => d.verified === true);
+
     const docs = data.documents.map(d => `
-      <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]">
+      <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]" data-doctype="${esc(d.doc_type)}">
         <button type="button" data-doc="${esc(d.id)}" class="flex-1 min-w-0 text-left">
           <span class="block text-sm font-medium text-[#6B4423]">${DOC_LABELS[d.doc_type]||d.doc_type}</span>
           <span class="block text-xs text-gray-400 truncate">${esc(d.original_filename||'')}</span>
         </button>
         <button type="button" data-doc="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Open</button>
         <button type="button" data-dl="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Download</button>
+        <label class="tick shrink-0 ${d.verified ? 'on' : ''}" title="${seen.has(d.doc_type) || d.verified ? 'Tick once you have read it' : 'Open or download it first'}">
+          <input type="checkbox" data-verify="${esc(d.id)}" ${d.verified ? 'checked' : ''} ${locked || !(seen.has(d.doc_type) || d.verified) ? 'disabled' : ''}>
+          Checked
+        </label>
       </div>`).join('') || '<p class="text-sm text-gray-500">No documents.</p>';
 
     const events = data.events.map(e => `
@@ -295,6 +331,8 @@
           Applied ${fmt(a.created_at)}${a.reviewed_at ? '<br>Last action '+fmt(a.reviewed_at) : ''}
         </div>
       </div>
+
+      ${renderProgress(data.progress)}
 
       ${a.wants_registered_address ? `
         <div class="mt-4 p-3 rounded-lg text-sm" style="background:#fdf6e7;border-left:3px solid var(--vh-gold)">
@@ -320,7 +358,7 @@
 
       <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Documents</h3>
       <div class="space-y-2">${docs}</div>
-      <p class="text-xs text-gray-400 mt-2">Open reads it in a new tab, Download saves it. Both are logged against the application.</p>
+      <p class="text-xs text-gray-400 mt-2">Open reads it in a new tab, Download saves it. Both are logged against the application. Tick <strong>Checked</strong> on each one after reading it: Approve stays locked until all are ticked.</p>
 
       ${a.internal_notes ? `<h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Internal notes</h3>
         <pre class="text-xs text-gray-700 whitespace-pre-wrap bg-[#FAF8F6] p-3 rounded-lg border border-[#E8D9C5]">${esc(a.internal_notes)}</pre>` : ''}
@@ -331,12 +369,14 @@
       <div class="flex flex-wrap gap-2 mt-3">
         ${a.status === 'submitted' ? '<button class="btn btn-ghost" data-act="take">Take this one</button>' : ''}
         <button class="btn btn-ghost"  data-act="request_info">Request information</button>
-        <button class="btn btn-sage"   data-act="approve">Approve</button>
+        ${locked ? '' : `<button class="btn btn-sage" data-act="approve" ${allTicked ? '' : 'disabled title="Tick every document as checked first"'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
         <button class="btn btn-danger" data-act="decline">Decline</button>
         <button class="btn btn-ghost"  data-act="note">Add note only</button>
       </div>
 
-      ${a.status === 'approved' ? `
+      ${a.status === 'approved' ? renderAutomation(a, data) + `
+        <details class="mt-3" ${data.automation === 'live' && data.progress.state !== 'needs_attention' ? '' : 'open'}>
+          <summary class="text-xs font-semibold text-gray-600 cursor-pointer">${data.automation === 'live' ? 'Set up by hand instead' : 'Set up in Spacebring by hand'}</summary>
         <div class="mt-5 p-4 rounded-lg" style="background:#FAF8F6;border:1px solid var(--vh-sand)">
           <p class="text-sm font-bold text-gray-900">Now create the subscription in Spacebring</p>
           <p class="text-xs text-gray-600 mt-1 mb-3">Create the customer and the <strong>${esc(a.plan)}</strong> subscription in Spacebring, let it raise the invoice, then record the references here so the loop is closed.</p>
@@ -345,7 +385,8 @@
             <input class="field" id="sbSub" placeholder="Spacebring subscription ref">
           </div>
           <button class="btn btn-brown mt-3" data-act="activate">Mark as activated</button>
-        </div>` : ''}
+        </div>
+        </details>` : ''}
 
       ${a.spacebring_subscription_ref ? `<p class="text-xs text-gray-500 mt-4">Spacebring subscription: ${esc(a.spacebring_subscription_ref)}</p>` : ''}
 
@@ -363,6 +404,77 @@
     Array.from(document.querySelectorAll('[data-dl]')).forEach(b => {
       b.addEventListener('click', () => downloadDoc(b.dataset.dl, b));
     });
+    Array.from(document.querySelectorAll('[data-verify]')).forEach(c => {
+      c.addEventListener('change', () => verifyDoc(c.dataset.verify, c));
+    });
+  }
+
+  // The bar across the top of an application: every stage from application
+  // to the mail desk being told, with the date each one happened.
+  function renderProgress(p){
+    if(!p || !p.stages) return '';
+    const stuck = p.state === 'needs_attention';
+    return `
+      <div class="mt-5 p-4 rounded-lg" style="background:#FAF8F6;border:1px solid var(--vh-sand)">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold text-gray-900 uppercase tracking-wide">Onboarding progress</span>
+          <span class="text-xs ${stuck ? 'text-red-700 font-semibold' : 'text-gray-500'}">${stuck ? 'Needs attention' : p.done + ' of ' + p.total + ' done'}</span>
+        </div>
+        <div class="steps">
+          ${p.stages.map(st => `
+            <div class="step ${st.done ? 'done' : ''} ${st.current ? (stuck ? 'stuck current' : 'current') : ''}">
+              ${st.done ? '&#10003; ' : ''}${esc(st.label)}
+              ${st.at ? '<small>' + fmt(st.at) + '</small>' : ''}
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // What the automation is doing with an approved application.
+  function renderAutomation(a, data){
+    const p = data.progress || {};
+    if(data.automation === 'off' && !p.state) return '';
+    const box = (bg, border, html) => `<div class="mt-5 p-4 rounded-lg text-sm" style="background:${bg};border-left:3px solid ${border}">${html}</div>`;
+    if(p.state === 'needs_attention' && p.error){
+      return box('#fdecea', '#B4472E', `
+        <strong class="text-gray-900">Automatic set-up stopped at: ${esc(p.error.step)}</strong>
+        <p class="text-gray-700 mt-1">${esc(p.error.message)}</p>
+        <p class="text-xs text-gray-600 mt-2">Everything before this step is done and will not be repeated.</p>
+        <button class="btn btn-brown mt-3" data-act="retry_onboarding">Retry set-up</button>`);
+    }
+    if(p.state === 'dry_run'){
+      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Test mode.</strong> The set-up steps were worked out and recorded, but nothing was sent to Spacebring. Set this client up by hand below.`);
+    }
+    if(p.state === 'in_progress'){
+      const next = (p.stages.find(x => x.current) || {}).label || '';
+      return box('#eef3e6', '#8A9A5B', `<strong class="text-gray-900">Set-up is running automatically.</strong> Waiting on: ${esc(next)}. This page updates every 15 minutes; nothing needs doing unless it stalls.`);
+    }
+    if(!p.state && data.automation !== 'off'){
+      return box('#fdf6e7', '#C9A24B', `<strong class="text-gray-900">Approved before the automation was switched on.</strong>
+        <button class="btn btn-brown mt-3 block" data-act="retry_onboarding">Run the automatic set-up now</button>`);
+    }
+    return '';
+  }
+
+  async function verifyDoc(docId, box){
+    box.disabled = true;
+    try{
+      const res = await api('application-action', { method:'POST', body: JSON.stringify({
+        application_id: currentId, action:'verify_doc', document_id: docId, verified: box.checked }) });
+      if(!res) return;
+      await openDetail(currentId);
+    }catch(e){
+      box.checked = !box.checked; box.disabled = false;
+      docError(e.message || 'That tick did not save.');
+    }
+  }
+
+  // Opening or downloading a document unlocks its tick straight away.
+  function unlockTick(docId){
+    const c = document.querySelector('[data-verify="'+docId+'"]');
+    if(c && !c.checked && !['approved','activated'].includes((cache[currentId]||{application:{}}).application.status)){
+      c.disabled = false; c.parentElement.title = 'Tick once you have read it';
+    }
   }
 
   function docError(message){
@@ -392,7 +504,7 @@
     try{
       const data = await api('staff-applications?doc=' + encodeURIComponent(docId));
       if(!data || !data.view_url) throw new Error('No link came back');
-      if(tab){ tab.location.href = data.view_url; }
+      if(tab){ tab.location.href = data.view_url; unlockTick(docId); }
       else { docError('Allow pop-ups for this site, or use Download instead.'); }
     }catch(e){
       if(tab) tab.close();
@@ -429,6 +541,7 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
+      unlockTick(docId);
     }catch(e){
       docError(e.message || 'That document would not download.');
     }finally{
@@ -449,6 +562,9 @@
       return;
     }
     if(action === 'decline' && !confirm('Decline this application and email the applicant?')) return;
+    const live = (cache[currentId]||{}).automation === 'live';
+    if(action === 'approve' && live && !confirm('Approve and set this client up in Spacebring? The client is emailed, invited to the app and sent their agreement or invoice.')) return;
+    if(action === 'retry_onboarding' && live && !confirm('Run the Spacebring set-up for this client now?')) return;
 
     Array.from(document.querySelectorAll('[data-act]')).forEach(b => b.disabled = true);
     msgEl.className = 'text-sm mt-4 text-gray-600';
@@ -468,7 +584,10 @@
       after.className = 'text-sm mt-4 ' + (res.emailed === false && action !== 'take' && action !== 'note' && action !== 'activate' ? 'text-amber-700' : 'text-green-700');
       after.textContent = (res.emailed === false && ['approve','decline','request_info'].includes(action))
         ? 'Saved, but the email did NOT go out. Contact the applicant yourself.'
-        : 'Done.';
+        : (res.onboarding && res.onboarding.state === 'needs_attention')
+          ? 'Saved, but the automatic set-up stopped. See the red box above.'
+          : 'Done.';
+      if(res.onboarding && res.onboarding.state === 'needs_attention') after.className = 'text-sm mt-4 text-amber-700';
     }catch(e){
       msgEl.className = 'text-sm mt-4 text-red-700';
       msgEl.textContent = e.message || 'That did not work.';

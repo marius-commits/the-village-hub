@@ -26,6 +26,11 @@ const STAFF_EMAILS = (process.env.LEAD_NOTIFY_EMAILS ||
   'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za')
   .split(',').map(e => e.trim()).filter(Boolean);
 
+// Whoever runs the mail desk. Told when a virtual office client goes live.
+// Falls back to the staff list so the notice is never lost if this is unset.
+const MAIL_DESK_EMAILS = (process.env.MAIL_DESK_EMAILS || '')
+  .split(',').map(e => e.trim()).filter(Boolean);
+
 // Marius is the gate. New access requests are emailed here.
 const OWNER_EMAIL = (process.env.ADMIN_OWNER_EMAIL || 'marius@brick-field.co.za').toLowerCase();
 
@@ -275,7 +280,16 @@ async function sendStaffOtp(email) {
 
 // --- Email ---------------------------------------------------------------
 
-async function sendEmail({ to, subject, html, replyTo }) {
+// client:true marks a message that goes to an applicant or member. Every one
+// of those is blind-copied to the Hub inbox, so the team can see exactly what
+// a client was sent and when without anyone having to forward it.
+function clientBcc(to) {
+  const list = (Array.isArray(to) ? to : [to]).map(e => String(e).toLowerCase());
+  return list.includes(NOTIFY_EMAIL.toLowerCase()) ? [] : [NOTIFY_EMAIL];
+}
+
+async function sendEmail({ to, subject, html, replyTo, client, cc }) {
+  const bcc = client ? clientBcc(to) : [];
   if (!RESEND_KEY) {
     console.warn('RESEND_API_KEY not set, skipping email:', subject);
     return { skipped: true };
@@ -289,6 +303,8 @@ async function sendEmail({ to, subject, html, replyTo }) {
       subject,
       html,
       ...(replyTo ? { reply_to: replyTo } : {}),
+      ...(cc && cc.length ? { cc } : {}),
+      ...(bcc.length ? { bcc } : {}),
     }),
   });
   if (!res.ok) {
@@ -327,13 +343,12 @@ function safeExtension(filename, mime) {
 
 module.exports = {
   SUPABASE_URL, BUCKET, PLANS, REQUIRED_DOCS, ALLOWED_MIME, MAX_FILE_BYTES,
-  SUPABASE_URL, BUCKET, PLANS, REQUIRED_DOCS, ALLOWED_MIME, MAX_FILE_BYTES,
-  NOTIFY_EMAIL, STAFF_EMAILS, OWNER_EMAIL, SITE_URL, PUBLISHABLE_KEY,
+  NOTIFY_EMAIL, STAFF_EMAILS, MAIL_DESK_EMAILS, OWNER_EMAIL, SITE_URL, PUBLISHABLE_KEY,
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
   createSignedUploadUrl, createSignedViewUrl,
   bearerToken, accessStatus, staffView, staffByEmail,
   requireStaff, gate, guard, readUser,
-  ensureAuthUser, sendStaffOtp, sendEmail,
+  ensureAuthUser, sendStaffOtp, sendEmail, clientBcc,
   clean, validEmail, safeExtension,
 };

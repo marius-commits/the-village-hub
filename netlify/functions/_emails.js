@@ -135,7 +135,32 @@ function infoRequested(app, message) {
 }
 
 // 4. Approved. This is the handover to billing.
-function approved(app, message) {
+function approved(app, message, opts) {
+  const o = opts || {};
+  const isVO = app.type === 'virtual_office';
+  const start = o.startDate || app.preferred_start_date;
+
+  // Three versions of "what happens now", because telling a client to expect
+  // an invoice when an agreement arrives first is how trust gets lost.
+  let next;
+  if (o.automated && isVO) {
+    next = `
+      <p style="margin:0 0 10px;"><strong>What happens now.</strong> Three emails follow from our member system, Spacebring:</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 14px;">
+        <tr><td style="padding:3px 10px 3px 0;vertical-align:top;font:600 14px/1.6 Arial,sans-serif;color:${BRAND.brown};">1</td><td style="padding:3px 0;font:400 14px/1.6 Arial,sans-serif;">Your invitation to the Village Hub member app.</td></tr>
+        <tr><td style="padding:3px 10px 3px 0;vertical-align:top;font:600 14px/1.6 Arial,sans-serif;color:${BRAND.brown};">2</td><td style="padding:3px 0;font:400 14px/1.6 Arial,sans-serif;">Your virtual office agreement, to sign online. It takes a minute.</td></tr>
+        <tr><td style="padding:3px 10px 3px 0;vertical-align:top;font:600 14px/1.6 Arial,sans-serif;color:${BRAND.brown};">3</td><td style="padding:3px 0;font:400 14px/1.6 Arial,sans-serif;">Your first invoice, issued once the agreement is signed.</td></tr>
+      </table>
+      <p style="margin:0 0 14px;">Your address goes live as soon as that invoice is paid${start ? `, with the membership running from <strong>${start}</strong>` : ''}. We will email you the exact address wording to use the moment it is live. Please do not use the address before then.</p>`;
+  } else if (o.automated) {
+    next = `
+      <p style="margin:0 0 14px;"><strong>What happens now.</strong> You will get two emails from our member system, Spacebring: your invitation to the Village Hub member app, and your first invoice. Your membership starts once that invoice is paid${start ? `, from <strong>${start}</strong>` : ''}.</p>`;
+  } else {
+    next = `
+      <p style="margin:0 0 14px;"><strong>What happens now.</strong> We are setting your membership up. You will get an invoice from our member system, Spacebring, within the next business day. Your membership starts once that invoice is paid${app.preferred_start_date ? `, from <strong>${app.preferred_start_date}</strong>` : ''}.</p>
+      <p style="margin:0 0 14px;">That invoice email also carries your login for the member app, where you book the boardroom, see your day passes and get your access.</p>`;
+  }
+
   return {
     subject: `Approved — ${app.plan} at The Village Hub (${app.reference})`,
     html: shell(`
@@ -143,8 +168,7 @@ function approved(app, message) {
       <p style="margin:0 0 14px;">Good news. Your application for <strong>${app.plan}</strong> has been approved and your documents check out.</p>
       ${refBox(app)}
       ${message ? `<p style="margin:0 0 14px;">${message}</p>` : ''}
-      <p style="margin:0 0 14px;"><strong>What happens now.</strong> We are setting your membership up. You will get an invoice from our member system, Spacebring, within the next business day. Your membership starts once that invoice is paid${app.preferred_start_date ? `, from <strong>${app.preferred_start_date}</strong>` : ''}.</p>
-      <p style="margin:0 0 14px;">That invoice email also carries your login for the member app, where you book the boardroom, see your day passes and get your access.</p>
+      ${next}
       <p style="margin:18px 0 0;">Welcome to the Village.<br>The Village Hub team</p>
     `, `Your ${app.plan} application is approved.`),
   };
@@ -246,7 +270,105 @@ function leadsDigest(d) {
   };
 }
 
+// --- Onboarding automation ------------------------------------------------
+
+const HUB_ADDRESS_LINES = ['1st Floor, The Foundry', 'Sauvignon Street, Nooitgedacht Village', 'Stellenbosch, 7600'];
+
+function addressBox(companyName) {
+  const lines = [companyName, ...HUB_ADDRESS_LINES].filter(Boolean).map(l => esc(l)).join('<br>');
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BRAND.cream};border-left:3px solid ${BRAND.gold};border-radius:6px;margin:16px 0 20px;">
+    <tr><td style="padding:14px 16px;font:400 15px/1.7 Arial,sans-serif;color:${BRAND.ink};">${lines}</td></tr></table>`;
+}
+
+// 6. Paid and live. The client's working instructions.
+function activated(app, opts) {
+  const o = opts || {};
+  if (app.type !== 'virtual_office') {
+    return {
+      subject: `You are live at The Village Hub (${app.reference})`,
+      html: shell(`
+        <p style="margin:0 0 14px;">Hi ${esc(app.first_name)},</p>
+        <p style="margin:0 0 14px;">Payment received, thank you. Your <strong>${esc(app.plan)}</strong> membership is live.</p>
+        ${refBox(app)}
+        <p style="margin:0 0 14px;">Use the Village Hub member app (the invitation came from Spacebring) to check in, book the boardroom and see what is included in your plan. Bring your student card the first time you come in.</p>
+        <p style="margin:18px 0 0;">See you at the Hub.<br>The Village Hub team</p>
+      `, `Your ${app.plan} membership is live.`),
+    };
+  }
+  const company = app.company_name || '';
+  const registered = o.registeredAddress === true;
+  return {
+    subject: `Your address is live: ${company} at The Village Hub (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;">Hi ${esc(app.first_name)},</p>
+      <p style="margin:0 0 14px;">Payment received, thank you. <strong>${esc(company)}</strong> is live on <strong>${esc(app.plan)}</strong>. This is the address to use, exactly as written:</p>
+      ${addressBox(company)}
+      <p style="margin:0 0 8px;"><strong>How your post works</strong></p>
+      <p style="margin:0 0 14px;">Have senders put the company name on the first line. When something arrives we photograph it and message you on WhatsApp the same day. Collect on weekdays between 08:00 and 17:00, or tell us to forward it. We hold items for 30 days.</p>
+      <p style="margin:0 0 8px;"><strong>What the address is for</strong></p>
+      ${registered
+        ? `<p style="margin:0 0 14px;">You may use it as your business, postal and registered address. Please update your registered address with CIPC (form CoR21.1) and SARS within 30 days and send us proof of both. If you need a letter confirming the address for CIPC, SARS or your bank, reply to this email and we will send it.</p>`
+        : `<p style="margin:0 0 14px;">You may use it as your business and postal address: website, invoices, cards and Google Business Profile. It is not your registered CIPC or SARS address on this plan, and we cannot accept registered mail or legal documents for you. If you need that, reply and we will add the registered address service.</p>`}
+      <p style="margin:0 0 14px;">Your hot desk days${app.plan === 'Village Address' ? '' : ' and boardroom hours'} are in the Village Hub member app. Book there before you come in.</p>
+      <p style="margin:18px 0 0;">Welcome to the Village.<br>The Village Hub team</p>
+    `, `${esc(company)} is live at The Village Hub.`),
+  };
+}
+
+// 7. To the mail desk when a virtual office client goes live.
+function mailDesk(app, opts) {
+  const o = opts || {};
+  const registered = o.registeredAddress === true;
+  const names = [app.company_name, app.company_trading_name]
+    .filter((n, i, a) => n && a.indexOf(n) === i).map(n => esc(n)).join('<br>');
+  return {
+    subject: `New virtual office client: ${app.company_name || app.last_name} (${app.plan})`,
+    html: shell(`
+      <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">New virtual office client is live</p>
+      <p style="margin:0 0 14px;">Accept post from today for:</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BRAND.cream};border-left:3px solid ${BRAND.gold};border-radius:6px;margin:0 0 18px;">
+        <tr><td style="padding:14px 16px;font:600 15px/1.7 Arial,sans-serif;color:${BRAND.ink};">${names}</td></tr></table>
+      <p style="margin:0 0 14px;">
+        <strong>Contact</strong> ${esc(app.first_name)} ${esc(app.last_name)}<br>
+        <strong>WhatsApp</strong> ${esc(app.phone || 'not given')}<br>
+        <strong>Email</strong> ${esc(app.email)}<br>
+        <strong>Plan</strong> ${esc(app.plan)}<br>
+        <strong>Expected post</strong> ${esc(app.expected_mail_volume || 'not stated')}<br>
+        <strong>Reference</strong> ${esc(app.reference)}
+      </p>
+      <p style="margin:0 0 6px;"><strong>To do now</strong></p>
+      <p style="margin:0 0 14px;">1. Label a pigeon-hole with the company name.<br>2. Add the client to the Virtual Office Mail Log.</p>
+      <p style="margin:0 0 6px;"><strong>When post arrives</strong></p>
+      <p style="margin:0 0 14px;">Photograph it, log it, and WhatsApp the photo to the client before 16:00 the same day. Hand post only to the client or someone they have named in writing.</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${registered ? '#e6f4ea' : '#fdecea'};border-radius:6px;margin:0 0 6px;">
+        <tr><td style="padding:12px 16px;font:400 14px/1.6 Arial,sans-serif;color:${BRAND.ink};">
+          <strong>Registered mail and legal documents:</strong>
+          ${registered
+            ? 'ACCEPT and sign. This client has the registered address service and a signed mandate. Tell them the same day and tell Christel.'
+            : 'DO NOT sign. This client does not have the registered address service. Ask the courier or sheriff to return it to the sender, and tell Christel.'}
+        </td></tr></table>
+    `, `${esc(app.company_name || '')} is live. Start accepting their post.`),
+  };
+}
+
+// 8. To staff when the automation stops and a person is needed.
+function onboardingAttention(app, step, message, reviewUrl) {
+  return {
+    subject: `Needs attention: onboarding stopped for ${app.company_name || (app.first_name + ' ' + app.last_name)} (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">Automatic set-up stopped</p>
+      ${refBox(app)}
+      <p style="margin:0 0 14px;"><strong>Stopped at</strong> ${esc(step)}</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fdecea;border-radius:6px;margin:0 0 18px;">
+        <tr><td style="padding:12px 16px;font:400 14px/1.6 Arial,sans-serif;color:${BRAND.ink};">${esc(message)}</td></tr></table>
+      <p style="margin:0 0 14px;">Everything before this step is done and will not be repeated. Fix the cause, then press Retry on the application. The client has not been told anything went wrong.</p>
+      ${button(reviewUrl, 'Open the application')}
+    `, `Onboarding for ${app.reference} needs a person.`),
+  };
+}
+
 module.exports = {
   applicantReceived, staffAlert, infoRequested, approved, declined, leadAlert, DOC_LABELS,
   accessRequested, accessApproved, leadsDigest,
+  activated, mailDesk, onboardingAttention,
 };

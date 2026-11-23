@@ -108,7 +108,7 @@ exports.handler = async function (event) {
     const toStaff     = T.staffAlert(app, landed, reviewUrl);
 
     await Promise.all([
-      L.sendEmail({ to: app.email,     subject: toApplicant.subject, html: toApplicant.html, replyTo: L.NOTIFY_EMAIL }),
+      L.sendEmail({ to: app.email,     subject: toApplicant.subject, html: toApplicant.html, replyTo: L.NOTIFY_EMAIL, client: true }),
       L.sendEmail({ to: L.STAFF_EMAILS, subject: toStaff.subject,     html: toStaff.html,     replyTo: app.email }),
     ]);
 
