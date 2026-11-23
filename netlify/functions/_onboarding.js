@@ -26,6 +26,18 @@ function needsRegisteredAddress(app) {
   return isVO(app) && (app.wants_registered_address === true || app.plan === 'Village Virtual Pro');
 }
 
+// The registry check (Lexis WinDeed company search) recorded by staff.
+// Passed means: the company is in business and the applicant is a director.
+function vettingPassed(app) {
+  const v = app.vetting;
+  return Boolean(v && v.cipc_name && v.company_active === true && v.director_listed === true);
+}
+
+// The name the registry holds wins over what the applicant typed.
+function legalCompanyName(app) {
+  return (app.vetting && app.vetting.cipc_name) || app.company_name;
+}
+
 function sastDate(d) {
   return new Date(d.getTime() + SAST_OFFSET_MS).toISOString().slice(0, 10);
 }
@@ -61,6 +73,7 @@ function stages(app, documents) {
   const list = [
     { key: 'received', label: 'Application received', done: true, at: app.created_at || null },
     { key: 'verified', label: 'Documents checked', done: allVerified || approved, at: null },
+    ...(isVO(app) ? [{ key: 'vetted', label: 'Company vetted', done: vettingPassed(app), at: (app.vetting && app.vetting.checked_at) || null }] : []),
     { key: 'approved', label: 'Approved', done: approved, at: approved ? app.reviewed_at || null : null },
     { key: 'account', label: 'Set up in Spacebring', done: Boolean(s.company || s.membership) || live, at: at('company') || at('membership') },
   ];
@@ -164,7 +177,7 @@ async function provision(app, staffEmail, deps) {
         title,
         // The registration number rides on the legal name because that is the
         // only company field Spacebring prints on agreements and invoices.
-        legalName: app.cipc_registration_number ? `${app.company_name} (Reg. No. ${app.cipc_registration_number})` : app.company_name,
+        legalName: app.cipc_registration_number ? `${legalCompanyName(app)} (Reg. No. ${app.cipc_registration_number})` : legalCompanyName(app),
         taxId: app.vat_number || undefined,
         notes: companyNotes(app, staffEmail, deps.now()),
         metadata: { application_reference: app.reference, cipc_registration_number: app.cipc_registration_number || '' },
@@ -318,4 +331,4 @@ async function activate(app, deps) {
   }
 }
 
-module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO };
+module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO, vettingPassed, legalCompanyName };

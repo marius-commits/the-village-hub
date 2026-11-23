@@ -33,6 +33,7 @@ const ACTIONS = {
   note:         { status: null,            email: null },
   verify_doc:   { status: null,            email: null },
   retry_onboarding: { status: null,        email: null },
+  save_vetting: { status: null,            email: null },
 };
 
 exports.handler = async function (event) {
@@ -81,9 +82,41 @@ exports.handler = async function (event) {
       return L.ok({ document: { id: doc.id, verified: doc.verified } });
     }
 
+    // --- Registry check recorded (Lexis WinDeed company search) ------------
+    // Staff run the search in WinDeed and record what the register says. The
+    // registered name captured here is the one printed on the agreement and
+    // the invoice, so a typo on the application form never reaches a client.
+    if (action === 'save_vetting') {
+      if (before.type !== 'virtual_office') return L.bad('Vetting applies to virtual office applications.');
+      if (before.status === 'activated') return L.bad('This client is already live.');
+      const cipcName = L.clean(payload.cipc_name, 200);
+      if (!cipcName) return L.bad('Enter the company name exactly as the register shows it.');
+      if (typeof payload.company_active !== 'boolean' || typeof payload.director_listed !== 'boolean') {
+        return L.bad('Answer both questions: is the company in business, and is the applicant a director.');
+      }
+      const vetting = {
+        source: 'Lexis WinDeed company search',
+        cipc_name: cipcName,
+        company_active: payload.company_active,
+        director_listed: payload.director_listed,
+        notes: L.clean(payload.notes, 1000) || null,
+        checked_by: staff.email,
+        checked_at: new Date().toISOString(),
+      };
+      await L.updateRows('applications', `id=eq.${id}`, { vetting });
+      await L.logEvent(id, 'vetting_recorded', staff.email, {
+        company_active: vetting.company_active, director_listed: vetting.director_listed,
+        name_matches_form: cipcName.trim().toLowerCase() === String(before.company_name || '').trim().toLowerCase(),
+      });
+      return L.ok({ vetting, passed: O.vettingPassed({ vetting }) });
+    }
+
     // --- Automatic set-up, picked back up ---------------------------------
     if (action === 'retry_onboarding') {
       if (before.status !== 'approved') return L.bad('Only an approved application can be set up.');
+      if (O.isVO(before) && !O.vettingPassed(before)) {
+        return L.bad('Record the WinDeed company check first. Set-up uses the registered name from it.');
+      }
       await L.logEvent(id, 'action:retry_onboarding', staff.email, null);
       const result = await O.provision(before, staff.email, Live.deps());
       return L.ok({ application: before, onboarding: result });
@@ -92,6 +125,13 @@ exports.handler = async function (event) {
     if (action === 'approve') {
       if (before.status === 'approved' || before.status === 'activated') {
         return L.bad('This application is already approved. Nothing was sent again.');
+      }
+      // The registry gate, virtual office only.
+      if (O.isVO(before)) {
+        const v = before.vetting;
+        if (!v) return L.bad('Run the WinDeed company search and record the result before approving.');
+        if (v.company_active !== true) return L.bad('The register shows this company is not in business. Decline, or request information.');
+        if (v.director_listed !== true) return L.bad('The applicant is not a director on the register. Decline, or request information.');
       }
       // The KYC gate. Approving is a statement that the documents were read.
       const docs = await L.selectRows('application_documents', `application_id=eq.${id}&select=id,doc_type,verified`);

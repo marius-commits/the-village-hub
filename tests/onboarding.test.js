@@ -202,12 +202,14 @@ test('sync: a declined agreement asks for a person', async () => {
 
 test('progress bar: counts and marks the next stage', () => {
   const fresh = O.stages(voApp({ status: 'submitted', reviewed_at: null }), [{ verified: false }, { verified: true }]);
-  assert.equal(fresh.total, 9);
+  assert.equal(fresh.total, 10);
   assert.equal(fresh.done, 1);
   assert.equal(fresh.stages.find(s => s.current).key, 'verified');
 
   const checked = O.stages(voApp({ status: 'submitted' }), [{ verified: true }, { verified: true }]);
-  assert.equal(checked.stages.find(s => s.current).key, 'approved');
+  assert.equal(checked.stages.find(s => s.current).key, 'vetted');
+  const vetted = O.stages(voApp({ status: 'submitted', vetting: { cipc_name: 'X', company_active: true, director_listed: true } }), [{ verified: true }]);
+  assert.equal(vetted.stages.find(s => s.current).key, 'approved');
 
   const student = O.stages(voApp({ type: 'student', status: 'activated' }), []);
   assert.equal(student.total, 6);
@@ -246,4 +248,18 @@ test('a live run after a test-mode run starts clean and really creates everythin
   assert.deepEqual(live.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue']);
   assert.equal(app.spacebring_customer_ref, 'co-1');
   assert.equal(app.onboarding.steps.contract.ref, 'con-1');
+});
+
+test('vetting: passes only when in business and the applicant is a director', () => {
+  assert.equal(O.vettingPassed({}), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: true, director_listed: false } }), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: false, director_listed: true } }), false);
+  assert.equal(O.vettingPassed({ vetting: { cipc_name: 'X', company_active: true, director_listed: true } }), true);
+});
+
+test('vetting: the registered name, not the typed one, goes to Spacebring', async () => {
+  const f = fakes();
+  const app = voApp({ company_name: 'Exmaple Tradng', vetting: { cipc_name: 'Example Trading (Pty) Ltd', company_active: true, director_listed: true } });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls[0][1].legalName, 'Example Trading (Pty) Ltd (Reg. No. 2020/000000/07)');
 });
