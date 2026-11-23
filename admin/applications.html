@@ -55,6 +55,39 @@
     .tab{ padding:.5rem .9rem; border-radius:999px; font-size:14px; font-weight:600; color:var(--vh-bark); text-decoration:none; }
     .tab.on{ background:var(--vh-bark); color:#fff; }
     [hidden]{ display:none !important; }
+
+    /* ---- phone layout ----
+       One pane at a time below 1024px: the queue, or one application. On a
+       wide screen both sit side by side as before. */
+    .chips{ display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; margin:0 -12px; padding:0 12px; }
+    .chips::-webkit-scrollbar{ display:none; }
+    .chip{ flex:none; padding:.5rem .85rem; border-radius:999px; font-size:13px; font-weight:600; color:var(--vh-bark); background:#fff; border:1px solid var(--vh-sand); white-space:nowrap; }
+    .chip.on{ background:var(--vh-bark); border-color:var(--vh-bark); color:#fff; }
+    .chip b{ font-weight:700; opacity:.7; margin-left:.3rem; }
+    .flag{ display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:99px; }
+    .flag-age{ background:#fdf3e0; color:#8a6116; }
+    .flag-dup{ background:#fbeae7; color:#b03a2b; }
+    .flag-reg{ background:#f6efdc; color:#8a6116; }
+    .contact{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .contact a{ display:flex; align-items:center; justify-content:center; min-height:44px; border-radius:12px; font-size:14px; font-weight:600; text-decoration:none; background:#fff; color:var(--vh-bark); border:1px solid var(--vh-sand); }
+    .contact a.wa{ background:#e9f8ef; border-color:#bfe8cf; color:#12703a; }
+    .backbar{ display:none; }
+    @media (min-width:1024px){ .chips{ flex-wrap:wrap; margin:0; padding:0; } .contact{ max-width:420px; } }
+    @media (max-width:1023px){
+      body.viewing #queuePane{ display:none; }
+      body:not(.viewing) #detail{ display:none; }
+      .backbar{ display:flex; align-items:center; gap:.4rem; position:sticky; top:56px; z-index:30; margin:-1rem -1rem 1rem; padding:.7rem 1rem; background:#fff; border-bottom:1px solid var(--vh-sand); border-radius:12px 12px 0 0; font-size:14px; font-weight:700; color:var(--vh-bark); width:calc(100% + 2rem); text-align:left; }
+      .field{ font-size:16px; }               /* stops iOS zooming on focus */
+      .btn{ min-height:44px; }
+      .tab{ padding:.45rem .7rem; font-size:13px; }
+      .row{ padding-top:.9rem; padding-bottom:.9rem; }
+      .tick{ font-size:13px; min-height:44px; }
+      .tick input{ width:22px; height:22px; }
+    }
+    @media (max-width:639px){
+      .steps{ grid-template-columns:1fr 1fr; gap:10px 8px; }
+      .step{ font-size:12px; }
+    }
   </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
@@ -86,45 +119,45 @@
 <!-- ===== APP ===== -->
 <div id="app" hidden>
   <header class="bg-white border-b border-[#E8D9C5] sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-      <div class="flex items-center">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-2">
+      <div class="flex items-center shrink-0">
         <img class="h-8 w-8 object-contain" src="/images/web/logo.png" alt="">
-        <span class="ml-2 font-bold text-[#6B4423] text-sm font-display">Admin</span>
+        <span class="ml-2 font-bold text-[#6B4423] text-sm font-display hidden sm:inline">Admin</span>
       </div>
-      <nav class="flex items-center gap-1">
+      <nav class="flex items-center gap-1 min-w-0">
         <a class="tab" href="/admin">Today</a>
         <span class="tab on">Applications</span>
         <a class="tab" href="/admin/leads">Leads</a>
       </nav>
-      <div class="flex items-center gap-3">
-        <select class="field text-xs py-1.5 w-auto" id="statusFilter">
-          <option value="">Open queue</option>
-          <option value="submitted">Submitted</option>
-          <option value="under_review">Under review</option>
-          <option value="info_requested">Waiting on applicant</option>
-          <option value="approved">Approved</option>
-          <option value="activated">Activated</option>
-          <option value="declined">Declined</option>
-        </select>
-        <span class="text-xs text-gray-500 hidden sm:inline" id="whoami"></span>
-        <button class="text-xs text-[#6B4423] underline" id="signout">Sign out</button>
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="text-xs text-gray-500 hidden md:inline" id="whoami"></span>
+        <button class="text-xs text-[#6B4423] underline whitespace-nowrap py-2" id="signout">Sign out</button>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 py-6 grid lg:grid-cols-[380px_1fr] gap-5 items-start">
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 grid lg:grid-cols-[380px_1fr] gap-5 items-start">
 
     <!-- queue -->
-    <section class="card overflow-hidden">
-      <div class="px-4 py-3 border-b border-[#E8D9C5] flex items-center justify-between">
-        <span class="text-sm font-bold text-gray-900">Queue</span>
-        <span class="text-xs text-gray-500" id="count"></span>
+    <section id="queuePane" class="min-w-0">
+      <input class="field" id="search" type="search" placeholder="Search name, company or reference" autocomplete="off" enterkeyhint="search">
+      <div class="chips mt-2 mb-3" id="chips"></div>
+      <div class="card overflow-hidden">
+        <div class="px-4 py-3 border-b border-[#E8D9C5] flex items-center justify-between">
+          <span class="text-sm font-bold text-gray-900">Queue</span>
+          <span class="flex items-center gap-3">
+            <span class="text-xs text-gray-500" id="count"></span>
+            <button class="text-xs font-semibold text-[#6B4423] underline py-1" id="refresh" type="button">Refresh</button>
+          </span>
+        </div>
+        <!-- The list scrolls with the page on a phone. Only the wide layout
+             needs its own scroll box, to keep the detail pane in view. -->
+        <div id="list" class="divide-y divide-[#F0EAE1] lg:max-h-[68vh] lg:overflow-y-auto"></div>
       </div>
-      <div id="list" class="divide-y divide-[#F0EAE1] max-h-[72vh] overflow-y-auto"></div>
     </section>
 
     <!-- detail -->
-    <section id="detail" class="card p-8 text-center text-gray-500 text-sm">
+    <section id="detail" class="card p-8 text-center text-gray-500 text-sm min-w-0">
       Choose an application from the queue.
     </section>
   </main>
@@ -227,45 +260,117 @@
   }
 
   // ---- queue ----
+  // The open queue is fetched once and filtered here, so switching between
+  // New / In review / Approved is instant and each chip can show its count.
+  // Activated and Declined are history, fetched only when asked for.
+  const CHIPS = [
+    ['', 'Open'], ['submitted', 'New'], ['under_review', 'In review'],
+    ['info_requested', 'Waiting on applicant'], ['approved', 'Approved'],
+    ['activated', 'Activated'], ['declined', 'Declined']
+  ];
+  const HISTORY = ['activated', 'declined'];
+  let view = '', all = [], openCounts = null, lastLoad = 0, queueScroll = 0;
+
+  const days = d => Math.floor((Date.now() - new Date(d).getTime()) / 86400000);
+  const isPhone = () => window.matchMedia('(max-width:1023px)').matches;
+
   async function loadQueue(){
-    const status = $('#statusFilter').value;
-    const data = await api('staff-applications' + (status ? '?status='+status : ''));
+    const server = HISTORY.includes(view) ? view : '';
+    const data = await api('staff-applications' + (server ? '?status=' + server : ''));
     if(!data) return;
     if(data.staff) $('#whoami').textContent = data.staff.email;
+    all = data.applications || [];
+    lastLoad = Date.now();
+    if(!server){
+      openCounts = { '': all.length };
+      all.forEach(a => { openCounts[a.status] = (openCounts[a.status] || 0) + 1; });
+    }
+    renderQueue();
+  }
 
-    const apps = data.applications;
+  function renderQueue(){
+    $('#chips').innerHTML = CHIPS.map(([key, label]) => {
+      const n = openCounts && !HISTORY.includes(key) ? (openCounts[key] || 0) : null;
+      return `<button type="button" class="chip ${view === key ? 'on' : ''}" data-view="${key}">${label}${n === null ? '' : `<b>${n}</b>`}</button>`;
+    }).join('');
+
+    // The same person applying twice is easy to miss in a list. Same email,
+    // more than one application in view: say so on each.
+    const byEmail = {};
+    all.forEach(a => { const k = (a.email || '').trim().toLowerCase(); if(k) (byEmail[k] = byEmail[k] || []).push(a); });
+
+    const q = $('#search').value.trim().toLowerCase();
+    const apps = all.filter(a => {
+      if(view && !HISTORY.includes(view) && a.status !== view) return false;
+      if(!q) return true;
+      return [a.first_name + ' ' + a.last_name, a.company_name, a.institution, a.reference, a.email, a.plan]
+        .some(v => v && String(v).toLowerCase().includes(q));
+    });
+
     $('#count').textContent = apps.length + (apps.length === 1 ? ' application' : ' applications');
-    $('#list').innerHTML = apps.length ? apps.map(a => `
-      <div class="row px-4 py-3" data-id="${a.id}">
-        <div class="flex items-center justify-between gap-2">
-          <span class="font-semibold text-sm text-gray-900">${esc(a.first_name)} ${esc(a.last_name)}</span>
-          <span class="pill s-${a.status}">${STATUS_LABELS[a.status]||a.status}</span>
+    $('#list').innerHTML = apps.length ? apps.map(a => {
+      const who = a.company_name || a.institution || '';
+      const open = !['activated','declined','withdrawn'].includes(a.status);
+      const age = days(a.created_at);
+      const twins = (byEmail[(a.email || '').trim().toLowerCase()] || []).filter(x => x.id !== a.id);
+      const stuck = a.progress && a.progress.state === 'needs_attention';
+      const flags = [
+        open && age >= 7 ? `<span class="flag flag-age">Open ${age} days</span>` : '',
+        twins.length ? `<span class="flag flag-dup">Same applicant as ${esc(twins.map(t => t.reference).join(', '))}</span>` : '',
+        a.wants_registered_address ? '<span class="flag flag-reg">Registered address</span>' : ''
+      ].join('');
+      return `
+      <div class="row px-4 py-3 ${a.id === currentId ? 'sel' : ''}" data-id="${a.id}" role="button" tabindex="0">
+        <div class="flex items-start justify-between gap-2">
+          <span class="font-semibold text-[15px] leading-snug text-gray-900 min-w-0 break-words">${esc(a.first_name)} ${esc(a.last_name)}</span>
+          <span class="pill s-${a.status} shrink-0 whitespace-nowrap">${STATUS_LABELS[a.status]||a.status}</span>
         </div>
-        <div class="text-xs text-gray-600 mt-1">${esc(a.plan)}</div>
+        <div class="text-[13px] text-gray-600 mt-0.5">${esc(a.plan)}${who ? ' &middot; ' + esc(who) : ''}</div>
         ${a.progress ? `
         <div class="mt-2">
-          <div class="prog-track"><div class="prog-fill ${a.progress.state === 'needs_attention' ? 'warn' : ''}" style="width:${Math.round(100*a.progress.done/a.progress.total)}%"></div></div>
-          <div class="text-[11px] mt-1 ${a.progress.state === 'needs_attention' ? 'text-red-700 font-semibold' : 'text-gray-500'}">
-            ${a.progress.state === 'needs_attention' ? 'Needs attention' : (a.progress.next ? 'Next: ' + esc(a.progress.next) : 'Complete')}
-            &middot; ${a.progress.done}/${a.progress.total}
+          <div class="prog-track"><div class="prog-fill ${stuck ? 'warn' : ''}" style="width:${Math.round(100*a.progress.done/a.progress.total)}%"></div></div>
+          <div class="text-[13px] mt-1.5 ${stuck ? 'text-red-700 font-semibold' : 'text-gray-700 font-medium'}">
+            ${stuck ? 'Needs attention' : (a.progress.next ? 'Next: ' + esc(a.progress.next) : 'Complete')}
+            <span class="text-gray-400 font-normal">&middot; ${a.progress.done}/${a.progress.total}</span>
           </div>
         </div>` : ''}
-        <div class="text-xs text-gray-400 mt-0.5">
-          ${esc(a.reference)} &middot; ${fmt(a.created_at)}
-          ${a.wants_registered_address ? ' &middot; <span class="text-[#8a6116] font-semibold">registered address</span>' : ''}
-        </div>
-      </div>`).join('')
-      : '<div class="px-4 py-10 text-center text-sm text-gray-500">Nothing in this queue.</div>';
-
-    Array.from(document.querySelectorAll('.row')).forEach(r => {
-      r.addEventListener('click', () => openDetail(r.dataset.id));
-    });
-    if(currentId) {
-      const sel = document.querySelector('.row[data-id="'+currentId+'"]');
-      if(sel) sel.classList.add('sel');
-    }
+        ${flags ? `<div class="flex flex-wrap gap-1.5 mt-2">${flags}</div>` : ''}
+        <div class="text-xs text-gray-400 mt-1.5">${esc(a.reference)} &middot; ${fmt(a.created_at)}</div>
+      </div>`; }).join('')
+      : `<div class="px-4 py-10 text-center text-sm text-gray-500">${q ? 'Nothing matches that search.' : 'Nothing in this queue.'}</div>`;
   }
-  $('#statusFilter').addEventListener('change', loadQueue);
+
+  $('#chips').addEventListener('click', e => {
+    const c = e.target.closest('[data-view]'); if(!c) return;
+    const was = view; view = c.dataset.view;
+    // Moving between the open views needs no round trip.
+    if(HISTORY.includes(view) || HISTORY.includes(was)){ renderQueue(); loadQueue().catch(()=>{}); }
+    else renderQueue();
+  });
+  $('#search').addEventListener('input', renderQueue);
+  $('#list').addEventListener('click', e => { const r = e.target.closest('.row'); if(r) openDetail(r.dataset.id, true); });
+  $('#list').addEventListener('keydown', e => { if(e.key === 'Enter'){ const r = e.target.closest('.row'); if(r) openDetail(r.dataset.id, true); } });
+  $('#refresh').addEventListener('click', async () => {
+    const b = $('#refresh'); b.disabled = true; b.textContent = 'Refreshing…';
+    try{ await loadQueue(); } catch(e){} finally { b.disabled = false; b.textContent = 'Refresh'; }
+  });
+  // Coming back to the tab after a while: the queue has probably moved on.
+  document.addEventListener('visibilitychange', () => {
+    if(!document.hidden && !$('#app').hidden && lastLoad && Date.now() - lastLoad > 120000) loadQueue().catch(()=>{});
+  });
+
+  // On a phone an application takes over the screen. It is a real history
+  // entry, so the phone's own back button returns to the queue.
+  function closeDetail(){
+    document.body.classList.remove('viewing');
+    currentId = null;
+    Array.from(document.querySelectorAll('.row.sel')).forEach(r => r.classList.remove('sel'));
+    if(isPhone()) window.scrollTo(0, queueScroll);
+  }
+  window.addEventListener('popstate', () => {
+    const id = (location.hash.match(/^#a=(.+)$/) || [])[1];
+    if(id) openDetail(decodeURIComponent(id)); else closeDetail();
+  });
 
   // ---- detail ----
   function field(label, value){
@@ -275,10 +380,29 @@
             <dd class="text-sm text-gray-900 mt-0.5">${esc(v)}</dd></div>`;
   }
 
-  async function openDetail(id){
+  // fresh = the user just picked it from the queue (as opposed to a re-render
+  // after an action, which must not move the page or add history).
+  const BACKBAR = '<button type="button" class="backbar" data-back>&#8249; Back to queue</button>';
+  const waNumber = p => { let d = String(p || '').replace(/\D/g, ''); if(d.startsWith('0')) d = '27' + d.slice(1); return d; };
+
+  async function openDetail(id, fresh){
+    if(fresh){
+      if(!document.body.classList.contains('viewing')) queueScroll = window.scrollY;
+      const hash = '#a=' + encodeURIComponent(id);
+      if(location.hash !== hash){
+        if(document.body.classList.contains('viewing') || !isPhone()) history.replaceState(null, '', hash);
+        else history.pushState(null, '', hash);
+      }
+    }
+    const samePane = currentId === id && !fresh;
     currentId = id;
+    document.body.classList.add('viewing');
     Array.from(document.querySelectorAll('.row')).forEach(r => r.classList.toggle('sel', r.dataset.id === id));
-    $('#detail').innerHTML = '<div class="p-8 text-center text-sm text-gray-500">Loading…</div>';
+    $('#detail').className = 'card p-4 sm:p-7 text-sm text-left min-w-0';
+    if(!samePane){
+      $('#detail').innerHTML = BACKBAR + '<div class="p-8 text-center text-sm text-gray-500">Loading…</div>';
+      if(isPhone()) window.scrollTo(0, 0);
+    }
 
     const data = await api('staff-applications?id=' + encodeURIComponent(id));
     if(!data) return;
@@ -297,14 +421,14 @@
     const allTicked = data.documents.length > 0 && data.documents.every(d => d.verified === true);
 
     const docs = data.documents.map(d => `
-      <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]" data-doctype="${esc(d.doc_type)}">
-        <button type="button" data-doc="${esc(d.id)}" class="flex-1 min-w-0 text-left">
+      <div class="flex flex-wrap items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8D9C5] hover:bg-[#FAF8F6]" data-doctype="${esc(d.doc_type)}">
+        <button type="button" data-doc="${esc(d.id)}" class="basis-full sm:basis-0 sm:flex-1 min-w-0 text-left">
           <span class="block text-sm font-medium text-[#6B4423]">${DOC_LABELS[d.doc_type]||d.doc_type}</span>
           <span class="block text-xs text-gray-400 truncate">${esc(d.original_filename||'')}</span>
         </button>
         <button type="button" data-doc="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Open</button>
         <button type="button" data-dl="${esc(d.id)}" class="btn btn-ghost shrink-0" style="padding:.35rem .8rem">Download</button>
-        <label class="tick shrink-0 ${d.verified ? 'on' : ''}" title="${seen.has(d.doc_type) || d.verified ? 'Tick once you have read it' : 'Open or download it first'}">
+        <label class="tick shrink-0 ml-auto ${d.verified ? 'on' : ''}" title="${seen.has(d.doc_type) || d.verified ? 'Tick once you have read it' : 'Open or download it first'}">
           <input type="checkbox" data-verify="${esc(d.id)}" ${d.verified ? 'checked' : ''} ${locked || !(seen.has(d.doc_type) || d.verified) ? 'disabled' : ''}>
           Checked
         </label>
@@ -312,24 +436,31 @@
 
     const events = data.events.map(e => `
       <li class="flex gap-3 text-xs">
-        <span class="text-gray-400 shrink-0 w-28">${fmt(e.created_at)}</span>
+        <span class="text-gray-400 shrink-0 w-24 sm:w-28">${fmt(e.created_at)}</span>
         <span class="text-gray-700"><strong>${esc(e.event_type)}</strong>
         ${e.actor ? ' &middot; ' + esc(e.actor) : ''}
         ${e.detail && e.detail.message ? '<br><span class="text-gray-500">'+esc(e.detail.message)+'</span>' : ''}</span>
       </li>`).join('');
 
-    $('#detail').innerHTML = `
-      <div class="flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <div class="flex items-center gap-3">
+    const wa = waNumber(a.phone);
+    $('#detail').innerHTML = BACKBAR + `
+      <div class="flex items-start justify-between gap-x-4 gap-y-1 flex-wrap">
+        <div class="min-w-0">
+          <div class="flex items-center gap-x-3 gap-y-1 flex-wrap">
             <h2 class="text-xl font-extrabold text-gray-900">${esc(a.first_name)} ${esc(a.last_name)}</h2>
             <span class="pill s-${a.status}">${STATUS_LABELS[a.status]||a.status}</span>
           </div>
           <p class="text-sm text-gray-600 mt-1">${esc(a.plan)} &middot; ${esc(a.reference)}</p>
         </div>
-        <div class="text-right text-xs text-gray-500">
+        <div class="sm:text-right text-xs text-gray-500">
           Applied ${fmt(a.created_at)}${a.reviewed_at ? '<br>Last action '+fmt(a.reviewed_at) : ''}
         </div>
+      </div>
+
+      <div class="contact mt-4">
+        ${a.phone ? `<a href="tel:${esc(String(a.phone).replace(/[^\d+]/g,''))}">Call</a>` : ''}
+        ${wa.length >= 10 ? `<a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">WhatsApp</a>` : ''}
+        ${a.email ? `<a href="mailto:${esc(a.email)}?subject=${encodeURIComponent('Your Village Hub application ' + (a.reference || ''))}">Email</a>` : ''}
       </div>
 
       ${renderProgress(data.progress)}
@@ -340,7 +471,7 @@
           Confirm the head lease permits third-party registered-address use before approving.
         </div>` : ''}
 
-      <dl class="grid sm:grid-cols-2 gap-4 mt-5">
+      <dl class="grid grid-cols-2 gap-x-4 gap-y-4 mt-5 [&_dd]:break-words">
         ${field('Email', a.email)}
         ${field('Phone', a.phone)}
         ${field('Preferred start', a.preferred_start_date)}
@@ -366,13 +497,15 @@
       <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">Actions</h3>
       <textarea class="field" id="msg" rows="3" placeholder="Message to the applicant (required to request information or decline). This text goes into the email."></textarea>
 
-      <div class="flex flex-wrap gap-2 mt-3">
+      <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mt-3">
         ${a.status === 'submitted' ? '<button class="btn btn-ghost" data-act="take">Take this one</button>' : ''}
         <button class="btn btn-ghost"  data-act="request_info">Request information</button>
-        ${locked ? '' : `<button class="btn btn-sage" data-act="approve" ${allTicked ? '' : 'disabled title="Tick every document as checked first"'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
+        ${locked ? '' : `<button class="btn btn-sage col-span-2 order-first sm:order-none" data-act="approve" ${allTicked ? '' : 'disabled title="Tick every document as checked first"'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
         <button class="btn btn-danger" data-act="decline">Decline</button>
         <button class="btn btn-ghost"  data-act="note">Add note only</button>
       </div>
+      ${!locked && !allTicked ? '<p class="text-xs text-gray-500 mt-2">Approve unlocks once every document above is ticked as checked.</p>' : ''}
+      <p id="actionMsg" class="text-sm mt-3" role="status"></p>
 
       ${a.status === 'approved' ? renderAutomation(a, data) + `
         <details class="mt-3" ${data.automation === 'live' && data.progress.state !== 'needs_attention' ? '' : 'open'}>
@@ -381,7 +514,7 @@
           <p class="text-sm font-bold text-gray-900">Now create the subscription in Spacebring</p>
           <p class="text-xs text-gray-600 mt-1 mb-3">Create the customer and the <strong>${esc(a.plan)}</strong> subscription in Spacebring, let it raise the invoice, then record the references here so the loop is closed.</p>
           <div class="grid sm:grid-cols-2 gap-2">
-            <input class="field" id="sbCustomer" placeholder="Spacebring customer ref">
+            <input class="field" autocapitalize="off" autocorrect="off" id="sbCustomer" placeholder="Spacebring customer ref">
             <input class="field" id="sbSub" placeholder="Spacebring subscription ref">
           </div>
           <button class="btn btn-brown mt-3" data-act="activate">Mark as activated</button>
@@ -392,8 +525,13 @@
 
       <h3 class="text-sm font-bold text-gray-900 mt-7 mb-2">History</h3>
       <ul class="space-y-1.5">${events}</ul>
-      <p id="actionMsg" class="text-sm mt-4"></p>
     `;
+
+    const back = $('#detail [data-back]');
+    if(back) back.addEventListener('click', () => {
+      if(/^#a=/.test(location.hash) && history.length > 1) history.back();
+      else { history.replaceState(null, '', location.pathname); closeDetail(); }
+    });
 
     Array.from(document.querySelectorAll('[data-act]')).forEach(b => {
       b.addEventListener('click', () => doAction(b.dataset.act, b));
@@ -479,7 +617,7 @@
 
   function docError(message){
     const m = $('#actionMsg');
-    if(m){ m.className = 'text-sm mt-4 text-red-700'; m.textContent = message; }
+    if(m){ m.className = 'text-sm mt-3 text-red-700'; m.textContent = message; m.scrollIntoView({block:'nearest', behavior:'smooth'}); }
   }
 
   // Opens the document in its own tab, leaving this page exactly as it was.
@@ -599,6 +737,9 @@
   // A stored refresh token means no sign-in screen at all: the access token
   // is renewed in the background on the first request.
   if(Auth.hasSession()){ bootApp(); }
+  // A reload, or a link shared between staff, lands back on the same application.
+  const deep = (location.hash.match(/^#a=(.+)$/) || [])[1];
+  if(deep && Auth.hasSession()) openDetail(decodeURIComponent(deep)).catch(()=>{});
 })();
 </script>
 </body>
