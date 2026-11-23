@@ -1,0 +1,17 @@
+{
+  "name": "the-village-hub",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --minify",
+    "images": "node scripts/optimize-images.mjs",
+    "markup": "node scripts/apply-markup.mjs",
+    "build": "npm run build:css"
+  },
+  "dependencies": {
+    "tailwindcss": "3.4.17"
+  },
+  "devDependencies": {
+    "sharp": "0.34.4",
+    "svgo": "4.0.0"
+  }
+}
