@@ -114,8 +114,10 @@ exports.handler = async function (event) {
     // --- Automatic set-up, picked back up ---------------------------------
     if (action === 'retry_onboarding') {
       if (before.status !== 'approved') return L.bad('Only an approved application can be set up.');
-      if (O.isVO(before) && !O.vettingPassed(before)) {
-        return L.bad('Record the WinDeed company check first. Set-up uses the registered name from it.');
+      if (O.isVO(before) && (O.vettingRequired() || before.vetting) && !O.vettingPassed(before)) {
+        return L.bad(before.vetting
+          ? 'The recorded company check failed. Update it or decline before setting this client up.'
+          : 'Record the WinDeed company check first. Set-up uses the registered name from it.');
       }
       await L.logEvent(id, 'action:retry_onboarding', staff.email, null);
       const result = await O.provision(before, staff.email, Live.deps());
@@ -129,9 +131,9 @@ exports.handler = async function (event) {
       // The registry gate, virtual office only.
       if (O.isVO(before)) {
         const v = before.vetting;
-        if (!v) return L.bad('Run the WinDeed company search and record the result before approving.');
-        if (v.company_active !== true) return L.bad('The register shows this company is not in business. Decline, or request information.');
-        if (v.director_listed !== true) return L.bad('The applicant is not a director on the register. Decline, or request information.');
+        if (!v && O.vettingRequired()) return L.bad('Run the WinDeed company search and record the result before approving.');
+        if (v && v.company_active !== true) return L.bad('The register shows this company is not in business. Decline, or request information.');
+        if (v && v.director_listed !== true) return L.bad('The applicant is not a director on the register. Decline, or request information.');
       }
       // The KYC gate. Approving is a statement that the documents were read.
       const docs = await L.selectRows('application_documents', `application_id=eq.${id}&select=id,doc_type,verified`);

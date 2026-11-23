@@ -202,14 +202,18 @@ test('sync: a declined agreement asks for a person', async () => {
 
 test('progress bar: counts and marks the next stage', () => {
   const fresh = O.stages(voApp({ status: 'submitted', reviewed_at: null }), [{ verified: false }, { verified: true }]);
-  assert.equal(fresh.total, 10);
+  assert.equal(fresh.total, 9);
   assert.equal(fresh.done, 1);
   assert.equal(fresh.stages.find(s => s.current).key, 'verified');
 
   const checked = O.stages(voApp({ status: 'submitted' }), [{ verified: true }, { verified: true }]);
-  assert.equal(checked.stages.find(s => s.current).key, 'vetted');
+  assert.equal(checked.stages.find(s => s.current).key, 'approved');
   const vetted = O.stages(voApp({ status: 'submitted', vetting: { cipc_name: 'X', company_active: true, director_listed: true } }), [{ verified: true }]);
   assert.equal(vetted.stages.find(s => s.current).key, 'approved');
+  assert.equal(vetted.total, 10);
+  process.env.VETTING_REQUIRED = 'true';
+  assert.equal(O.stages(voApp({ status: 'submitted' }), [{ verified: true }]).stages.find(s => s.current).key, 'vetted');
+  delete process.env.VETTING_REQUIRED;
 
   const student = O.stages(voApp({ type: 'student', status: 'activated' }), []);
   assert.equal(student.total, 6);

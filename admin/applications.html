@@ -501,7 +501,7 @@
       <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mt-3">
         ${a.status === 'submitted' ? '<button class="btn btn-ghost" data-act="take">Take this one</button>' : ''}
         <button class="btn btn-ghost"  data-act="request_info">Request information</button>
-        ${locked ? '' : `<button class="btn btn-sage col-span-2 order-first sm:order-none" data-act="approve" ${allTicked && (a.type !== 'virtual_office' || vetOk(a)) ? '' : 'disabled title="Tick every document and record the WinDeed company check first"'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
+        ${locked ? '' : `<button class="btn btn-sage col-span-2 order-first sm:order-none" data-act="approve" ${allTicked && (a.type !== 'virtual_office' || vetOk(a) || (!a.vetting && !data.vetting_required)) ? '' : 'disabled title="Tick every document first. A failed or required company check also blocks approval."'}>Approve${data.automation === 'live' ? ' and set up' : ''}</button>`}
         <button class="btn btn-danger" data-act="decline">Decline</button>
         <button class="btn btn-ghost"  data-act="note">Add note only</button>
       </div>
@@ -573,8 +573,8 @@
     return `
       <div class="mt-5 p-4 rounded-lg" style="background:#FAF8F6;border:1px solid var(--vh-sand);border-left:3px solid ${done ? (ok ? '#8A9A5B' : '#B4472E') : '#C9A24B'}">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-gray-900 uppercase tracking-wide">Company vetting (Lexis WinDeed)</span>
-          <span class="text-xs font-semibold ${done ? (ok ? 'text-green-700' : 'text-red-700') : 'text-amber-700'}">${done ? (ok ? 'Passed' : 'Failed') : 'Not done'}</span>
+          <span class="text-xs font-bold text-gray-900 uppercase tracking-wide">Company vetting (Lexis WinDeed)${(cache[currentId]||{}).vetting_required ? '' : ', optional'}</span>
+          <span class="text-xs font-semibold ${done ? (ok ? 'text-green-700' : 'text-red-700') : 'text-amber-700'}">${done ? (ok ? 'Passed' : 'Failed') : 'Not recorded'}</span>
         </div>
         <ol class="text-sm text-gray-700 mt-2 ml-5 list-decimal space-y-1">
           <li>Open <a class="underline text-[#6B4423]" href="https://search.windeed.co.za" target="_blank" rel="noopener">WinDeed</a>, choose Person, then Company.</li>

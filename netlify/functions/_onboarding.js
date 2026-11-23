@@ -33,6 +33,12 @@ function vettingPassed(app) {
   return Boolean(v && v.cipc_name && v.company_active === true && v.director_listed === true);
 }
 
+// Off by default: the registry check is recorded when staff choose to do it.
+// Set VETTING_REQUIRED=true to make it compulsory before approval and set-up.
+function vettingRequired() {
+  return String(process.env.VETTING_REQUIRED || '').toLowerCase() === 'true';
+}
+
 // The name the registry holds wins over what the applicant typed.
 function legalCompanyName(app) {
   return (app.vetting && app.vetting.cipc_name) || app.company_name;
@@ -74,7 +80,7 @@ function stages(app, documents) {
   const list = [
     { key: 'received', label: 'Application received', done: true, at: app.created_at || null },
     { key: 'verified', label: 'Documents checked', done: allVerified || approved, at: null },
-    ...(isVO(app) ? [{ key: 'vetted', label: 'Company vetted', done: vettingPassed(app), at: (app.vetting && app.vetting.checked_at) || null }] : []),
+    ...(isVO(app) && (app.vetting || vettingRequired()) ? [{ key: 'vetted', label: 'Company vetted', done: vettingPassed(app), at: (app.vetting && app.vetting.checked_at) || null }] : []),
     { key: 'approved', label: 'Approved', done: approved, at: approved ? app.reviewed_at || null : null },
     { key: 'account', label: 'Set up in Spacebring', done: Boolean(s.company || s.membership) || live, at: at('company') || at('membership') },
   ];
@@ -332,4 +338,4 @@ async function activate(app, deps) {
   }
 }
 
-module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO, vettingPassed, legalCompanyName };
+module.exports = { provision, sync, activate, stages, startDate, startInstant, needsRegisteredAddress, isVO, vettingPassed, vettingRequired, legalCompanyName };
