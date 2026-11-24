@@ -480,7 +480,7 @@
         if (state.who === 'vo') {
           if (state.vo === 'va') return ['va', 'vv', 'Address, mail handling with same-day WhatsApp photos and one desk day. Everything a home-based business needs to look established.'];
           if (state.vo === 'vv') return ['vv', 'vp', 'The local number forwarded to your mobile plus two desk days and a boardroom hour is where most clients land.'];
-          return ['vp', 'vv', 'Pro includes the registered CIPC and SARS address (R250 pm on its own) plus three desk days and two boardroom hours.'];
+          return ['vp', 'vv', 'Pro includes the registered CIPC and SARS address. On Address and Virtual it is a R250/month excl. VAT add-on with a 3-month minimum. Pro also adds three desk days and two boardroom hours.'];
         }
         if (state.who === 'stu') {
           var m = { exam: ['exam', 'sall', 'R795 for the whole season is R19,39 a day. Twenty passes, student card and proof of registration required.'], owl: ['owl', 's5', 'Night Owl never competes with daytime members, so it is the cheapest unlimited plan we offer.'], s5: ['s5', 'owl', 'Five days for R350 is R70 a day, any day of the week, 24 hours from check-in.'], sall: ['sall', 'owl', 'Unlimited 24/7 with the business directory and a monthly Branch Out invite: a postgrad’s desk two minutes from home.'] };

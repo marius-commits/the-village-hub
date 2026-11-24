@@ -132,6 +132,26 @@
         </div>
         <p class="err-msg" id="err-plan">Choose a package to continue.</p>
 
+        <div class="card p-5 space-y-4" style="background:#FAF8F6;border:1px solid var(--vh-sand)">
+          <h3 class="font-bold text-gray-900">When it starts, and for how long</h3>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="preferred_start_date">Start date</label>
+              <input class="field" type="date" id="preferred_start_date" name="preferred_start_date">
+              <p class="hint">The date your agreement and billing start. Leave it blank, or if that date has already passed when we approve you, we use the approval date.</p>
+            </div>
+            <div>
+              <label class="lbl" for="commitment_months">Commitment period</label>
+              <select class="field" id="commitment_months" name="commitment_months">
+                <option value="3" selected>3 months (minimum)</option>
+                <option value="6">6 months</option>
+                <option value="12">12 months</option>
+              </select>
+              <p class="hint">3 months is the minimum on every virtual office plan. After the commitment it runs month to month. A longer choice is the term written on the agreement.</p>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <!-- STEP 2: you -->
@@ -171,11 +191,6 @@
               <option value="Trustee">Trustee</option>
               <option value="Authorised representative">Authorised representative</option>
             </select>
-          </div>
-          <div>
-            <label class="lbl" for="preferred_start_date">When would you like to start?</label>
-            <input class="field" type="date" id="preferred_start_date" name="preferred_start_date">
-            <p class="hint">Leave blank and we will start you as soon as you are approved and the invoice is paid.</p>
           </div>
         </div>
       </section>
@@ -260,7 +275,7 @@
             <input type="checkbox" id="wants_registered_address" name="wants_registered_address" class="mt-1 h-4 w-4 accent-[#8A9A5B]">
             <span class="text-sm text-gray-700">
               <span class="font-semibold">I want to use this as my registered CIPC and SARS address.</span>
-              <span class="block text-gray-500 mt-0.5">Included with Village Virtual Pro. You will sign a short mandate before we lodge anything.</span>
+              <span class="block text-gray-500 mt-0.5" id="regAddrNote">On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> You will sign a short mandate before we lodge anything.</span>
             </span>
           </label>
         </div>
@@ -448,6 +463,12 @@
     wants.disabled = notReg;
     if(notReg) wants.checked = false;
     if(isPro && !notReg && !wants.dataset.touched) wants.checked = true;
+    const note = $('#regAddrNote');
+    if(note){
+      note.innerHTML = isPro
+        ? '<strong>Included with Village Virtual Pro.</strong> On Village Address and Village Virtual the same service is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. You will sign a short mandate before we lodge anything.'
+        : 'On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> You will sign a short mandate before we lodge anything.';
+    }
   }
   typeSel.addEventListener('change', () => { syncProRules(); saveDraft(); });
   $('#wants_registered_address').addEventListener('change', e => { e.target.dataset.touched='1'; });
@@ -648,6 +669,7 @@
       email:      $('#email').value.trim(),
       phone:      $('#phone').value.trim(),
       preferred_start_date: $('#preferred_start_date').value || null,
+      commitment_months: Number($('#commitment_months').value) || 3,
       company_name:         $('#company_name').value.trim(),
       company_trading_name: $('#company_trading_name').value.trim(),
       company_type:         typeSel.value,

@@ -34,7 +34,12 @@ const ACTIONS = {
   verify_doc:   { status: null,            email: null },
   retry_onboarding: { status: null,        email: null },
   save_vetting: { status: null,            email: null },
+  upload_vetting_pdf: { status: null,      email: null },
 };
+
+// Netlify caps a function body near 6MB. Base64 adds a third, so the PDF
+// itself stops at 4MB, which a BizProfile is.
+const VETTING_PDF_MAX_BYTES = 4 * 1024 * 1024;
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return L.bad('Method Not Allowed', 405);
@@ -82,33 +87,85 @@ exports.handler = async function (event) {
       return L.ok({ document: { id: doc.id, verified: doc.verified } });
     }
 
-    // --- Registry check recorded (Lexis WinDeed company search) ------------
-    // Staff run the search in WinDeed and record what the register says. The
-    // registered name captured here is the one printed on the agreement and
-    // the invoice, so a typo on the application form never reaches a client.
+    // --- CIPC BizPortal BizProfile recorded by staff ----------------------
+    // The registered name captured here is the one printed on the agreement
+    // and the invoice, so a typo on the application form never reaches a client.
     if (action === 'save_vetting') {
       if (before.type !== 'virtual_office') return L.bad('Vetting applies to virtual office applications.');
       if (before.status === 'activated') return L.bad('This client is already live.');
       const cipcName = L.clean(payload.cipc_name, 200);
-      if (!cipcName) return L.bad('Enter the company name exactly as the register shows it.');
+      if (!cipcName) return L.bad('Enter the company name exactly as the BizProfile shows it.');
       if (typeof payload.company_active !== 'boolean' || typeof payload.director_listed !== 'boolean') {
         return L.bad('Answer both questions: is the company in business, and is the applicant a director.');
       }
-      const vetting = {
-        source: 'Lexis WinDeed company search',
-        cipc_name: cipcName,
-        company_active: payload.company_active,
-        director_listed: payload.director_listed,
-        notes: L.clean(payload.notes, 1000) || null,
-        checked_by: staff.email,
-        checked_at: new Date().toISOString(),
-      };
+      const vetting = O.vettingRecord({ ...payload, cipc_name: cipcName }, staff.email, before.vetting, new Date().toISOString());
       await L.updateRows('applications', `id=eq.${id}`, { vetting });
       await L.logEvent(id, 'vetting_recorded', staff.email, {
+        source: vetting.source,
         company_active: vetting.company_active, director_listed: vetting.director_listed,
         name_matches_form: cipcName.trim().toLowerCase() === String(before.company_name || '').trim().toLowerCase(),
       });
       return L.ok({ vetting, passed: O.vettingPassed({ vetting }) });
+    }
+
+    // Staff upload (or replace) the BizProfile PDF. The file lands in the
+    // private kyc-documents bucket and the vetting row points at it.
+    if (action === 'upload_vetting_pdf') {
+      if (before.type !== 'virtual_office') return L.bad('Vetting applies to virtual office applications.');
+      if (before.status === 'activated') return L.bad('This client is already live.');
+      const filename = L.clean(payload.filename, 200) || 'cipc-bizprofile.pdf';
+      const raw = String(payload.pdf_base64 || '').replace(/^data:application\/pdf;base64,/i, '').replace(/\s/g, '');
+      if (!raw) return L.bad('Choose the BizProfile PDF first.');
+      if (raw.length > Math.ceil(VETTING_PDF_MAX_BYTES * 4 / 3) + 16) {
+        return L.bad('That PDF is over 4MB. Export a smaller BizProfile and try again.');
+      }
+      const bytes = Buffer.from(raw, 'base64');
+      if (!bytes.length || bytes.length > VETTING_PDF_MAX_BYTES) {
+        return L.bad('That PDF is over 4MB. Export a smaller BizProfile and try again.');
+      }
+      if (bytes.subarray(0, 4).toString() !== '%PDF') return L.bad('The verification file must be a PDF.');
+
+      const rand = Math.random().toString(36).slice(2, 10);
+      const path = `applications/${id}/cipc_bizprofile-${rand}.pdf`;
+      try {
+        await L.uploadObject(path, bytes, 'application/pdf');
+      } catch (err) {
+        console.error('vetting pdf upload failed:', err.message);
+        return L.bad('The BizProfile PDF could not be stored. Try again.', 502);
+      }
+
+      let doc;
+      try {
+        doc = await L.insertRow('application_documents', {
+          application_id: id,
+          doc_type: 'cipc_bizprofile',
+          storage_path: path,
+          original_filename: filename.toLowerCase().endsWith('.pdf') ? filename : `${filename}.pdf`,
+          mime_type: 'application/pdf',
+          size_bytes: bytes.length,
+          verified: true,
+          verified_by: staff.user_id,
+          verified_at: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error('vetting pdf row failed:', err.message);
+        try { await L.deleteObject(path); } catch (cleanup) { console.error('vetting pdf cleanup failed:', cleanup.message); }
+        if (/document_type|enum|cipc_bizprofile/i.test(err.message)) {
+          return L.bad('The database does not know the cipc_bizprofile document type yet. Apply the migration, then upload again.', 500);
+        }
+        return L.bad('The PDF was stored but could not be attached. Try again.', 500);
+      }
+
+      const prev = before.vetting && typeof before.vetting === 'object' ? before.vetting : {};
+      const vetting = {
+        ...prev,
+        source: prev.source || O.VETTING_SOURCE,
+        document_id: doc.id,
+        storage_path: path,
+      };
+      await L.updateRows('applications', `id=eq.${id}`, { vetting });
+      await L.logEvent(id, 'vetting_pdf_uploaded', staff.email, { document_id: doc.id, storage_path: path, bytes: bytes.length });
+      return L.ok({ vetting, document: { id: doc.id, doc_type: 'cipc_bizprofile', storage_path: path, verified: true } });
     }
 
     // --- Automatic set-up, picked back up ---------------------------------
@@ -117,7 +174,7 @@ exports.handler = async function (event) {
       if (O.isVO(before) && (O.vettingRequired() || before.vetting) && !O.vettingPassed(before)) {
         return L.bad(before.vetting
           ? 'The recorded company check failed. Update it or decline before setting this client up.'
-          : 'Record the WinDeed company check first. Set-up uses the registered name from it.');
+          : 'Record the CIPC BizPortal BizProfile check first. Set-up uses the registered name from it.');
       }
       await L.logEvent(id, 'action:retry_onboarding', staff.email, null);
       const result = await O.provision(before, staff.email, Live.deps());
@@ -131,7 +188,7 @@ exports.handler = async function (event) {
       // The registry gate, virtual office only.
       if (O.isVO(before)) {
         const v = before.vetting;
-        if (!v && O.vettingRequired()) return L.bad('Run the WinDeed company search and record the result before approving.');
+        if (!v && O.vettingRequired()) return L.bad('Record the CIPC BizPortal BizProfile check before approving.');
         if (v && v.company_active !== true) return L.bad('The register shows this company is not in business. Decline, or request information.');
         if (v && v.director_listed !== true) return L.bad('The applicant is not a director on the register. Decline, or request information.');
       }
