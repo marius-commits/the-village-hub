@@ -32,7 +32,7 @@ async function mirrorToZoho(app) {
       xnQsjsdp: '3bab74f7e8aba6be99b9d1863cff751310a973b2c6f80cb471b7a4eede332658',
       xmIwtLD: 'bdb9fc7c567f2c2566b234583069f587376dc60a5539756d51c3e410227569ad393d23a4d15100a62a79b7c7a7284819',
       actionType: 'TGVhZHM=',
-      returnURL: 'https://the-village-hub.netlify.app/success.html',
+      returnURL: 'https://the-village-hub.netlify.app/success',
       'First Name': app.first_name,
       'Last Name':  app.last_name,
       Email:        app.email,

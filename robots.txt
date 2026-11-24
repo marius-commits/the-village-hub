@@ -7,6 +7,7 @@ Allow: /
 Disallow: /Netlify/
 Disallow: /.netlify/
 Disallow: /ads-dashboard.html
+Disallow: /ads-dashboard
 Disallow: /admin/
 Disallow: /apply-virtual-office
 Disallow: /apply-student
@@ -15,6 +16,7 @@ Disallow: /apply-student
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /ads-dashboard
 Disallow: /admin/
 Disallow: /apply-virtual-office
 Disallow: /apply-student
@@ -23,6 +25,7 @@ Disallow: /apply-student
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /ads-dashboard
 Disallow: /admin/
 Disallow: /apply-virtual-office
 Disallow: /apply-student
@@ -31,6 +34,7 @@ Disallow: /apply-student
 User-agent: PerplexityBot
 Allow: /
 Disallow: /ads-dashboard.html
+Disallow: /ads-dashboard
 Disallow: /admin/
 Disallow: /apply-virtual-office
 Disallow: /apply-student
