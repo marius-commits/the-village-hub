@@ -156,15 +156,8 @@
   }
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { theme: { extend: {
-      colors: { bark:'#6B4423', barkdeep:'#4A2E17', sage:'#8A9A5B', sagedeep:'#6F7A45', gold:'#C9A24B', cream:'#F8F1E5', sand:'#E8D9C5', linen:'#FAF8F6', ink:'#1F1D1A', charcoal:'#0E0F0C', wa:'#25D366' },
-      fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif'] },
-      boxShadow: { soft:'0 10px 30px -12px rgba(31,29,26,.18)', lift:'0 24px 48px -16px rgba(31,29,26,.28)' }
-    } } }
-  </script>
-  <link rel="stylesheet" href="/assets/vh.css?v=3">
+  <link rel="stylesheet" href="/assets/tailwind.css?v=1">
+<link rel="stylesheet" href="/assets/vh.css?v=5">
   <style>
     .jump { white-space: nowrap; border-radius: 9999px; padding: .5rem .95rem; font-size: .85rem; font-weight: 600; color: #4A2E17; background: #fff; border: 1px solid #E8D9C5; transition: all .2s; text-decoration: none; }
     .jump:hover, .jump.active { background: #6B4423; color: #fff; border-color: #6B4423; }
@@ -476,7 +469,7 @@
       </div>
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         <article data-tilt="5" class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
-          <img src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12-seat boardroom hire in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="900">
+          <picture class="vh-pic"><source type="image/avif" srcset="/images/web/village-boardroom-640w.avif 640w, /images/web/village-boardroom-960w.avif 960w, /images/web/village-boardroom-1280w.avif 1280w, /images/web/village-boardroom-1600w.avif 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/web/village-boardroom-640w.webp 640w, /images/web/village-boardroom-960w.webp 960w, /images/web/village-boardroom-1280w.webp 1280w, /images/web/village-boardroom-1600w.webp 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/web/village-boardroom-1600w.avif" src="/images/web/village-boardroom.jpg" alt="The Village Boardroom, 12-seat boardroom hire in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="900"></picture>
           <div class="p-7">
             <div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Village Boardroom</h3><p><span class="price text-3xl text-ink">R390</span><span class="ml-1 text-sm text-ink/60">/ hour</span></p></div>
             <p class="mt-1 text-sm text-ink/60">12 seats. The heart of decision-making.</p>
@@ -485,7 +478,7 @@
           </div>
         </article>
         <article data-tilt="5" class="card-lift overflow-hidden rounded-3xl bg-linen reveal">
-          <img src="/images/web/village-chamber.jpg" alt="The Village Chamber, 10-seat meeting room in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="901">
+          <picture class="vh-pic"><source type="image/avif" srcset="/images/web/village-chamber-640w.avif 640w, /images/web/village-chamber-960w.avif 960w, /images/web/village-chamber-1280w.avif 1280w, /images/web/village-chamber-1600w.avif 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/web/village-chamber-640w.webp 640w, /images/web/village-chamber-960w.webp 960w, /images/web/village-chamber-1280w.webp 1280w, /images/web/village-chamber-1600w.webp 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/web/village-chamber-1600w.avif" src="/images/web/village-chamber.jpg" alt="The Village Chamber, 10-seat meeting room in Stellenbosch" class="aspect-[16/9] w-full object-cover" loading="lazy" width="1600" height="901"></picture>
           <div class="p-7">
             <div class="flex items-baseline justify-between gap-3"><h3 class="font-display text-2xl font-semibold text-bark">Village Chamber</h3><p><span class="price text-3xl text-ink">R350</span><span class="ml-1 text-sm text-ink/60">/ hour</span></p></div>
             <p class="mt-1 text-sm text-ink/60">10 seats. Where strategy meets synergy.</p>
@@ -544,7 +537,7 @@
   <section id="stay" class="py-20 sm:py-24 bg-linen">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-8 overflow-hidden rounded-3xl bg-white shadow-soft lg:grid-cols-12 reveal">
-        <div class="lg:col-span-5"><img src="/images/web/village-stay-suite-1.jpg" alt="The Village Stay boutique suite at Nooitgedacht Village" class="h-full w-full object-cover aspect-[4/3] lg:aspect-auto" loading="lazy" width="1400" height="1050"></div>
+        <div class="lg:col-span-5"><picture class="vh-pic"><source type="image/avif" srcset="/images/web/village-stay-suite-1-640w.avif 640w, /images/web/village-stay-suite-1-960w.avif 960w, /images/web/village-stay-suite-1-1280w.avif 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/web/village-stay-suite-1-640w.webp 640w, /images/web/village-stay-suite-1-960w.webp 960w, /images/web/village-stay-suite-1-1280w.webp 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/web/village-stay-suite-1-1280w.avif" src="/images/web/village-stay-suite-1.jpg" alt="The Village Stay boutique suite at Nooitgedacht Village" class="h-full w-full object-cover aspect-[4/3] lg:aspect-auto" loading="lazy" width="1400" height="1050"></picture></div>
         <div class="p-8 lg:col-span-7 lg:py-10">
           <p class="eyebrow text-sage">The Village Stay &middot; accommodation</p>
           <h2 class="mt-3 font-display text-3xl sm:text-4xl font-medium text-ink">Stay where you work.</h2>
@@ -674,7 +667,7 @@
 
 
 
-  <script src="/assets/vh.js?v=4" defer></script>
+  <script src="/assets/vh.js?v=5" defer></script>
   <script>
     (function () {
       // Jump bar active state

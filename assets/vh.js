@@ -1,3 +1,6 @@
+/* vh-img-variants:start */
+var VH_IMG = {"/images/stay/bathroom.jpg":{"width":1600,"height":1200,"variants":[640,960,1280,1600]},"/images/stay/bedroom.jpg":{"width":1600,"height":1200,"variants":[640,960,1280,1600]},"/images/stay/detail-2.jpg":{"width":1024,"height":1024,"variants":[640,960]},"/images/stay/detail.jpg":{"width":1280,"height":960,"variants":[640,960,1280]},"/images/stay/exterior.jpg":{"width":1440,"height":809,"variants":[640,960,1280]},"/images/stay/kitchenette.jpg":{"width":992,"height":1056,"variants":[640,960]},"/images/stay/living.jpg":{"width":1600,"height":1200,"variants":[640,960,1280,1600]},"/images/stay/lounge.jpg":{"width":1600,"height":900,"variants":[640,960,1280,1600]},"/images/stay/mark.png":{"width":512,"height":512,"variants":[96,192],"logo":true},"/images/stay/workspace.jpg":{"width":1350,"height":900,"variants":[640,960,1280]},"/images/web/foundry-exterior.jpg":{"width":1600,"height":899,"variants":[640,960,1280,1600]},"/images/web/foundry-front.jpg":{"width":1600,"height":900,"variants":[640,960,1280,1600]},"/images/web/foundry.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/hero-overview.jpg":{"width":1536,"height":1024,"variants":[640,960,1280]},"/images/web/hotdesks-1.jpg":{"width":1672,"height":941,"variants":[640,960,1280,1600]},"/images/web/hotdesks-2.jpg":{"width":1672,"height":941,"variants":[640,960,1280,1600]},"/images/web/hotdesks-3.jpg":{"width":1672,"height":941,"variants":[640,960,1280,1600]},"/images/web/hotdesks-4.jpg":{"width":1672,"height":941,"variants":[640,960,1280,1600]},"/images/web/hotdesks-5.jpg":{"width":1671,"height":941,"variants":[640,960,1280,1600]},"/images/web/kitchen.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/lobby-stair.jpg":{"width":1600,"height":899,"variants":[640,960,1280,1600]},"/images/web/office-2.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/office.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/offices.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/open-area.jpg":{"width":1600,"height":900,"variants":[640,960,1280,1600]},"/images/web/reception-hub.jpg":{"width":1600,"height":899,"variants":[640,960,1280,1600]},"/images/web/reception.jpg":{"width":1800,"height":1012,"variants":[640,960,1280,1600]},"/images/web/village-boardroom.jpg":{"width":1600,"height":900,"variants":[640,960,1280,1600]},"/images/web/village-chamber.jpg":{"width":1600,"height":901,"variants":[640,960,1280,1600]},"/images/web/village-stay-bathroom.jpg":{"width":1400,"height":1050,"variants":[640,960,1280]},"/images/web/village-stay-suite-1.jpg":{"width":1400,"height":1050,"variants":[640,960,1280]},"/images/web/village-stay-suite-2.jpg":{"width":1400,"height":1050,"variants":[640,960,1280]},"/images/web/logo.png":{"width":256,"height":256,"variants":[96,192],"logo":true},"/images/web/logo-white.png":{"width":256,"height":256,"variants":[96,192],"logo":true}};
+/* vh-img-variants:end */
 /* ==========================================================================
    The Village Hub - shared interaction layer
    Loads after the DOM. Progressive: every feature is optional and no-JS safe.
@@ -93,6 +96,62 @@
   function wa(text) { return WA + '?text=' + encodeURIComponent(text); }
   function R(n) { return 'R' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 
+  /* Motion (vanilla) — pinned ESM build. Loaded on idle, skipped when the
+     visitor asks for less motion. Features fall back to an instant swap. */
+  var MOTION_URL = 'https://cdn.jsdelivr.net/npm/motion@14.14.0/+esm';
+  var motionP = null;
+  function loadMotion() {
+    if (reduced) return Promise.resolve(null);
+    if (!motionP) motionP = import(MOTION_URL).catch(function () { return null; });
+    return motionP;
+  }
+  if (!reduced && !(navigator.connection && navigator.connection.saveData)) {
+    (w.requestIdleCallback || function (fn) { setTimeout(fn, 600); })(function () { loadMotion(); });
+  }
+  function imgPath(src) {
+    try { return new URL(src, location.origin).pathname; } catch (e) { return src; }
+  }
+  function imgMeta(src) {
+    var map = (typeof VH_IMG !== 'undefined') ? VH_IMG : null;
+    return map ? map[imgPath(src)] : null;
+  }
+  function variantSrcset(src, ext) {
+    var meta = imgMeta(src);
+    if (!meta || !meta.variants || !meta.variants.length) return '';
+    var base = src.replace(/\.(jpe?g|png)$/i, '');
+    return meta.variants.map(function (w) { return base + '-' + w + 'w.' + ext + ' ' + w + 'w'; }).join(', ');
+  }
+  function largestVariant(src) {
+    var meta = imgMeta(src);
+    if (!meta || !meta.variants || !meta.variants.length) return src;
+    return src.replace(/\.(jpe?g|png)$/i, '') + '-' + meta.variants[meta.variants.length - 1] + 'w.avif';
+  }
+  function brandLogo(src, alt, wh) {
+    var avif = variantSrcset(src, 'avif'), webp = variantSrcset(src, 'webp');
+    var img = '<img src="' + src + '" alt="' + alt + '" width="' + wh + '" height="' + wh + '" decoding="async">';
+    if (!avif) return img;
+    return '<picture class="vh-pic"><source type="image/avif" srcset="' + avif + '" sizes="' + wh + 'px"><source type="image/webp" srcset="' + webp + '" sizes="' + wh + 'px">' + img + '</picture>';
+  }
+  function setResponsive(img, src, sizes) {
+    img.src = src;
+    var avif = variantSrcset(src, 'avif'), webp = variantSrcset(src, 'webp');
+    var pic = img.parentNode && img.parentNode.tagName === 'PICTURE' ? img.parentNode : null;
+    if (avif && !pic) {
+      pic = el('picture', 'vh-pic');
+      if (img.parentNode) img.parentNode.insertBefore(pic, img);
+      var s1 = el('source'), s2 = el('source');
+      s1.type = 'image/avif'; s2.type = 'image/webp';
+      pic.appendChild(s1); pic.appendChild(s2); pic.appendChild(img);
+    }
+    if (pic) {
+      var sources = pic.querySelectorAll('source');
+      if (sources[0]) { sources[0].srcset = avif; if (sizes) sources[0].sizes = sizes; }
+      if (sources[1]) { sources[1].srcset = webp; if (sizes) sources[1].sizes = sizes; }
+    }
+    if (sizes) img.sizes = sizes;
+    img.setAttribute('data-full', largestVariant(src));
+  }
+
   /* ---------- NAV + FOOTER ---------- */
   var NAV_LINKS = [
     ['/#spaces', 'Spaces', '/'],
@@ -115,7 +174,7 @@
       ['/accommodation', 'Village Stay'], ['/#reviews', 'Reviews'], ['/#faq', 'FAQ'], ['/#contact', 'Contact']
     ].map(function (l) { return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('');
     return '<header class="vh-nav" id="vh-nav"><nav class="vh-nav__in" aria-label="Main">' +
-      '<a class="vh-nav__brand" href="/" aria-label="The Village Hub home"><img src="/images/web/logo.png" alt="The Village Hub logo" width="46" height="46"><span>The Village Hub</span></a>' +
+      '<a class="vh-nav__brand" href="/" aria-label="The Village Hub home">' + brandLogo('/images/web/logo.png', 'The Village Hub logo', 46) + '<span>The Village Hub</span></a>' +
       '<div class="vh-nav__links">' + links + '<a class="btn btn-sage btn-sm" href="' + wa("Hi Village Hub, I'd like to book a tour of the coworking space") + '">Book a Free Tour</a></div>' +
       '<button type="button" class="vh-nav__burger" aria-controls="vh-mobile" aria-expanded="false" aria-label="Menu">' +
       '<svg class="ic-open" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>' +
@@ -124,7 +183,7 @@
   }
   function footerHTML() {
     return '<footer class="vh-footer"><div class="vh-footer__in"><div class="vh-footer__grid"><div>' +
-      '<a class="vh-footer__brand" href="/"><img src="/images/web/logo-white.png" alt="The Village Hub logo" width="46" height="46" onerror="this.src=\'/images/web/logo.png\'"><span>The Village Hub</span></a>' +
+      '<a class="vh-footer__brand" href="/">' + brandLogo('/images/web/logo-white.png', 'The Village Hub logo', 46) + '<span>The Village Hub</span></a>' +
       '<p>Stellenbosch’s premium coworking space at Nooitgedacht Village. Hot desks, private offices, boardrooms, virtual office, student study passes, event space and boutique stays. A Brickfield Spaces location.</p>' +
       '<address>1st Floor, The Foundry, Sauvignon Street<br>Nooitgedacht Village, Stellenbosch 7600<br><a href="tel:+27632603513">+27 63 260 3513</a> · <a href="' + WA + '">WhatsApp</a><br><a href="mailto:hello@villagehub.co.za">hello@villagehub.co.za</a></address>' +
       '<div class="vh-footer__social"><a href="https://www.facebook.com/profile.php?id=61559197625598" target="_blank" rel="noopener" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg></a>' +
@@ -189,33 +248,53 @@
     d.body.classList.add('vh-promo-on');
 
     requestAnimationFrame(function () {
-      requestAnimationFrame(function () { bar.classList.add('is-in'); });
+      requestAnimationFrame(function () { bar.classList.add('is-in'); placeFloaters(); });
     });
 
     $('.vh-promo__x', bar).addEventListener('click', function () {
       bar.classList.remove('is-in');
       d.body.classList.remove('vh-promo-on');
       try { localStorage.setItem(PROMO_KEY, '1'); } catch (e) {}
-      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 500);
+      placeFloaters();
+      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); placeFloaters(); }, reduced ? 0 : 500);
     });
   }
 
-  /* ---------- page transitions ---------- */
+  /* Keep the founding-rate bar and the WhatsApp button off each other,
+     and above the Stay page's mobile booking bar when that is on screen. */
+  function placeFloaters() {
+    var wa = $('.vh-wa');
+    var promo = $('.vh-promo');
+    var stay = $('.vh-stay-book');
+    var stayOn = !!(stay && w.getComputedStyle(stay).display !== 'none');
+    var stayH = stayOn ? stay.offsetHeight + 10 : 0;
+    var promoOn = !!(promo && promo.classList.contains('is-in'));
+    if (promo) promo.style.bottom = stayH ? stayH + 'px' : '';
+    var promoH = promoOn ? promo.offsetHeight : 0;
+    if (wa) wa.style.bottom = (stayH || promoH) ? (stayH + promoH + 12) + 'px' : '';
+    if (stay) d.body.style.paddingBottom = stayOn ? (stayH + promoH + 8) + 'px' : '';
+    /* On a phone the hero copy sits where the WhatsApp button does.
+       Hide the float until that block has scrolled clear of it. */
+    if (wa) {
+      var btn = $('.vh-wa__btn', wa);
+      var block = $('#top .relative');
+      var hit = false;
+      if (btn && block && w.innerWidth < 768) {
+        var br = btn.getBoundingClientRect();
+        var r = block.getBoundingClientRect();
+        hit = r.width > 8 && r.bottom > 0 && r.top < w.innerHeight && !(br.bottom < r.top + 8 || r.bottom < br.top + 8 || br.right < r.left + 8 || r.right < br.left + 8);
+      }
+      wa.style.visibility = hit ? 'hidden' : '';
+    }
+  }
+
+  /* ---------- page transitions ----------
+     Same-origin clicks used to wait 240ms for a fade. Cross-document view
+     transitions (see vh.css) do that in ~140ms where the browser supports
+     them, and everywhere else the next page just loads. */
   function transitions() {
-    d.body.classList.add('vh-page');
-    requestAnimationFrame(function () { requestAnimationFrame(function () { d.body.classList.add('vh-ready'); }); });
+    d.body.classList.add('vh-page', 'vh-ready');
     w.addEventListener('pageshow', function (e) { if (e.persisted) d.body.classList.remove('vh-leaving'); });
-    if (reduced) return;
-    d.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
-      var href = a.getAttribute('href');
-      if (!href || href.charAt(0) === '#' || a.target === '_blank' || a.hasAttribute('download') || e.metaKey || e.ctrlKey || e.shiftKey) return;
-      var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
-      if (u.origin !== location.origin) return;
-      if (u.pathname === location.pathname && u.hash) return;
-      e.preventDefault(); d.body.classList.add('vh-leaving');
-      setTimeout(function () { location.href = a.href; }, 240);
-    });
   }
 
   /* ---------- scroll progress + glow ---------- */
@@ -343,22 +422,120 @@
     });
   }
 
-  /* ---------- lightbox ---------- */
+  /* ---------- lightbox ----------
+     One gallery for every [data-lightbox] on the page. Opening morphs the
+     tapped photo into the full view (Motion animateView). Swipe, arrows and
+     Escape move through the set. */
   function lightbox() {
     var items = $$('[data-lightbox]'); if (!items.length) return;
-    var lb = el('div', 'vh-lightbox'); lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true');
-    lb.innerHTML = '<button class="vh-lightbox__close" aria-label="Close">&times;</button><button class="vh-lightbox__nav vh-lightbox__prev" aria-label="Previous">&#8249;</button><img alt=""><button class="vh-lightbox__nav vh-lightbox__next" aria-label="Next">&#8250;</button><div class="vh-lightbox__cap"></div>';
+    var lb = el('div', 'vh-lightbox');
+    lb.hidden = true;
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Photo');
+    lb.innerHTML = '<div class="vh-lightbox__bg"></div><button class="vh-lightbox__close" aria-label="Close">&times;</button><button class="vh-lightbox__nav vh-lightbox__prev" aria-label="Previous">&#8249;</button><div class="vh-lightbox__stage"><img alt=""></div><button class="vh-lightbox__nav vh-lightbox__next" aria-label="Next">&#8250;</button><div class="vh-lightbox__cap"></div>';
     d.body.appendChild(lb);
-    var img = $('img', lb), cap = $('.vh-lightbox__cap', lb), i = 0;
-    function show(n) { i = (n + items.length) % items.length; var it = items[i]; var im = it.tagName === 'IMG' ? it : $('img', it); img.src = it.getAttribute('data-lightbox') || im.currentSrc || im.src; img.alt = im.alt; cap.textContent = im.alt; }
-    function open(n) { show(n); lb.classList.add('is-open'); d.body.style.overflow = 'hidden'; }
-    function close() { lb.classList.remove('is-open'); d.body.style.overflow = ''; }
-    items.forEach(function (it, n) { it.style.cursor = 'zoom-in'; it.addEventListener('click', function (e) { e.preventDefault(); open(n); }); });
-    $('.vh-lightbox__close', lb).addEventListener('click', close);
-    $('.vh-lightbox__prev', lb).addEventListener('click', function () { show(i - 1); });
-    $('.vh-lightbox__next', lb).addEventListener('click', function () { show(i + 1); });
-    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
-    d.addEventListener('keydown', function (e) { if (!lb.classList.contains('is-open')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(i - 1); if (e.key === 'ArrowRight') show(i + 1); });
+    var stage = $('.vh-lightbox__stage', lb), img = $('img', stage), cap = $('.vh-lightbox__cap', lb);
+    var closeBtn = $('.vh-lightbox__close', lb);
+    var i = 0, open = false, restoreFocus = null, pointer = null;
+
+    function sourceImg(n) {
+      var it = items[n];
+      return it.tagName === 'IMG' ? it : $('img', it);
+    }
+    function fullSrc(n) {
+      var it = items[n];
+      var explicit = it.getAttribute('data-lightbox');
+      if (explicit) return explicit;
+      var im = sourceImg(n);
+      return (im && (im.getAttribute('data-full') || it.getAttribute('data-full'))) || (im && (im.currentSrc || im.src)) || '';
+    }
+    function apply(n) {
+      i = (n + items.length) % items.length;
+      var im = sourceImg(i);
+      var src = fullSrc(i);
+      img.src = src;
+      img.alt = im ? im.alt : '';
+      cap.textContent = (img.alt ? img.alt + ' · ' : '') + (i + 1) + ' / ' + items.length;
+    }
+    function reveal() {
+      lb.hidden = false;
+      lb.classList.add('is-open');
+      d.body.style.overflow = 'hidden';
+      open = true;
+    }
+    function conceal() {
+      lb.classList.remove('is-open');
+      lb.hidden = true;
+      d.body.style.overflow = '';
+      open = false;
+      if (restoreFocus && restoreFocus.focus) restoreFocus.focus();
+    }
+    function openAt(n, origin) {
+      if (open) return;
+      restoreFocus = d.activeElement;
+      apply(n);
+      var from = origin || sourceImg(n);
+      loadMotion().then(function (m) {
+        if (!m || !m.animateView || !d.startViewTransition || reduced || !from) { reveal(); closeBtn.focus(); return; }
+        m.animateView(function () { reveal(); }, { type: 'spring', visualDuration: 0.5, bounce: 0.16 })
+          .add(from, img);
+        closeBtn.focus();
+      });
+    }
+    function close() {
+      if (!open) return;
+      var dest = sourceImg(i);
+      loadMotion().then(function (m) {
+        if (!m || !m.animateView || !d.startViewTransition || reduced || !dest) { conceal(); return; }
+        m.animateView(function () { conceal(); }, { type: 'spring', visualDuration: 0.42, bounce: 0.1 })
+          .add(img, dest);
+      });
+    }
+    function step(dir) {
+      if (!open) return;
+      var next = i + dir;
+      loadMotion().then(function (m) {
+        if (!m || !m.animate || reduced) { apply(next); return; }
+        m.animate(img, { opacity: [1, 0], transform: ['none', 'translateX(' + (dir > 0 ? '-6%' : '6%') + ') scale(.98)'] }, { duration: 0.16 }).finished.then(function () {
+          apply(next);
+          m.animate(img, { opacity: [0, 1], transform: ['translateX(' + (dir > 0 ? '6%' : '-6%') + ') scale(.98)', 'none'] }, { type: 'spring', visualDuration: 0.38, bounce: 0.12 });
+        }).catch(function () { apply(next); });
+      });
+    }
+    items.forEach(function (it, n) {
+      it.style.cursor = 'zoom-in';
+      if (!it.hasAttribute('tabindex')) it.tabIndex = 0;
+      it.addEventListener('click', function (e) {
+        e.preventDefault();
+        var im = it.tagName === 'IMG' ? it : $('img', it);
+        openAt(n, im);
+      });
+      it.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAt(n, it.tagName === 'IMG' ? it : $('img', it)); }
+      });
+    });
+    closeBtn.addEventListener('click', close);
+    $('.vh-lightbox__prev', lb).addEventListener('click', function () { step(-1); });
+    $('.vh-lightbox__next', lb).addEventListener('click', function () { step(1); });
+    $('.vh-lightbox__bg', lb).addEventListener('click', close);
+    stage.addEventListener('pointerdown', function (e) {
+      pointer = { x: e.clientX, y: e.clientY, id: e.pointerId };
+    });
+    stage.addEventListener('pointerup', function (e) {
+      if (!pointer || !open) return;
+      var dx = e.clientX - pointer.x, dy = e.clientY - pointer.y;
+      pointer = null;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+      step(dx < 0 ? 1 : -1);
+    });
+    stage.addEventListener('pointercancel', function () { pointer = null; });
+    d.addEventListener('keydown', function (e) {
+      if (!open) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    });
   }
 
   /* ---------- countdown ---------- */
@@ -444,12 +621,16 @@
         } else {
           var rec = recommend();
           var p = PLANS[rec[0]], a = PLANS[rec[1]];
-          html += '<p class="eyebrow" style="color:var(--vh-gold)">Our recommendation</p><div class="pf__result"><div class="pf__card"><span class="eyebrow" style="color:var(--vh-sage-deep)">Best fit</span><h4>' + p.n + '</h4><p class="pf__price">' + p.p + ' <span style="font-size:.9rem;font-family:Inter,sans-serif;font-weight:500;color:rgba(31,29,26,.6)">' + p.u + '</span></p><ul>' + p.f.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul><a class="btn btn-bark" style="margin-top:1.25rem;width:100%" href="' + p.cta[1] + '">' + p.cta[0] + '</a></div>' +
+          var ask = wa('Hi Christel, the plan finder suggested ' + p.n + ' for me. Can we chat?');
+          var askBtn = p.cta[1].indexOf('wa.me') === -1 ? '<a class="btn btn-wa" style="margin-top:.75rem;width:100%" href="' + ask + '">Ask Christel</a>' : '';
+          html += '<p class="eyebrow" style="color:var(--vh-gold)">Our recommendation</p><div class="pf__result"><div class="pf__card" data-layout-id="pf-card"><span class="eyebrow" style="color:var(--vh-sage-deep)">Best fit</span><h4>' + p.n + '</h4><p class="pf__price">' + p.p + ' <span style="font-size:.9rem;font-family:Inter,sans-serif;font-weight:500;color:rgba(31,29,26,.6)">' + p.u + '</span></p><ul>' + p.f.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul><a class="btn btn-bark" style="margin-top:1.25rem;width:100%" href="' + p.cta[1] + '">' + p.cta[0] + '</a>' + askBtn + '</div>' +
             '<div><div class="pf__alt"><h5>Why this one</h5><p>' + rec[2] + '</p></div>' + (a ? '<div class="pf__alt" style="margin-top:.75rem"><h5>Also consider</h5><p><b style="color:#fff">' + a.n + '</b> · ' + a.p + ' ' + a.u + '. <a href="' + a.cta[1] + '" style="color:var(--vh-gold);text-decoration:underline">' + a.cta[0] + '</a></p></div>' : '') +
-            '<div class="pf__nav"><button class="pf__back" data-restart>↺ Start again</button><a class="btn btn-ghost btn-sm" href="' + wa('Hi Christel, the plan finder suggested ' + p.n + ' for me. Can we chat?') + '">Ask Christel</a></div></div></div>';
+            '<div class="pf__nav"><button class="pf__back" data-restart>↺ Start again</button>' + (askBtn ? '' : '<a class="btn btn-wa btn-sm" href="' + ask + '">Ask Christel</a>') + '</div></div></div>';
         }
-        root.innerHTML = html;
-        $$('[data-who]', root).forEach(function (b) { b.addEventListener('click', function () { state.who = b.getAttribute('data-who'); state.step = 1; render(); }); });
+        var showingCard = done;
+        function commit() {
+          root.innerHTML = '<div class="pf__stage" data-layout-id="pf-stage">' + html + '</div>';
+          $$('[data-who]', root).forEach(function (b) { b.addEventListener('click', function () { state.who = b.getAttribute('data-who'); state.step = 1; render(); }); });
         $$('[data-own]', root).forEach(function (b) { b.addEventListener('click', function () { state.own = b.getAttribute('data-own'); state.step = 3; render(); }); });
         $$('[data-vo]', root).forEach(function (b) { b.addEventListener('click', function () { state.vo = b.getAttribute('data-vo'); state.step = 2; render(); }); });
         $$('[data-stu]', root).forEach(function (b) { b.addEventListener('click', function () { state.stu = b.getAttribute('data-stu'); state.step = 2; render(); }); });
@@ -458,6 +639,28 @@
         var bk = $('[data-back]', root); if (bk) bk.addEventListener('click', function () { state.step = Math.max(0, state.step - 1); render(); });
         var rs = $('[data-restart]', root); if (rs) rs.addEventListener('click', function () { state.step = 0; state.who = null; render(); });
         if (fine && !reduced) magnetic();
+          if (showingCard && root.__vhDrawn && !reduced) {
+            var card = $('.pf__card', root);
+            if (card) {
+              loadMotion().then(function (m) {
+                if (!m || !m.animate) return;
+                m.animate(card, { opacity: [0, 1], transform: ['translateY(18px) scale(0.96)', 'none'] }, { type: 'spring', visualDuration: 0.55, bounce: 0.26 });
+              });
+            }
+          }
+        }
+        if (!root.getAttribute('data-layout')) root.setAttribute('data-layout', '');
+        if (!root.__vhDrawn || reduced) {
+          commit();
+          root.__vhDrawn = true;
+        } else {
+          loadMotion().then(function (m) {
+            if (m && m.animateLayout) {
+              try { m.animateLayout(commit, { type: 'spring', visualDuration: 0.48, bounce: 0.2 }); }
+              catch (err) { commit(); }
+            } else commit();
+          });
+        }
       }
       function recommend() {
         if (state.who === 'solo') {
@@ -523,12 +726,37 @@
       SPOTS.forEach(function (s) { var b = el('button', '', s.t); b.type = 'button'; b.setAttribute('data-spot', s.id); legend.appendChild(b); });
       var side = el('div'); side.appendChild(panel); side.appendChild(legend);
       root.innerHTML = ''; root.appendChild(map); root.appendChild(side);
+      panel.innerHTML = '<div class="floor__photo"><img alt="" decoding="async"></div><div class="floor__panel-body" data-layout><h4></h4><p></p><div class="floor__meta"></div><a class="btn btn-bark btn-sm floor__cta"></a></div>';
+      var photo = $('img', panel), seen = false;
+      function applySpot(s) {
+        setResponsive(photo, s.img, '(min-width: 1024px) 480px, 100vw');
+        photo.alt = s.t;
+        $('h4', panel).textContent = s.t;
+        $('p', panel).textContent = s.d;
+        $('.floor__meta', panel).innerHTML = s.meta.map(function (m) { return '<span>' + m + '</span>'; }).join('');
+        var cta = $('.floor__cta', panel);
+        cta.href = s.link[1];
+        cta.textContent = s.link[0] + ' →';
+      }
       function pick(id, scroll) {
         var s = SPOTS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
         $$('[data-spot]', root).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-spot') === id); });
-        panel.innerHTML = '<div class="fade"><img src="' + s.img + '" alt="' + s.t + '" loading="lazy"><div class="floor__panel-body"><h4>' + s.t + '</h4><p>' + s.d + '</p><div class="floor__meta">' + s.meta.map(function (m) { return '<span>' + m + '</span>'; }).join('') + '</div><a class="btn btn-bark btn-sm" style="margin-top:1.1rem" href="' + s.link[1] + '">' + s.link[0] + ' →</a></div></div>';
-        if (scroll && w.innerWidth < 1024) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        if (fine && !reduced) magnetic();
+        function run() { applySpot(s); if (fine && !reduced) magnetic(); }
+        if (!seen || reduced) { run(); seen = true; }
+        else {
+          loadMotion().then(function (m) {
+            var photoBox = $('.floor__photo', panel), body = $('.floor__panel-body', panel);
+            if (m && m.animateView && d.startViewTransition) {
+              m.animateView(run, { type: 'spring', visualDuration: 0.42, bounce: 0.12 }).add(photoBox).add(body);
+            } else if (m && m.animate) {
+              m.animate(photoBox, { opacity: [1, 0.2] }, { duration: 0.14 }).finished.then(function () {
+                run();
+                m.animate(photoBox, { opacity: [0.2, 1] }, { duration: 0.24 });
+              }).catch(run);
+            } else run();
+          });
+        }
+        if (scroll && w.innerWidth < 1024) panel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
       }
       $$('[data-spot]', root).forEach(function (b) { b.addEventListener('click', function () { pick(b.getAttribute('data-spot'), true); }); });
       pick('hot', false);
@@ -545,7 +773,11 @@
   }
 
   function boot() {
-    mountChrome(); transitions(); progress(); glow(); anchors(); words(); reveal(); magnetic(); tilt(); parallax(); drag(); lightbox(); countdown(); toggles(); status(); planFinder(); floor(); tracking();
+    mountChrome(); transitions(); progress(); glow(); anchors(); words(); reveal(); magnetic(); tilt(); parallax(); drag(); lightbox(); countdown(); toggles(); status(); planFinder(); floor(); tracking();     placeFloaters();
+    var floatTick = false;
+    function queueFloat() { if (floatTick) return; floatTick = true; requestAnimationFrame(function () { floatTick = false; placeFloaters(); }); }
+    w.addEventListener('resize', queueFloat, { passive: true });
+    w.addEventListener('scroll', queueFloat, { passive: true });
   }
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
   w.VH = { wa: wa, plans: PLANS };

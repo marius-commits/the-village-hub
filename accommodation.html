@@ -4,79 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Village Stay | Accommodation at Nooitgedacht Village</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-  <style>
-    .suite-card { transition: all .25s ease; border-left: 4px solid transparent; }
-    .suite-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); }
-    .ember { border-left-color: #e53e3e; }
-    .sol   { border-left-color: #ecc94b; }
-    .olive { border-left-color: #48bb78; }
-    .azure { border-left-color: #4299e1; }
-    .slate { border-left-color: #718096; }
-    .pill { font-size: 12px; line-height: 1; padding: 6px 10px; border-radius: 999px; font-weight: 600; }
-
-    .book-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-    }
-    .book-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(138, 154, 91, 0.35);
-    }
-    .book-btn svg {
-      transition: transform 0.2s ease;
-    }
-    .book-btn:hover svg {
-      transform: translateX(2px);
-    }
-
-    .nb-cta {
-      background: linear-gradient(135deg, #8A9A5B 0%, #6F7A45 100%);
-      transition: all 0.3s ease;
-    }
-    .nb-cta:hover {
-      background: linear-gradient(135deg, #6F7A45 0%, #556032 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(138, 154, 91, 0.4);
-    }
-
-    .glightbox img {
-      transition: transform 0.3s ease;
-    }
-    .glightbox:hover img {
-      transform: scale(1.02);
-    }
-
-    /* Amenity icons */
-    .amenity-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-    }
-    .amenity-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.875rem;
-      color: #4a5568;
-    }
-
-    /* Powered-by badge */
-    .nb-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.7rem;
-      color: #a0aec0;
-      letter-spacing: 0.02em;
-    }
-  </style>
+  <meta name="description" content="A peaceful stay in Nooitgedacht Village — modern comfort meets winelands calm. Five boutique suites, booked on Nightsbridge." />
+  <link rel="canonical" href="https://www.villagehub.co.za/accommodation" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tailwind.css?v=1">
+  <link rel="stylesheet" href="/assets/vh.css?v=5">
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=2" />
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png?v=2" />
@@ -84,350 +18,208 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2" />
   <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png?v=2" />
   <meta name="theme-color" content="#8A9A5B" />
-
-  <!-- Village Hub shared design layer -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/vh.css?v=3">
-  <style>.vh-page h1,.vh-page h2{font-family:var(--vh-display);font-weight:600;letter-spacing:-.015em}.vh-page h3{font-family:var(--vh-display);font-weight:600}.vh-page{font-family:var(--vh-sans)}</style>
 </head>
-
-<body class="font-sans antialiased bg-white">
+<body class="font-sans text-ink bg-white vh-page" data-anchor-offset="96">
   <div data-vh-nav></div>
 
-  <!-- HERO -->
-  <section class="bg-[#FAF8F6] py-14">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <img src="https://lh3.googleusercontent.com/d/1amXTsXrB4pl9zJDfU3wUdAo7PQ9FNg6i" alt="The Village Stay" class="mx-auto h-28 sm:h-36 mb-4" onerror="this.style.display='none'">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#6B4423]">The Village Stay</h1>
-        <p class="mt-4 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-          A peaceful stay in Nooitgedacht Village — modern comfort meets winelands calm.
-        </p>
-      </div>
+  <section id="top" class="relative min-h-[78svh] flex items-end text-white overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <picture class="vh-pic"><source type="image/avif" srcset="/images/stay/bedroom-640w.avif 640w, /images/stay/bedroom-960w.avif 960w, /images/stay/bedroom-1280w.avif 1280w, /images/stay/bedroom-1600w.avif 1600w" sizes="100vw"><source type="image/webp" srcset="/images/stay/bedroom-640w.webp 640w, /images/stay/bedroom-960w.webp 960w, /images/stay/bedroom-1280w.webp 1280w, /images/stay/bedroom-1600w.webp 1600w" sizes="100vw"><img decoding="async" sizes="100vw" data-full="/images/stay/bedroom-1600w.avif" class="absolute inset-0 h-full w-full object-cover" src="/images/stay/bedroom.jpg" alt="" width="1600" height="1200" fetchpriority="high"></picture>
+      <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(14,15,12,.35) 0%, rgba(14,15,12,.25) 40%, rgba(14,15,12,.82) 100%)"></div>
+    </div>
+    <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pb-20">
+      <picture class="vh-pic"><source type="image/avif" srcset="/images/stay/mark-96w.avif 96w, /images/stay/mark-192w.avif 192w" sizes="46px"><source type="image/webp" srcset="/images/stay/mark-96w.webp 96w, /images/stay/mark-192w.webp 192w" sizes="46px"><img decoding="async" sizes="46px" data-full="/images/stay/mark-192w.avif" src="/images/stay/mark.png" alt="The Village Stay" class="h-16 sm:h-20 w-auto mb-6" width="512" height="512"></picture>
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-medium leading-[1.02] max-w-3xl">The Village Stay</h1>
+      <p class="mt-5 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">
+        A peaceful stay in Nooitgedacht Village — modern comfort meets winelands calm.
+      </p>
+    </div>
+  </section>
 
-      <!-- BOOKING CTA -->
-      <div class="mt-10 bg-white rounded-xl shadow-md p-6 sm:p-8 max-w-3xl mx-auto text-center">
-        <h2 class="text-xl font-bold text-[#6B4423]">Ready to book your stay?</h2>
-        <p class="mt-2 text-gray-600 text-sm sm:text-base">
+  <section class="py-16 sm:py-20 bg-linen">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-white shadow-soft p-6 sm:p-10 text-center">
+        <p class="eyebrow text-sage">Nightsbridge</p>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl font-medium text-bark">Ready to book your stay?</h2>
+        <p class="mt-3 text-ink/70 text-sm sm:text-base leading-relaxed">
           Check real-time availability, view rates, and book instantly — secure online payment included.
         </p>
-
-        <a href="https://book.nightsbridge.com/39429"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="nb-cta mt-5 inline-flex items-center gap-2 text-white font-semibold py-3 px-8 rounded-lg text-lg">
-          Check Availability & Book
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-          </svg>
+        <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage mt-6">
+          Check Availability &amp; Book
         </a>
-
-        <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-500">
-          <span class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            Instant confirmation
-          </span>
-          <span class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            Secure payment
-          </span>
-          <span class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            No minimum stay
-          </span>
-        </div>
-
-        <p class="mt-3 nb-badge justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          Powered by NightsBridge — South Africa's trusted booking platform
-        </p>
-      </div>
-
-      <!-- Gallery Section -->
-      <div class="mt-12 max-w-4xl mx-auto">
-        <h3 class="text-xl font-bold text-[#6B4423] mb-4 text-center">Gallery</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(2).jpeg"
-                 alt="Suite bedroom with modern design"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(13).jpeg"
-                 alt="Suite bathroom with rain shower"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40.jpeg"
-                 alt="Suite living area with comfortable seating"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/Gemini_Generated_Image_b0twc4b0twc4b0tw.png"
-                 alt="Suite kitchenette with modern appliances"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_192_189_16682f7a493449b68932b9a91d6a6809_t_w_1440_h_900.jpg"
-                 alt="Suite workspace with desk and chair"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_202_c912ec8b-37e7-467a-cc2f-0274811ae719.jpg"
-                 alt="Suite relaxation area with comfortable seating"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/imgi_177_189_7ed786941702477d8f00a9713f621af0_t_w_1440_h_900.jpg"
-                 alt="Suite exterior with natural lighting"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2009.59.06%20(1).jpeg"
-                 alt="Suite additional view"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-          <a href="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg" class="glightbox">
-            <img src="https://huggingface.co/spaces/Mariusvj86/the-village-hub/resolve/main/images/WhatsApp%20Image%202025-12-15%20at%2010.06.40%20(15).jpeg"
-                 alt="Suite additional view"
-                 class="w-full h-32 object-cover rounded-lg shadow-md hover:opacity-90 transition-opacity">
-          </a>
-        </div>
+        <ul class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-ink/60">
+          <li>Instant confirmation</li>
+          <li>Secure payment</li>
+          <li>No minimum stay</li>
+        </ul>
+        <p class="mt-4 text-xs text-ink/40">Powered by NightsBridge — South Africa's trusted booking platform</p>
       </div>
     </div>
   </section>
 
-  <!-- SUITES -->
-  <section class="py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="flex items-end justify-between gap-4 flex-wrap">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423]">Choose your suite</h2>
-          <p class="text-gray-600 mt-1">Five individually styled suites. Select a suite to book directly.</p>
-        </div>
+  <section id="gallery" class="py-16 sm:py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-sage">The suites</p>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Gallery</h2>
+        <p class="mt-3 text-sm text-ink/60">Tap a photo to open it.</p>
       </div>
-
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        <!-- Ember -->
-        <div class="suite-card ember bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start gap-3">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Ember Suite</h3>
-            <span class="pill bg-red-100 text-red-800">EMBER</span>
-          </div>
-
-          <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
-
-          <div class="mt-4 amenity-grid">
-            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
-            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
-            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
-            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
-          </div>
-
-          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
-
-
-          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
-            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
-            Book Now
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Sol -->
-        <div class="suite-card sol bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start gap-3">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Sol Suite</h3>
-            <span class="pill bg-yellow-100 text-yellow-800">SOL</span>
-          </div>
-
-          <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
-
-          <div class="mt-4 amenity-grid">
-            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
-            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
-            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
-            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
-          </div>
-
-          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
-
-
-          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
-            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
-            Book Now
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Olive -->
-        <div class="suite-card olive bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start gap-3">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Olive Suite</h3>
-            <span class="pill bg-green-100 text-green-800">OLIVE</span>
-          </div>
-
-          <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
-
-          <div class="mt-4 amenity-grid">
-            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
-            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
-            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
-            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
-          </div>
-
-          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
-
-
-          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
-            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
-            Book Now
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Azure -->
-        <div class="suite-card azure bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start gap-3">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Azure Suite</h3>
-            <span class="pill bg-blue-100 text-blue-800">AZURE</span>
-          </div>
-
-          <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
-
-          <div class="mt-4 amenity-grid">
-            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
-            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
-            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
-            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
-          </div>
-
-          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
-
-
-          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
-            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
-            Book Now
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Slate -->
-        <div class="suite-card slate bg-white rounded-lg shadow-md p-6">
-          <div class="flex justify-between items-start gap-3">
-            <h3 class="text-2xl font-bold text-[#6B4423]">Slate Suite</h3>
-            <span class="pill bg-gray-100 text-gray-800">SLATE</span>
-          </div>
-
-          <p class="mt-3 text-sm text-gray-600">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
-
-          <div class="mt-4 amenity-grid">
-            <div class="amenity-item"><span>🛏</span> King or Twin beds</div>
-            <div class="amenity-item"><span>📺</span> Smart TV + Wi-Fi</div>
-            <div class="amenity-item"><span>🍳</span> Compact kitchenette</div>
-            <div class="amenity-item"><span>🚿</span> Walk-in shower</div>
-          </div>
-
-          <div class="mt-2 text-sm text-[#8A9A5B] font-semibold">✨ 20% off Village Hub Co-Working</div>
-
-
-          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer"
-            class="book-btn mt-4 w-full bg-[#8A9A5B] text-white py-2.5 px-4 rounded-md font-medium text-center">
-            Book Now
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+        <figure class="img-zoom col-span-2 overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/bedroom-640w.avif 640w, /images/stay/bedroom-960w.avif 960w, /images/stay/bedroom-1280w.avif 1280w, /images/stay/bedroom-1600w.avif 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/stay/bedroom-640w.webp 640w, /images/stay/bedroom-960w.webp 960w, /images/stay/bedroom-1280w.webp 1280w, /images/stay/bedroom-1600w.webp 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/stay/bedroom-1600w.avif" src="/images/stay/bedroom.jpg" alt="Suite bedroom with modern design" class="aspect-[16/10] w-full object-cover" width="1600" height="1200"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/bathroom-640w.avif 640w, /images/stay/bathroom-960w.avif 960w, /images/stay/bathroom-1280w.avif 1280w, /images/stay/bathroom-1600w.avif 1600w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><source type="image/webp" srcset="/images/stay/bathroom-640w.webp 640w, /images/stay/bathroom-960w.webp 960w, /images/stay/bathroom-1280w.webp 1280w, /images/stay/bathroom-1600w.webp 1600w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><img decoding="async" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw" data-full="/images/stay/bathroom-1600w.avif" src="/images/stay/bathroom.jpg" alt="Suite bathroom with rain shower" class="aspect-[4/5] sm:aspect-square w-full object-cover" width="1600" height="1200"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/living-640w.avif 640w, /images/stay/living-960w.avif 960w, /images/stay/living-1280w.avif 1280w, /images/stay/living-1600w.avif 1600w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><source type="image/webp" srcset="/images/stay/living-640w.webp 640w, /images/stay/living-960w.webp 960w, /images/stay/living-1280w.webp 1280w, /images/stay/living-1600w.webp 1600w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><img decoding="async" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw" data-full="/images/stay/living-1600w.avif" src="/images/stay/living.jpg" alt="Suite living area with comfortable seating" class="aspect-square w-full object-cover" width="1600" height="1200"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/kitchenette-640w.avif 640w, /images/stay/kitchenette-960w.avif 960w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><source type="image/webp" srcset="/images/stay/kitchenette-640w.webp 640w, /images/stay/kitchenette-960w.webp 960w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><img decoding="async" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw" data-full="/images/stay/kitchenette-960w.avif" src="/images/stay/kitchenette.jpg" alt="Suite kitchenette with modern appliances" class="aspect-square w-full object-cover" width="992" height="1056"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/workspace-640w.avif 640w, /images/stay/workspace-960w.avif 960w, /images/stay/workspace-1280w.avif 1280w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><source type="image/webp" srcset="/images/stay/workspace-640w.webp 640w, /images/stay/workspace-960w.webp 960w, /images/stay/workspace-1280w.webp 1280w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><img decoding="async" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw" data-full="/images/stay/workspace-1280w.avif" src="/images/stay/workspace.jpg" alt="Suite workspace with desk and chair" class="aspect-square w-full object-cover" width="1350" height="900"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/lounge-640w.avif 640w, /images/stay/lounge-960w.avif 960w, /images/stay/lounge-1280w.avif 1280w, /images/stay/lounge-1600w.avif 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/stay/lounge-640w.webp 640w, /images/stay/lounge-960w.webp 960w, /images/stay/lounge-1280w.webp 1280w, /images/stay/lounge-1600w.webp 1600w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/stay/lounge-1600w.avif" src="/images/stay/lounge.jpg" alt="Suite relaxation area with comfortable seating" class="aspect-[16/10] w-full object-cover md:col-span-1" width="1600" height="900"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/exterior-640w.avif 640w, /images/stay/exterior-960w.avif 960w, /images/stay/exterior-1280w.avif 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/stay/exterior-640w.webp 640w, /images/stay/exterior-960w.webp 960w, /images/stay/exterior-1280w.webp 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/stay/exterior-1280w.avif" src="/images/stay/exterior.jpg" alt="Suite exterior with natural lighting" class="aspect-[16/10] w-full object-cover" width="1440" height="809"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/detail-640w.avif 640w, /images/stay/detail-960w.avif 960w, /images/stay/detail-1280w.avif 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><source type="image/webp" srcset="/images/stay/detail-640w.webp 640w, /images/stay/detail-960w.webp 960w, /images/stay/detail-1280w.webp 1280w" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw"><img decoding="async" sizes="(min-width: 1280px) 840px, (min-width: 768px) 70vw, 100vw" data-full="/images/stay/detail-1280w.avif" src="/images/stay/detail.jpg" alt="Suite additional view" class="aspect-[4/3] w-full object-cover" width="1280" height="960"></picture></figure>
+        <figure class="img-zoom overflow-hidden rounded-3xl" data-lightbox><picture class="vh-pic"><source type="image/avif" srcset="/images/stay/detail-2-640w.avif 640w, /images/stay/detail-2-960w.avif 960w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><source type="image/webp" srcset="/images/stay/detail-2-640w.webp 640w, /images/stay/detail-2-960w.webp 960w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw"><img decoding="async" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw" data-full="/images/stay/detail-2-960w.avif" src="/images/stay/detail-2.jpg" alt="Suite additional view" class="aspect-square w-full object-cover" width="1024" height="1024"></picture></figure>
       </div>
     </div>
   </section>
 
-  <!-- WHAT'S INCLUDED -->
-  <section class="bg-[#FAF8F6] py-14">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423] text-center">What's included in every stay</h2>
-      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">🛏</div>
-          <h3 class="font-bold text-[#6B4423]">Flexible bedding</h3>
-          <p class="text-sm text-gray-600 mt-1">Two single beds convertible to a King — your choice on arrival.</p>
-        </div>
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">📶</div>
-          <h3 class="font-bold text-[#6B4423]">Unlimited Wi-Fi</h3>
-          <p class="text-sm text-gray-600 mt-1">High-speed fibre connection throughout the property.</p>
-        </div>
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">🍳</div>
-          <h3 class="font-bold text-[#6B4423]">Kitchenette</h3>
-          <p class="text-sm text-gray-600 mt-1">Microwave, mini-fridge, kettle, and essentials for light meals.</p>
-        </div>
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">💼</div>
-          <h3 class="font-bold text-[#6B4423]">Co-working discount</h3>
-          <p class="text-sm text-gray-600 mt-1">20% off Village Hub hot desks and meeting rooms during your stay.</p>
-        </div>
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">🚗</div>
-          <h3 class="font-bold text-[#6B4423]">Free parking</h3>
-          <p class="text-sm text-gray-600 mt-1">Secure on-site parking included for all guests.</p>
-        </div>
-        <div class="bg-white rounded-lg p-5 shadow-sm">
-          <div class="text-2xl mb-2">🏔</div>
-          <h3 class="font-bold text-[#6B4423]">Winelands location</h3>
-          <p class="text-sm text-gray-600 mt-1">Minutes from Stellenbosch wine farms, restaurants, and nature trails.</p>
-        </div>
+  <section class="py-16 sm:py-24 bg-linen">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-sage">Five suites</p>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl font-medium text-ink">Choose your suite</h2>
+        <p class="mt-4 text-lg text-ink/70">Five individually styled suites. Select a suite to book directly.</p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card-lift rounded-3xl bg-white shadow-soft p-6 sm:p-7 border-l-4 border-red-700">
+          <div class="flex justify-between items-start gap-3">
+            <h3 class="font-display text-2xl font-semibold text-bark">Ember Suite</h3>
+            <span class="vh-tag" style="background:#fee2e2;color:#991b1b">Ember</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-ink/75">
+            <li>King or Twin beds</li>
+            <li>Smart TV + Wi-Fi</li>
+            <li>Compact kitchenette</li>
+            <li>Walk-in shower</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-sagedeep">20% off Village Hub Co-Working</p>
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage btn-sm mt-5 w-full">Book Now</a>
+        </article>
+
+        <article class="card-lift rounded-3xl bg-white shadow-soft p-6 sm:p-7 border-l-4" style="border-color:#C9A24B">
+          <div class="flex justify-between items-start gap-3">
+            <h3 class="font-display text-2xl font-semibold text-bark">Sol Suite</h3>
+            <span class="vh-tag vh-tag--gold">Sol</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-ink/75">
+            <li>King or Twin beds</li>
+            <li>Smart TV + Wi-Fi</li>
+            <li>Compact kitchenette</li>
+            <li>Walk-in shower</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-sagedeep">20% off Village Hub Co-Working</p>
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage btn-sm mt-5 w-full">Book Now</a>
+        </article>
+
+        <article class="card-lift rounded-3xl bg-white shadow-soft p-6 sm:p-7 border-l-4 border-sage">
+          <div class="flex justify-between items-start gap-3">
+            <h3 class="font-display text-2xl font-semibold text-bark">Olive Suite</h3>
+            <span class="vh-tag vh-tag--sage">Olive</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-ink/75">
+            <li>King or Twin beds</li>
+            <li>Smart TV + Wi-Fi</li>
+            <li>Compact kitchenette</li>
+            <li>Walk-in shower</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-sagedeep">20% off Village Hub Co-Working</p>
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage btn-sm mt-5 w-full">Book Now</a>
+        </article>
+
+        <article class="card-lift rounded-3xl bg-white shadow-soft p-6 sm:p-7 border-l-4" style="border-color:#4299e1">
+          <div class="flex justify-between items-start gap-3">
+            <h3 class="font-display text-2xl font-semibold text-bark">Azure Suite</h3>
+            <span class="vh-tag" style="background:#dbeafe;color:#1e40af">Azure</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-ink/75">
+            <li>King or Twin beds</li>
+            <li>Smart TV + Wi-Fi</li>
+            <li>Compact kitchenette</li>
+            <li>Walk-in shower</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-sagedeep">20% off Village Hub Co-Working</p>
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage btn-sm mt-5 w-full">Book Now</a>
+        </article>
+
+        <article class="card-lift rounded-3xl bg-white shadow-soft p-6 sm:p-7 border-l-4" style="border-color:#718096">
+          <div class="flex justify-between items-start gap-3">
+            <h3 class="font-display text-2xl font-semibold text-bark">Slate Suite</h3>
+            <span class="vh-tag" style="background:#edf2f7;color:#2d3748">Slate</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65">Sleeps 2 · King/Twin · Kitchenette · Shower · Wi-Fi</p>
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-ink/75">
+            <li>King or Twin beds</li>
+            <li>Smart TV + Wi-Fi</li>
+            <li>Compact kitchenette</li>
+            <li>Walk-in shower</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-sagedeep">20% off Village Hub Co-Working</p>
+          <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage btn-sm mt-5 w-full">Book Now</a>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- BOTTOM CTA -->
-  <section class="py-14">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#6B4423]">Secure your stay today</h2>
-      <p class="mt-3 text-gray-600">
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-4xl sm:text-5xl font-medium text-ink text-center">What's included in every stay</h2>
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Flexible bedding</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">Two single beds convertible to a King — your choice on arrival.</p>
+        </article>
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Unlimited Wi-Fi</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">High-speed fibre connection throughout the property.</p>
+        </article>
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Kitchenette</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">Microwave, mini-fridge, kettle, and essentials for light meals.</p>
+        </article>
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Co-working discount</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">20% off Village Hub hot desks and meeting rooms during your stay.</p>
+        </article>
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Free parking</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">Secure on-site parking included for all guests.</p>
+        </article>
+        <article class="rounded-3xl bg-linen p-6">
+          <h3 class="font-display text-xl font-semibold text-bark">Winelands location</h3>
+          <p class="text-sm text-ink/70 mt-2 leading-relaxed">Minutes from Stellenbosch wine farms, restaurants, and nature trails.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-24 bg-charcoal text-cream">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-4xl sm:text-5xl font-medium">Secure your stay today</h2>
+      <p class="mt-4 text-cream/75 leading-relaxed">
         All five suites book up fast — especially over weekends and holidays. Lock in your dates now.
       </p>
-      <a href="https://book.nightsbridge.com/39429"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="nb-cta mt-6 inline-flex items-center gap-2 text-white font-semibold py-3 px-8 rounded-lg text-lg">
-        Check Availability & Book
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-        </svg>
-      </a>
-      <p class="mt-3 text-sm text-gray-500">
-        Questions? Email <a href="mailto:stay@villagehub.co.za" class="text-[#8A9A5B] underline">stay@villagehub.co.za</a>
-        or call <a href="tel:+27878220802" class="text-[#8A9A5B] underline">087 822 0802</a>
+      <a href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer" class="btn btn-sage mt-8">Check Availability &amp; Book</a>
+      <p class="mt-5 text-sm text-cream/60">
+        Questions? Email <a href="mailto:stay@villagehub.co.za" class="text-gold underline underline-offset-4">stay@villagehub.co.za</a>
+        or call <a href="tel:+27878220802" class="text-gold underline underline-offset-4">087 822 0802</a>
       </p>
     </div>
   </section>
 
   <div data-vh-footer></div>
 
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const lightbox = GLightbox({ selector: '.glightbox' });
-    });
-  </script>
-  <script src="/assets/vh.js?v=4" defer></script>
+  <a class="vh-stay-book" href="https://book.nightsbridge.com/39429" target="_blank" rel="noopener noreferrer">Check availability</a>
+
+  <script src="/assets/vh.js?v=5" defer></script>
 </body>
 </html>
