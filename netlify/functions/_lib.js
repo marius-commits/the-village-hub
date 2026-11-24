@@ -9,8 +9,6 @@
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const RESEND_KEY   = process.env.RESEND_API_KEY;
-
 // Publishable key, the same one the admin pages carry. Used only for the
 // /auth/v1/otp call, so that request is made with exactly the privileges a
 // browser would have. It grants no data access: every table is behind RLS.
@@ -152,6 +150,27 @@ async function uploadObject(path, bytes, contentType) {
     throw new Error(`Storage upload ${res.status}: ${text.slice(0, 300)}`);
   }
   return true;
+}
+
+// Reads one private object. A missing object is null, not an error, so an
+// optional file (the Hub proof of address) can be skipped cleanly.
+async function downloadObject(objectPath) {
+  const safe = String(objectPath || '').replace(/^\/+/, '');
+  if (!safe || !SUPABASE_URL || !SERVICE_KEY) return null;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${safe}`, {
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+    },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    const text = await res.text();
+    if (res.status === 400 && /not_found|object not found/i.test(text)) return null;
+    throw new Error(`Storage download ${res.status}: ${text.slice(0, 200)}`);
+  }
+  const bytes = Buffer.from(await res.arrayBuffer());
+  return bytes.length ? bytes : null;
 }
 
 async function deleteObject(path) {
@@ -324,15 +343,32 @@ function clientBcc(to) {
   return list.includes(NOTIFY_EMAIL.toLowerCase()) ? [] : [NOTIFY_EMAIL];
 }
 
-async function sendEmail({ to, subject, html, replyTo, client, cc }) {
+// Resend attachments are { filename, content } with content base64.
+// contentType is optional and sent as content_type when the caller has one.
+function resendAttachments(attachments) {
+  if (!Array.isArray(attachments) || !attachments.length) return undefined;
+  const files = [];
+  for (const file of attachments) {
+    if (!file || !file.filename || file.content == null || file.content === '') continue;
+    const item = { filename: String(file.filename), content: String(file.content) };
+    const type = file.content_type || file.contentType;
+    if (type) item.content_type = String(type);
+    files.push(item);
+  }
+  return files.length ? files : undefined;
+}
+
+async function sendEmail({ to, subject, html, replyTo, client, cc, attachments }) {
   const bcc = client ? clientBcc(to) : [];
-  if (!RESEND_KEY) {
+  const resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) {
     console.warn('RESEND_API_KEY not set, skipping email:', subject);
     return { skipped: true };
   }
+  const files = resendAttachments(attachments);
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+    headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: FROM_EMAIL,
       to: Array.isArray(to) ? to : [to],
@@ -341,6 +377,7 @@ async function sendEmail({ to, subject, html, replyTo, client, cc }) {
       ...(replyTo ? { reply_to: replyTo } : {}),
       ...(cc && cc.length ? { cc } : {}),
       ...(bcc.length ? { bcc } : {}),
+      ...(files ? { attachments: files } : {}),
     }),
   });
   if (!res.ok) {
@@ -382,7 +419,7 @@ module.exports = {
   NOTIFY_EMAIL, STAFF_EMAILS, MAIL_DESK_EMAILS, OWNER_EMAIL, SITE_URL, PUBLISHABLE_KEY,
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
-  createSignedUploadUrl, createSignedViewUrl, uploadObject, deleteObject,
+  createSignedUploadUrl, createSignedViewUrl, uploadObject, downloadObject, deleteObject,
   bearerToken, accessStatus, staffView, staffByEmail,
   requireStaff, gate, guard, readUser,
   ensureAuthUser, sendStaffOtp, sendEmail, clientBcc,

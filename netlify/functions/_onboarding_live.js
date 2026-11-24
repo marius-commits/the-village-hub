@@ -6,6 +6,7 @@ const L  = require('./_lib');
 const T  = require('./_emails');
 const SB = require('./_spacebring');
 const O  = require('./_onboarding');
+const Letter = require('./_registered_address_letter');
 
 function reviewUrl(app) {
   return `${L.SITE_URL}/admin/applications?ref=${encodeURIComponent(app.reference)}`;
@@ -22,9 +23,16 @@ function deps() {
     mail: {
       // To the client, blind-copied to the Hub inbox like every client email.
       async welcome(app) {
-        const mail = T.activated(app, { registeredAddress: O.needsRegisteredAddress(app) });
-        const r = await L.sendEmail({ to: app.email, subject: mail.subject, html: mail.html, replyTo: L.NOTIFY_EMAIL, client: true });
-        return !r.error && !r.skipped;
+        // Registered-address clients get the confirmation letter on this
+        // email, plus the Hub proof of address when that file is in Storage.
+        return Letter.deliverWelcome(app, Letter.liveIo(), (mail) => L.sendEmail({
+          to: app.email,
+          subject: mail.subject,
+          html: mail.html,
+          attachments: mail.attachments,
+          replyTo: L.NOTIFY_EMAIL,
+          client: true,
+        }));
       },
       // To whoever runs the mail desk, copied to the team.
       async mailDesk(app) {

@@ -275,7 +275,7 @@
             <input type="checkbox" id="wants_registered_address" name="wants_registered_address" class="mt-1 h-4 w-4 accent-[#8A9A5B]">
             <span class="text-sm text-gray-700">
               <span class="font-semibold">I want to use this as my registered CIPC and SARS address.</span>
-              <span class="block text-gray-500 mt-0.5" id="regAddrNote">On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> You will sign a short mandate before we lodge anything.</span>
+              <span class="block text-gray-500 mt-0.5" id="regAddrNote">On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> The Registered Address Mandate is included in your agreement. Once your membership is active, we email you the official Village Hub confirmation letter. You lodge your CIPC update (form CoR21.1) and your SARS address update yourself, using that letter.</span>
             </span>
           </label>
         </div>
@@ -466,8 +466,8 @@
     const note = $('#regAddrNote');
     if(note){
       note.innerHTML = isPro
-        ? '<strong>Included with Village Virtual Pro.</strong> On Village Address and Village Virtual the same service is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. You will sign a short mandate before we lodge anything.'
-        : 'On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> You will sign a short mandate before we lodge anything.';
+        ? '<strong>Included with Village Virtual Pro.</strong> On Village Address and Village Virtual the same service is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. The Registered Address Mandate is included in your agreement. Once your membership is active, we email you the official Village Hub confirmation letter. You lodge your CIPC update (form CoR21.1) and your SARS address update yourself, using that letter.'
+        : 'On Village Address and Village Virtual this is a <strong>R250/month excl. VAT add-on (3-month minimum)</strong>. <strong>Included with Village Virtual Pro.</strong> The Registered Address Mandate is included in your agreement. Once your membership is active, we email you the official Village Hub confirmation letter. You lodge your CIPC update (form CoR21.1) and your SARS address update yourself, using that letter.';
     }
   }
   typeSel.addEventListener('change', () => { syncProRules(); saveDraft(); });
