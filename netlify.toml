@@ -25,8 +25,8 @@
 [functions."onboarding-sync"]
   schedule = "*/15 * * * *"
 
-# Pretty URLs for landing pages.
 # The founding rate is closed. Old URLs go to Your Desk 2027.
+# These rules stay above the extensionless 301s so they win first.
 [[redirects]]
   from = "/founding-rate"
   to = "/your-desk-2027"
@@ -82,22 +82,6 @@
   force = true
 
 [[redirects]]
-  from = "/your-desk-2027"
-  to = "/your-desk-2027.html"
-  status = 200
-
-[[redirects]]
-  from = "/hotdesks"
-  to = "/hotdesks.html"
-  status = 200
-
-[[redirects]]
-  from = "/meeting-rooms-stellenbosch"
-  to = "/meeting-rooms-stellenbosch.html"
-  status = 200
-
-# Saturday corporate events merged into the boardroom page (6 Nov 2026)
-[[redirects]]
   from = "/corporate-events-stellenbosch"
   to = "/boardroom-hire-stellenbosch#saturday-events"
   status = 301
@@ -110,36 +94,6 @@
   force = true
 
 [[redirects]]
-  from = "/boardroom-hire-stellenbosch"
-  to = "/boardroom-hire-stellenbosch.html"
-  status = 200
-
-[[redirects]]
-  from = "/event-space-stellenbosch"
-  to = "/event-space-stellenbosch.html"
-  status = 200
-
-[[redirects]]
-  from = "/private-offices-stellenbosch"
-  to = "/private-offices-stellenbosch.html"
-  status = 200
-
-[[redirects]]
-  from = "/pricing"
-  to = "/pricing.html"
-  status = 200
-
-[[redirects]]
-  from = "/ads-dashboard"
-  to = "/ads-dashboard.html"
-  status = 200
-
-[[redirects]]
-  from = "/student-study-space-stellenbosch"
-  to = "/student-study-space-stellenbosch.html"
-  status = 200
-
-[[redirects]]
   from = "/students"
   to = "/student-study-space-stellenbosch"
   status = 301
@@ -148,27 +102,6 @@
   from = "/exam-pass"
   to = "/student-study-space-stellenbosch"
   status = 301
-
-[[redirects]]
-  from = "/virtual-office-stellenbosch"
-  to = "/virtual-office-stellenbosch.html"
-  status = 200
-
-# Membership application forms
-[[redirects]]
-  from = "/apply-virtual-office"
-  to = "/apply-virtual-office.html"
-  status = 200
-
-[[redirects]]
-  from = "/apply-student"
-  to = "/apply-student.html"
-  status = 200
-
-[[redirects]]
-  from = "/admin/applications"
-  to = "/admin/applications.html"
-  status = 200
 
 [[redirects]]
   from = "/admin/leads.html"
@@ -186,6 +119,7 @@
   status = 301
 
 # One command centre. The path picks the tab; the file is the same.
+
 [[redirects]]
   from = "/admin/leads"
   to = "/admin/command.html"
@@ -235,6 +169,274 @@
   from = "/business-address-stellenbosch"
   to = "/virtual-office-stellenbosch"
   status = 301
+
+
+# Extensionless canonical URLs.
+# Netlify already serves /slug from slug.html (see /coworking-stellenbosch,
+# which has no rewrite). A status-200 rewrite back to the .html file, paired
+# with a forced 301 the other way, loops when Pretty URLs or the redirect
+# engine evaluates the rewritten path again. The identity rewrites were
+# removed for that reason. /index.html goes to /, which is the directory
+# index and is not rewritten back to index.html. Rules above this block
+# still win, including every /founding-rate* redirect to /your-desk-2027.
+
+[[redirects]]
+  from = "/accommodation.html"
+  to = "/accommodation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ads-dashboard.html"
+  to = "/ads-dashboard"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/apply-student.html"
+  to = "/apply-student"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/apply-virtual-office.html"
+  to = "/apply-virtual-office"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/boardroom-hire-prices-stellenbosch.html"
+  to = "/boardroom-hire-prices-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/boardroom-hire-stellenbosch-guide.html"
+  to = "/boardroom-hire-stellenbosch-guide"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/boardroom-hire-stellenbosch.html"
+  to = "/boardroom-hire-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/change-registered-address-cipc.html"
+  to = "/change-registered-address-cipc"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-somerset-west-durbanville.html"
+  to = "/coworking-somerset-west-durbanville"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-stellenbosch-guide.html"
+  to = "/coworking-stellenbosch-guide"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-stellenbosch.html"
+  to = "/coworking-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-vs-traditional-2.html"
+  to = "/coworking-vs-traditional-2"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-vs-traditional-combined.html"
+  to = "/coworking-vs-traditional-combined"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coworking-with-parking-stellenbosch.html"
+  to = "/coworking-with-parking-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/email-proposal-2collaborate.html"
+  to = "/email-proposal-2collaborate"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/event-space-stellenbosch.html"
+  to = "/event-space-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hot-desk-cost-stellenbosch.html"
+  to = "/hot-desk-cost-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hot-desk-stellenbosch.html"
+  to = "/hot-desk-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hotdesks.html"
+  to = "/hotdesks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/meeting-rooms-stellenbosch.html"
+  to = "/meeting-rooms-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/member-badge.html"
+  to = "/member-badge"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nooitgedacht-village-stellenbosch.html"
+  to = "/nooitgedacht-village-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/office-space-to-rent-stellenbosch.html"
+  to = "/office-space-to-rent-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/office-space-to-rent-techno-park-stellenbosch.html"
+  to = "/office-space-to-rent-techno-park-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pricing.html"
+  to = "/pricing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy.html"
+  to = "/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/private-office-small-team-stellenbosch.html"
+  to = "/private-office-small-team-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/private-offices-stellenbosch.html"
+  to = "/private-offices-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/registered-business-address-stellenbosch.html"
+  to = "/registered-business-address-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/remote-work-and-stay-stellenbosch.html"
+  to = "/remote-work-and-stay-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/stellenbosch-coworking-compared.html"
+  to = "/stellenbosch-coworking-compared"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/stellenbosch-tech-hub-2026.html"
+  to = "/stellenbosch-tech-hub-2026"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/student-study-space-stellenbosch.html"
+  to = "/student-study-space-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/success.html"
+  to = "/success"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms.html"
+  to = "/terms"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you-boardroom.html"
+  to = "/thank-you-boardroom"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/virtual-office-stellenbosch.html"
+  to = "/virtual-office-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/virtual-office-vs-home-address-stellenbosch.html"
+  to = "/virtual-office-vs-home-address-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/work-and-stay-stellenbosch.html"
+  to = "/work-and-stay-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/workshop-training-venue-stellenbosch.html"
+  to = "/workshop-training-venue-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/your-desk-2027.html"
+  to = "/your-desk-2027"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/admin/applications.html"
+  to = "/admin/applications"
+  status = 301
+  force = true
 
 # Long-cache web-optimized images
 [[headers]]
