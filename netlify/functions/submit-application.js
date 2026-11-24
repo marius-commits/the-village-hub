@@ -10,6 +10,13 @@
 
 const L = require('./_lib');
 
+// Virtual office commitments are 3 (the minimum), 6 or 12 months.
+function commitmentMonths(value) {
+  if (value === undefined || value === null || value === '') return 3;
+  const n = Number(value);
+  return n === 3 || n === 6 || n === 12 ? n : null;
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return L.bad('Method Not Allowed', 405);
   if (!L.configured()) {
@@ -103,12 +110,14 @@ exports.handler = async function (event) {
       business_activity:        L.clean(payload.business_activity, 600),
       website:                  L.clean(payload.website, 200),
       wants_registered_address: Boolean(payload.wants_registered_address),
+      commitment_months: commitmentMonths(payload.commitment_months),
       expected_mail_volume:     L.clean(payload.expected_mail_volume, 40),
       director_full_name:       L.clean(payload.director_full_name, 160),
       director_role:            L.clean(payload.director_role, 80),
     });
     if (!row.company_name) return L.bad('Please give the company or trading name');
     if (!row.director_full_name) return L.bad('Please give the name of the director or owner');
+    if (!row.commitment_months) return L.bad('Choose a commitment of 3, 6 or 12 months.');
   } else {
     Object.assign(row, {
       institution:              L.clean(payload.institution, 120),

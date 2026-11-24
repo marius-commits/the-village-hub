@@ -7,6 +7,9 @@
 // Requires a Supabase session JWT in the Authorization header belonging to
 // an active row in the staff table.
 //
+// A CIPC BizProfile PDF (doc_type cipc_bizprofile) is opened the same way
+// as every other document: this handler mints the signed URL on click.
+//
 // Documents are signed ON CLICK, not when the application is opened. Signing
 // them up front meant a link was already counting down while the reviewer
 // read the page, and anything opened more than fifteen minutes later died

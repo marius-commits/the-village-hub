@@ -24,13 +24,33 @@ function fakes(opts) {
   const sb = {
     mode: () => o.mode || 'live',
     credentialsSet: () => o.credentials !== false,
-    PLAN_REFS: { 'Village Address': { id: 'p1', period: 'month' }, 'Village Virtual Pro': { id: 'p3', period: 'month' }, 'Student 5-Day': { id: 's1', period: 'month' } },
+    PLAN_REFS: {
+      'Village Address': { id: 'p1', period: 'month' },
+      'Village Virtual': { id: 'p2', period: 'month' },
+      'Village Virtual Pro': { id: 'p3', period: 'month' },
+      'Student 5-Day': { id: 's1', period: 'month' },
+    },
     TEMPLATE_VO: 'tpl' in o ? o.tpl : 'tpl-standard',
     TEMPLATE_VO_REGISTERED: 'tplReg' in o ? o.tplReg : 'tpl-registered',
     async createCompany(x) { calls.push(['company', x]); if (o.failAt === 'company') throw new Error('boom'); return { id: 'co-1' }; },
     async createMembership(x) { calls.push(['membership', x]); if (o.failAt === 'membership') throw new Error('email exists'); return { id: 'mem-1' }; },
     async createContract(x) { calls.push(['contract', x]); if (o.failAt === 'contract') throw new Error('bad template'); return { id: 'con-1', title: 'CON-1' }; },
-    async issueContract(id) { calls.push(['issue', id]); return { id, title: 'CON-1', subscriptionRef: 'sub-1' }; },
+    async issueContract(id) {
+      calls.push(['issue', id]);
+      if ('issueSub' in o && !o.issueSub) return { id, title: 'CON-1' };
+      return { id, title: 'CON-1', subscriptionRef: 'sub-1' };
+    },
+    async getSubscription(id) {
+      calls.push(['getSubscription', id]);
+      if (o.subscription) return o.subscription;
+      return { id, items: [{ id: 'plan-item', planRef: 'p1', commitmentCycles: o.planCommitment === undefined ? 3 : o.planCommitment }] };
+    },
+    async updateSubscriptionItem(subId, itemId, item) { calls.push(['updateItem', subId, itemId, item]); return null; },
+    async createSubscriptionItem(id, item) {
+      calls.push(['subscriptionItem', item]);
+      if (o.failAt === 'registered_address') throw new Error('addon refused');
+      return { id, items: [{ id: 'item-ra', title: item.title, productRef: item.productRef, price: item.price, commitmentCycles: item.commitmentCycles }] };
+    },
     async createSubscription(x) { calls.push(['subscription', x]); return { id: 'sub-9' }; },
     async getContract() { return o.contract || { status: 'issued' }; },
     async listInvoices() { return o.invoices || []; },
@@ -69,7 +89,7 @@ test('virtual office: company, member, agreement, issued, in that order', async 
   const f = fakes();
   const app = voApp();
   const r = await O.provision(app, 'christel@x', f.deps);
-  assert.deepEqual(f.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue']);
+  assert.deepEqual(f.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue', 'getSubscription']);
   assert.equal(r.state, 'in_progress');
   assert.equal(app.spacebring_customer_ref, 'co-1');
   assert.equal(app.spacebring_subscription_ref, 'sub-1');
@@ -111,7 +131,7 @@ test('retry after a failure does not repeat finished steps', async () => {
 
   const g = fakes();
   await O.provision(app, 's@x', g.deps);
-  assert.deepEqual(g.calls.map(c => c[0]), ['contract', 'issue']);
+  assert.deepEqual(g.calls.map(c => c[0]), ['contract', 'issue', 'getSubscription']);
   assert.equal(app.onboarding_state, 'in_progress');
   assert.equal(app.onboarding.error, undefined);
 });
@@ -249,7 +269,7 @@ test('a live run after a test-mode run starts clean and really creates everythin
 
   const live = fakes();
   await O.provision(app, 's@x', live.deps);
-  assert.deepEqual(live.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue']);
+  assert.deepEqual(live.calls.map(c => c[0]), ['company', 'membership', 'contract', 'issue', 'getSubscription']);
   assert.equal(app.spacebring_customer_ref, 'co-1');
   assert.equal(app.onboarding.steps.contract.ref, 'con-1');
 });
@@ -266,6 +286,125 @@ test('vetting: the registered name, not the typed one, goes to Spacebring', asyn
   const app = voApp({ company_name: 'Exmaple Tradng', vetting: { cipc_name: 'Example Trading (Pty) Ltd', company_active: true, director_listed: true } });
   await O.provision(app, 's@x', f.deps);
   assert.equal(f.calls[0][1].legalName, 'Example Trading (Pty) Ltd (Reg. No. 2020/000000/07)');
+});
+
+test('commitment: contract ends after the chosen months, subscription commitment matches, billing does not stop', async () => {
+  assert.equal(O.addMonths('2026-01-31', 1), '2026-02-28');
+  assert.equal(O.addMonths('2024-01-31', 1), '2024-02-29');
+  assert.equal(O.commitmentMonths({ type: 'virtual_office' }), 3);
+  assert.equal(O.commitmentMonths({ type: 'virtual_office', commitment_months: 12 }), 12);
+  assert.equal(O.commitmentMonths({ type: 'virtual_office', commitment_months: 9 }), 3);
+
+  const f = fakes({ planCommitment: 0 });
+  const app = voApp({ commitment_months: 6, preferred_start_date: '2026-12-01' });
+  await O.provision(app, 's@x', f.deps);
+  const contract = f.calls.find(c => c[0] === 'contract')[1];
+  assert.equal(contract.startDate, '2026-11-30T22:00:00.000Z'); // 1 Dec 00:00 SAST
+  assert.equal(contract.endDate, '2027-05-31T22:00:00.000Z'); // 1 Jun 00:00 SAST
+  const update = f.calls.find(c => c[0] === 'updateItem');
+  assert.equal(update[3].commitmentCycles, 6);
+  assert.equal(app.onboarding.steps.commitment.months, 6);
+  assert.equal(app.onboarding.commitment_months, 6);
+});
+
+test('registered address add-on is R250 for the chosen commitment, and Pro does not get one', async () => {
+  const address = fakes();
+  await O.provision(voApp({ wants_registered_address: true, commitment_months: 6, plan: 'Village Virtual' }), 's@x', address.deps);
+  const item = address.calls.find(c => c[0] === 'subscriptionItem')[1];
+  assert.equal(item.type, 'recurring');
+  assert.equal(item.price, 250);
+  assert.equal(item.commitmentCycles, 6);
+  assert.equal(item.title, 'Registered Address (CIPC / SARS)');
+  assert.equal(item.productRef, 'a3ec6ad3-05cd-486a-98b1-104157dbfb36');
+  assert.equal(address.calls.find(c => c[0] === 'contract')[1].templateRef, 'tpl-registered');
+
+  const pro = fakes();
+  await O.provision(voApp({ plan: 'Village Virtual Pro' }), 's@x', pro.deps);
+  assert.equal(pro.calls.some(c => c[0] === 'subscriptionItem'), false);
+  assert.equal(pro.calls.find(c => c[0] === 'contract')[1].templateRef, 'tpl-registered');
+});
+
+test('add-on and commitment wait for the subscription, then run once', async () => {
+  const f = fakes({ issueSub: null });
+  const app = voApp({ wants_registered_address: true });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls.some(c => c[0] === 'getSubscription'), false);
+  assert.equal(f.calls.some(c => c[0] === 'subscriptionItem'), false);
+  assert.equal(app.onboarding.steps.contract.end_date, '2027-02-22T22:00:00.000Z');
+
+  const g = fakes({ contract: { status: 'signed', subscriptionRef: 'sub-9', title: 'CON-1' } });
+  await O.sync(app, g.deps);
+  assert.equal(app.onboarding.steps.commitment.months, 3);
+  assert.equal(g.calls.filter(c => c[0] === 'subscriptionItem').length, 1);
+  assert.equal(g.calls.find(c => c[0] === 'subscriptionItem')[1].commitmentCycles, 3);
+
+  const again = fakes({ contract: { status: 'signed', subscriptionRef: 'sub-9' }, invoices: [] });
+  await O.sync(app, again.deps);
+  assert.equal(again.calls.some(c => c[0] === 'subscriptionItem'), false);
+  assert.equal(again.calls.some(c => c[0] === 'updateItem'), false);
+});
+
+test('an add-on already on the subscription is not added again', async () => {
+  const f = fakes({
+    subscription: {
+      id: 'sub-1',
+      items: [
+        { id: 'plan-item', planRef: 'p1', commitmentCycles: 3 },
+        { id: 'existing', title: 'Registered Address (CIPC / SARS)', productRef: 'a3ec6ad3-05cd-486a-98b1-104157dbfb36' },
+      ],
+    },
+  });
+  const app = voApp({ wants_registered_address: true });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls.some(c => c[0] === 'subscriptionItem'), false);
+  assert.equal(app.onboarding.steps.registered_address.already_present, true);
+  assert.equal(app.onboarding.steps.registered_address.ref, 'existing');
+});
+
+test('dry mode records the add-on and the commitment without calling Spacebring', async () => {
+  const f = fakes({ mode: 'dry' });
+  const app = voApp({ wants_registered_address: true, commitment_months: 12 });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls.length, 0);
+  assert.equal(app.onboarding.steps.registered_address.price, 250);
+  assert.equal(app.onboarding.steps.registered_address.commitment_cycles, 12);
+  assert.equal(app.onboarding.steps.commitment.months, 12);
+});
+
+test('vetting record keeps the BizProfile fields and the attached PDF', () => {
+  const v = O.vettingRecord({
+    cipc_name: 'Example Trading (Pty) Ltd',
+    company_active: true,
+    director_listed: false,
+    directors: 'A Director\nB Director',
+    enterprise_number: '2020/000000/07',
+    enterprise_status: 'In Business',
+    registered_address: '1 Main Road',
+    annual_returns_note: 'Up to date',
+    notes: 'Checked',
+  }, 'staff@x', { document_id: 'doc-1', storage_path: 'applications/a/cipc_bizprofile-x.pdf' }, '2026-11-24T00:00:00.000Z');
+  assert.equal(v.source, O.VETTING_SOURCE);
+  assert.deepEqual(v.directors, ['A Director', 'B Director']);
+  assert.equal(v.document_id, 'doc-1');
+  assert.equal(v.storage_path, 'applications/a/cipc_bizprofile-x.pdf');
+  assert.equal(v.enterprise_status, 'In Business');
+  assert.equal(O.vettingPassed({ vetting: v }), false);
+  v.director_listed = true;
+  assert.equal(O.vettingPassed({ vetting: v }), true);
+});
+
+test('vetting: without a trading name the registered name is the Spacebring title', async () => {
+  const f = fakes();
+  const app = voApp({
+    company_name: 'Exmaple Tradng',
+    company_trading_name: null,
+    vetting: { cipc_name: 'Example Trading (Pty) Ltd', company_active: true, director_listed: true },
+  });
+  await O.provision(app, 's@x', f.deps);
+  assert.equal(f.calls[0][1].title, 'Example Trading (Pty) Ltd');
+  assert.equal(f.calls[0][1].legalName, 'Example Trading (Pty) Ltd (Reg. No. 2020/000000/07)');
+  assert.equal(f.calls[0][1].metadata.legal_name, 'Example Trading (Pty) Ltd');
+  assert.match(T.activated(app, {}).html, /Example Trading \(Pty\) Ltd<br>1st Floor, The Foundry/);
 });
 
 test('progress bar: test-mode steps never show as done', async () => {

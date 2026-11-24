@@ -2,6 +2,8 @@
 // Table-based layout and inline styles, because Outlook and Gmail still
 // ignore most modern CSS.
 
+const O = require('./_onboarding');
+
 const BRAND = {
   brown: '#6B4423',
   sage:  '#8A9A5B',
@@ -54,6 +56,7 @@ function refBox(app) {
 
 const DOC_LABELS = {
   cipc_certificate: 'CIPC registration certificate',
+  cipc_bizprofile: 'CIPC BizPortal BizProfile',
   director_id: 'Director ID document',
   proof_of_address: 'Proof of address',
   registered_address_mandate: 'Signed registered-address mandate',
@@ -92,7 +95,13 @@ function staffAlert(app, documents, reviewUrl) {
   const detail = app.type === 'virtual_office'
     ? `<strong>Company</strong> ${app.company_name || '—'}<br>
        <strong>CIPC no.</strong> ${app.cipc_registration_number || 'not supplied'}<br>
-       <strong>Registered address requested</strong> ${app.wants_registered_address ? 'YES — check the Sureship lease position first' : 'No'}`
+       <strong>Start date</strong> ${app.preferred_start_date || 'approval date if blank or already past'}<br>
+       <strong>Commitment</strong> ${Number(app.commitment_months) || 3} months<br>
+       <strong>Registered address requested</strong> ${app.wants_registered_address
+         ? (app.plan === 'Village Virtual Pro'
+           ? 'YES — included with Village Virtual Pro'
+           : 'YES — R250/month excl. VAT add-on, 3-month minimum. Check the head lease first.')
+         : 'No'}`
     : `<strong>Institution</strong> ${app.institution || '—'}<br>
        <strong>Student number</strong> ${app.student_number || '—'}<br>
        <strong>Lives at Nooitgedacht</strong> ${app.is_nooitgedacht_resident ? 'Yes' : 'No'}`;
@@ -295,7 +304,7 @@ function activated(app, opts) {
       `, `Your ${app.plan} membership is live.`),
     };
   }
-  const company = app.company_name || '';
+  const company = O.legalCompanyName(app) || '';
   const registered = o.registeredAddress === true;
   return {
     subject: `Your address is live: ${company} at The Village Hub (${app.reference})`,
@@ -308,7 +317,7 @@ function activated(app, opts) {
       <p style="margin:0 0 8px;"><strong>What the address is for</strong></p>
       ${registered
         ? `<p style="margin:0 0 14px;">You may use it as your business, postal and registered address. Please update your registered address with CIPC (form CoR21.1) and SARS within 30 days and send us proof of both. If you need a letter confirming the address for CIPC, SARS or your bank, reply to this email and we will send it.</p>`
-        : `<p style="margin:0 0 14px;">You may use it as your business and postal address: website, invoices, cards and Google Business Profile. It is not your registered CIPC or SARS address on this plan, and we cannot accept registered mail or legal documents for you. If you need that, reply and we will add the registered address service.</p>`}
+        : `<p style="margin:0 0 14px;">You may use it as your business and postal address: website, invoices, cards and Google Business Profile. It is not your registered CIPC or SARS address on this plan, and we cannot accept registered mail or legal documents for you. If you need that, reply and we will add it: R250/month excl. VAT, 3-month minimum.</p>`}
       <p style="margin:0 0 14px;">Your hot desk days${app.plan === 'Village Address' ? '' : ' and boardroom hours'} are in the Village Hub member app. Book there before you come in.</p>
       <p style="margin:18px 0 0;">Welcome to the Village.<br>The Village Hub team</p>
     `, `${esc(company)} is live at The Village Hub.`),
@@ -319,10 +328,10 @@ function activated(app, opts) {
 function mailDesk(app, opts) {
   const o = opts || {};
   const registered = o.registeredAddress === true;
-  const names = [app.company_name, app.company_trading_name]
+  const names = [O.legalCompanyName(app), app.company_trading_name, app.company_name]
     .filter((n, i, a) => n && a.indexOf(n) === i).map(n => esc(n)).join('<br>');
   return {
-    subject: `New virtual office client: ${app.company_name || app.last_name} (${app.plan})`,
+    subject: `New virtual office client: ${O.legalCompanyName(app) || app.last_name} (${app.plan})`,
     html: shell(`
       <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">New virtual office client is live</p>
       <p style="margin:0 0 14px;">Accept post from today for:</p>

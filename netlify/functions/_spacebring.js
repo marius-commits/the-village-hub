@@ -22,6 +22,42 @@ const LOCATION_REF  = process.env.SPACEBRING_LOCATION_REF || 'e54f9f0c-df10-4943
 const TEMPLATE_VO            = process.env.SPACEBRING_TEMPLATE_VIRTUAL_OFFICE || null;
 const TEMPLATE_VO_REGISTERED = process.env.SPACEBRING_TEMPLATE_VIRTUAL_OFFICE_REGISTERED || null;
 
+// Shop product "Registered Address (CIPC / SARS)", read 24 Nov 2026.
+// The Monthly option is R250 ZAR. Contract line items cannot be type
+// "recurring" (only plan, resource or oneOff), so the monthly charge is
+// added with createSubscriptionItem once the signature has created the
+// subscription. SPACEBRING_REGISTERED_ADDRESS_PRODUCT_REF overrides the
+// product; set it to "none" for a custom line with no product link.
+const REGISTERED_ADDRESS_PRODUCT_REF = 'a3ec6ad3-05cd-486a-98b1-104157dbfb36';
+const REGISTERED_ADDRESS_OPTION_REF  = 'c7336c09-8f78-4ed5-904d-2ee89ce3397f';
+
+function registeredAddressSpec(commitmentCycles) {
+  const raw = process.env.SPACEBRING_REGISTERED_ADDRESS_PRODUCT_REF;
+  const productRef = raw === undefined || raw === ''
+    ? REGISTERED_ADDRESS_PRODUCT_REF
+    : (String(raw).toLowerCase() === 'none' ? null : raw);
+  const price = Number(process.env.SPACEBRING_REGISTERED_ADDRESS_PRICE || 250);
+  const title = process.env.SPACEBRING_REGISTERED_ADDRESS_TITLE || 'Registered Address (CIPC / SARS)';
+  const cycles = Number(commitmentCycles) || Number(process.env.SPACEBRING_REGISTERED_ADDRESS_COMMITMENT_CYCLES || 3);
+  return {
+    title,
+    price,
+    productRef,
+    optionRef: process.env.SPACEBRING_REGISTERED_ADDRESS_OPTION_REF || REGISTERED_ADDRESS_OPTION_REF,
+    commitmentCycles: cycles,
+    item() {
+      return {
+        type: 'recurring',
+        title,
+        price,
+        quantity: 1,
+        commitmentCycles: cycles,
+        ...(productRef ? { productRef } : {}),
+      };
+    },
+  };
+}
+
 // Plan ids, read from Spacebring on 23 Nov 2026. Titles must match
 // _lib.PLANS exactly. Prices are not sent: the plan's own price applies, so a
 // price change in Spacebring needs no change here.
@@ -103,7 +139,14 @@ function createMembership({ email, name, surname, phoneNumber, companyRef, notes
 
 // A contract whose signature creates the subscription (actionable). The
 // client is the only signatory, so nothing waits on a Hub signature.
-function createContract({ customerRef, templateRef, planTitle, startDate, expirationDate, signer }) {
+//
+// startDate is when membership and billing begin. endDate is the end of the
+// commitment term on the agreement (start plus 3, 6 or 12 months). It is not
+// a cancellation date for the subscription: after the commitment the plan
+// carries on month to month. Contract items have no commitmentCycles field
+// (types are plan, resource, oneOff), so the billing commitment is written
+// onto the subscription item once the signature has created it.
+function createContract({ customerRef, templateRef, planTitle, startDate, endDate, expirationDate, signer }) {
   const plan = PLAN_REFS[planTitle];
   return call('POST', '/contracts/v1', {
     contract: {
@@ -111,6 +154,7 @@ function createContract({ customerRef, templateRef, planTitle, startDate, expira
       customerRef,
       templateRef,
       startDate,
+      ...(endDate ? { endDate } : {}),
       expirationDate,
       items: [{ type: 'plan', planRef: plan.id, title: planTitle, quantity: 1 }],
       signers: [{ type: 'customer', email: signer.email, name: signer.name, surname: signer.surname || '', ...(signer.phoneNumber ? { phoneNumber: signer.phoneNumber } : {}) }],
@@ -128,7 +172,9 @@ function getContract(contractId) {
 }
 
 // Used for plans with no agreement to sign (student plans).
-function createSubscription({ membershipRef, companyRef, planTitle, startDate }) {
+// commitmentCycles is the minimum number of billing periods. endDate is left
+// unset so the subscription does not stop when the minimum is reached.
+function createSubscription({ membershipRef, companyRef, planTitle, startDate, commitmentCycles }) {
   const plan = PLAN_REFS[planTitle];
   return call('POST', '/subscriptions/v1', {
     issueFirstInvoice: 'auto',
@@ -136,9 +182,24 @@ function createSubscription({ membershipRef, companyRef, planTitle, startDate })
       ...(companyRef ? { companyRef } : { membershipRef }),
       period: plan.period,
       startDate,
-      items: [{ planRef: plan.id }],
+      items: [{ planRef: plan.id, ...(commitmentCycles ? { commitmentCycles } : {}) }],
     },
   }).then(d => unwrap(d, 'subscription'));
+}
+
+function getSubscription(subscriptionId) {
+  return call('GET', `/subscriptions/v1/${subscriptionId}`).then(d => unwrap(d, 'subscription'));
+}
+
+// Recurring add-on, billed with the subscription from the next invoice on.
+function createSubscriptionItem(subscriptionId, item) {
+  return call('POST', `/subscriptions/v1/${subscriptionId}/items`, { item })
+    .then(d => unwrap(d, 'subscription'));
+}
+
+// 204 with an empty body. Omitted fields keep their current values.
+function updateSubscriptionItem(subscriptionId, itemId, item) {
+  return call('PATCH', `/subscriptions/v1/${subscriptionId}/items/${itemId}`, { item });
 }
 
 // Newest invoices for one customer. The caller picks the one that belongs to
@@ -150,7 +211,9 @@ function listInvoices(customerRef) {
 
 module.exports = {
   mode, credentialsSet, SpacebringError, PLAN_REFS, LOCATION_REF,
-  TEMPLATE_VO, TEMPLATE_VO_REGISTERED,
+  TEMPLATE_VO, TEMPLATE_VO_REGISTERED, registeredAddressSpec,
+  REGISTERED_ADDRESS_PRODUCT_REF, REGISTERED_ADDRESS_OPTION_REF,
   createCompany, createMembership, createContract, issueContract, getContract,
-  createSubscription, listInvoices,
+  createSubscription, getSubscription, createSubscriptionItem, updateSubscriptionItem,
+  listInvoices,
 };

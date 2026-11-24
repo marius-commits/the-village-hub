@@ -133,6 +133,42 @@ async function createSignedUploadUrl(path) {
   return { path, token: data.token, url: `${SUPABASE_URL}/storage/v1${data.url}` };
 }
 
+// Writes one object with the service role. Staff BizProfile PDFs are small
+// enough to come through the function; applicant KYC still uses signed URLs
+// because phone photos blow the function body limit.
+async function uploadObject(path, bytes, contentType) {
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`, {
+    method: 'POST',
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+      'Content-Type': contentType || 'application/octet-stream',
+      'x-upsert': 'false',
+    },
+    body: bytes,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Storage upload ${res.status}: ${text.slice(0, 300)}`);
+  }
+  return true;
+}
+
+async function deleteObject(path) {
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`, {
+    method: 'DELETE',
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+    },
+  });
+  if (!res.ok && res.status !== 404) {
+    const text = await res.text();
+    throw new Error(`Storage delete ${res.status}: ${text.slice(0, 200)}`);
+  }
+  return true;
+}
+
 // Returns a short-lived read URL so staff can view a document in the browser.
 async function createSignedViewUrl(path, expiresIn = 900) {
   const data = await sb(`/storage/v1/object/sign/${BUCKET}/${path}`, {
@@ -346,7 +382,7 @@ module.exports = {
   NOTIFY_EMAIL, STAFF_EMAILS, MAIL_DESK_EMAILS, OWNER_EMAIL, SITE_URL, PUBLISHABLE_KEY,
   ok, bad, configured,
   sb, insertRow, updateRows, selectRows, logEvent,
-  createSignedUploadUrl, createSignedViewUrl,
+  createSignedUploadUrl, createSignedViewUrl, uploadObject, deleteObject,
   bearerToken, accessStatus, staffView, staffByEmail,
   requireStaff, gate, guard, readUser,
   ensureAuthUser, sendStaffOtp, sendEmail, clientBcc,
