@@ -1,0 +1,10 @@
+{
+  "name": "the-village-hub",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "pdf-lib": "1.17.1"
+  }
+}

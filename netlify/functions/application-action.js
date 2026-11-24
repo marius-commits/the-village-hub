@@ -23,6 +23,7 @@ const T = require('./_emails');
 const SB = require('./_spacebring');
 const O = require('./_onboarding');
 const Live = require('./_onboarding_live');
+const Letter = require('./_registered_address_letter');
 
 const ACTIONS = {
   take:         { status: 'under_review',  email: null },
@@ -35,6 +36,7 @@ const ACTIONS = {
   retry_onboarding: { status: null,        email: null },
   save_vetting: { status: null,            email: null },
   upload_vetting_pdf: { status: null,      email: null },
+  registered_address_letter: { status: null, email: null },
 };
 
 // Netlify caps a function body near 6MB. Base64 adds a third, so the PDF
@@ -166,6 +168,29 @@ exports.handler = async function (event) {
       await L.updateRows('applications', `id=eq.${id}`, { vetting });
       await L.logEvent(id, 'vetting_pdf_uploaded', staff.email, { document_id: doc.id, storage_path: path, bytes: bytes.length });
       return L.ok({ vetting, document: { id: doc.id, doc_type: 'cipc_bizprofile', storage_path: path, verified: true } });
+    }
+
+    // Staff generate (or regenerate) the CIPC / SARS / bank confirmation
+    // letter. It is stored with the application and opened from the page.
+    // The same letter is attached automatically when the address goes live.
+    if (action === 'registered_address_letter') {
+      if (!O.needsRegisteredAddress(before)) {
+        return L.bad('This application does not include a registered address.');
+      }
+      if (before.status === 'declined' || before.status === 'withdrawn') {
+        return L.bad('This application is closed.');
+      }
+      try {
+        const document = await Letter.generateForStaff(before, staff);
+        return L.ok({ document });
+      } catch (err) {
+        console.error('confirmation letter failed:', err.message);
+        if (/document_type|enum|registered_address_confirmation/i.test(err.message)) {
+          return L.bad('The database does not know the registered_address_confirmation document type yet. Apply the migration, then try again.', 500);
+        }
+        if (err.code === 'missing_company' || /does not fit on one page/i.test(err.message)) return L.bad(err.message);
+        return L.bad('The confirmation letter could not be written. Try again.', 500);
+      }
     }
 
     // --- Automatic set-up, picked back up ---------------------------------

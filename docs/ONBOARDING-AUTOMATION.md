@@ -14,7 +14,7 @@ What happens after staff press **Approve** on a membership application.
 | Agreement signed | Client | Spacebring creates the subscription and the first invoice. |
 | Commitment and add-on | Automatic | The plan item's commitment is set to the months the applicant chose. The subscription is not given an end date, so it continues month to month after the minimum. Village Address and Village Virtual with a registered address also get the R250/month excl. VAT add-on. Village Virtual Pro includes that address, so no add-on line is added. |
 | Invoice sent / paid | Client | Followed every 15 minutes by `onboarding-sync`. |
-| Paid and live | Automatic | Application marked activated. Welcome email to the client with the exact address wording, using the registered name. |
+| Paid and live | Automatic | Application marked activated. Welcome email to the client with the exact address wording, using the registered name. A registered-address client also receives the Confirmation of Registered Office and Business Address as a PDF attachment, and the Foundry proof of address when that file is in Storage. |
 | Mail desk told | Automatic | Email to the mail desk with the company names, contact and the legal-mail rule. |
 
 Student plans skip the agreement: member, then subscription and first invoice.
@@ -47,6 +47,21 @@ On Village Address and Village Virtual, using The Village Hub as the registered 
 
 Spacebring's contract API cannot add a recurring shop line (only plan, resource or oneOff). The Monthly option of the shop product `Registered Address (CIPC / SARS)` is therefore added with `createSubscriptionItem` when the subscription exists, type `recurring`, price 250, commitment equal to the applicant's commitment (at least 3). If that item is already on the subscription it is not added again. The product description in Spacebring may still say 12 months; the charge this automation writes is the 3-month minimum (or the longer commitment the applicant chose).
 
+## Confirmation of Registered Office and Business Address
+
+When `onboarding-sync` activates a registered-address application (`Village Virtual Pro`, or Village Address / Village Virtual with `wants_registered_address`), the function writes a one-page PDF in the shape of the official Village Hub letter and:
+
+1. Stores it in the private `kyc-documents` bucket at `applications/{application_id}/registered_address_confirmation-{rand}.pdf`.
+2. Records an `application_documents` row with `doc_type = registered_address_confirmation` (verified, because the Hub wrote it). This is not `registered_address_mandate`: that value is the signed mandate inside the agreement. The letter is the document the client gives to CIPC, SARS and the bank.
+3. Attaches it to the "Your address is live" email. The email tells the client the letter is attached and that they lodge CoR21.1 and the SARS update themselves.
+4. Also attaches `kyc-documents/hub/foundry-proof-of-address.pdf` when that object exists. A missing proof is skipped. It does not fail the welcome.
+
+The letter is filled from the application: legal name (`vetting.cipc_name`, else `company_name`), registration number (`vetting.enterprise_number`, else `company_reg_number`, else `cipc_registration_number`), agreement start date, and the authorised representative (`applicant_name`, else `director_full_name`). Capacity is Director when `vetting.director_listed` is true, otherwise Authorised Representative. The reference is `VH-RA-` plus the trailing number of the application reference (`VO-2026-0012` becomes `VH-RA-0012`).
+
+Staff can generate or regenerate the same PDF from the registered-address panel on `/admin/applications`. Each run stores a new file. The letterhead uses `images/web/logo.png`.
+
+The migration is `supabase/migrations/20261124200000_registered_address_confirmation.sql`.
+
 ## Netlify environment variables
 
 | Variable | Value |
@@ -70,6 +85,7 @@ Spacebring's contract API cannot add a recurring shop line (only plan, resource 
    - `supabase/migrations/20261123100000_onboarding_automation.sql`
    - `supabase/migrations/20261123150000_application_vetting.sql`
    - `supabase/migrations/20261124120000_cipc_bizprofile_and_commitment.sql` (`cipc_bizprofile` on `document_type`, and `applications.commitment_months` defaulting to 3)
+   - `supabase/migrations/20261124200000_registered_address_confirmation.sql` (`registered_address_confirmation` on `document_type`)
 2. Merge and deploy. With `SPACEBRING_PROVISIONING` unset nothing automatic happens; the document ticks, the BizProfile upload, the progress bar and the BCC rule are live straight away.
 3. Upload both agreement templates in Spacebring (Location settings > Billing > Contracts) and set the two template ids. The registered-address template should state the R250/month excl. VAT add-on and the 3-month minimum.
 4. Set the client id and secret, set `SPACEBRING_PROVISIONING=dry`, approve a test application and read the recorded steps.

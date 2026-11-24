@@ -174,6 +174,7 @@
   const DOC_LABELS = {
     cipc_certificate:'CIPC certificate', cipc_bizprofile:'CIPC BizPortal BizProfile', director_id:'Director ID',
     proof_of_address:'Proof of address', registered_address_mandate:'Registered address mandate',
+    registered_address_confirmation:'Confirmation of registered address',
     student_card:'Student card', proof_of_registration:'Proof of registration', other:'Other document'
   };
   const STATUS_LABELS = {
@@ -473,6 +474,11 @@
             : ' R250/month excl. VAT add-on, 3-month minimum, added to the Spacebring subscription.'}
           Confirm the head lease permits third-party registered-address use before approving.
           Commitment on this application: <strong>${esc(a.commitment_months || 3)} months</strong>.
+          ${a.status === 'declined' || a.status === 'withdrawn' ? '' : `
+            <div class="mt-3">
+              <button type="button" class="btn btn-brown" id="gen-letter">${(data.documents || []).some(d => d.doc_type === 'registered_address_confirmation') ? 'Regenerate confirmation letter' : 'Generate confirmation letter'}</button>
+              <p class="text-xs text-gray-600 mt-2">Writes the Confirmation of Registered Office and Business Address, stores it on this application, and opens it. The same letter is attached to the welcome email when the address goes live.</p>
+            </div>`}
         </div>` : ''}
 
       <dl class="grid grid-cols-2 gap-x-4 gap-y-4 mt-5 [&_dd]:break-words">
@@ -551,6 +557,8 @@
     Array.from(document.querySelectorAll('[data-verify]')).forEach(c => {
       c.addEventListener('change', () => verifyDoc(c.dataset.verify, c));
     });
+    const letterBtn = document.getElementById('gen-letter');
+    if(letterBtn) letterBtn.addEventListener('click', () => generateLetter(letterBtn));
     const vs = document.getElementById('vet-save');
     if(vs) vs.addEventListener('click', saveVetting);
     const vu = document.getElementById('vet-upload');
@@ -655,6 +663,50 @@
         ${live ? '' : `<button type="button" id="vet-save" class="btn btn-brown mt-3">${done ? 'Update the check' : 'Save the check'}</button>`}
         <p id="vet-msg" class="text-xs mt-2 ${done ? 'text-gray-500' : 'hidden'}">${done ? 'Recorded by ' + esc(v.checked_by || '') + (v.checked_at ? ' on ' + fmt(v.checked_at) : '') + '.' : ''}</p>
       </div>`;
+  }
+
+  // The blank tab has to open inside the click, before the await, or the
+  // browser treats it as an unrequested pop-up. Same rule as Open.
+  async function generateLetter(btn){
+    const tab = window.open('about:blank', '_blank');
+    if(tab){
+      try{
+        tab.document.write('<!doctype html><title>Confirmation letter</title>' +
+          '<body style="margin:0;display:grid;place-items:center;height:100vh;' +
+          'font:500 14px/1.5 system-ui,sans-serif;color:#6B4423;background:#FAF8F6">Writing the confirmation letter…</body>');
+        tab.document.close();
+      }catch(e){}
+    }
+    btn.disabled = true;
+    const msg = document.getElementById('actionMsg');
+    if(msg){ msg.className = 'text-sm mt-3 text-gray-600'; msg.textContent = 'Writing the confirmation letter…'; }
+    try{
+      const res = await api('application-action', { method:'POST', body: JSON.stringify({
+        application_id: currentId, action: 'registered_address_letter',
+      })});
+      if(!res || !res.document || !res.document.id){
+        if(tab) tab.close();
+        if(!res) return;
+        throw new Error('No letter came back');
+      }
+      const data = await api('staff-applications?doc=' + encodeURIComponent(res.document.id));
+      if(tab && data && data.view_url) tab.location.href = data.view_url;
+      else if(tab) tab.close();
+      await openDetail(currentId);
+      const after = document.getElementById('actionMsg');
+      if(after){
+        after.className = 'text-sm mt-3 text-green-700';
+        after.textContent = 'Confirmation letter saved on this application.';
+      }
+    }catch(e){
+      if(tab) tab.close();
+      const err = document.getElementById('actionMsg');
+      if(err){
+        err.className = 'text-sm mt-3 text-red-700';
+        err.textContent = e.message || 'The confirmation letter could not be written.';
+      }
+      btn.disabled = false;
+    }
   }
 
   async function saveVetting(){

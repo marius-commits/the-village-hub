@@ -60,6 +60,7 @@ const DOC_LABELS = {
   director_id: 'Director ID document',
   proof_of_address: 'Proof of address',
   registered_address_mandate: 'Signed registered-address mandate',
+  registered_address_confirmation: 'Confirmation of registered office and business address',
   student_card: 'Student card',
   proof_of_registration: 'Proof of registration',
   other: 'Supporting document',
@@ -316,7 +317,9 @@ function activated(app, opts) {
       <p style="margin:0 0 14px;">Have senders put the company name on the first line. When something arrives we photograph it and message you on WhatsApp the same day. Collect on weekdays between 08:00 and 17:00, or tell us to forward it. We hold items for 30 days.</p>
       <p style="margin:0 0 8px;"><strong>What the address is for</strong></p>
       ${registered
-        ? `<p style="margin:0 0 14px;">You may use it as your business, postal and registered address. Please update your registered address with CIPC (form CoR21.1) and SARS within 30 days and send us proof of both. If you need a letter confirming the address for CIPC, SARS or your bank, reply to this email and we will send it.</p>`
+        ? (o.confirmationAttached
+          ? `<p style="margin:0 0 14px;">You may use it as your business, postal and registered address. Your <strong>Confirmation of Registered Office and Business Address</strong> is attached. It is ready for your CIPC address change (form CoR21.1), your SARS address update, and your bank. Please lodge both updates within 30 days and send us proof of each.${o.proofAttached ? ' Our proof of address for The Foundry is attached with it.' : ''}</p>`
+          : `<p style="margin:0 0 14px;">You may use it as your business, postal and registered address. Please update your registered address with CIPC (form CoR21.1) and SARS within 30 days and send us proof of both. If you need a letter confirming the address for CIPC, SARS or your bank, reply to this email and we will send it.</p>`)
         : `<p style="margin:0 0 14px;">You may use it as your business and postal address: website, invoices, cards and Google Business Profile. It is not your registered CIPC or SARS address on this plan, and we cannot accept registered mail or legal documents for you. If you need that, reply and we will add it: R250/month excl. VAT, 3-month minimum.</p>`}
       <p style="margin:0 0 14px;">Your hot desk days${app.plan === 'Village Address' ? '' : ' and boardroom hours'} are in the Village Hub member app. Book there before you come in.</p>
       <p style="margin:18px 0 0;">Welcome to the Village.<br>The Village Hub team</p>
