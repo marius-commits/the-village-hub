@@ -5,6 +5,10 @@
 // three confirmations, and Marius's signature block. pdf-lib is pure
 // JavaScript, so the same file runs in tests and in a Netlify Function.
 // The mark is images/web/logo.png (a real PNG, not a Git LFS pointer).
+// The type is Liberation Sans (Regular, Bold, Italic), embedded as TrueType.
+// StandardFonts.Helvetica is a non-embedded Type 1 font. Mobile viewers that
+// do not ship that font substitute one whose space glyph is the wrong width,
+// and the words run together.
 //
 // Stored as application_documents.doc_type = registered_address_confirmation.
 // That is deliberately not registered_address_mandate: the mandate is the
@@ -12,7 +16,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
+const fontkit = require('@pdf-lib/fontkit');
+const { PDFDocument, rgb } = require('pdf-lib');
 
 const L = require('./_lib');
 const O = require('./_onboarding');
@@ -21,6 +26,18 @@ const T = require('./_emails');
 const DOC_TYPE = 'registered_address_confirmation';
 const HUB_PROOF_PATH = 'hub/foundry-proof-of-address.pdf';
 const HUB_PROOF_FILENAME = 'Foundry-Proof-of-Address.pdf';
+
+const FONT_FILES = {
+  regular: 'LiberationSans-Regular.ttf',
+  bold: 'LiberationSans-Bold.ttf',
+  italic: 'LiberationSans-Italic.ttf',
+};
+
+// subset: true keeps the emailed PDF small. With @pdf-lib/fontkit 1.1.1 and
+// these Liberation Sans files, the space glyph keeps its real advance in the
+// embedded hmtx table and in the CID /W array (about 278 PDF units). Older
+// fontkit builds wrote that width as 0, which collapses words in the same
+// way the unembedded Helvetica did. The letter test checks the width.
 
 const SAST_OFFSET_MS = 2 * 3600 * 1000;
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -174,6 +191,32 @@ function loadLogoBytes() {
   return fs.readFileSync(logoPath);
 }
 
+function resolveFontPath(filename) {
+  const candidates = [
+    path.join(__dirname, '../../fonts', filename),
+    path.join(__dirname, 'fonts', filename),
+    path.join(process.cwd(), 'fonts', filename),
+  ];
+  for (const candidate of candidates) {
+    try {
+      if (fs.existsSync(candidate) && fs.statSync(candidate).size > 1000) return candidate;
+    } catch { /* try the next place the file might have been included */ }
+  }
+  return null;
+}
+
+const fontBytesCache = new Map();
+
+function loadFontBytes(filename) {
+  const cached = fontBytesCache.get(filename);
+  if (cached) return cached;
+  const fontPath = resolveFontPath(filename);
+  if (!fontPath) throw new Error(`Letter font was not found at fonts/${filename}.`);
+  const bytes = fs.readFileSync(fontPath);
+  fontBytesCache.set(filename, bytes);
+  return bytes;
+}
+
 function wrapText(text, font, size, maxWidth) {
   const words = String(text).split(/\s+/).filter(Boolean);
   const lines = [];
@@ -241,14 +284,15 @@ function bodyCopy(fields) {
 
 async function drawLetter(fields, logoBytes) {
   const pdf = await PDFDocument.create();
+  pdf.registerFontkit(fontkit);
   pdf.setTitle('Confirmation of Registered Office and Business Address');
   pdf.setAuthor(`${ENTITY.legalName} t/a ${ENTITY.tradingAs}`);
   pdf.setSubject(fields.reference);
   pdf.setCreator('The Village Hub');
   const page = pdf.addPage([PAGE_W, PAGE_H]);
-  const font = await pdf.embedFont(StandardFonts.Helvetica);
-  const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
-  const italic = await pdf.embedFont(StandardFonts.HelveticaOblique);
+  const font = await pdf.embedFont(loadFontBytes(FONT_FILES.regular), { subset: true });
+  const bold = await pdf.embedFont(loadFontBytes(FONT_FILES.bold), { subset: true });
+  const italic = await pdf.embedFont(loadFontBytes(FONT_FILES.italic), { subset: true });
   const logo = await pdf.embedPng(logoBytes);
   const contentW = PAGE_W - MARGIN * 2;
   const copy = bodyCopy(fields);
@@ -495,5 +539,5 @@ module.exports = {
   confirmationReference, letterFields, letterFilename,
   renderConfirmationPdf, prepareWelcome, deliverWelcome,
   createAndStore, readHubProof, liveIo, generateForStaff,
-  resolveLogoPath,
+  resolveLogoPath, resolveFontPath, FONT_FILES,
 };

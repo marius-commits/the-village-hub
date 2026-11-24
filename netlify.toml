@@ -1,11 +1,17 @@
 [build]
   functions = "netlify/functions"
 
-# The confirmation letter embeds images/web/logo.png. The functions bundler
-# does not follow a runtime read, so the file has to be listed here or the
-# letterhead is missing once the function is deployed.
+# The confirmation letter reads images/web/logo.png and the Liberation Sans
+# files in fonts/ at runtime. The functions bundler does not follow those
+# reads, so the files have to be listed here or the deployed function has
+# no letterhead and no embedded fonts.
 [functions]
-  included_files = ["images/web/logo.png"]
+  included_files = [
+    "images/web/logo.png",
+    "fonts/LiberationSans-Regular.ttf",
+    "fonts/LiberationSans-Bold.ttf",
+    "fonts/LiberationSans-Italic.ttf",
+  ]
 
 # Weekdays 16:00 SAST = 14:00 UTC. The function no-ops unless
 # LEADS_DIGEST_ENABLED=true, so this schedule is safe to deploy dark.
