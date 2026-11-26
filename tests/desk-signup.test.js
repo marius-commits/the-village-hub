@@ -214,6 +214,7 @@ test('a sign-up is saved, accepted, and both emails go out, once', async () => {
 
 test('Francois is on the default team list for every alert', () => {
   assert.ok(L.STAFF_EMAILS.includes('francois@brick-field.co.za'));
+  assert.ok(L.STAFF_EMAILS.includes('schalk@villagehub.co.za'));
   assert.ok(L.STAFF_EMAILS.includes('marius@brick-field.co.za'));
   assert.ok(L.STAFF_EMAILS.includes('christel@villagehub.co.za'));
 });

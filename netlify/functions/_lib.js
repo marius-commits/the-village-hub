@@ -21,7 +21,7 @@ const SITE_URL     = process.env.SITE_URL                  || 'https://www.villa
 // Everyone who must hear about every new lead and every completed application.
 // Override with LEAD_NOTIFY_EMAILS (comma-separated) in Netlify env if the team changes.
 const STAFF_EMAILS = (process.env.LEAD_NOTIFY_EMAILS ||
-  'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za')
+  'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za,schalk@villagehub.co.za')
   .split(',').map(e => e.trim()).filter(Boolean);
 
 // Whoever runs the mail desk. Told when a virtual office client goes live.
