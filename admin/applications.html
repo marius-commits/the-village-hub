@@ -410,6 +410,7 @@
     cache[id] = data;
     const a = data.application;
     const isVO = a.type === 'virtual_office';
+    const isDesk = a.type === 'desk';
 
     // Each document is signed when it is clicked, not now, so a link can
     // never have expired by the time it is used.
@@ -486,10 +487,10 @@
         ${field('Phone', a.phone)}
         ${field('Preferred start', a.preferred_start_date || 'Approval date')}
         ${isVO ? field('Commitment', (a.commitment_months || 3) + ' months') : ''}
-        ${isVO ? field('Company', a.company_name) : field('Institution', a.institution)}
-        ${isVO ? field('Trading name', a.company_trading_name) : field('Student number', a.student_number)}
-        ${isVO ? field('Structure', a.company_type) : field('Studying', a.course_of_study)}
-        ${isVO ? field('CIPC number', a.cipc_registration_number) : field('Year', a.year_of_study)}
+        ${isVO || isDesk ? field('Company', a.company_name) : field('Institution', a.institution)}
+        ${isVO ? field('Trading name', a.company_trading_name) : (isDesk ? '' : field('Student number', a.student_number))}
+        ${isVO ? field('Structure', a.company_type) : (isDesk ? '' : field('Studying', a.course_of_study))}
+        ${isVO ? field('CIPC number', a.cipc_registration_number) : (isDesk ? '' : field('Year', a.year_of_study))}
         ${isVO ? field('VAT number', a.vat_number) : field('Lives at Nooitgedacht', a.is_nooitgedacht_resident)}
         ${isVO ? field('Director / owner', a.director_full_name) : field('Area', a.residence_area)}
         ${isVO ? field('Role', a.director_role) : ''}

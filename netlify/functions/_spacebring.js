@@ -69,6 +69,13 @@ const PLAN_REFS = {
   'Student All-Access':       { id: 'b108988a-e265-485a-ac20-f63d60de6939', period: 'month' },
   'Night Owl (Student)':      { id: '002e61fa-3889-4ec5-b361-2d5edb8708e7', period: 'month' },
   'Exam Pass 2026 (Student)': { id: 'ed4077b8-b086-45f2-9148-1969d4c281b7', period: 'threeMonths' },
+  // Desk passes, read from Spacebring on 26 Nov 2026. Village Local and
+  // Village Resident are NOT here on purpose: in Spacebring they are pricing
+  // tiers of a desk resource, not plans, and a subscription to one cannot be
+  // created with a planRef. Those two are set up by hand until that call has
+  // been proven against the live API.
+  'Village Wanderer':         { id: '1a11906e-8de4-4671-9f13-23f5421d0f1f', period: 'month' },
+  'Village Visitor':          { id: '554d225a-e51b-49ea-80eb-a9625be9f4f6', period: 'month' },
 };
 
 function mode() {
@@ -174,7 +181,9 @@ function getContract(contractId) {
 // Used for plans with no agreement to sign (student plans).
 // commitmentCycles is the minimum number of billing periods. endDate is left
 // unset so the subscription does not stop when the minimum is reached.
-function createSubscription({ membershipRef, companyRef, planTitle, startDate, commitmentCycles }) {
+// couponRef grants a coupon on the plan item, so the discount is on the first
+// invoice without the member typing a promo code.
+function createSubscription({ membershipRef, companyRef, planTitle, startDate, commitmentCycles, couponRef }) {
   const plan = PLAN_REFS[planTitle];
   return call('POST', '/subscriptions/v1', {
     issueFirstInvoice: 'auto',
@@ -182,7 +191,11 @@ function createSubscription({ membershipRef, companyRef, planTitle, startDate, c
       ...(companyRef ? { companyRef } : { membershipRef }),
       period: plan.period,
       startDate,
-      items: [{ planRef: plan.id, ...(commitmentCycles ? { commitmentCycles } : {}) }],
+      items: [{
+        planRef: plan.id,
+        ...(commitmentCycles ? { commitmentCycles } : {}),
+        ...(couponRef ? { grantedDiscounts: [{ coupon: { id: couponRef } }] } : {}),
+      }],
     },
   }).then(d => unwrap(d, 'subscription'));
 }

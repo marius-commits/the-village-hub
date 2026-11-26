@@ -220,7 +220,8 @@ exports.handler = async function (event) {
       // The KYC gate. Approving is a statement that the documents were read.
       const docs = await L.selectRows('application_documents', `application_id=eq.${id}&select=id,doc_type,verified`);
       const unchecked = (docs || []).filter(d => d.verified !== true);
-      if (!docs || !docs.length) return L.bad('There are no documents on this application to check.');
+      // A desk sign-up carries no documents, so there is nothing to tick.
+      if ((!docs || !docs.length) && !O.isDesk(before)) return L.bad('There are no documents on this application to check.');
       if (unchecked.length) {
         const names = unchecked.map(d => T.DOC_LABELS[d.doc_type] || d.doc_type).join(', ');
         return L.bad(`Open and tick every document before approving. Still unchecked: ${names}.`);
@@ -296,6 +297,10 @@ exports.handler = async function (event) {
         const done = (app.onboarding && app.onboarding.steps) || {};
         const stepsNow = { ...done };
         if (!done.welcome && await d.mail.welcome(app)) stepsNow.welcome = { at: new Date().toISOString() };
+        if (O.isDesk(app) && !done.paid_alert) {
+          const to = await d.mail.paidAlert(app);
+          if (to) stepsNow.paid_alert = { at: new Date().toISOString(), to };
+        }
         if (O.isVO(app) && !done.mail_desk) {
           const to = await d.mail.mailDesk(app);
           if (to) stepsNow.mail_desk = { at: new Date().toISOString(), to };

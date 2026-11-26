@@ -40,12 +40,16 @@ const BUCKET = 'kyc-documents';
 const PLANS = {
   virtual_office: ['Village Address', 'Village Virtual', 'Village Virtual Pro'],
   student: ['Student 5-Day', 'Student All-Access', 'Night Owl (Student)', 'Exam Pass 2026 (Student)'],
+  // Desk plans. Prices and the current offer live in _desk.js.
+  desk: ['Village Wanderer', 'Village Visitor', 'Village Local', 'Village Resident'],
 };
 
 // Which documents each application type requires before it can be reviewed.
 const REQUIRED_DOCS = {
   virtual_office: ['cipc_certificate', 'director_id', 'proof_of_address'],
   student: ['student_card', 'proof_of_registration'],
+  // A desk needs no compliance check, so there is nothing to upload.
+  desk: [],
 };
 
 const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/heic', 'image/webp', 'application/pdf'];
