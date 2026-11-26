@@ -72,7 +72,7 @@
     if (/apply-virtual-office|virtual pro/.test(t)) v = 1695; else if (/virtual|address/.test(t)) v = 1095;
     else if (/corporate|saturday/.test(t)) v = 5000; else if (/boardroom|meeting/.test(t)) v = 2500;
     else if (/student/.test(t)) v = 795; else if (/office/.test(t)) v = 7500;
-    else if (/your desk 2027|your-desk-2027/.test(t)) v = 1710;
+    else if (/50% off|your-desk-2027/.test(t)) v = 1500;
     else if (/desk|cowork|founding/.test(t)) v = 1750;
     try { gtag('event', 'conversion', { 'send_to': 'AW-18265049370/nZtxCMHin7MdEJqSuoVE', 'value': v, 'currency': 'ZAR' }); } catch (e) {}
     try { gtag('event', 'generate_lead', { 'value': v, 'currency': 'ZAR' }); } catch (e) {}
@@ -109,7 +109,7 @@
       return '<a class="vh-nav__link" href="' + l[0] + '"' + cur + '>' + l[1] + '</a>';
     }).join('');
     var mobile = [
-      ['/your-desk-2027', 'Your Desk 2027 <span class="vh-tag vh-tag--gold">Black Friday</span>'],
+      ['/your-desk-2027', 'Coworking desks <span class="vh-tag vh-tag--gold">50% off</span>'],
       ['/#spaces', 'Spaces'], ['/virtual-office-stellenbosch', 'Virtual Office <span class="vh-tag vh-tag--sage">New</span>'],
       ['/student-study-space-stellenbosch', 'Students <span class="vh-tag vh-tag--gold">Exam Pass</span>'], ['/pricing', 'All pricing'],
       ['/accommodation', 'Village Stay'], ['/#reviews', 'Reviews'], ['/#faq', 'FAQ'], ['/#contact', 'Contact']
@@ -131,7 +131,7 @@
       '<a href="https://www.instagram.com/thevillagehub_/" target="_blank" rel="noopener" aria-label="Instagram"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>' +
       '<a href="https://www.linkedin.com/company/villagehub-co-working" target="_blank" rel="noopener" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.4 2H3.6A1.6 1.6 0 002 3.6v16.8A1.6 1.6 0 003.6 22h16.8a1.6 1.6 0 001.6-1.6V3.6A1.6 1.6 0 0020.4 2zM8 19H5V9h3v10zM6.5 7.7a1.7 1.7 0 110-3.4 1.7 1.7 0 010 3.4zM19 19h-3v-4.9c0-1.2 0-2.7-1.6-2.7s-1.9 1.3-1.9 2.6V19h-3V9h2.9v1.4h.1a3.2 3.2 0 012.8-1.6c3 0 3.6 2 3.6 4.6V19z"/></svg></a></div></div>' +
       '<div class="vh-footer__cols"><div><h3>Workspaces</h3><ul><li><a href="/hot-desk-stellenbosch">Hot desks</a></li><li><a href="/private-offices-stellenbosch">Private offices</a></li><li><a href="/boardroom-hire-stellenbosch">Boardroom hire</a></li><li><a href="/meeting-rooms-stellenbosch">Meeting rooms</a></li><li><a href="/event-space-stellenbosch">Event space</a></li><li><a href="/boardroom-hire-stellenbosch#saturday-events">Saturday corporate events</a></li><li><a href="/workshop-training-venue-stellenbosch">Workshop venue</a></li><li><a href="/pricing">All pricing</a></li></ul></div>' +
-      '<div><h3>New</h3><ul><li><a href="/your-desk-2027">Your Desk 2027</a></li><li><a href="/virtual-office-stellenbosch">Virtual office</a></li><li><a href="/registered-business-address-stellenbosch">Registered business address</a></li><li><a href="/change-registered-address-cipc">Change a CIPC address</a></li><li><a href="/virtual-office-vs-home-address-stellenbosch">Virtual office vs home address</a></li><li><a href="/student-study-space-stellenbosch">Student study space</a></li><li><a href="/student-study-space-stellenbosch#exam-pass">Exam Pass 2026</a></li><li><a href="/accommodation">The Village Stay</a></li><li><a href="/work-and-stay-stellenbosch">Work and stay</a></li></ul></div>' +
+      '<div><h3>New</h3><ul><li><a href="/your-desk-2027">50% off coworking</a></li><li><a href="/virtual-office-stellenbosch">Virtual office</a></li><li><a href="/registered-business-address-stellenbosch">Registered business address</a></li><li><a href="/change-registered-address-cipc">Change a CIPC address</a></li><li><a href="/virtual-office-vs-home-address-stellenbosch">Virtual office vs home address</a></li><li><a href="/student-study-space-stellenbosch">Student study space</a></li><li><a href="/student-study-space-stellenbosch#exam-pass">Exam Pass 2026</a></li><li><a href="/accommodation">The Village Stay</a></li><li><a href="/work-and-stay-stellenbosch">Work and stay</a></li></ul></div>' +
       '<div><h3>Guides</h3><ul><li><a href="/coworking-stellenbosch-guide">Coworking in Stellenbosch</a></li><li><a href="/stellenbosch-coworking-compared">Coworking compared</a></li><li><a href="/coworking-vs-traditional-2">Coworking vs traditional office</a></li><li><a href="/office-space-to-rent-stellenbosch">Office space to rent</a></li><li><a href="/hot-desk-cost-stellenbosch">What a hot desk costs</a></li><li><a href="/boardroom-hire-stellenbosch-guide">Boardroom hire guide</a></li><li><a href="/coworking-with-parking-stellenbosch">Coworking with parking</a></li><li><a href="/nooitgedacht-village-stellenbosch">Nooitgedacht Village</a></li><li><a href="/stellenbosch-tech-hub-2026">Stellenbosch tech hub 2026</a></li></ul></div>' +
       '<div><h3>Visit</h3><ul><li><a href="/#about">About</a></li><li><a href="/#floor">Explore the floor</a></li><li><a href="/#gallery">Gallery</a></li><li><a href="/#reviews">Reviews (5.0 ★)</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/#contact">Contact</a></li><li><a href="https://members.villagehub.co.za/">Member app</a></li></ul><h3>Hours</h3><ul><li>Mon – Fri 06:30 – 18:00</li><li>Sat 08:00 – 14:00</li><li>24/7 for tag-access plans</li></ul></div></div></div>' +
       '<div class="vh-footer__bottom"><p>© <span data-year>2026</span> The Village Hub · Brickfield Spaces (Pty) Ltd · Coworking in Stellenbosch. Hub prices exclude VAT; student prices include VAT.</p><p class="links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></p></div></div></footer>';
@@ -160,12 +160,12 @@
     mountPromo();
   }
 
-  /* ---------- Your Desk 2027 promo banner ----------
+  /* ---------- 50% off coworking promo banner ----------
      On until 31 December 2026. Remove this block once the campaign closes. */
   function mountPromo() {
     var PROMO_END  = '2026-12-31T23:59:59+02:00';
     var PROMO_PATH = '/your-desk-2027';
-    var PROMO_KEY  = 'vh-promo-desk-2027';
+    var PROMO_KEY  = 'vh-promo-50-off';
 
     if (new Date() > new Date(PROMO_END)) return;
     if (location.pathname.indexOf(PROMO_PATH) === 0) return;
@@ -177,12 +177,12 @@
 
     var bar = el('div', 'vh-promo');
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Your Desk 2027 offer');
+    bar.setAttribute('aria-label', '50% off coworking offer');
     bar.innerHTML =
       '<div class="vh-promo__in">' +
-        '<span class="vh-promo__tag">Black Friday</span>' +
-        '<span class="vh-promo__txt"><b>Lock in 2027.</b> Any desk from <i>R1&nbsp;710</i>/mo. The rest of 2026 is included.</span>' +
-        '<a class="vh-promo__cta" href="' + PROMO_PATH + '">See the offer</a>' +
+        '<span class="vh-promo__tag">50% off</span>' +
+        '<span class="vh-promo__txt"><b>50% off coworking for 12 months.</b> Desks from <i>R1&nbsp;500</i>/mo excl. VAT.</span>' +
+        '<a class="vh-promo__cta" href="' + PROMO_PATH + '">Sign up</a>' +
       '</div>' +
       '<button class="vh-promo__x" aria-label="Dismiss this offer">&times;</button>';
     d.body.appendChild(bar);
