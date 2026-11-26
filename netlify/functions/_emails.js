@@ -293,6 +293,8 @@ function addressBox(companyName) {
 // 6. Paid and live. The client's working instructions.
 function activated(app, opts) {
   const o = opts || {};
+  // Desk members get their own welcome: booking and Wi-Fi, not post.
+  if (app.type === 'desk') return deskWelcome(app, D.offer(app.plan, new Date(app.created_at || Date.now())) || D.offer(app.plan));
   if (app.type !== 'virtual_office') {
     return {
       subject: `You are live at The Village Hub (${app.reference})`,
@@ -379,8 +381,184 @@ function onboardingAttention(app, step, message, reviewUrl) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Desk sign-ups. No documents and no review, so these five messages carry the
+// whole journey: signed up, team told, paid and live (client and team), and
+// the 48-hour follow-up when a sign-up has not gone live.
+// ---------------------------------------------------------------------------
+
+const D = require('./_desk');
+
+const PORTAL_URL = 'https://members.villagehub.co.za';
+const HUB_WHATSAPP = '063 260 3513';
+const WIFI_NETWORK = 'The Village Hub Guest';
+
+function deskPriceBox(o) {
+  const saving = o.discounted
+    ? `<br>${o.percentOff}% off the normal ${D.rand(o.list)} for your first ${o.months} months.`
+    : '';
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BRAND.cream};border-left:3px solid ${BRAND.gold};border-radius:6px;margin:16px 0 20px;">
+    <tr><td style="padding:14px 16px;font:400 15px/1.7 Arial,sans-serif;color:${BRAND.ink};">
+      <strong>${esc(o.plan)}</strong>: ${esc(o.label)}<br>
+      <strong>${D.rand(o.price)} a month</strong> excl. VAT (${D.rand(o.priceInclVat)} incl. VAT).${saving}<br>
+      No minimum commitment.
+    </td></tr></table>`;
+}
+
+function deskStartLine(app) {
+  return app.preferred_start_date
+    ? `You asked to start on <strong>${esc(app.preferred_start_date)}</strong>.`
+    : 'You start as soon as your first invoice is paid.';
+}
+
+// D1. To the person, the moment the sign-up is saved.
+function deskReceived(app, o, opts) {
+  const automated = Boolean(opts && opts.automated);
+  return {
+    subject: `You are signed up: ${app.plan} at The Village Hub (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;">Hi ${esc(app.first_name)},</p>
+      <p style="margin:0 0 14px;">Thank you. Your desk sign-up is in. Here is what you chose:</p>
+      ${deskPriceBox(o)}
+      <p style="margin:0 0 14px;">${deskStartLine(app)}</p>
+      <p style="margin:0 0 8px;"><strong>What happens next</strong></p>
+      <p style="margin:0 0 6px;">1. We set up your membership in Spacebring, our member system. You get an invitation to the Village Hub member app and your first invoice by email${automated ? ' shortly' : ', normally within one business day'}.</p>
+      <p style="margin:0 0 6px;">2. You pay the invoice. Nothing is payable before it arrives.</p>
+      <p style="margin:0 0 14px;">3. Your access starts, and we send your welcome email with how to get in, how to book a desk and how to get onto the Wi-Fi.</p>
+      <p style="margin:0 0 6px;">Questions? Reply to this email or WhatsApp us on ${HUB_WHATSAPP}, and quote <strong>${esc(app.reference)}</strong>.</p>
+      <p style="margin:18px 0 0;">The Village Hub team</p>
+    `, `Your ${app.plan} sign-up is in. Your invoice follows by email.`),
+  };
+}
+
+// D2. To the team, the same moment.
+function deskStaffAlert(app, o, reviewUrl, opts) {
+  const automated = Boolean(opts && opts.automated);
+  const name = `${app.first_name} ${app.last_name}`;
+  const todo = automated
+    ? `<p style="margin:0 0 14px;">Nothing to do yet. The member, the subscription and the first invoice are being created in Spacebring automatically. You will be told when it is paid, or straight away if a step stops.</p>`
+    : `<p style="margin:0 0 6px;">1. Check this is a new member. The offer is for new members only.</p>
+       <p style="margin:0 0 6px;">2. In Spacebring, add the member and a <strong>${esc(app.plan)}</strong> subscription${app.preferred_start_date ? ` starting ${esc(app.preferred_start_date)}` : ''}.${o.code ? ` Apply promo code <strong>${esc(o.code)}</strong>. The line must read ${D.rand(o.price)} excl. VAT.` : ''}</p>
+       <p style="margin:0 0 6px;">3. Issue the first invoice.</p>
+       <p style="margin:0 0 14px;">4. When it is paid, open the sign-up and press <strong>Mark as activated</strong>. That sends the welcome email and tells the team. Door access goes on only after payment.</p>`;
+  return {
+    subject: `New desk sign-up: ${app.plan}, ${name} (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">New desk sign-up</p>
+      ${refBox(app)}
+      <p style="margin:0 0 14px;">
+        <strong>Name</strong> ${esc(name)}<br>
+        <strong>Email</strong> <a href="mailto:${esc(app.email)}" style="color:${BRAND.brown};">${esc(app.email)}</a><br>
+        <strong>Phone</strong> ${esc(app.phone)}<br>
+        <strong>Company</strong> ${esc(app.company_name || 'not given')}<br>
+        <strong>Start</strong> ${esc(app.preferred_start_date || 'as soon as paid')}<br>
+        <strong>Price</strong> ${D.rand(o.price)} a month excl. VAT${o.discounted ? ` (${o.percentOff}% off ${D.rand(o.list)} for ${o.months} months)` : ''}
+      </p>
+      <p style="margin:0 0 8px;"><strong>What to do</strong></p>
+      ${todo}
+      ${button(reviewUrl, 'Open this sign-up')}
+      <p style="margin:0;font:400 13px/1.6 Arial,sans-serif;color:${BRAND.muted};">${automated ? 'They have been told the invoice follows shortly.' : 'They have been told the invoice follows within one business day.'}</p>
+    `, `${esc(name)} signed up for ${esc(app.plan)}.`),
+  };
+}
+
+// D3. To the member once the first invoice is paid: getting in, booking a
+// desk, and the Wi-Fi. The two kinds of plan work differently.
+function deskWelcome(app, o) {
+  const booking = o.kind === 'pass'
+    ? `<p style="margin:0 0 8px;"><strong>Booking your desk days and getting your Wi-Fi code</strong></p>
+       <p style="margin:0 0 6px;">Your plan gives you <strong>${o.days} desk days a month</strong>. Book each day before you come in. The booking is what sends your Wi-Fi code.</p>
+       <p style="margin:0 0 6px;">1. Open the Village Hub member app (your invitation came from Spacebring) or go to <a href="${PORTAL_URL}" style="color:${BRAND.brown};">members.villagehub.co.za</a>.</p>
+       <p style="margin:0 0 6px;">2. Choose <strong>Desks</strong>, pick a hot desk and the day you are coming in.</p>
+       <p style="margin:0 0 6px;">3. Confirm the booking. It comes off your ${o.days} days for the month.</p>
+       <p style="margin:0 0 14px;">4. We send your Wi-Fi code for that day by WhatsApp or email once the booking is confirmed. Connect to <strong>${WIFI_NETWORK}</strong> and enter the code on the login page that opens. The code starts when you first log in and lasts for the day.</p>
+       <p style="margin:0 0 14px;">No booking means no Wi-Fi code, so please book before you arrive.</p>`
+    : `<p style="margin:0 0 8px;"><strong>Your desk and your Wi-Fi</strong></p>
+       <p style="margin:0 0 14px;">${o.plan === 'Village Resident'
+          ? 'You have your own dedicated desk, so there is nothing to book day by day. We will show you which desk is yours on your first day.'
+          : 'You can work from any open desk on any working day, so there is nothing to book day by day.'} We send your member Wi-Fi code separately by WhatsApp or email. It is not tied to a daily booking.</p>
+       <p style="margin:0 0 14px;">To book a boardroom at member rates, use the Village Hub member app (your invitation came from Spacebring) or <a href="${PORTAL_URL}" style="color:${BRAND.brown};">members.villagehub.co.za</a>.</p>`;
+  return {
+    subject: `Welcome to The Village Hub: your ${app.plan} membership is live (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;">Hi ${esc(app.first_name)},</p>
+      <p style="margin:0 0 14px;">Payment received, thank you. Your <strong>${esc(app.plan)}</strong> membership is live.</p>
+      ${refBox(app)}
+      <p style="margin:0 0 8px;"><strong>Finding us and getting in</strong></p>
+      <p style="margin:0 0 14px;">We are on the 1st Floor of The Foundry, Sauvignon Street, Nooitgedacht Village, Stellenbosch, with parking at the door. Your door access is being switched on now that your payment is in, and we will message you how to use it. If you arrive before that message, WhatsApp us on ${HUB_WHATSAPP} and we will let you in.</p>
+      ${booking}
+      <p style="margin:0 0 8px;"><strong>Your billing</strong></p>
+      <p style="margin:0 0 14px;">Spacebring invoices you each month: ${D.rand(o.price)} excl. VAT${o.discounted ? ` for your first ${o.months} months, then the normal ${D.rand(o.list)}` : ''}. There is no minimum commitment. To stop, tell us before your next invoice is issued.</p>
+      <p style="margin:0 0 14px;">Coffee and Wi-Fi are included. Anything not working, WhatsApp us on ${HUB_WHATSAPP}.</p>
+      <p style="margin:18px 0 0;">Welcome to the Village.<br>The Village Hub team</p>
+    `, `Your ${app.plan} membership is live. Here is how to book and get onto the Wi-Fi.`),
+  };
+}
+
+// D4. To the team when a desk member has paid.
+function deskPaid(app, o, reviewUrl) {
+  const name = `${app.first_name} ${app.last_name}`;
+  const wifi = o.kind === 'pass'
+    ? 'Wi-Fi: nothing to do. A code goes out automatically with each desk booking they make.'
+    : `Wi-Fi: send ${esc(app.first_name)} the member Wi-Fi code today. The welcome email says it follows separately.`;
+  return {
+    subject: `New member paid: ${name}, ${app.plan} (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">New desk member, paid and live</p>
+      ${refBox(app)}
+      <p style="margin:0 0 14px;">
+        <strong>Name</strong> ${esc(name)}<br>
+        <strong>Email</strong> <a href="mailto:${esc(app.email)}" style="color:${BRAND.brown};">${esc(app.email)}</a><br>
+        <strong>Phone</strong> ${esc(app.phone)}<br>
+        <strong>Price</strong> ${D.rand(o.price)} a month excl. VAT
+      </p>
+      <p style="margin:0 0 8px;"><strong>To do now</strong></p>
+      <p style="margin:0 0 6px;">1. Switch on their door access and message them how to use it. The welcome email says this is coming.</p>
+      <p style="margin:0 0 6px;">2. ${wifi}</p>
+      ${app.plan === 'Village Resident' ? '<p style="margin:0 0 6px;">3. Allocate their dedicated desk before their first day.</p>' : ''}
+      <p style="margin:14px 0 14px;">The welcome email with booking and Wi-Fi instructions has gone to them.</p>
+      ${button(reviewUrl, 'Open this sign-up')}
+    `, `${esc(name)} has paid for ${esc(app.plan)} and is live.`),
+  };
+}
+
+// D5. To the person when the sign-up is two days old and not live.
+function deskReminder(app, o) {
+  return {
+    subject: `Your desk at The Village Hub is waiting (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;">Hi ${esc(app.first_name)},</p>
+      <p style="margin:0 0 14px;">You signed up for <strong>${esc(app.plan)}</strong> at ${D.rand(o.price)} a month excl. VAT, and your membership is not live yet.</p>
+      <p style="margin:0 0 14px;">Your invoice comes by email from Spacebring, our member system. If you cannot find it, check your spam folder, or reply to this email and we will send it again.</p>
+      <p style="margin:0 0 14px;">If your plans have changed, reply and tell us. There is nothing to cancel and nothing is owed.</p>
+      <p style="margin:18px 0 0;">The Village Hub team<br>WhatsApp ${HUB_WHATSAPP}</p>
+    `, `Your ${app.plan} sign-up is not live yet.`),
+  };
+}
+
+// D6. To the team at the same point.
+function deskStalled(app, o, reviewUrl, hours) {
+  const name = `${app.first_name} ${app.last_name}`;
+  return {
+    subject: `Needs attention: desk sign-up not live after ${hours} hours, ${name} (${app.reference})`,
+    html: shell(`
+      <p style="margin:0 0 14px;font:600 16px/1.4 Arial,sans-serif;">Desk sign-up not live after ${hours} hours</p>
+      ${refBox(app)}
+      <p style="margin:0 0 14px;">
+        <strong>Name</strong> ${esc(name)}<br>
+        <strong>Email</strong> <a href="mailto:${esc(app.email)}" style="color:${BRAND.brown};">${esc(app.email)}</a><br>
+        <strong>Phone</strong> ${esc(app.phone)}
+      </p>
+      <p style="margin:0 0 6px;">Check in Spacebring: has the subscription been created, has the invoice gone out, and is it paid?</p>
+      <p style="margin:0 0 14px;">If it is paid, press <strong>Mark as activated</strong> on the sign-up. If they have gone quiet, phone them. They have been sent one reminder and will not be sent another.</p>
+      ${button(reviewUrl, 'Open this sign-up')}
+    `, `${esc(name)} signed up ${hours} hours ago and is not live.`),
+  };
+}
+
 module.exports = {
   applicantReceived, staffAlert, infoRequested, approved, declined, leadAlert, DOC_LABELS,
   accessRequested, accessApproved, leadsDigest,
   activated, mailDesk, onboardingAttention,
+  deskReceived, deskStaffAlert, deskWelcome, deskPaid, deskReminder, deskStalled,
 };

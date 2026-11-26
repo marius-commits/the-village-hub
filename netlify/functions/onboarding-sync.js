@@ -7,12 +7,14 @@
 // thinly documented and a missed delivery would leave a paid client sitting
 // unactivated. Reading the state every 15 minutes cannot miss anything.
 //
-// Does nothing unless SPACEBRING_PROVISIONING=live.
+// The Spacebring part does nothing unless SPACEBRING_PROVISIONING=live. The
+// desk follow-up at the top runs regardless.
 
 const L  = require('./_lib');
 const SB = require('./_spacebring');
 const O  = require('./_onboarding');
 const Live = require('./_onboarding_live');
+const Followup = require('./_desk_followup');
 
 const STALL_MS = 3 * 60 * 1000;
 
@@ -22,7 +24,25 @@ function setupUnfinished(app) {
 }
 
 exports.handler = async function () {
-  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true });
+  // Desk sign-ups not live after two days: one reminder to the person and one
+  // alert to the team. Runs whether or not the Spacebring automation is on.
+  let followup = null;
+  if (L.configured()) {
+    try {
+      followup = await Followup.run({
+        now: () => new Date(),
+        select: (table, query) => L.selectRows(table, query),
+        save: (id, patch) => L.updateRows('applications', `id=eq.${id}`, patch),
+        log: (id, type, actor, detail) => L.logEvent(id, type, actor, detail),
+        send: (args) => L.sendEmail(args),
+        staffEmails: L.STAFF_EMAILS,
+        notifyEmail: L.NOTIFY_EMAIL,
+        siteUrl: L.SITE_URL,
+      });
+    } catch (err) { console.error('desk follow-up failed:', err.message); }
+  }
+
+  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true, followup });
 
   const apps = await L.selectRows(
     'applications',
@@ -49,5 +69,5 @@ exports.handler = async function () {
       console.error('onboarding-sync failed for', app.reference, err.message);
     }
   }
-  return L.ok({ checked: (apps || []).length, moved, resumed });
+  return L.ok({ checked: (apps || []).length, moved, resumed, followup });
 };

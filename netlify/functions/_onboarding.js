@@ -25,6 +25,7 @@ const VETTING_SOURCE = 'CIPC BizPortal BizProfile';
 const COMMITMENT_CHOICES = [3, 6, 12];
 
 function isVO(app) { return app.type === 'virtual_office'; }
+function isDesk(app) { return app.type === 'desk'; }
 
 function needsRegisteredAddress(app) {
   return isVO(app) && (app.wants_registered_address === true || app.plan === 'Village Virtual Pro');
@@ -163,9 +164,10 @@ function stages(app, documents) {
 
   const list = [
     { key: 'received', label: 'Application received', done: true, at: app.created_at || null },
-    { key: 'verified', label: 'Documents checked', done: allVerified || approved, at: null },
+    // A desk sign-up has no documents and no review: it is accepted on arrival.
+    ...(isDesk(app) ? [] : [{ key: 'verified', label: 'Documents checked', done: allVerified || approved, at: null }]),
     ...(isVO(app) && (app.vetting || vettingRequired()) ? [{ key: 'vetted', label: 'Company vetted', done: vettingPassed(app), at: (app.vetting && app.vetting.checked_at) || null }] : []),
-    { key: 'approved', label: 'Approved', done: approved, at: approved ? app.reviewed_at || null : null },
+    { key: 'approved', label: isDesk(app) ? 'Accepted' : 'Approved', done: approved, at: approved ? app.reviewed_at || app.created_at || null : null },
     { key: 'account', label: 'Set up in Spacebring', done: Boolean(s.company || s.membership) || live, at: at('company') || at('membership') },
   ];
   if (isVO(app)) {
@@ -377,7 +379,9 @@ async function provision(app, staffEmail, deps) {
           const m = await sb.createMembership({
             email: app.email, name: app.first_name, surname: app.last_name,
             phoneNumber: app.phone || undefined, companyRef,
-            notes: isVO(app) ? undefined : `Village Hub application ${app.reference} (${app.plan}). Student documents checked by ${staffEmail} on ${sastDate(deps.now())}.`,
+            notes: isVO(app) ? undefined : (isDesk(app)
+              ? `Village Hub desk sign-up ${app.reference} (${app.plan}), ${sastDate(deps.now())}. Door access only after the first invoice is paid.`
+              : `Village Hub application ${app.reference} (${app.plan}). Student documents checked by ${staffEmail} on ${sastDate(deps.now())}.`),
             metadata: { application_reference: app.reference },
           });
           value = { ref: m.id };
@@ -441,8 +445,9 @@ async function provision(app, staffEmail, deps) {
       if (!steps(app).subscription) {
         const sub = dry ? { id: 'dry-run' } : await sb.createSubscription({
           membershipRef: steps(app).membership.ref, planTitle: app.plan, startDate: startInstant(start),
+          ...(deps.couponRef && deps.couponRef(app) ? { couponRef: deps.couponRef(app) } : {}),
         });
-        await record(app, deps, 'subscription', { ref: sub.id }, { spacebring_subscription_ref: sub.id });
+        await record(app, deps, 'subscription', { ref: sub.id, coupon_ref: (deps.couponRef && deps.couponRef(app)) || null }, { spacebring_subscription_ref: sub.id });
       }
     }
   } catch (err) {
@@ -536,6 +541,12 @@ async function activate(app, deps) {
     const sent = await deps.mail.welcome(app);
     if (sent) await record(app, deps, 'welcome', {});
   }
+  // Desk members: the team is told the moment payment lands, because door
+  // access is switched on only then.
+  if (isDesk(app) && deps.mail && deps.mail.paidAlert && !steps(app).paid_alert) {
+    const sent = await deps.mail.paidAlert(app);
+    if (sent) await record(app, deps, 'paid_alert', { to: sent });
+  }
   if (isVO(app) && deps.mail && deps.mail.mailDesk && !steps(app).mail_desk) {
     const sent = await deps.mail.mailDesk(app);
     if (sent) await record(app, deps, 'mail_desk', { to: sent });
@@ -544,7 +555,7 @@ async function activate(app, deps) {
 
 module.exports = {
   provision, sync, activate, stages, startDate, startInstant, addMonths, termEndInstant,
-  needsRegisteredAddress, billableRegisteredAddress, isVO,
+  needsRegisteredAddress, billableRegisteredAddress, isVO, isDesk,
   vettingPassed, vettingRequired, vettingRecord, legalCompanyName, companyTitle,
   commitmentMonths, VETTING_SOURCE, COMMITMENT_CHOICES,
 };

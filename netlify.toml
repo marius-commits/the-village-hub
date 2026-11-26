@@ -199,6 +199,12 @@
   force = true
 
 [[redirects]]
+  from = "/apply-desk.html"
+  to = "/apply-desk"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/apply-virtual-office.html"
   to = "/apply-virtual-office"
   status = 301

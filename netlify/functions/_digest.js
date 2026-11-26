@@ -10,6 +10,7 @@ const PRODUCT_LABELS = {
   private_office: 'Private office',
   virtual_office: 'Virtual office',
   student: 'Student',
+  desk: 'Desk',
   village_stay: 'Village stay',
   event: 'Event',
   corporate_event: 'Event',
