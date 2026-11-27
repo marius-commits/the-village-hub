@@ -50,6 +50,8 @@ test('what a person must price goes to the quote route', () => {
   assert.deepEqual(B.parse(good({ date: '2026-12-06' }), NOW).reasons, ['sunday']);
   assert.deepEqual(B.parse(good({ start: '17:00' }), NOW).reasons, ['outside_hours']);
   assert.deepEqual(B.parse(good({ start: '06:30' }), NOW).reasons, ['outside_hours']);
+  assert.deepEqual(B.parse(good({ start: '07:30' }), NOW).reasons, ['outside_hours']); // front desk opens 08:00
+  assert.deepEqual(B.parse(good({ start: '15:30', duration_minutes: 90 }), NOW).reasons, []); // ends 17:00 exactly
   assert.deepEqual(B.parse(good({ date: '2026-11-27', start: '10:30' }), NOW).reasons, ['short_notice']);
   const q = B.parse(good({ guests: 40, date: '2026-12-05' }), NOW);
   assert.equal(q.route, 'quote');

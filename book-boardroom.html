@@ -113,7 +113,7 @@
         <p class="hint mt-3"><span style="display:inline-block;width:10px;height:10px;background:#e9efd9;border-radius:2px;vertical-align:middle"></span> free
           &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#c9b8a3;border-radius:2px;vertical-align:middle"></span> taken
           &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#6B4423;border-radius:2px;vertical-align:middle"></span> your slot.
-          Online booking is Monday to Friday, 07:00 to 18:00.
+          Online booking is Monday to Friday, 08:00 to 17:00.
           <a href="#" id="afterHours" class="underline text-[#6B4423]">Need a time outside those hours?</a></p>
       </div>
       <p class="err-msg" id="err-slot">Please choose a start time.</p>
@@ -283,7 +283,7 @@
     chamber:   { title: 'Village Chamber',   capacity: 10, rate: 350 },
     boardroom: { title: 'Village Boardroom', capacity: 12, rate: 390 }
   };
-  var OPEN = 420, CLOSE = 1080, STEP = 30, MAX_ROOM = 12;
+  var OPEN = 480, CLOSE = 1020, STEP = 30, MAX_ROOM = 12;
 
   var state = { day: null, room: null, start: null, manual: false, loading: false, wantRoom: null };
 
@@ -315,7 +315,7 @@
     if(g && g > MAX_ROOM) return 'Our two boardrooms seat up to 12. For ' + g + ' people we quote the open floor, which is available on Saturdays for corporate events of up to 60. Send the details and we come back with a quote within one business day.';
     if(wd === 6) return 'Saturdays are quoted, not booked online. Send the details and we come back with availability and a quote within one business day.';
     if(wd === 0) return 'Sunday hire is by arrangement. Send the details and we come back to you within one business day.';
-    if(state.manual) return 'Times outside 07:00 to 18:00 are by arrangement. Send the details and we come back with a quote within one business day.';
+    if(state.manual) return 'Times outside 08:00 to 17:00 are by arrangement. Send the details and we come back with a quote within one business day.';
     return null;
   }
   function isQuote(){ return Boolean(quoteWhy()); }
@@ -353,7 +353,7 @@
       }
       card.appendChild(bar);
       var ticks = document.createElement('div'); ticks.className = 'ticks'; ticks.setAttribute('aria-hidden', 'true');
-      ticks.innerHTML = '<span>07:00</span><span>10:00</span><span>13:00</span><span>16:00</span><span>18:00</span>'; card.appendChild(ticks);
+      ticks.innerHTML = '<span>08:00</span><span>11:00</span><span>14:00</span><span>17:00</span>'; card.appendChild(ticks);
 
       if(tooSmall){
         var p = document.createElement('p'); p.className = 'text-sm text-gray-600 mt-3'; p.textContent = 'Seats ' + room.capacity + ', too small for ' + g + ' people.'; card.appendChild(p);
