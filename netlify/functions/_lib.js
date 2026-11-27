@@ -18,10 +18,12 @@ const PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY
 const FROM_EMAIL   = process.env.APPLICATIONS_FROM_EMAIL   || 'The Village Hub <hello@villagehub.co.za>';
 const NOTIFY_EMAIL = process.env.APPLICATIONS_NOTIFY_EMAIL || 'hello@villagehub.co.za';
 const SITE_URL     = process.env.SITE_URL                  || 'https://www.villagehub.co.za';
-// Everyone who must hear about every new lead and every completed application.
+// Where every new lead, booking and application alert goes. The shared Hub
+// inbox reaches the team, and Schalk as floor manager gets his own copy.
+// (Marius, 27 Nov 2026: Brickfield addresses are being phased out.)
 // Override with LEAD_NOTIFY_EMAILS (comma-separated) in Netlify env if the team changes.
 const STAFF_EMAILS = (process.env.LEAD_NOTIFY_EMAILS ||
-  'marius@brick-field.co.za,christel@villagehub.co.za,francois@brick-field.co.za,schalk@villagehub.co.za')
+  'hello@villagehub.co.za,schalk@villagehub.co.za')
   .split(',').map(e => e.trim()).filter(Boolean);
 
 // Whoever runs the mail desk. Told when a virtual office client goes live.

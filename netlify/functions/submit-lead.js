@@ -45,7 +45,7 @@ async function saveLead(params, event, fields) {
   catch (err) { console.error('submit-lead: leads insert failed:', err.message); }
 }
 
-// Emails Marius, Christel and Francois (L.STAFF_EMAILS) about every real lead.
+// Emails the team (L.STAFF_EMAILS: hello@ and Schalk) about every real lead.
 // Never fails the visitor's submission.
 async function notifyStaff(params, event, f) {
   const T = require('./_emails');
