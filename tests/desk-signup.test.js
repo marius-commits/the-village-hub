@@ -106,7 +106,7 @@ test('money is written the way the site writes it', () => {
 });
 
 test('the sign-up page shows exactly the prices the server charges', () => {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'apply-desk.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'hot-desk-stellenbosch.html'), 'utf8');
   const block = html.slice(html.indexOf('var PLANS = {'), html.indexOf('var ALIASES'));
   for (const title of D.PLAN_TITLES) {
     const o = D.offer(title, NOW);
@@ -114,7 +114,7 @@ test('the sign-up page shows exactly the prices the server charges', () => {
     assert.ok(m, `${title} is missing from the page`);
     assert.deepEqual([Number(m[1]), Number(m[2]), Number(m[3])], [o.list, o.price, o.percentOff], title);
     // The card a person reads, not only the script.
-    const card = html.slice(html.indexOf(`data-plan="${title}"`), html.indexOf('</label>', html.indexOf(`data-plan="${title}"`)));
+    const card = html.slice(html.indexOf(`data-choice="${title}"`), html.indexOf('</label>', html.indexOf(`data-choice="${title}"`)));
     assert.ok(card.includes(`>${D.rand(o.price)}<`), `${title} card price`);
     assert.ok(card.includes(`<s>${D.rand(o.list)}</s>`), `${title} card list price`);
   }

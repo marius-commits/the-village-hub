@@ -17,6 +17,8 @@ const Live = require('./_onboarding_live');
 const Followup = require('./_desk_followup');
 const Boardroom = require('./_boardroom_flow');
 const BoardroomLive = require('./_boardroom_live');
+const DeskDay = require('./_deskday_flow');
+const DeskDayLive = require('./_deskday_live');
 
 const STALL_MS = 3 * 60 * 1000;
 
@@ -52,7 +54,14 @@ exports.handler = async function () {
     catch (err) { console.error('boardroom sync failed:', err.message); }
   }
 
-  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true, followup, boardroom });
+  // Hot desk holds by the hour, half day or full day. Own switch: DESK_BOOKING.
+  let deskDay = null;
+  if (L.configured() && SB.credentialsSet()) {
+    try { deskDay = await DeskDay.run(DeskDayLive.deps()); }
+    catch (err) { console.error('desk day sync failed:', err.message); }
+  }
+
+  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true, followup, boardroom, deskDay });
 
   const apps = await L.selectRows(
     'applications',
@@ -79,5 +88,5 @@ exports.handler = async function () {
       console.error('onboarding-sync failed for', app.reference, err.message);
     }
   }
-  return L.ok({ checked: (apps || []).length, moved, resumed, followup, boardroom });
+  return L.ok({ checked: (apps || []).length, moved, resumed, followup, boardroom, deskDay });
 };
