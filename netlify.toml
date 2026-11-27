@@ -21,7 +21,8 @@
 # Every 15 minutes. Follows approved applications through Spacebring
 # (agreement signed, invoice issued, paid) and activates on payment. The
 # function no-ops unless SPACEBRING_PROVISIONING=live, so it is safe to
-# deploy dark.
+# deploy dark. The same run follows boardroom holds (paid, reminder, lapsed)
+# when BOARDROOM_BOOKING=live.
 [functions."onboarding-sync"]
   schedule = "*/15 * * * *"
 
@@ -197,6 +198,17 @@
   to = "/apply-student"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/book-boardroom.html"
+  to = "/book-boardroom"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/book-a-boardroom"
+  to = "/book-boardroom"
+  status = 301
 
 [[redirects]]
   from = "/apply-desk.html"
@@ -464,6 +476,14 @@
   for = "/apply-*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+    Referrer-Policy = "same-origin"
+    Cache-Control = "no-store"
+
+# The booking page takes personal details and shows a live calendar.
+[[headers]]
+  for = "/book-boardroom"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
     Referrer-Policy = "same-origin"
     Cache-Control = "no-store"
 

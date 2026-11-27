@@ -131,11 +131,13 @@ function createCompany({ title, legalName, taxId, notes, metadata }) {
 }
 
 // Sends the member their Spacebring invitation.
-function createMembership({ email, name, surname, phoneNumber, companyRef, notes, metadata }) {
+// type 'nonmember' creates the customer without the member app invitation,
+// which is what a one-off boardroom booker needs.
+function createMembership({ email, name, surname, phoneNumber, companyRef, notes, metadata, type }) {
   return call('POST', '/community/memberships/v1', {
     membership: {
       locationRef: LOCATION_REF,
-      type: 'member',
+      type: type === 'nonmember' ? 'nonmember' : 'member',
       user: { email, name, ...(surname ? { surname } : {}), ...(phoneNumber ? { phoneNumber } : {}) },
       ...(companyRef ? { companyRef, companyRole: 'manager' } : {}),
       ...(notes ? { notes } : {}),
@@ -222,6 +224,110 @@ function listInvoices(customerRef) {
     .then(d => (d && d.invoices) || []);
 }
 
+// --- Boardroom bookings --------------------------------------------------
+// Paths and bodies below were read from Spacebring's OpenAPI document
+// (spacebring.com/docs/assets/openapi.json) on 27 Nov 2026.
+
+// A person's membership at this location, member or nonmember, or null.
+function findMembershipByEmail(email) {
+  const q = `locationRef=${encodeURIComponent(LOCATION_REF)}&userEmail=${encodeURIComponent(email)}&types=member,nonmember&limit=5`;
+  return call('GET', `/community/memberships/v1?${q}`)
+    .then(d => ((d && d.memberships) || [])[0] || null);
+}
+
+// Exact title match only. A near match is a different company.
+function findCompanyByTitle(title) {
+  const q = `locationRef=${encodeURIComponent(LOCATION_REF)}&title=${encodeURIComponent(title)}&limit=10`;
+  return call('GET', `/community/companies/v1?${q}`).then(d => {
+    const want = String(title).trim().toLowerCase();
+    return ((d && d.companies) || []).find(c => String(c.title || '').trim().toLowerCase() === want) || null;
+  });
+}
+
+// Every tentative or confirmed booking of one room that touches the window.
+function listBookings({ resourceRef, from, to }) {
+  const q = [
+    `resourceRef=${encodeURIComponent(resourceRef)}`,
+    `startDate%5Blt%5D=${encodeURIComponent(to)}`,
+    `endDate%5Bgt%5D=${encodeURIComponent(from)}`,
+    'status=tentative,confirmed',
+    'singleBookings=true',
+    'order=startDate:asc',
+    'limit=100',
+  ].join('&');
+  return call('GET', `/resources/bookings/v1?${q}`).then(d => (d && d.bookings) || []);
+}
+
+// The same rules as creating the booking: clashes, schedule, booking window.
+function checkAvailability({ resourceRef, startDate, endDate }) {
+  return call('POST', `/resources/v1/${resourceRef}/availability`, { startDate, endDate })
+    .then(d => ({ available: Boolean(d && d.available), reason: (d && d.reason) || null }));
+}
+
+// A booking with no paymentMethod is a free booking in Spacebring. The money
+// is on the invoice instead, so the room is blocked the moment this returns
+// and the booking carries no payment of its own to reconcile.
+// sendUpdates none: the Hub's own emails tell the person what is happening.
+function createBooking({ resourceRef, startDate, endDate, membershipRefOwner, title, memo, metadata }) {
+  return call('POST', '/resources/bookings/v1', {
+    booking: {
+      resourceRef, startDate, endDate, membershipRefOwner,
+      sendUpdates: 'none',
+      ...(title ? { title } : {}),
+      ...(memo ? { memo } : {}),
+      ...(metadata ? { metadata } : {}),
+    },
+  }).then(d => unwrap(d, 'booking'));
+}
+
+function updateBooking(bookingId, booking) {
+  return call('PATCH', `/resources/bookings/v1/${bookingId}`, { booking: { sendUpdates: 'none', ...booking } })
+    .then(d => unwrap(d, 'booking'));
+}
+
+function cancelBooking(bookingId) {
+  return call('DELETE', `/resources/bookings/v1/${bookingId}`);
+}
+
+// A draft invoice with custom lines. unitAmount is in rand, before VAT: the
+// location adds its own tax rate. quantity must be a whole number.
+function createInvoice({ companyRef, membershipRef, items, dueDate, internalNote }) {
+  const owner = companyRef ? { companyRef } : { membershipRef };
+  return call('POST', '/billing/invoices/v1', {
+    invoice: {
+      ...owner,
+      ...(dueDate ? { dueType: 'date', dueDate } : {}),
+      ...(internalNote ? { internalNote } : {}),
+    },
+    items: (items || []).map(i => ({
+      ...owner,
+      type: 'custom',
+      product: { title: i.title },
+      quantity: i.quantity || 1,
+      unitAmount: i.unitAmount,
+    })),
+  }).then(d => unwrap(d, 'invoice'));
+}
+
+// Gives the invoice its number and emails it to the customer.
+// skipAutoCharge: a boardroom guest has no saved card to charge.
+function issueInvoice(invoiceId) {
+  return call('POST', `/billing/invoices/v1/${invoiceId}/issue`, { skipAutoCharge: true })
+    .then(d => unwrap(d, 'invoice'));
+}
+
+function getInvoice(invoiceId) {
+  return call('GET', `/billing/invoices/v1/${invoiceId}`).then(d => unwrap(d, 'invoice'));
+}
+
+function voidInvoice(invoiceId) {
+  return call('PATCH', `/billing/invoices/v1/${invoiceId}/void`);
+}
+
+function deleteInvoice(invoiceId) {
+  return call('DELETE', `/billing/invoices/v1/${invoiceId}`);
+}
+
 module.exports = {
   mode, credentialsSet, SpacebringError, PLAN_REFS, LOCATION_REF,
   TEMPLATE_VO, TEMPLATE_VO_REGISTERED, registeredAddressSpec,
@@ -229,4 +335,7 @@ module.exports = {
   createCompany, createMembership, createContract, issueContract, getContract,
   createSubscription, getSubscription, createSubscriptionItem, updateSubscriptionItem,
   listInvoices,
+  findMembershipByEmail, findCompanyByTitle, listBookings, checkAvailability,
+  createBooking, updateBooking, cancelBooking,
+  createInvoice, issueInvoice, getInvoice, voidInvoice, deleteInvoice,
 };
