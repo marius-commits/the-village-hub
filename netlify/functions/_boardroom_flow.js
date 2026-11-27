@@ -152,7 +152,13 @@ async function provision(b, d) {
       });
       if (!invoice || !invoice.id) throw new Error('Spacebring returned no invoice id');
       await save(b, { spacebring: { ...sb(b), invoice_id: invoice.id } }, d);
-      const total = Number(invoice.totalAmount);
+      // Spacebring answers the create call before it has added up the lines
+      // (the response says 0), so the total is read back from the invoice.
+      let total = Number(invoice.totalAmount);
+      if (!dry) {
+        const fresh = await d.sb.getInvoice(invoice.id);
+        if (fresh && fresh.totalAmount !== undefined && fresh.totalAmount !== null) total = Number(fresh.totalAmount);
+      }
       if (Number.isFinite(total) && Math.abs(total - pr.inclVat) > 0.01) {
         await record(b, 'invoice', { dry, total, expected: pr.inclVat, mismatch: true }, d);
         throw new Error(`Draft invoice total is ${B.rand(total)} but the booking is ${B.rand(pr.inclVat)} incl. VAT. The draft was left unissued. Check the VAT setting, fix the draft and issue it by hand.`);

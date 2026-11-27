@@ -308,7 +308,7 @@ function deps(opts) {
     async createBooking(a) { calls.push(['createBooking', a]); if (o.bookingFails) throw new Error('Spacebring 500'); return { id: 'bk1' }; },
     async createInvoice(a) { calls.push(['createInvoice', a]); return { id: 'inv1', totalAmount: o.total === undefined ? 805 : o.total }; },
     async issueInvoice() { calls.push('issueInvoice'); return { id: 'inv1', title: 'INV-0099', pdfUrl: 'https://example.test/inv.pdf' }; },
-    async getInvoice() { calls.push('getInvoice'); return { id: 'inv1', title: 'INV-0099', status: o.invoiceStatus || 'issued', pdfUrl: 'https://example.test/inv.pdf' }; },
+    async getInvoice() { calls.push('getInvoice'); return { id: 'inv1', title: 'INV-0099', status: o.invoiceStatus || 'issued', pdfUrl: 'https://example.test/inv.pdf', ...(o.fetchedTotal !== undefined ? { totalAmount: o.fetchedTotal } : {}) }; },
     async updateBooking(id, a) { calls.push(['updateBooking', a]); },
     async cancelBooking() { calls.push('cancelBooking'); if (o.cancelFails) throw new Error('nope'); },
     async voidInvoice() { calls.push('voidInvoice'); if (o.voidFails) throw new Error('nope'); },
@@ -327,7 +327,7 @@ test('provision: guest created without an app invite, room held, invoice checked
   const d = deps(); const b = booking();
   const r = await F.provision(b, d);
   assert.equal(r.state, 'held');
-  assert.deepEqual(names(d), ['findMembership', 'createMembership', 'checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d), ['findMembership', 'createMembership', 'checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
   const member = d.calls.find(c => c[0] === 'createMembership')[1];
   assert.equal(member.type, 'nonmember');
   const bk = d.calls.find(c => c[0] === 'createBooking')[1];
@@ -347,10 +347,19 @@ test('provision: a returning person is reused, a company is invoiced as a compan
   const d = deps({ membership: { id: 'old', type: 'member' } });
   const b = booking({ billing: 'company', company_name: 'Acme (Pty) Ltd', company_vat: '4123' });
   await F.provision(b, d);
-  assert.deepEqual(names(d), ['findMembership', 'findCompany', 'createCompany', 'checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d), ['findMembership', 'findCompany', 'createCompany', 'checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
   assert.equal(b.spacebring.existing_member, true);
   assert.equal(d.calls.find(c => c[0] === 'createInvoice')[1].companyRef, 'co1');
   assert.match(d.calls.find(c => c[0] === 'createBooking')[1].title, /Acme \(Pty\) Ltd/);
+});
+
+test('provision: Spacebring says 0 on create, the re-read total is what is checked', async () => {
+  const ok = deps({ total: 0, fetchedTotal: 805 }); const b = booking();
+  assert.equal((await F.provision(b, ok)).state, 'held');
+  assert.ok(names(ok).includes('issueInvoice'));
+  const wrong = deps({ total: 0, fetchedTotal: 700 }); const c = booking();
+  assert.equal((await F.provision(c, wrong)).state, 'attention');
+  assert.ok(!names(wrong).includes('issueInvoice'));
 });
 
 test('provision: a slot that has gone is a clash, nothing is created', async () => {
@@ -378,7 +387,7 @@ test('provision: a failure half way resumes at the failed step, never repeating 
   assert.equal((await F.provision(b, d)).state, 'attention');
   const d2 = deps(); b.status = 'received';
   assert.equal((await F.provision(b, d2)).state, 'held');
-  assert.deepEqual(names(d2), ['checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d2), ['checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
 });
 
 test('provision: dry mode touches nothing in Spacebring', async () => {
