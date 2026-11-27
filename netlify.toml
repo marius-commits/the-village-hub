@@ -210,9 +210,17 @@
   to = "/book-boardroom"
   status = 301
 
+# The desk sign-up form now lives on the hot desk page, next to booking by
+# the hour, half day and full day. ?plan= is carried across by Netlify.
 [[redirects]]
   from = "/apply-desk.html"
-  to = "/apply-desk"
+  to = "/hot-desk-stellenbosch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/apply-desk"
+  to = "/hot-desk-stellenbosch"
   status = 301
   force = true
 

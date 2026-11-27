@@ -259,8 +259,9 @@ function listBookings({ resourceRef, from, to }) {
 }
 
 // The same rules as creating the booking: clashes, schedule, booking window.
-function checkAvailability({ resourceRef, startDate, endDate }) {
-  return call('POST', `/resources/v1/${resourceRef}/availability`, { startDate, endDate })
+// quantity: seats to check, for seat-based resources such as hot desks.
+function checkAvailability({ resourceRef, startDate, endDate, quantity }) {
+  return call('POST', `/resources/v1/${resourceRef}/availability`, { startDate, endDate, ...(quantity ? { quantity } : {}) })
     .then(d => ({ available: Boolean(d && d.available), reason: (d && d.reason) || null }));
 }
 
@@ -268,10 +269,13 @@ function checkAvailability({ resourceRef, startDate, endDate }) {
 // is on the invoice instead, so the room is blocked the moment this returns
 // and the booking carries no payment of its own to reconcile.
 // sendUpdates none: the Hub's own emails tell the person what is happening.
-function createBooking({ resourceRef, startDate, endDate, membershipRefOwner, title, memo, metadata }) {
+// seats: for a hot desk, how many seats. Bookings Spacebring returns carry
+// the same field name.
+function createBooking({ resourceRef, startDate, endDate, membershipRefOwner, title, memo, metadata, seats }) {
   return call('POST', '/resources/bookings/v1', {
     booking: {
       resourceRef, startDate, endDate, membershipRefOwner,
+      ...(seats ? { seats } : {}),
       sendUpdates: 'none',
       ...(title ? { title } : {}),
       ...(memo ? { memo } : {}),
