@@ -48,10 +48,11 @@ test('what a person must price goes to the quote route', () => {
   assert.deepEqual(B.parse(good({ guests: 20 }), NOW).reasons, ['more_than_12_guests']);
   assert.deepEqual(B.parse(good({ date: '2026-12-05' }), NOW).reasons, ['saturday']);
   assert.deepEqual(B.parse(good({ date: '2026-12-06' }), NOW).reasons, ['sunday']);
-  assert.deepEqual(B.parse(good({ start: '17:00' }), NOW).reasons, ['outside_hours']);
+  assert.deepEqual(B.parse(good({ start: '19:30' }), NOW).reasons, ['outside_hours']);
   assert.deepEqual(B.parse(good({ start: '06:30' }), NOW).reasons, ['outside_hours']);
-  assert.deepEqual(B.parse(good({ start: '07:30' }), NOW).reasons, ['outside_hours']); // front desk opens 08:00
-  assert.deepEqual(B.parse(good({ start: '15:30', duration_minutes: 90 }), NOW).reasons, []); // ends 17:00 exactly
+  assert.deepEqual(B.parse(good({ start: '07:00' }), NOW).reasons, []); // online booking opens 07:00
+  assert.deepEqual(B.parse(good({ start: '18:00', duration_minutes: 120 }), NOW).reasons, []); // ends 20:00 exactly
+  assert.deepEqual(B.parse(good({ start: '18:30', duration_minutes: 120 }), NOW).reasons, ['outside_hours']);
   assert.deepEqual(B.parse(good({ date: '2026-11-27', start: '10:30' }), NOW).reasons, ['short_notice']);
   const q = B.parse(good({ guests: 40, date: '2026-12-05' }), NOW);
   assert.equal(q.route, 'quote');
@@ -208,7 +209,7 @@ test('automation off: saved, person told an invoice follows, team told what to d
   assert.equal(x.inserted[0].amount_ex_vat, 700);
   assert.equal(x.inserted[0].mode, 'off');
   assert.equal(x.sent.length, 2);
-  assert.match(x.sent[0].subject, /We have your boardroom request/);
+  assert.match(x.sent[0].subject, /received your booking request/);
   assert.equal(x.sent[0].client, true);
   assert.match(x.sent[1].html, /To do in Spacebring/);
   assert.equal(x.leads[0].product, 'boardroom');
@@ -219,7 +220,7 @@ test('automation live: room held, person gets the pay-to-confirm email', async (
   const r = await S.run(good(), x);
   assert.equal(r.body.state, 'held');
   assert.ok(r.body.hold_expires_at);
-  assert.match(x.sent[0].subject, /held: pay to confirm/);
+  assert.match(x.sent[0].subject, /reserved: please pay to confirm/);
   assert.match(x.sent[0].html, /INV-0099/);
   assert.match(x.sent[1].html, /Nothing to do yet/);
 });
@@ -229,7 +230,7 @@ test('live but a step stops: the request is still saved and honest emails go out
   const r = await S.run(good(), x);
   assert.equal(r.status, 200);
   assert.equal(r.body.state, 'attention');
-  assert.match(x.sent[0].subject, /We have your boardroom request/);
+  assert.match(x.sent[0].subject, /received your booking request/);
   assert.match(x.sent[1].html, /Needs attention/);
   const y = io({ mode: 'live', provisionThrows: true });
   assert.equal((await S.run(good(), y)).body.state, 'attention');
@@ -307,7 +308,7 @@ function deps(opts) {
     async createBooking(a) { calls.push(['createBooking', a]); if (o.bookingFails) throw new Error('Spacebring 500'); return { id: 'bk1' }; },
     async createInvoice(a) { calls.push(['createInvoice', a]); return { id: 'inv1', totalAmount: o.total === undefined ? 805 : o.total }; },
     async issueInvoice() { calls.push('issueInvoice'); return { id: 'inv1', title: 'INV-0099', pdfUrl: 'https://example.test/inv.pdf' }; },
-    async getInvoice() { calls.push('getInvoice'); return { id: 'inv1', title: 'INV-0099', status: o.invoiceStatus || 'issued', pdfUrl: 'https://example.test/inv.pdf' }; },
+    async getInvoice() { calls.push('getInvoice'); return { id: 'inv1', title: 'INV-0099', status: o.invoiceStatus || 'issued', pdfUrl: 'https://example.test/inv.pdf', ...(o.fetchedTotal !== undefined ? { totalAmount: o.fetchedTotal } : {}) }; },
     async updateBooking(id, a) { calls.push(['updateBooking', a]); },
     async cancelBooking() { calls.push('cancelBooking'); if (o.cancelFails) throw new Error('nope'); },
     async voidInvoice() { calls.push('voidInvoice'); if (o.voidFails) throw new Error('nope'); },
@@ -326,7 +327,7 @@ test('provision: guest created without an app invite, room held, invoice checked
   const d = deps(); const b = booking();
   const r = await F.provision(b, d);
   assert.equal(r.state, 'held');
-  assert.deepEqual(names(d), ['findMembership', 'createMembership', 'checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d), ['findMembership', 'createMembership', 'checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
   const member = d.calls.find(c => c[0] === 'createMembership')[1];
   assert.equal(member.type, 'nonmember');
   const bk = d.calls.find(c => c[0] === 'createBooking')[1];
@@ -346,10 +347,19 @@ test('provision: a returning person is reused, a company is invoiced as a compan
   const d = deps({ membership: { id: 'old', type: 'member' } });
   const b = booking({ billing: 'company', company_name: 'Acme (Pty) Ltd', company_vat: '4123' });
   await F.provision(b, d);
-  assert.deepEqual(names(d), ['findMembership', 'findCompany', 'createCompany', 'checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d), ['findMembership', 'findCompany', 'createCompany', 'checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
   assert.equal(b.spacebring.existing_member, true);
   assert.equal(d.calls.find(c => c[0] === 'createInvoice')[1].companyRef, 'co1');
   assert.match(d.calls.find(c => c[0] === 'createBooking')[1].title, /Acme \(Pty\) Ltd/);
+});
+
+test('provision: Spacebring says 0 on create, the re-read total is what is checked', async () => {
+  const ok = deps({ total: 0, fetchedTotal: 805 }); const b = booking();
+  assert.equal((await F.provision(b, ok)).state, 'held');
+  assert.ok(names(ok).includes('issueInvoice'));
+  const wrong = deps({ total: 0, fetchedTotal: 700 }); const c = booking();
+  assert.equal((await F.provision(c, wrong)).state, 'attention');
+  assert.ok(!names(wrong).includes('issueInvoice'));
 });
 
 test('provision: a slot that has gone is a clash, nothing is created', async () => {
@@ -377,7 +387,7 @@ test('provision: a failure half way resumes at the failed step, never repeating 
   assert.equal((await F.provision(b, d)).state, 'attention');
   const d2 = deps(); b.status = 'received';
   assert.equal((await F.provision(b, d2)).state, 'held');
-  assert.deepEqual(names(d2), ['checkAvailability', 'createBooking', 'createInvoice', 'issueInvoice']);
+  assert.deepEqual(names(d2), ['checkAvailability', 'createBooking', 'createInvoice', 'getInvoice', 'issueInvoice']);
 });
 
 test('provision: dry mode touches nothing in Spacebring', async () => {
@@ -493,5 +503,32 @@ test('the enquiry auto-reply goes to boardroom enquiries only', async () => {
 test('the Spacebring client exposes what the flow calls', () => {
   for (const fn of ['findMembershipByEmail', 'findCompanyByTitle', 'listBookings', 'checkAvailability', 'createBooking', 'updateBooking', 'cancelBooking', 'createInvoice', 'issueInvoice', 'getInvoice', 'voidInvoice']) {
     assert.equal(typeof SB[fn], 'function', fn);
+  }
+});
+
+test('every time sent to Spacebring ends in Z, even when the database gives +00:00', async () => {
+  assert.equal(SB.iso('2026-12-04T12:00:00+00:00'), '2026-12-04T12:00:00.000Z');
+  assert.equal(SB.iso('2026-12-04T14:00:00+02:00'), '2026-12-04T12:00:00.000Z');
+  assert.throws(() => SB.iso('not a date'));
+  const saved = { id: process.env.SPACEBRING_CLIENT_ID, secret: process.env.SPACEBRING_CLIENT_SECRET };
+  const realFetch = global.fetch; const bodies = [];
+  global.fetch = async (url, opts) => { bodies.push(JSON.parse(opts.body || '{}')); return { ok: true, text: async () => '{"available":true,"booking":{"id":"b"},"invoice":{"id":"i"}}' }; };
+  try {
+    delete require.cache[require.resolve('../netlify/functions/_spacebring')];
+    process.env.SPACEBRING_CLIENT_ID = 'x'; process.env.SPACEBRING_CLIENT_SECRET = 'y';
+    const S2 = require('../netlify/functions/_spacebring');
+    const s = '2026-12-04T12:00:00+00:00', e = '2026-12-04T13:00:00+00:00';
+    await S2.checkAvailability({ resourceRef: 'r', startDate: s, endDate: e });
+    await S2.createBooking({ resourceRef: 'r', startDate: s, endDate: e, membershipRefOwner: 'm' });
+    await S2.createInvoice({ membershipRef: 'm', dueDate: s, items: [{ title: 't', unitAmount: 1 }] });
+    assert.equal(bodies[0].startDate, '2026-12-04T12:00:00.000Z');
+    assert.equal(bodies[0].endDate, '2026-12-04T13:00:00.000Z');
+    assert.equal(bodies[1].booking.startDate, '2026-12-04T12:00:00.000Z');
+    assert.equal(bodies[2].invoice.dueDate, '2026-12-04T12:00:00.000Z');
+  } finally {
+    global.fetch = realFetch;
+    if (saved.id === undefined) delete process.env.SPACEBRING_CLIENT_ID; else process.env.SPACEBRING_CLIENT_ID = saved.id;
+    if (saved.secret === undefined) delete process.env.SPACEBRING_CLIENT_SECRET; else process.env.SPACEBRING_CLIENT_SECRET = saved.secret;
+    delete require.cache[require.resolve('../netlify/functions/_spacebring')];
   }
 });

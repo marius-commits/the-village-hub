@@ -262,9 +262,9 @@ function deps(opts) {
     createMembership: async (x) => { calls.push(['createMembership', x]); return { id: 'mem-1' }; },
     checkAvailability: async (x) => { calls.push(['checkAvailability', x]); return { available: o.available !== false, reason: o.available === false ? { message: 'no seats' } : null }; },
     createBooking: async (x) => { calls.push(['createBooking', x]); return { id: 'bk-1' }; },
-    createInvoice: async (x) => { calls.push(['createInvoice', x]); return { id: 'inv-1', totalAmount: o.total !== undefined ? o.total : 138 }; },
+    createInvoice: async (x) => { calls.push(['createInvoice', x]); return { id: 'inv-1', totalAmount: 0 }; }, // Spacebring answers 0 on create
     issueInvoice: async (id) => { calls.push(['issueInvoice', id]); return { id, title: 'INV-77', pdfUrl: 'https://x/inv.pdf' }; },
-    getInvoice: async () => ({ id: 'inv-1', status: o.invoiceStatus || 'issued', title: 'INV-77' }),
+    getInvoice: async () => ({ id: 'inv-1', status: o.invoiceStatus || 'issued', title: 'INV-77', totalAmount: o.total !== undefined ? o.total : 138 }),
     updateBooking: async (id, x) => { calls.push(['updateBooking', id, x]); return {}; },
     cancelBooking: async (id) => { calls.push(['cancelBooking', id]); },
     voidInvoice: async (id) => { calls.push(['voidInvoice', id]); },

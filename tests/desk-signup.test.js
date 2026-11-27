@@ -212,11 +212,9 @@ test('a sign-up is saved, accepted, and both emails go out, once', async () => {
   assert.ok(f.events.some(e => e[0] === 'mirror'));
 });
 
-test('Francois is on the default team list for every alert', () => {
-  assert.ok(L.STAFF_EMAILS.includes('francois@brick-field.co.za'));
-  assert.ok(L.STAFF_EMAILS.includes('schalk@villagehub.co.za'));
-  assert.ok(L.STAFF_EMAILS.includes('marius@brick-field.co.za'));
-  assert.ok(L.STAFF_EMAILS.includes('christel@villagehub.co.za'));
+test('team alerts go to the Hub inbox and Schalk, not Brickfield addresses', () => {
+  assert.deepEqual(L.STAFF_EMAILS, ['hello@villagehub.co.za', 'schalk@villagehub.co.za']);
+  assert.ok(!L.STAFF_EMAILS.some(e => /brick-field/.test(e)));
 });
 
 test('a refused sign-up saves nothing and sends nothing', async () => {

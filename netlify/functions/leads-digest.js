@@ -15,6 +15,8 @@ const L = require('./_lib');
 const T = require('./_emails');
 const D = require('./_digest');
 
+// WhatsApp copies of the digest go to these people's phones (wa_team_members).
+// The email copy goes to the shared team list (L.STAFF_EMAILS).
 const RECIPIENTS = [
   'marius@brick-field.co.za',
   'christel@villagehub.co.za',
@@ -113,7 +115,7 @@ exports.handler = async function (event) {
     if (digest.skip) return L.ok({ skipped: true, reason: digest.reason });
 
     const mail = T.leadsDigest(digest);
-    const emailed = await L.sendEmail({ to: RECIPIENTS, subject: mail.subject, html: mail.html });
+    const emailed = await L.sendEmail({ to: L.STAFF_EMAILS, subject: mail.subject, html: mail.html });
     let whatsapp = { queued: [], skipped: 'not attempted' };
     try { whatsapp = await queueWhatsApp(digest); }
     catch (err) { console.error('whatsapp queue failed:', err.message); whatsapp = { error: err.message }; }

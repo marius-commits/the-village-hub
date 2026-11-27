@@ -83,6 +83,7 @@ async function run(payload, io) {
     const tenMinutesAgo = new Date(now.getTime() - 10 * 60_000).toISOString();
     const dupes = await io.select(
       `email=eq.${encodeURIComponent(row.email)}&starts_at=eq.${encodeURIComponent(row.starts_at)}&created_at=gte.${tenMinutesAgo}` +
+      '&status=not.in.(cancelled,released,clash)' +
       '&select=id,reference,route,status,room_title&order=created_at.desc&limit=1');
     if (dupes && dupes.length) {
       return { status: 200, body: { reference: dupes[0].reference, route: dupes[0].route, state: dupes[0].status, room: dupes[0].room_title, already_received: true } };

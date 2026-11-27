@@ -29,8 +29,8 @@ const MAX_ROOM_GUESTS = 12;
 const MAX_EVENT_GUESTS = 60;
 
 // Online booking hours, South African time, Monday to Friday.
-const OPEN_MIN  = 8 * 60;
-const CLOSE_MIN = 17 * 60;
+const OPEN_MIN  = 7 * 60;
+const CLOSE_MIN = 20 * 60;
 const STEP_MIN = 30;
 const MIN_DURATION = 60;
 // A slot that starts sooner than this cannot wait for an invoice to be paid.
@@ -283,7 +283,7 @@ const REASON_TEXT = {
   more_than_12_guests: 'More than 12 guests, so this needs the open floor (Saturdays) or a tailored set-up',
   saturday: 'A Saturday. Saturday hire is quoted, not booked online',
   sunday: 'A Sunday. Sunday hire is by arrangement',
-  outside_hours: 'Outside 08:00 to 17:00. After-hours hire is by arrangement',
+  outside_hours: 'Outside 07:00 to 20:00, so it is by arrangement',
   short_notice: 'Starts within the hour, too soon to hold online',
 };
 
