@@ -496,3 +496,30 @@ test('the Spacebring client exposes what the flow calls', () => {
     assert.equal(typeof SB[fn], 'function', fn);
   }
 });
+
+test('every time sent to Spacebring ends in Z, even when the database gives +00:00', async () => {
+  assert.equal(SB.iso('2026-12-04T12:00:00+00:00'), '2026-12-04T12:00:00.000Z');
+  assert.equal(SB.iso('2026-12-04T14:00:00+02:00'), '2026-12-04T12:00:00.000Z');
+  assert.throws(() => SB.iso('not a date'));
+  const saved = { id: process.env.SPACEBRING_CLIENT_ID, secret: process.env.SPACEBRING_CLIENT_SECRET };
+  const realFetch = global.fetch; const bodies = [];
+  global.fetch = async (url, opts) => { bodies.push(JSON.parse(opts.body || '{}')); return { ok: true, text: async () => '{"available":true,"booking":{"id":"b"},"invoice":{"id":"i"}}' }; };
+  try {
+    delete require.cache[require.resolve('../netlify/functions/_spacebring')];
+    process.env.SPACEBRING_CLIENT_ID = 'x'; process.env.SPACEBRING_CLIENT_SECRET = 'y';
+    const S2 = require('../netlify/functions/_spacebring');
+    const s = '2026-12-04T12:00:00+00:00', e = '2026-12-04T13:00:00+00:00';
+    await S2.checkAvailability({ resourceRef: 'r', startDate: s, endDate: e });
+    await S2.createBooking({ resourceRef: 'r', startDate: s, endDate: e, membershipRefOwner: 'm' });
+    await S2.createInvoice({ membershipRef: 'm', dueDate: s, items: [{ title: 't', unitAmount: 1 }] });
+    assert.equal(bodies[0].startDate, '2026-12-04T12:00:00.000Z');
+    assert.equal(bodies[0].endDate, '2026-12-04T13:00:00.000Z');
+    assert.equal(bodies[1].booking.startDate, '2026-12-04T12:00:00.000Z');
+    assert.equal(bodies[2].invoice.dueDate, '2026-12-04T12:00:00.000Z');
+  } finally {
+    global.fetch = realFetch;
+    if (saved.id === undefined) delete process.env.SPACEBRING_CLIENT_ID; else process.env.SPACEBRING_CLIENT_ID = saved.id;
+    if (saved.secret === undefined) delete process.env.SPACEBRING_CLIENT_SECRET; else process.env.SPACEBRING_CLIENT_SECRET = saved.secret;
+    delete require.cache[require.resolve('../netlify/functions/_spacebring')];
+  }
+});

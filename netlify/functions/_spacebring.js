@@ -111,6 +111,17 @@ async function call(method, path, body) {
   return data;
 }
 
+// Spacebring only accepts UTC timestamps written with a trailing Z
+// (2026-12-04T12:00:00.000Z). Supabase hands timestamps back as
+// 2026-12-04T12:00:00+00:00, which Spacebring rejects with
+// "Invalid request parameters". Every time sent to it goes through this.
+function iso(value) {
+  if (value === undefined || value === null || value === '') return value;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) throw new Error(`Not a valid date for Spacebring: ${value}`);
+  return d.toISOString();
+}
+
 // The API wraps some responses twice ({contract:{contract:{...}}}).
 function unwrap(data, key) {
   let v = data && data[key];
@@ -248,8 +259,8 @@ function findCompanyByTitle(title) {
 function listBookings({ resourceRef, from, to }) {
   const q = [
     `resourceRef=${encodeURIComponent(resourceRef)}`,
-    `startDate%5Blt%5D=${encodeURIComponent(to)}`,
-    `endDate%5Bgt%5D=${encodeURIComponent(from)}`,
+    `startDate%5Blt%5D=${encodeURIComponent(iso(to))}`,
+    `endDate%5Bgt%5D=${encodeURIComponent(iso(from))}`,
     'status=tentative,confirmed',
     'singleBookings=true',
     'order=startDate:asc',
@@ -260,7 +271,7 @@ function listBookings({ resourceRef, from, to }) {
 
 // The same rules as creating the booking: clashes, schedule, booking window.
 function checkAvailability({ resourceRef, startDate, endDate }) {
-  return call('POST', `/resources/v1/${resourceRef}/availability`, { startDate, endDate })
+  return call('POST', `/resources/v1/${resourceRef}/availability`, { startDate: iso(startDate), endDate: iso(endDate) })
     .then(d => ({ available: Boolean(d && d.available), reason: (d && d.reason) || null }));
 }
 
@@ -271,7 +282,7 @@ function checkAvailability({ resourceRef, startDate, endDate }) {
 function createBooking({ resourceRef, startDate, endDate, membershipRefOwner, title, memo, metadata }) {
   return call('POST', '/resources/bookings/v1', {
     booking: {
-      resourceRef, startDate, endDate, membershipRefOwner,
+      resourceRef, startDate: iso(startDate), endDate: iso(endDate), membershipRefOwner,
       sendUpdates: 'none',
       ...(title ? { title } : {}),
       ...(memo ? { memo } : {}),
@@ -281,7 +292,10 @@ function createBooking({ resourceRef, startDate, endDate, membershipRefOwner, ti
 }
 
 function updateBooking(bookingId, booking) {
-  return call('PATCH', `/resources/bookings/v1/${bookingId}`, { booking: { sendUpdates: 'none', ...booking } })
+  const patch = { sendUpdates: 'none', ...booking };
+  if (patch.startDate) patch.startDate = iso(patch.startDate);
+  if (patch.endDate) patch.endDate = iso(patch.endDate);
+  return call('PATCH', `/resources/bookings/v1/${bookingId}`, { booking: patch })
     .then(d => unwrap(d, 'booking'));
 }
 
@@ -296,7 +310,7 @@ function createInvoice({ companyRef, membershipRef, items, dueDate, internalNote
   return call('POST', '/billing/invoices/v1', {
     invoice: {
       ...owner,
-      ...(dueDate ? { dueType: 'date', dueDate } : {}),
+      ...(dueDate ? { dueType: 'date', dueDate: iso(dueDate) } : {}),
       ...(internalNote ? { internalNote } : {}),
     },
     items: (items || []).map(i => ({
@@ -335,7 +349,7 @@ module.exports = {
   createCompany, createMembership, createContract, issueContract, getContract,
   createSubscription, getSubscription, createSubscriptionItem, updateSubscriptionItem,
   listInvoices,
-  findMembershipByEmail, findCompanyByTitle, listBookings, checkAvailability,
+  iso, findMembershipByEmail, findCompanyByTitle, listBookings, checkAvailability,
   createBooking, updateBooking, cancelBooking,
   createInvoice, issueInvoice, getInvoice, voidInvoice, deleteInvoice,
 };
