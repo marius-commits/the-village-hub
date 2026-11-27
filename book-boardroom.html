@@ -31,7 +31,10 @@
     .bar{ position:relative; height:14px; border-radius:7px; background:#e9efd9; overflow:hidden; }
     .bar i{ position:absolute; top:0; bottom:0; background:#c9b8a3; }
     .bar b{ position:absolute; top:0; bottom:0; background:var(--vh-bark); border-radius:3px; }
-    .ticks{ display:flex; justify-content:space-between; font-size:10px; color:#8a7f72; margin-top:3px; }
+    .ticks{ position:relative; height:14px; font-size:10px; color:#8a7f72; margin-top:3px; }
+    .ticks span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
+    .ticks span:first-child{ transform:none; }
+    .ticks span:last-child{ transform:translateX(-100%); }
     .chips{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
     @media(min-width:640px){ .chips{ grid-template-columns:repeat(7,minmax(0,1fr)); } }
     .chip{ border:1px solid #d9cdbb; border-radius:8px; padding:.5rem 0; font-size:14px; font-weight:600; text-align:center; background:#fff; color:var(--vh-bark-deep); cursor:pointer; min-height:40px; font-family:inherit; }
@@ -113,7 +116,7 @@
         <p class="hint mt-3"><span style="display:inline-block;width:10px;height:10px;background:#e9efd9;border-radius:2px;vertical-align:middle"></span> free
           &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#c9b8a3;border-radius:2px;vertical-align:middle"></span> taken
           &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#6B4423;border-radius:2px;vertical-align:middle"></span> your slot.
-          Online booking is Monday to Friday, 08:00 to 17:00.
+          Online booking is Monday to Friday, 07:00 to 20:00.
           <a href="#" id="afterHours" class="underline text-[#6B4423]">Need a time outside those hours?</a></p>
       </div>
       <p class="err-msg" id="err-slot">Please choose a start time.</p>
@@ -220,7 +223,7 @@
 
       <label class="flex gap-3 items-start text-sm text-gray-700">
         <input type="checkbox" id="terms_accepted" class="mt-1" style="accent-color:#6B4423">
-        <span>I accept the <a href="/terms" target="_blank" rel="noopener" class="underline text-[#6B4423]">Village Hub terms</a>. Paying the invoice confirms the booking. An unpaid hold lapses at the time shown in my email.</span>
+        <span>I accept the <a href="/terms" target="_blank" rel="noopener" class="underline text-[#6B4423]">Village Hub terms</a>. My booking is confirmed once the invoice is paid. If it is not paid by the time in my email, the room is released.</span>
       </label>
       <p class="err-msg" id="err-terms">Please accept the terms to book.</p>
 
@@ -232,8 +235,8 @@
 
       <div id="errBox" class="rounded-lg px-4 py-3 text-sm" style="background:#fdecea" role="alert" hidden></div>
 
-      <button type="submit" id="send" class="btn btn-sage w-full">Hold my slot</button>
-      <p class="text-xs text-gray-500 text-center" id="sendHint">Nothing is charged now. We hold the room and email your invoice.</p>
+      <button type="submit" id="send" class="btn btn-sage w-full">Book now</button>
+      <p class="text-xs text-gray-500 text-center" id="sendHint">Nothing is charged now. We reserve the room and email your invoice.</p>
     </div>
   </form>
 
@@ -283,7 +286,7 @@
     chamber:   { title: 'Village Chamber',   capacity: 10, rate: 350 },
     boardroom: { title: 'Village Boardroom', capacity: 12, rate: 390 }
   };
-  var OPEN = 480, CLOSE = 1020, STEP = 30, MAX_ROOM = 12;
+  var OPEN = 420, CLOSE = 1200, STEP = 30, MAX_ROOM = 12;
 
   var state = { day: null, room: null, start: null, manual: false, loading: false, wantRoom: null };
 
@@ -302,7 +305,7 @@
   // Durations: 1 hour to 11 hours in half-hour steps.
   (function(){
     var sel = $('#duration');
-    for(var m = 60; m <= 660; m += 30){ var o = document.createElement('option'); o.value = m; o.textContent = durLabel(m); if(m === 120) o.selected = true; sel.appendChild(o); }
+    for(var m = 60; m <= 780; m += 30){ var o = document.createElement('option'); o.value = m; o.textContent = durLabel(m); if(m === 120) o.selected = true; sel.appendChild(o); }
     var man = $('#startManual');
     for(var t = 360; t <= 1320; t += 30){ var p = document.createElement('option'); p.value = hhmm(t); p.textContent = hhmm(t); if(t === 540) p.selected = true; man.appendChild(p); }
   })();
@@ -315,7 +318,7 @@
     if(g && g > MAX_ROOM) return 'Our two boardrooms seat up to 12. For ' + g + ' people we quote the open floor, which is available on Saturdays for corporate events of up to 60. Send the details and we come back with a quote within one business day.';
     if(wd === 6) return 'Saturdays are quoted, not booked online. Send the details and we come back with availability and a quote within one business day.';
     if(wd === 0) return 'Sunday hire is by arrangement. Send the details and we come back to you within one business day.';
-    if(state.manual) return 'Times outside 08:00 to 17:00 are by arrangement. Send the details and we come back with a quote within one business day.';
+    if(state.manual) return 'Times outside 07:00 to 20:00 are by arrangement. Send the details and we come back with a quote within one business day.';
     return null;
   }
   function isQuote(){ return Boolean(quoteWhy()); }
@@ -353,7 +356,9 @@
       }
       card.appendChild(bar);
       var ticks = document.createElement('div'); ticks.className = 'ticks'; ticks.setAttribute('aria-hidden', 'true');
-      ticks.innerHTML = '<span>08:00</span><span>11:00</span><span>14:00</span><span>17:00</span>'; card.appendChild(ticks);
+      var marks = [OPEN, 600, 780, 960, CLOSE];
+      ticks.innerHTML = marks.map(function(m){ return '<span style="left:' + ((m - OPEN) / (CLOSE - OPEN) * 100) + '%">' + hhmm(m) + '</span>'; }).join('');
+      card.appendChild(ticks);
 
       if(tooSmall){
         var p = document.createElement('p'); p.className = 'text-sm text-gray-600 mt-3'; p.textContent = 'Seats ' + room.capacity + ', too small for ' + g + ' people.'; card.appendChild(p);
@@ -370,12 +375,21 @@
           chips.appendChild(btn); if(ok) free++;
         }
         card.appendChild(chips);
-        if(!free){ var none = document.createElement('p'); none.className = 'text-sm text-gray-600 mt-3'; none.textContent = 'No free ' + durLabel(dur) + ' slot here on this day. Try a shorter booking, the other room or another date.'; card.appendChild(none); }
+        if(!free){ var none = document.createElement('p'); none.className = 'text-sm text-gray-600 mt-3'; var gaps = freeGaps(room); none.textContent = (gaps.length ? 'Free ' + gaps.join(' and ') + ', but not long enough for ' + durLabel(dur) + '. Try a shorter booking, the other room or another date.' : 'Fully booked on this day. Try the other room or another date.'); card.appendChild(none); }
         else any = true;
       }
       wrap.appendChild(card);
     });
     $('#availTitle').textContent = any ? 'Choose a start time for ' + durLabel(dur) : 'Nothing free for ' + durLabel(dur) + ' on this day';
+  }
+
+  // The open stretches of a room's day, e.g. "08:00 to 10:00".
+  function freeGaps(room){
+    var start = Math.max(OPEN, state.day ? state.day.earliest_minutes : OPEN), out = [];
+    var busy = (room.busy || []).slice().sort(function(a, b){ return a.start_min - b.start_min; });
+    busy.forEach(function(b){ if(b.start_min > start && b.start_min - start >= STEP) out.push(hhmm(start) + ' to ' + hhmm(Math.min(b.start_min, CLOSE))); start = Math.max(start, b.end_min); });
+    if(CLOSE - start >= STEP) out.push(hhmm(start) + ' to ' + hhmm(CLOSE));
+    return out.filter(function(g){ return g.slice(0, 5) < hhmm(CLOSE); });
   }
 
   function pick(roomKey, start){
@@ -440,12 +454,12 @@
       box.innerHTML = '<strong>Quote request</strong><br>' + niceDate(d) + ', from ' + $('#startManual').value + ' for ' + durLabel(dur) + ', ' + g + ' people.<br>We come back with availability and a price within one business day.';
       return;
     }
-    hint.textContent = 'Nothing is charged now. We hold the room and email your invoice.';
-    if(!d || !g || !s){ box.textContent = 'Choose a date, the number of people and a start time to see your price.'; btn.textContent = 'Hold my slot'; return; }
+    hint.textContent = 'Nothing is charged now. We reserve the room and email your invoice.';
+    if(!d || !g || !s){ box.textContent = 'Choose a date, the number of people and a start time to see your price.'; btn.textContent = 'Book now'; return; }
     var room = ROOMS[s.room], ex = Math.round(room.rate * dur / 60 * 100) / 100, incl = Math.round(ex * 1.15 * 100) / 100;
     box.innerHTML = '<strong>' + room.title + '</strong>, ' + niceDate(d) + '<br>' + hhmm(s.start) + ' to ' + hhmm(s.start + dur) + ' (' + durLabel(dur) + '), ' + g + ' people<br>' +
       '<strong>' + rand(ex) + '</strong> excl. VAT (' + rand(incl) + ' incl. VAT), at ' + rand(room.rate) + ' an hour';
-    btn.textContent = 'Hold my slot for ' + rand(incl);
+    btn.textContent = 'Book now for ' + rand(incl);
   }
 
   // --- field wiring ---------------------------------------------------------
@@ -519,7 +533,7 @@
     var errBox = $('#errBox'); errBox.hidden = true;
     if(!validate()) return;
     var s = slot(), btn = $('#send'), label = btn.textContent, quote = isQuote();
-    sending = true; btn.disabled = true; btn.textContent = quote ? 'Sending…' : 'Holding your slot…';
+    sending = true; btn.disabled = true; btn.textContent = quote ? 'Sending…' : 'Booking…';
 
     var payload = {
       date: $('#date').value, start: hhmm(s.start), duration_minutes: duration(), guests: guests(),
@@ -557,14 +571,14 @@
       $('#refOut').textContent = data.reference;
       $('#slotOut').textContent = (data.room ? data.room + ', ' : '') + when;
       if(data.route === 'quote'){
-        $('#doneTitle').textContent = 'Your quote request is in';
-        $('#doneText').textContent = 'We come back to you with availability and a price within one business day.';
+        $('#doneTitle').textContent = 'Thanks, we have your request';
+        $('#doneText').textContent = 'We will send you availability and a quote within one business day.';
       } else if(data.state === 'held'){
-        $('#doneTitle').textContent = 'Your room is held';
-        $('#doneText').textContent = 'Your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT is on its way by email. Pay it and the booking is confirmed. On the day your Wi-Fi code comes by WhatsApp.';
+        $('#doneTitle').textContent = 'Your room is reserved';
+        $('#doneText').textContent = 'Your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT is on its way by email. Once it is paid, your booking is confirmed. On the day, we will WhatsApp you the Wi-Fi code.';
       } else {
-        $('#doneTitle').textContent = 'We have your booking';
-        $('#doneText').textContent = 'The slot was free when you sent this. We put the room on hold and email your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT, usually within the hour during office hours. Paying it confirms the booking.';
+        $('#doneTitle').textContent = 'Thanks, we have your booking request';
+        $('#doneText').textContent = 'We will reserve the room for you and email your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT, usually within an hour during office hours. Once it is paid, your booking is confirmed.';
       }
       $('#emailLine').textContent = data.email_sent === false
         ? 'Your request is saved. The confirmation email did not send, so please keep this reference. We will be in touch on the number you gave.'
