@@ -174,7 +174,7 @@ async function provision(b, d) {
       const issued = dry ? { id: sb(b).invoice_id, title: 'DRY-RUN', pdfUrl: null } : await d.sb.issueInvoice(sb(b).invoice_id);
       await save(b, {
         status: dry ? 'received' : 'held',
-        spacebring: { ...sb(b), invoice_title: (issued && issued.title) || null, invoice_pdf_url: (issued && issued.pdfUrl) || null },
+        spacebring: { ...sb(b), invoice_title: (issued && issued.title) || null, invoice_pdf_url: (issued && (issued.hostedInvoiceUrl || issued.pdfUrl)) || null },
       }, d);
       await record(b, 'invoice_issued', { dry }, d);
       await d.store.log(b.id, dry ? 'dry_run_complete' : 'held', 'system', { invoice: (issued && issued.title) || null });
@@ -251,7 +251,7 @@ async function sync(b, d) {
   // One reminder, once half the hold has gone.
   if (!steps(b).reminder && now.getTime() >= created + (expires - created) / 2) {
     await record(b, 'reminder', null, d);
-    await d.mail.reminder(b, pr, { invoiceUrl: (invoice && invoice.pdfUrl) || refs.invoice_pdf_url || null });
+    await d.mail.reminder(b, pr, { invoiceUrl: (invoice && (invoice.hostedInvoiceUrl || invoice.pdfUrl)) || refs.invoice_pdf_url || null });
     await d.store.log(b.id, 'reminder_sent', 'system', null);
     return { changed: true, state: 'held' };
   }
