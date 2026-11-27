@@ -68,6 +68,26 @@ async function notifyStaff(params, event, f) {
   } catch (err) { console.error('submit-lead: staff notification failed:', err.message); }
 }
 
+// The first gate. A boardroom or meeting-room enquiry from a website form
+// arrives without the date, the headcount or what is needed, so the person
+// gets an immediate reply with the link to the booking page, which asks for
+// all of it and shows live availability. Saturday corporate event enquiries
+// are left alone: that form already collects what a quote needs.
+// BOARDROOM_AUTOREPLY=false switches this off. Never fails the submission.
+async function boardroomAutoReply(f) {
+  if (String(process.env.BOARDROOM_AUTOREPLY || 'true').toLowerCase() === 'false') return false;
+  if (!L.validEmail(f.email)) return false;
+  if (/corporate event|saturday/i.test(`${f.planInterest} ${f.leadSource}`)) return false;
+  const product = productFor(f.planInterest, f.leadSource);
+  if (product !== 'boardroom' && product !== 'meeting_room') return false;
+  try {
+    const mail = require('./_boardroom_emails').enquiryReply({ first_name: f.firstName }, `${L.SITE_URL}/book-boardroom`);
+    const r = await L.sendEmail({ to: f.email.trim(), subject: mail.subject, html: mail.html, replyTo: L.NOTIFY_EMAIL, client: true });
+    return Boolean(r) && !r.error && !r.skipped;
+  } catch (err) { console.error('submit-lead: boardroom auto-reply failed:', err.message); return false; }
+}
+
+exports.boardroomAutoReply = boardroomAutoReply;
 exports.handler = async function (event) {
     if (event.httpMethod !== 'POST') {
           return { statusCode: 405, body: 'Method Not Allowed' };
@@ -105,7 +125,7 @@ exports.handler = async function (event) {
       }
 
       const fields = { firstName, lastName, email, phone, company, planInterest, preferredDate, description: fullDescription, leadSource };
-      await Promise.all([saveLead(params, event, fields), notifyStaff(params, event, fields)]);
+      await Promise.all([saveLead(params, event, fields), notifyStaff(params, event, fields), boardroomAutoReply(fields)]);
 
       // Forms that already post to Zoho themselves (e.g. the boardroom form) send
       // skip_zoho=1 so the lead is tracked and notified without a duplicate in Zoho.

@@ -561,4 +561,6 @@ module.exports = {
   accessRequested, accessApproved, leadsDigest,
   activated, mailDesk, onboardingAttention,
   deskReceived, deskStaffAlert, deskWelcome, deskPaid, deskReminder, deskStalled,
+  // Building blocks, shared with _boardroom_emails.js.
+  shell, button, esc, BRAND, HUB_WHATSAPP,
 };

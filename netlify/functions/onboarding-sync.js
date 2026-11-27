@@ -15,6 +15,8 @@ const SB = require('./_spacebring');
 const O  = require('./_onboarding');
 const Live = require('./_onboarding_live');
 const Followup = require('./_desk_followup');
+const Boardroom = require('./_boardroom_flow');
+const BoardroomLive = require('./_boardroom_live');
 
 const STALL_MS = 3 * 60 * 1000;
 
@@ -42,7 +44,15 @@ exports.handler = async function () {
     } catch (err) { console.error('desk follow-up failed:', err.message); }
   }
 
-  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true, followup });
+  // Boardroom holds: paid, reminder due, or lapsed. Has its own switch
+  // (BOARDROOM_BOOKING), separate from the membership automation below.
+  let boardroom = null;
+  if (L.configured() && SB.credentialsSet()) {
+    try { boardroom = await Boardroom.run(BoardroomLive.deps()); }
+    catch (err) { console.error('boardroom sync failed:', err.message); }
+  }
+
+  if (SB.mode() !== 'live' || !L.configured()) return L.ok({ skipped: true, followup, boardroom });
 
   const apps = await L.selectRows(
     'applications',
@@ -69,5 +79,5 @@ exports.handler = async function () {
       console.error('onboarding-sync failed for', app.reference, err.message);
     }
   }
-  return L.ok({ checked: (apps || []).length, moved, resumed, followup });
+  return L.ok({ checked: (apps || []).length, moved, resumed, followup, boardroom });
 };

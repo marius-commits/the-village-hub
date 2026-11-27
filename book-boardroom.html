@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Boardroom Online | The Village Hub, Stellenbosch</title>
+  <meta name="description" content="See live availability for the Village Boardroom (12 seats) and Village Chamber (10 seats) at The Village Hub, Stellenbosch. Hold your slot online and get your invoice by email." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.villagehub.co.za/book-boardroom" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/vh.css?v=3">
+  <style>
+    body{ background:var(--vh-linen); }
+    .hero-gradient{ background:linear-gradient(135deg,var(--vh-cream) 0%,var(--vh-sand) 100%); }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+    .card{ background:#fff; border:1px solid var(--vh-sand); border-radius:16px; box-shadow:var(--vh-shadow-soft); }
+    .field{ width:100%; border:1px solid #d9cdbb; border-radius:10px; padding:.7rem .85rem; font:inherit; font-size:16px; background:#fff; color:var(--vh-ink); }
+    .field:focus{ outline:none; border-color:var(--vh-sage); box-shadow:0 0 0 3px rgba(138,154,91,.2); }
+    .field.err{ border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12); }
+    .lbl{ display:block; font-size:13px; font-weight:600; color:#4a3f33; margin-bottom:5px; }
+    .hint{ font-size:12px; color:#7a6f62; margin-top:5px; line-height:1.5; }
+    .err-msg{ font-size:12px; color:#c0392b; margin-top:5px; display:none; }
+    .step-n{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:999px; background:var(--vh-bark); color:#fff; font-size:13px; font-weight:700; margin-right:10px; flex:none; }
+    .room{ border:2px solid var(--vh-sand); border-radius:14px; background:#fff; transition:border-color .15s, box-shadow .15s; }
+    .room.sel{ border-color:var(--vh-bark); box-shadow:0 0 0 3px rgba(107,68,35,.12); }
+    .room.off{ opacity:.55; }
+    .bar{ position:relative; height:14px; border-radius:7px; background:#e9efd9; overflow:hidden; }
+    .bar i{ position:absolute; top:0; bottom:0; background:#c9b8a3; }
+    .bar b{ position:absolute; top:0; bottom:0; background:var(--vh-bark); border-radius:3px; }
+    .ticks{ display:flex; justify-content:space-between; font-size:10px; color:#8a7f72; margin-top:3px; }
+    .chips{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+    @media(min-width:640px){ .chips{ grid-template-columns:repeat(7,minmax(0,1fr)); } }
+    .chip{ border:1px solid #d9cdbb; border-radius:8px; padding:.5rem 0; font-size:14px; font-weight:600; text-align:center; background:#fff; color:var(--vh-bark-deep); cursor:pointer; min-height:40px; font-family:inherit; }
+    .chip:hover{ border-color:var(--vh-sage); }
+    .chip.on{ background:var(--vh-bark); border-color:var(--vh-bark); color:#fff; }
+    .chip:disabled{ background:#f3eee7; color:#b9ad9d; border-color:#ece4d8; cursor:not-allowed; text-decoration:line-through; }
+    .opt{ display:flex; gap:10px; align-items:flex-start; border:1px solid #d9cdbb; border-radius:10px; padding:.7rem .85rem; cursor:pointer; background:#fff; font-size:14px; }
+    .opt:has(input:checked){ border-color:var(--vh-bark); background:#fbf6ee; }
+    .opt input{ margin-top:3px; accent-color:#6B4423; flex:none; }
+    .seg{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .note{ border-left:3px solid var(--vh-gold); background:#fff; border-radius:8px; padding:.8rem 1rem; font-size:14px; color:#4a3f33; }
+    .vh-wa{ display:none !important; }
+    .hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    [hidden]{ display:none !important; }
+  </style>
+  <!-- Google Ads conversion tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18265049370"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18265049370');
+  </script>
+</head>
+<body class="vh-page font-sans antialiased">
+
+<div data-vh-nav></div>
+
+<main class="pb-20">
+
+  <section class="hero-gradient pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-xs font-semibold text-[#8A9A5B] uppercase tracking-wider">Boardroom booking</p>
+      <h1 class="mt-2 text-3xl md:text-5xl font-extrabold font-display text-gray-900">Book your boardroom</h1>
+      <p class="mt-3 text-gray-600 max-w-xl mx-auto">See what is free, hold your slot and get your invoice by email. About two minutes.</p>
+      <p class="mt-4 text-sm text-gray-600">Village Boardroom, 12 seats, R390 an hour &middot; Village Chamber, 10 seats, R350 an hour &middot; excl. VAT</p>
+      <p class="mt-3"><a href="/boardroom-hire-stellenbosch" class="text-sm font-medium text-[#6B4423] hover:underline">&larr; About the rooms</a></p>
+    </div>
+  </section>
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+
+  <div id="formWrap">
+  <form id="bk" novalidate>
+
+    <!-- 1 -->
+    <h2 class="font-bold text-lg text-gray-900 mb-3 flex items-center"><span class="step-n">1</span>When, and how many people?</h2>
+    <div class="card p-5 sm:p-6 space-y-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div class="col-span-2 sm:col-span-1">
+          <label class="lbl" for="date">Date</label>
+          <input class="field" type="date" id="date" required>
+          <p class="err-msg">Please choose a date.</p>
+        </div>
+        <div>
+          <label class="lbl" for="guests">People</label>
+          <input class="field" type="number" id="guests" min="1" max="60" inputmode="numeric" placeholder="e.g. 8" required>
+          <p class="err-msg">How many people, 1 to 60?</p>
+        </div>
+        <div>
+          <label class="lbl" for="duration">How long</label>
+          <select class="field" id="duration"></select>
+        </div>
+      </div>
+
+      <div id="quoteNote" class="note" hidden></div>
+
+      <div id="manualTime" hidden>
+        <label class="lbl" for="startManual">Start time</label>
+        <select class="field" id="startManual"></select>
+      </div>
+
+      <div id="avail" hidden>
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-sm font-semibold text-gray-800" id="availTitle">Choose a start time</p>
+          <p class="text-xs text-gray-500 text-right whitespace-nowrap" id="availState" aria-live="polite"></p>
+        </div>
+        <div id="rooms" class="space-y-4"></div>
+        <p class="hint mt-3"><span style="display:inline-block;width:10px;height:10px;background:#e9efd9;border-radius:2px;vertical-align:middle"></span> free
+          &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#c9b8a3;border-radius:2px;vertical-align:middle"></span> taken
+          &nbsp; <span style="display:inline-block;width:10px;height:10px;background:#6B4423;border-radius:2px;vertical-align:middle"></span> your slot.
+          Online booking is Monday to Friday, 07:00 to 18:00.
+          <a href="#" id="afterHours" class="underline text-[#6B4423]">Need a time outside those hours?</a></p>
+      </div>
+      <p class="err-msg" id="err-slot">Please choose a start time.</p>
+      <p id="pickFirst" class="text-sm text-gray-500">Choose a date and the number of people to see what is free.</p>
+    </div>
+
+    <!-- 2 -->
+    <h2 class="font-bold text-lg text-gray-900 mt-8 mb-3 flex items-center"><span class="step-n">2</span>About your meeting</h2>
+    <div class="card p-5 sm:p-6 space-y-5">
+      <div>
+        <label class="lbl" for="meeting_type">Type of meeting or event</label>
+        <select class="field" id="meeting_type" required>
+          <option value="">Choose one</option>
+          <option value="board_meeting">Board or management meeting</option>
+          <option value="client_meeting">Client meeting or pitch</option>
+          <option value="strategy">Strategy or planning session</option>
+          <option value="workshop">Training or workshop</option>
+          <option value="interviews">Interviews</option>
+          <option value="video_call">Video conference</option>
+          <option value="corporate_event">Corporate event</option>
+          <option value="other">Something else</option>
+        </select>
+        <p class="err-msg">Please choose the type of meeting.</p>
+      </div>
+
+      <div>
+        <p class="lbl">What do you need in the room?</p>
+        <div class="space-y-2">
+          <label class="opt"><input type="checkbox" name="needs" value="screen"><span>Screen to present on (HDMI or USB-C)</span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="video_call"><span>Video call set-up (camera and room audio)</span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="setup_help"><span>Someone to help us set up on arrival</span></label>
+        </div>
+        <p class="hint">Included with every booking: coffee, tea and water, fibre Wi-Fi and parking at the door.</p>
+      </div>
+
+      <div>
+        <p class="lbl">Catering</p>
+        <div class="space-y-2">
+          <label class="opt"><input type="radio" name="catering" value="none" checked><span>No catering</span></label>
+          <label class="opt"><input type="radio" name="catering" value="own"><span>We bring our own</span></label>
+          <label class="opt"><input type="radio" name="catering" value="village_table"><span>Get me a quote from The Village Table, the restaurant downstairs<br><span class="text-xs text-gray-500">We put you in touch. They quote and bill you directly.</span></span></label>
+        </div>
+        <div id="cateringWrap" class="mt-3" hidden>
+          <label class="lbl" for="catering_notes">What would you like? <span class="font-normal text-gray-500">(optional)</span></label>
+          <input class="field" id="catering_notes" maxlength="600" placeholder="e.g. breakfast platters at 08:30, lunch for 8 at 12:30">
+        </div>
+      </div>
+
+      <div>
+        <label class="lbl" for="notes">Anything else we should know? <span class="font-normal text-gray-500">(optional)</span></label>
+        <textarea class="field" id="notes" rows="2" maxlength="1500"></textarea>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <h2 class="font-bold text-lg text-gray-900 mt-8 mb-3 flex items-center"><span class="step-n">3</span>Who is the invoice for?</h2>
+    <div class="card p-5 sm:p-6 space-y-4">
+      <div class="seg" role="radiogroup" aria-label="Invoice to">
+        <label class="opt"><input type="radio" name="billing" value="personal" checked><span>Me, in my own name</span></label>
+        <label class="opt"><input type="radio" name="billing" value="company"><span>A company</span></label>
+      </div>
+      <div id="companyWrap" class="grid sm:grid-cols-2 gap-4" hidden>
+        <div>
+          <label class="lbl" for="company_name">Company name</label>
+          <input class="field" id="company_name" autocomplete="organization" maxlength="160">
+          <p class="err-msg">Please give the company name for the invoice.</p>
+        </div>
+        <div>
+          <label class="lbl" for="company_vat">VAT number <span class="font-normal text-gray-500">(optional)</span></label>
+          <input class="field" id="company_vat" maxlength="40" inputmode="numeric">
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="lbl" for="first_name">First name</label>
+          <input class="field" id="first_name" autocomplete="given-name" required>
+          <p class="err-msg">Please give your first name.</p>
+        </div>
+        <div>
+          <label class="lbl" for="last_name">Last name</label>
+          <input class="field" id="last_name" autocomplete="family-name" required>
+          <p class="err-msg">Please give your last name.</p>
+        </div>
+        <div>
+          <label class="lbl" for="email">Email</label>
+          <input class="field" type="email" id="email" autocomplete="email" inputmode="email" required>
+          <p class="hint">Your invoice and confirmation go here.</p>
+          <p class="err-msg">Please give a valid email address.</p>
+        </div>
+        <div>
+          <label class="lbl" for="phone">Mobile number</label>
+          <input class="field" type="tel" id="phone" autocomplete="tel" inputmode="tel" placeholder="082 123 4567" required>
+          <p class="hint">Your Wi-Fi code comes by WhatsApp on the day.</p>
+          <p class="err-msg">Please give a number we can reach you on.</p>
+        </div>
+      </div>
+      <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website_url" tabindex="-1" autocomplete="off"></label></div>
+    </div>
+
+    <!-- 4 -->
+    <h2 class="font-bold text-lg text-gray-900 mt-8 mb-3 flex items-center"><span class="step-n">4</span>Check and confirm</h2>
+    <div class="card p-5 sm:p-6 space-y-4">
+      <div id="summary" class="note">Choose a date, the number of people and a start time to see your price.</div>
+
+      <label class="flex gap-3 items-start text-sm text-gray-700">
+        <input type="checkbox" id="terms_accepted" class="mt-1" style="accent-color:#6B4423">
+        <span>I accept the <a href="/terms" target="_blank" rel="noopener" class="underline text-[#6B4423]">Village Hub terms</a>. Paying the invoice confirms the booking. An unpaid hold lapses at the time shown in my email.</span>
+      </label>
+      <p class="err-msg" id="err-terms">Please accept the terms to book.</p>
+
+      <label class="flex gap-3 items-start text-sm text-gray-700">
+        <input type="checkbox" id="popia_consent" class="mt-1" style="accent-color:#6B4423">
+        <span>The Village Hub may use these details to make this booking, invoice it and contact me about it, as set out in the <a href="/privacy" target="_blank" rel="noopener" class="underline text-[#6B4423]">privacy notice</a>.</span>
+      </label>
+      <p class="err-msg" id="err-consent">We cannot make a booking without this.</p>
+
+      <div id="errBox" class="rounded-lg px-4 py-3 text-sm" style="background:#fdecea" role="alert" hidden></div>
+
+      <button type="submit" id="send" class="btn btn-sage w-full">Hold my slot</button>
+      <p class="text-xs text-gray-500 text-center" id="sendHint">Nothing is charged now. We hold the room and email your invoice.</p>
+    </div>
+  </form>
+
+  <p class="text-center text-xs text-gray-500 mt-6">
+    Already a member? Book in the <a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" class="text-[#6B4423] underline">member app</a> to use your credits and member rate.
+    Rather talk first? <a href="https://wa.me/27632603513?text=Hi%20Village%20Hub%2C%20I%27d%20like%20to%20book%20a%20boardroom" class="text-[#6B4423] underline">WhatsApp us</a>
+    or call <a href="tel:+27632603513" class="text-[#6B4423] underline">+27 63 260 3513</a>.
+  </p>
+  </div>
+
+  <div id="done" hidden>
+    <div class="card p-8 text-center">
+      <div class="mx-auto w-14 h-14 rounded-full flex items-center justify-center" style="background:#f0f4e8">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A9A5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 class="mt-5 text-2xl font-extrabold font-display text-gray-900" tabindex="-1" id="doneTitle"></h1>
+      <p class="mt-3 text-gray-600" id="doneText"></p>
+      <div class="mt-6 inline-block text-left px-6 py-4 rounded-lg" style="background:var(--vh-linen);border-left:3px solid var(--vh-gold)">
+        <div class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Your reference</div>
+        <div class="text-xl font-bold text-[#6B4423] mt-0.5" id="refOut"></div>
+        <div class="text-sm text-gray-700 mt-2" id="slotOut"></div>
+      </div>
+      <p class="mt-6 text-sm text-gray-600" id="emailLine"></p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-sage">Back to the Hub</a>
+        <a href="https://wa.me/27632603513" class="btn btn-outline-sage">WhatsApp us</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<div data-vh-footer></div>
+
+<script>
+(function(){
+  'use strict';
+  var $  = function(s){ return document.querySelector(s); };
+  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var form = $('#bk');
+  var DRAFT_KEY = 'vh_boardroom_draft';
+
+  // Must match netlify/functions/_boardroom.js. tests/boardroom.test.js checks
+  // that the two agree, so a rate changed in one place fails the build.
+  var ROOMS = {
+    chamber:   { title: 'Village Chamber',   capacity: 10, rate: 350 },
+    boardroom: { title: 'Village Boardroom', capacity: 12, rate: 390 }
+  };
+  var OPEN = 420, CLOSE = 1080, STEP = 30, MAX_ROOM = 12;
+
+  var state = { day: null, room: null, start: null, manual: false, loading: false, wantRoom: null };
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function hhmm(m){ return pad(Math.floor(m / 60)) + ':' + pad(m % 60); }
+  function rand(n){
+    var fixed = Number(n).toFixed(2).split('.');
+    return 'R' + fixed[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (fixed[1] === '00' ? '' : '.' + fixed[1]);
+  }
+  function durLabel(m){ var h = Math.floor(m / 60), r = m % 60; return (h ? h + (h === 1 ? ' hour' : ' hours') : '') + (r ? (h ? ' ' : '') + r + ' min' : ''); }
+  function guests(){ var n = parseInt($('#guests').value, 10); return n >= 1 && n <= 60 ? n : null; }
+  function duration(){ return parseInt($('#duration').value, 10); }
+  function weekday(d){ return new Date(d + 'T12:00:00Z').getUTCDay(); }
+  function niceDate(d){ try{ return new Date(d + 'T12:00:00Z').toLocaleDateString('en-ZA', { weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }); }catch(e){ return d; } }
+
+  // Durations: 1 hour to 11 hours in half-hour steps.
+  (function(){
+    var sel = $('#duration');
+    for(var m = 60; m <= 660; m += 30){ var o = document.createElement('option'); o.value = m; o.textContent = durLabel(m); if(m === 120) o.selected = true; sel.appendChild(o); }
+    var man = $('#startManual');
+    for(var t = 360; t <= 1320; t += 30){ var p = document.createElement('option'); p.value = hhmm(t); p.textContent = hhmm(t); if(t === 540) p.selected = true; man.appendChild(p); }
+  })();
+
+  // Why this cannot be held online, in the person's words. Null means it can.
+  function quoteWhy(){
+    var d = $('#date').value, g = guests();
+    if(!d) return null;
+    var wd = weekday(d);
+    if(g && g > MAX_ROOM) return 'Our two boardrooms seat up to 12. For ' + g + ' people we quote the open floor, which is available on Saturdays for corporate events of up to 60. Send the details and we come back with a quote within one business day.';
+    if(wd === 6) return 'Saturdays are quoted, not booked online. Send the details and we come back with availability and a quote within one business day.';
+    if(wd === 0) return 'Sunday hire is by arrangement. Send the details and we come back to you within one business day.';
+    if(state.manual) return 'Times outside 07:00 to 18:00 are by arrangement. Send the details and we come back with a quote within one business day.';
+    return null;
+  }
+  function isQuote(){ return Boolean(quoteWhy()); }
+
+  function fits(room, start, dur){
+    if(start < OPEN || start + dur > CLOSE) return false;
+    if(state.day && start < state.day.earliest_minutes) return false;
+    var busy = room.busy || [];
+    for(var i = 0; i < busy.length; i++){ if(busy[i].start_min < start + dur && busy[i].end_min > start) return false; }
+    return true;
+  }
+
+  function renderRooms(){
+    var wrap = $('#rooms'); wrap.innerHTML = '';
+    var g = guests(), dur = duration(), any = false;
+    if(!state.day) return;
+    // Smallest room that fits first, so the cheaper room leads when it works.
+    var rooms = state.day.rooms.slice().sort(function(a, b){ return a.capacity - b.capacity; });
+    rooms.forEach(function(room){
+      var tooSmall = g && room.capacity < g;
+      var card = document.createElement('div');
+      card.className = 'room p-4' + (state.room === room.key ? ' sel' : '') + (tooSmall ? ' off' : '');
+      var head = document.createElement('div'); head.className = 'flex items-baseline justify-between gap-3';
+      head.innerHTML = '<div><div class="font-bold text-gray-900">' + room.title + '</div><div class="text-xs text-gray-500">' + room.capacity + ' seats</div></div>' +
+        '<div class="text-sm font-semibold text-[#6B4423] whitespace-nowrap">' + rand(room.rate) + ' an hour</div>';
+      card.appendChild(head);
+
+      var bar = document.createElement('div'); bar.className = 'bar mt-3'; bar.setAttribute('aria-hidden', 'true');
+      (room.busy || []).forEach(function(b){
+        var s = Math.max(OPEN, b.start_min), e = Math.min(CLOSE, b.end_min); if(e <= s) return;
+        var seg = document.createElement('i'); seg.style.left = ((s - OPEN) / (CLOSE - OPEN) * 100) + '%'; seg.style.width = ((e - s) / (CLOSE - OPEN) * 100) + '%'; bar.appendChild(seg);
+      });
+      if(state.room === room.key && state.start !== null){
+        var mine = document.createElement('b'); mine.style.left = ((state.start - OPEN) / (CLOSE - OPEN) * 100) + '%'; mine.style.width = (dur / (CLOSE - OPEN) * 100) + '%'; bar.appendChild(mine);
+      }
+      card.appendChild(bar);
+      var ticks = document.createElement('div'); ticks.className = 'ticks'; ticks.setAttribute('aria-hidden', 'true');
+      ticks.innerHTML = '<span>07:00</span><span>10:00</span><span>13:00</span><span>16:00</span><span>18:00</span>'; card.appendChild(ticks);
+
+      if(tooSmall){
+        var p = document.createElement('p'); p.className = 'text-sm text-gray-600 mt-3'; p.textContent = 'Seats ' + room.capacity + ', too small for ' + g + ' people.'; card.appendChild(p);
+      } else {
+        var chips = document.createElement('div'); chips.className = 'chips mt-3'; chips.setAttribute('role', 'group'); chips.setAttribute('aria-label', room.title + ' start times');
+        var free = 0;
+        for(var t = OPEN; t + 60 <= CLOSE; t += STEP){
+          var ok = fits(room, t, dur);
+          var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'chip' + (state.room === room.key && state.start === t ? ' on' : '');
+          btn.textContent = hhmm(t); btn.disabled = !ok;
+          btn.setAttribute('aria-pressed', state.room === room.key && state.start === t ? 'true' : 'false');
+          btn.setAttribute('aria-label', room.title + ' ' + hhmm(t) + (ok ? '' : ', not available'));
+          (function(key, time){ btn.addEventListener('click', function(){ pick(key, time); }); })(room.key, t);
+          chips.appendChild(btn); if(ok) free++;
+        }
+        card.appendChild(chips);
+        if(!free){ var none = document.createElement('p'); none.className = 'text-sm text-gray-600 mt-3'; none.textContent = 'No free ' + durLabel(dur) + ' slot here on this day. Try a shorter booking, the other room or another date.'; card.appendChild(none); }
+        else any = true;
+      }
+      wrap.appendChild(card);
+    });
+    $('#availTitle').textContent = any ? 'Choose a start time for ' + durLabel(dur) : 'Nothing free for ' + durLabel(dur) + ' on this day';
+  }
+
+  function pick(roomKey, start){
+    state.room = roomKey; state.start = start;
+    $('#err-slot').style.display = 'none';
+    renderRooms(); renderSummary(); saveDraft();
+  }
+
+  // Keep the chosen slot only while it is still possible.
+  function recheckSlot(){
+    if(state.room === null || state.start === null || !state.day) return;
+    var room = state.day.rooms.filter(function(r){ return r.key === state.room; })[0];
+    var g = guests();
+    if(!room || !fits(room, state.start, duration()) || (g && room.capacity < g)){ state.room = null; state.start = null; }
+  }
+
+  var reqId = 0;
+  function loadDay(){
+    var d = $('#date').value, why = quoteWhy();
+    $('#quoteNote').hidden = !why; if(why) $('#quoteNote').textContent = why;
+    $('#manualTime').hidden = !why;
+    $('#pickFirst').hidden = Boolean(d && guests());
+    if(why || !d || !guests()){ $('#avail').hidden = true; state.day = null; if(why){ state.room = null; state.start = null; } renderSummary(); return; }
+
+    $('#avail').hidden = false;
+    if(state.day && state.day.date === d){ recheckSlot(); renderRooms(); renderSummary(); return; }
+    var my = ++reqId; state.day = null; state.room = null; state.start = null;
+    $('#rooms').innerHTML = ''; $('#availState').textContent = 'Checking the calendar…';
+    fetch('/.netlify/functions/boardroom-availability?date=' + encodeURIComponent(d))
+      .then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error || 'failed'); return j; }); })
+      .then(function(day){
+        if(my !== reqId) return;
+        state.day = day;
+        $('#availState').textContent = day.live ? 'Live from our calendar' : 'Calendar not reachable: we confirm your slot by email';
+        if(state.wantRoom && state.pendingStart != null){
+          var room = day.rooms.filter(function(r){ return r.key === state.wantRoom; })[0];
+          if(room && fits(room, state.pendingStart, duration())){ state.room = state.wantRoom; state.start = state.pendingStart; }
+          state.pendingStart = null;
+        }
+        renderRooms(); renderSummary();
+      })
+      .catch(function(){
+        if(my !== reqId) return;
+        $('#availState').textContent = '';
+        $('#rooms').innerHTML = '<p class="text-sm text-gray-700">We could not load the calendar just now. <a href="#" id="retry" class="underline text-[#6B4423]">Try again</a>, or WhatsApp us on 063 260 3513.</p>';
+        var a = $('#retry'); if(a) a.addEventListener('click', function(e){ e.preventDefault(); loadDay(); });
+      });
+  }
+
+  function slot(){
+    if(isQuote()){ var m = $('#startManual').value.split(':'); return { start: parseInt(m[0], 10) * 60 + parseInt(m[1], 10), room: null }; }
+    if(state.room === null || state.start === null) return null;
+    return { start: state.start, room: state.room };
+  }
+
+  function renderSummary(){
+    var box = $('#summary'), btn = $('#send'), hint = $('#sendHint');
+    var d = $('#date').value, g = guests(), dur = duration(), s = slot();
+    if(isQuote()){
+      btn.textContent = 'Request my quote'; hint.textContent = 'No payment now. We reply within one business day.';
+      if(!d || !g){ box.textContent = 'Choose a date and the number of people.'; return; }
+      box.innerHTML = '<strong>Quote request</strong><br>' + niceDate(d) + ', from ' + $('#startManual').value + ' for ' + durLabel(dur) + ', ' + g + ' people.<br>We come back with availability and a price within one business day.';
+      return;
+    }
+    hint.textContent = 'Nothing is charged now. We hold the room and email your invoice.';
+    if(!d || !g || !s){ box.textContent = 'Choose a date, the number of people and a start time to see your price.'; btn.textContent = 'Hold my slot'; return; }
+    var room = ROOMS[s.room], ex = Math.round(room.rate * dur / 60 * 100) / 100, incl = Math.round(ex * 1.15 * 100) / 100;
+    box.innerHTML = '<strong>' + room.title + '</strong>, ' + niceDate(d) + '<br>' + hhmm(s.start) + ' to ' + hhmm(s.start + dur) + ' (' + durLabel(dur) + '), ' + g + ' people<br>' +
+      '<strong>' + rand(ex) + '</strong> excl. VAT (' + rand(incl) + ' incl. VAT), at ' + rand(room.rate) + ' an hour';
+    btn.textContent = 'Hold my slot for ' + rand(incl);
+  }
+
+  // --- field wiring ---------------------------------------------------------
+  function showErr(el){ el.classList.add('err'); var p = el.parentElement.querySelector('.err-msg'); if(p) p.style.display = 'block'; }
+  function clearErr(el){ el.classList.remove('err'); var p = el.parentElement.querySelector('.err-msg'); if(p) p.style.display = 'none'; }
+
+  $('#date').addEventListener('change', function(){ clearErr($('#date')); state.manual = false; loadDay(); saveDraft(); });
+  $('#guests').addEventListener('input', function(){ clearErr($('#guests')); loadDay(); saveDraft(); });
+  $('#duration').addEventListener('change', function(){ recheckSlot(); loadDay(); saveDraft(); });
+  $('#startManual').addEventListener('change', renderSummary);
+  $('#afterHours').addEventListener('click', function(e){ e.preventDefault(); state.manual = true; loadDay(); $('#startManual').focus(); });
+  ['first_name','last_name','email','phone','company_name','meeting_type'].forEach(function(id){
+    $('#' + id).addEventListener('input', function(){ clearErr($('#' + id)); saveDraft(); });
+  });
+  ['company_vat','notes','catering_notes'].forEach(function(id){ $('#' + id).addEventListener('input', saveDraft); });
+  $$('input[name="catering"]').forEach(function(r){ r.addEventListener('change', function(){ $('#cateringWrap').hidden = checked('catering') !== 'village_table'; saveDraft(); }); });
+  $$('input[name="billing"]').forEach(function(r){ r.addEventListener('change', function(){ $('#companyWrap').hidden = checked('billing') !== 'company'; saveDraft(); }); });
+  $$('input[name="needs"]').forEach(function(r){ r.addEventListener('change', saveDraft); });
+  $('#terms_accepted').addEventListener('change', function(){ $('#err-terms').style.display = 'none'; });
+  $('#popia_consent').addEventListener('change', function(){ $('#err-consent').style.display = 'none'; });
+
+  function checked(name){ var el = form.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : null; }
+  function needs(){ return $$('input[name="needs"]:checked').map(function(el){ return el.value; }); }
+
+  function validate(){
+    var first = null, good = true;
+    function fail(el){ good = false; if(!first) first = el; }
+    if(!$('#date').value){ showErr($('#date')); fail($('#date')); }
+    if(!guests()){ showErr($('#guests')); fail($('#guests')); }
+    if(!slot()){ $('#err-slot').style.display = 'block'; fail($('#avail').hidden ? $('#date') : $('#avail')); }
+    if(!$('#meeting_type').value){ showErr($('#meeting_type')); fail($('#meeting_type')); }
+    if(checked('billing') === 'company' && !$('#company_name').value.trim()){ showErr($('#company_name')); fail($('#company_name')); }
+    ['first_name','last_name'].forEach(function(id){ var el = $('#' + id); if(!el.value.trim()){ showErr(el); fail(el); } });
+    var email = $('#email'); if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())){ showErr(email); fail(email); }
+    var phone = $('#phone'), digits = phone.value.replace(/\D/g, ''); if(digits.length < 9 || digits.length > 15){ showErr(phone); fail(phone); }
+    if(!$('#terms_accepted').checked){ $('#err-terms').style.display = 'block'; fail($('#terms_accepted')); }
+    if(!$('#popia_consent').checked){ $('#err-consent').style.display = 'block'; fail($('#popia_consent')); }
+    if(first){ first.scrollIntoView({ behavior:'smooth', block:'center' }); if(first.focus) try{ first.focus({ preventScroll:true }); }catch(e){} }
+    return good;
+  }
+
+  var TEXT = ['first_name','last_name','email','phone','company_name','company_vat','notes','catering_notes','meeting_type','date','guests','duration'];
+  function saveDraft(){
+    try{
+      var d = { catering: checked('catering'), billing: checked('billing'), needs: needs(), room: state.room, start: state.start };
+      TEXT.forEach(function(id){ d[id] = $('#' + id).value; });
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    }catch(e){}
+  }
+  function loadDraft(){
+    try{
+      var d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); if(!d) return null;
+      TEXT.forEach(function(id){ if(d[id] && id !== 'date') $('#' + id).value = d[id]; });
+      if(d.date && d.date >= $('#date').min) $('#date').value = d.date;
+      ['catering','billing'].forEach(function(n){ if(d[n]){ var el = form.querySelector('input[name="' + n + '"][value="' + d[n] + '"]'); if(el) el.checked = true; } });
+      (d.needs || []).forEach(function(v){ var el = form.querySelector('input[name="needs"][value="' + v + '"]'); if(el) el.checked = true; });
+      return d;
+    }catch(e){ return null; }
+  }
+
+  function utm(){
+    var out = {}, q = new URLSearchParams(location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid','fbclid'].forEach(function(k){ var v = q.get(k); if(v) out[k] = v.slice(0, 200); });
+    return Object.keys(out).length ? out : null;
+  }
+
+  var sending = false;
+  form.addEventListener('submit', async function(ev){
+    ev.preventDefault();
+    if(sending) return;
+    var errBox = $('#errBox'); errBox.hidden = true;
+    if(!validate()) return;
+    var s = slot(), btn = $('#send'), label = btn.textContent, quote = isQuote();
+    sending = true; btn.disabled = true; btn.textContent = quote ? 'Sending…' : 'Holding your slot…';
+
+    var payload = {
+      date: $('#date').value, start: hhmm(s.start), duration_minutes: duration(), guests: guests(),
+      room: s.room || 'either',
+      meeting_type: $('#meeting_type').value, needs: needs(),
+      catering: checked('catering'), catering_notes: $('#catering_notes').value.trim() || null,
+      notes: $('#notes').value.trim() || null,
+      billing: checked('billing'),
+      company_name: $('#company_name').value.trim() || null, company_vat: $('#company_vat').value.trim() || null,
+      first_name: $('#first_name').value.trim(), last_name: $('#last_name').value.trim(),
+      email: $('#email').value.trim(), phone: $('#phone').value.trim(),
+      terms_accepted: true, popia_consent: true,
+      website_url: $('#website_url').value, source_page: location.pathname, utm: utm()
+    };
+
+    try{
+      var ctrl = new AbortController(), timer = setTimeout(function(){ ctrl.abort(); }, 40000);
+      var res = await fetch('/.netlify/functions/submit-boardroom', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
+      clearTimeout(timer);
+      var data = {}; try{ data = await res.json(); }catch(e){}
+      if(res.status === 409 && data.code === 'taken'){
+        state.day = null; loadDay();
+        throw new Error(data.error || 'That slot has just been taken.');
+      }
+      if(!res.ok || !data.reference) throw new Error(data.error || 'We could not reach the booking service.');
+
+      try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+      try{
+        var v = data.price_ex_vat || 2500;
+        gtag('event', 'generate_lead', { value: v, currency: 'ZAR', lead_type: quote ? 'boardroom_quote' : 'boardroom_booking' });
+        gtag('event', 'conversion', { send_to: 'AW-18265049370/nZtxCMHin7MdEJqSuoVE', value: v, currency: 'ZAR' });
+      }catch(e){}
+
+      var when = niceDate(payload.date) + ', ' + payload.start + ' to ' + hhmm(s.start + payload.duration_minutes);
+      $('#refOut').textContent = data.reference;
+      $('#slotOut').textContent = (data.room ? data.room + ', ' : '') + when;
+      if(data.route === 'quote'){
+        $('#doneTitle').textContent = 'Your quote request is in';
+        $('#doneText').textContent = 'We come back to you with availability and a price within one business day.';
+      } else if(data.state === 'held'){
+        $('#doneTitle').textContent = 'Your room is held';
+        $('#doneText').textContent = 'Your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT is on its way by email. Pay it and the booking is confirmed. On the day your Wi-Fi code comes by WhatsApp.';
+      } else {
+        $('#doneTitle').textContent = 'We have your booking';
+        $('#doneText').textContent = 'The slot was free when you sent this. We put the room on hold and email your invoice for ' + rand(data.price_incl_vat) + ' incl. VAT, usually within the hour during office hours. Paying it confirms the booking.';
+      }
+      $('#emailLine').textContent = data.email_sent === false
+        ? 'Your request is saved. The confirmation email did not send, so please keep this reference. We will be in touch on the number you gave.'
+        : 'We have emailed a copy to ' + payload.email + '. If it is not there in a few minutes, check your spam folder.';
+      $('#formWrap').hidden = true; $('#done').hidden = false;
+      window.scrollTo({ top:0, behavior:'smooth' });
+      try{ $('#doneTitle').focus({ preventScroll:true }); }catch(e){}
+    }catch(err){
+      var msg = err && err.name === 'AbortError' ? 'That took too long. Your connection may have dropped.' : ((err && err.message) || 'Something went wrong.');
+      errBox.innerHTML = '';
+      var strong = document.createElement('strong'); strong.textContent = 'Not booked yet. ';
+      errBox.appendChild(strong); errBox.appendChild(document.createTextNode(msg + ' Nothing is lost. You can also WhatsApp us on 063 260 3513.'));
+      errBox.hidden = false; errBox.scrollIntoView({ behavior:'smooth', block:'center' });
+      btn.disabled = false; btn.textContent = label;
+    }finally{ sending = false; }
+  });
+
+  // --- start-up ---------------------------------------------------------------
+  // Dates run from today, in South African time, to six months ahead.
+  var todaySast = new Date(Date.now() + 2 * 3600000).toISOString().slice(0, 10);
+  $('#date').min = todaySast;
+  $('#date').max = new Date(Date.now() + 2 * 3600000 + 183 * 86400000).toISOString().slice(0, 10);
+
+  var draft = loadDraft();
+  var q = new URLSearchParams(location.search);
+  var qRoom = (q.get('room') || '').toLowerCase(); if(ROOMS[qRoom]) state.wantRoom = qRoom;
+  var qDate = q.get('date'); if(qDate && /^\d{4}-\d{2}-\d{2}$/.test(qDate) && qDate >= todaySast) $('#date').value = qDate;
+  var qGuests = parseInt(q.get('guests'), 10); if(qGuests >= 1 && qGuests <= 60) $('#guests').value = qGuests;
+  if(draft && draft.room && draft.start != null && !state.wantRoom){ state.wantRoom = draft.room; state.pendingStart = draft.start; }
+  $('#cateringWrap').hidden = checked('catering') !== 'village_table';
+  $('#companyWrap').hidden = checked('billing') !== 'company';
+  loadDay();
+})();
+</script>
+<script src="/assets/vh.js?v=4" defer></script>
+</body>
+</html>

@@ -105,8 +105,8 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 <h1 class="mt-3 text-4xl md:text-5xl font-extrabold text-gray-900">Boardroom Hire in Stellenbosch &mdash; Bring Your Best Meeting Here</h1>
 <p class="mt-5 text-lg text-gray-700">Two professional boardrooms at The Village Hub: the executive <strong>Village Boardroom</strong> (12 seats, R390/hour) for board meetings, investor pitches and strategy sessions &mdash; or the <strong>Village Chamber</strong> (10 seats, R350/hour) for team strategy days and workshops. Bigger group? On <a href="#saturday-events" class="underline text-[#6B4423]">Saturdays the whole open-plan floor</a> hosts corporate events of up to 60 guests.</p>
 <div class="mt-8 flex flex-col sm:flex-row gap-3">
-<a href="#enquire" class="btn-sage px-6 py-3 rounded-md text-base font-medium text-center">Check Availability &amp; Pricing</a>
-<a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" class="px-6 py-3 rounded-md text-base font-medium text-center text-[#8B5A2B] border border-[#8B5A2B] hover:bg-white">Book Online</a>
+<a href="#book" class="btn-sage px-6 py-3 rounded-md text-base font-medium text-center">Check Availability &amp; Book</a>
+<a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" class="px-6 py-3 rounded-md text-base font-medium text-center text-[#8B5A2B] border border-[#8B5A2B] hover:bg-white">Members: book in the app</a>
 </div>
 <p class="mt-3 text-sm text-gray-500">Half-day &amp; full-day available &middot; Saturday corporate events up to 60, POA &middot; Catering available</p>
 </div>
@@ -125,13 +125,38 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 </div>
 </section>
 
+<!-- BOOK ONLINE: starts here, finishes on /book-boardroom -->
+<section id="book" class="py-14 bg-[#F8F1E5]">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-6" data-aos="fade-up">
+<p class="text-sm font-semibold text-[#8A9A5B] uppercase tracking-wider">Book online</p>
+<h2 class="mt-2 text-3xl font-extrabold text-gray-900">See What Is Free and Book It</h2>
+<p class="mt-3 text-gray-600">Live availability for both rooms. Pick your slot, we hold it and email your invoice. About two minutes.</p>
+</div>
+<form id="vh-book-start" action="/book-boardroom" method="GET" class="bg-white border border-[#e8d9c5] rounded-xl p-6 sm:p-8 shadow-sm" data-aos="fade-up">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label for="bs-date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+<input type="date" id="bs-date" name="date" class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#8A9A5B] focus:ring-1 focus:ring-[#8A9A5B] outline-none">
+</div>
+<div>
+<label for="bs-guests" class="block text-sm font-medium text-gray-700 mb-1">People</label>
+<input type="number" id="bs-guests" name="guests" min="1" max="60" inputmode="numeric" placeholder="e.g. 8" class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#8A9A5B] focus:ring-1 focus:ring-[#8A9A5B] outline-none">
+</div>
+</div>
+<button type="submit" class="btn-sage w-full mt-5 px-8 py-3 rounded-md text-base font-semibold">Check availability</button>
+<p class="mt-3 text-xs text-gray-500 text-center">No payment now. Village Boardroom R390 an hour, Village Chamber R350 an hour, excl. VAT. More than 12 people or a Saturday? Same form, and we quote within one business day.</p>
+</form>
+</div>
+</section>
+
 <!-- LEAD CAPTURE FORM -->
 <section id="enquire" class="py-16 bg-white">
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="text-center mb-8" data-aos="fade-up">
-<p class="text-sm font-semibold text-[#8A9A5B] uppercase tracking-wider">Enquire Now</p>
-<h2 class="mt-2 text-3xl font-extrabold text-gray-900">Request Your Boardroom Booking</h2>
-<p class="mt-3 text-gray-600">Send a few details and we&rsquo;ll confirm availability, pricing and any extras &mdash; usually within minutes during office hours.</p>
+<p class="text-sm font-semibold text-[#8A9A5B] uppercase tracking-wider">Rather have us arrange it?</p>
+<h2 class="mt-2 text-3xl font-extrabold text-gray-900">Send an Enquiry</h2>
+<p class="mt-3 text-gray-600">Leave your details and we reply by email straight away with the booking link, then follow up in person during office hours.</p>
 </div>
 <form action="https://crm.zoho.com/crm/WebToLeadForm" method="POST" accept-charset="UTF-8" class="bg-[#F8F1E5] border border-[#e8d9c5] rounded-xl p-6 sm:p-8 shadow-sm" data-aos="fade-up">
 <input type="hidden" name="xnQsjsdp" value="f490e128e099ee86cf851797e862cdf6dfa185c9a32ca765402c772dd1b67c62">
@@ -189,7 +214,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 <li>Fibre Wi-Fi &amp; on-site parking</li>
 </ul>
 <p class="mt-5 text-2xl font-bold text-[#8A9A5B]">R390<span class="text-sm font-normal text-gray-500">/hour</span></p>
-<a href="https://wa.me/27632603513?text=I%27d%20like%20to%20book%20the%20Village%20Boardroom" class="mt-4 block text-center btn-sage px-4 py-2 rounded-md text-sm font-medium">Book Village Boardroom</a>
+<a href="/book-boardroom?room=boardroom" data-vh-book class="mt-4 block text-center btn-sage px-4 py-2 rounded-md text-sm font-medium">Book Village Boardroom</a>
 </div>
 </article>
 <article class="bg-[#FAF8F6] rounded-lg overflow-hidden shadow-md card-hover transition-all" data-aos="fade-up" data-aos-delay="300">
@@ -206,7 +231,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 <li>Fibre Wi-Fi &amp; on-site parking</li>
 </ul>
 <p class="mt-5 text-2xl font-bold text-[#8A9A5B]">R350<span class="text-sm font-normal text-gray-500">/hour</span></p>
-<a href="https://wa.me/27632603513?text=I%27d%20like%20to%20book%20the%20Village%20Chamber" class="mt-4 block text-center btn-sage px-4 py-2 rounded-md text-sm font-medium">Book Village Chamber</a>
+<a href="/book-boardroom?room=chamber" data-vh-book class="mt-4 block text-center btn-sage px-4 py-2 rounded-md text-sm font-medium">Book Village Chamber</a>
 </div>
 </article>
 </div>
@@ -246,7 +271,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 <div class="text-center mb-8">
 <p class="text-sm font-semibold text-[#8A9A5B] uppercase tracking-wider">Saturday corporate events &middot; Price on application</p>
 <h2 class="mt-2 text-3xl font-extrabold text-gray-900">Request a Saturday quote</h2>
-<p class="mt-3 text-gray-600">Send the basics and we come back with availability and a quote within one business day. For a weekday boardroom, use the <a href="#enquire" class="underline text-[#6B4423]">booking form above</a>.</p>
+<p class="mt-3 text-gray-600">Send the basics and we come back with availability and a quote within one business day. For a weekday boardroom, use the <a href="#book" class="underline text-[#6B4423]">booking form above</a>.</p>
 </div>
 <form id="ce-form" novalidate class="bg-[#F8F1E5] border border-[#e8d9c5] rounded-xl p-6 sm:p-8 shadow-sm">
         <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);" aria-hidden="true"><input type="text" id="ce-hp" tabindex="-1" autocomplete="off"></div>
@@ -349,7 +374,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 <p class="mt-3 text-lg text-gray-700">Book online or message us &mdash; we&rsquo;ll confirm availability and pricing within minutes.</p>
 <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
 <a href="https://wa.me/27632603513?text=Boardroom%20booking%20enquiry" class="bg-[#25D366] hover:bg-[#1FB855] text-white px-6 py-3 rounded-md font-medium">WhatsApp Booking</a>
-<a href="https://members.villagehub.co.za/suite/organizations/e54f9f0c-df10-4943-aadc-fd378c74bd11/rooms" class="btn-sage px-6 py-3 rounded-md font-medium">Book Online</a>
+<a href="/book-boardroom" data-vh-book class="btn-sage px-6 py-3 rounded-md font-medium">Check Availability &amp; Book</a>
 </div>
 </div>
 </section>
@@ -418,6 +443,22 @@ html, body { overflow-x: hidden; max-width: 100vw; }
       if (window.VHLeadConversion) window.VHLeadConversion('boardroom');
       fetch('/.netlify/functions/submit-lead', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: b.toString() });
     } catch (e) {}
+  });
+})();
+</script>
+<script>
+/* Booking links and the availability starter keep the ad click id and UTMs,
+   so a booking that started from an ad is still attributed to it. */
+(function () {
+  var keep = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid'];
+  var q = new URLSearchParams(location.search), extra = new URLSearchParams();
+  keep.forEach(function (k) { var v = q.get(k); if (v) extra.set(k, v); });
+  var d = document.getElementById('bs-date');
+  if (d) { try { d.min = new Date(Date.now() + 2 * 3600000).toISOString().slice(0, 10); } catch (e) {} }
+  var f = document.getElementById('vh-book-start');
+  if (f) extra.forEach(function (v, k) { var i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
+  if (extra.toString()) Array.prototype.forEach.call(document.querySelectorAll('a[data-vh-book]'), function (a) {
+    a.href += (a.href.indexOf('?') === -1 ? '?' : '&') + extra.toString();
   });
 })();
 </script>
