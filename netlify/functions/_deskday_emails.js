@@ -38,7 +38,7 @@ function held(b, pr, opts) {
       <p style="margin:0 0 14px;">Your desk is held. One step left: pay the invoice and the booking is confirmed.</p>
       ${bookingBox(b, pr)}
       <p style="margin:0 0 14px;"><strong>Your invoice</strong> is made out to ${esc(whoPays(b))} and comes in a separate email from Spacebring, our booking system${o.invoiceTitle ? `, number <strong>${esc(o.invoiceTitle)}</strong>` : ''}. It shows how to pay.</p>
-      ${o.invoiceUrl ? button(o.invoiceUrl, 'Open the invoice (PDF)') : ''}
+      ${o.invoiceUrl ? button(o.invoiceUrl, 'View and pay the invoice') : ''}
       <p style="margin:0 0 14px;"><strong>We hold the desk until ${esc(holdText(b))}.</strong> If the invoice is not paid by then the desk opens up again.</p>
       <p style="margin:0 0 14px;">Once you have paid we email your confirmation, and on the day your Wi-Fi code comes by WhatsApp to ${esc(b.phone)}.</p>
       <p style="margin:0 0 6px;">Need to change something? Reply to this email or WhatsApp us on ${HUB_WHATSAPP}, and quote <strong>${esc(b.reference)}</strong>.</p>
@@ -141,7 +141,7 @@ function reminder(b, pr, opts) {
       <p style="margin:0 0 14px;">A quick reminder. We are holding your desk, and the invoice has not been paid yet.</p>
       ${bookingBox(b, pr)}
       <p style="margin:0 0 14px;"><strong>The hold lapses at ${esc(holdText(b))}.</strong> Pay before then and the desk is yours.</p>
-      ${o.invoiceUrl ? button(o.invoiceUrl, 'Open the invoice (PDF)') : ''}
+      ${o.invoiceUrl ? button(o.invoiceUrl, 'View and pay the invoice') : ''}
       <p style="margin:0 0 6px;">Paid already? Reply to this email or WhatsApp us on ${HUB_WHATSAPP}.</p>
       ${sign()}
     `, `Pay by ${holdText(b)} to keep your desk.`),
