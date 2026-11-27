@@ -100,8 +100,8 @@ test('touching bookings do not clash, overlapping ones do', () => {
   assert.equal(B.overlaps(busy, '2026-12-03T08:30:00Z', '2026-12-03T09:30:00Z'), true);
 });
 
-test('a hold lasts 24 hours, or to two hours before the meeting, never under 30 minutes', () => {
-  assert.equal(B.holdExpiry(NOW, '2026-12-03T07:00:00Z').toISOString(), '2026-11-28T08:00:00.000Z');
+test('a hold runs to 23:59 the next day, or to two hours before the meeting, never under 30 minutes', () => {
+  assert.equal(B.holdExpiry(NOW, '2026-12-03T07:00:00Z').toISOString(), '2026-11-28T21:59:00.000Z'); // 23:59 SAST, the invoice due time
   assert.equal(B.holdExpiry(NOW, '2026-11-27T13:00:00Z').toISOString(), '2026-11-27T11:00:00.000Z');
   assert.equal(B.holdExpiry(NOW, '2026-11-27T09:30:00Z').toISOString(), '2026-11-27T08:30:00.000Z');
 });
@@ -413,15 +413,15 @@ test('sync: paid confirms the booking, retitles it and tells person and team onc
 test('sync: one reminder at half way, then nothing until it lapses', async () => {
   const early = deps({ now: new Date(NOW.getTime() + 3600_000) }); const b = held();
   assert.equal((await F.sync(b, early)).changed, false);
-  const half = deps({ now: new Date(NOW.getTime() + 13 * 3600_000) });
+  const half = deps({ now: new Date(NOW.getTime() + 20 * 3600_000) });
   await F.sync(b, half);
   assert.deepEqual(half.mails.map(m => m[0]), ['reminder']);
-  const later = deps({ now: new Date(NOW.getTime() + 14 * 3600_000) });
+  const later = deps({ now: new Date(NOW.getTime() + 21 * 3600_000) });
   assert.equal((await F.sync(b, later)).changed, false);
 });
 
 test('sync: an unpaid hold that lapses is released and the invoice voided', async () => {
-  const d = deps({ now: new Date(NOW.getTime() + 25 * 3600_000) }); const b = held();
+  const d = deps({ now: new Date(NOW.getTime() + 39 * 3600_000) }); const b = held();
   const r = await F.sync(b, d);
   assert.equal(r.state, 'released'); assert.equal(b.status, 'released');
   assert.deepEqual(names(d), ['getInvoice', 'cancelBooking', 'voidInvoice']);
@@ -430,7 +430,7 @@ test('sync: an unpaid hold that lapses is released and the invoice voided', asyn
 });
 
 test('sync: with automatic release off the team is alerted once and the room stays', async () => {
-  const d = deps({ now: new Date(NOW.getTime() + 25 * 3600_000), autoRelease: false }); const b = held();
+  const d = deps({ now: new Date(NOW.getTime() + 39 * 3600_000), autoRelease: false }); const b = held();
   await F.sync(b, d);
   assert.ok(!names(d).includes('cancelBooking')); assert.equal(b.status, 'held');
   assert.deepEqual(d.mails.map(m => m[0]), ['staffLapsed']);

@@ -162,11 +162,13 @@ function quoteReasons({ date, startMin, duration, guests, now }) {
   return reasons;
 }
 
-// An unpaid hold lasts 24 hours, or until two hours before the meeting if
-// that is sooner, and never less than 30 minutes.
+// An unpaid hold runs to 23:59 (SA time) on the day 24 hours from now, or
+// until two hours before the meeting if that is sooner, and never less than
+// 30 minutes. 23:59 because Spacebring rounds an invoice's due date to the
+// end of the day: the room is released when the invoice says it is due.
 function holdExpiry(now, start) {
   const hours = Number(process.env.BOARDROOM_HOLD_HOURS || 24);
-  const byAge = now.getTime() + hours * 3600_000;
+  const byAge = instant(sastDate(new Date(now.getTime() + hours * 3600_000)), 23 * 60 + 59).getTime();
   const byStart = new Date(start).getTime() - 2 * 3600_000;
   return new Date(Math.max(Math.min(byAge, byStart), now.getTime() + 30 * 60_000));
 }
